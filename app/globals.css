@@ -5,78 +5,77 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-    /* ── Exact brand palette (ZenSpa Rebranding PDF) ────────────
-       #EAE1D6  Gebroken wit / cream   → pagina-achtergrond
-       #E6D7C7  Zandbeige              → secties & cards
-       #C9BCA8  Taupe mid-ton          → subtiele accenten
-       #74795E  Olijfgroen             → logo, accenten, iconen
-       #21231B  Zwartgroen             → buttons, labels, tekst
+    /* ── Brand palette — lichte modus ───────────────────────────
+       #EAE1D6  Primair / achtergrond  → pagina & basiskleur
+       #74795E  Olijfgroen             → buttons, links, avatar
+       #21231B  Zwartgroen             → alle tekst
+       Cards    Lichte tinten van #EAE1D6 met voldoende contrast
     ──────────────────────────────────────────────────────────── */
 
-    /* #EAE1D6 – gebroken wit / pagina-achtergrond */
+    /* ACHTERGROND = #EAE1D6 warm crème */
     --background: oklch(0.912 0.016 74);
-    /* #21231B – zwartgroen / body-tekst */
+
+    /* TEKST = #21231B zwartgroen */
     --foreground: oklch(0.148 0.020 120);
 
-    /* Cards: #E6D7C7 zandbeige */
-    --card: oklch(0.881 0.024 71);
+    /* CARDS = lichter dan achtergrond → crème-wit tint */
+    --card: oklch(0.950 0.012 77);
     --card-foreground: oklch(0.148 0.020 120);
-    --popover: oklch(0.881 0.024 71);
+    --popover: oklch(0.950 0.012 77);
     --popover-foreground: oklch(0.148 0.020 120);
 
-    /* PRIMARY = #21231B – buttons "Boek nu" & labels */
-    --primary: oklch(0.148 0.020 120);
-    --primary-foreground: oklch(0.912 0.016 74);
+    /* PRIMARY = #74795E olijfgroen → buttons, links */
+    --primary: oklch(0.502 0.052 122);
+    --primary-foreground: oklch(0.950 0.012 77);
 
-    /* SECONDARY = #E6D7C7 zandbeige */
-    --secondary: oklch(0.881 0.024 71);
+    /* SECONDARY = iets donkerder crème tint voor subtiele vlakken */
+    --secondary: oklch(0.888 0.018 74);
     --secondary-foreground: oklch(0.148 0.020 120);
 
-    /* MUTED – lichter dan card, voor sectie-wisselingen */
-    --muted: oklch(0.896 0.020 72);
-    --muted-foreground: oklch(0.470 0.036 118);
+    /* MUTED = zachte crème voor sectie-achtergronden */
+    --muted: oklch(0.896 0.016 74);
+    --muted-foreground: oklch(0.476 0.036 118);
 
-    /* ACCENT = #74795E – olijfgroen voor accenten & iconen */
+    /* ACCENT = #74795E olijfgroen → iconen, italic tekst, avatar */
     --accent: oklch(0.502 0.052 122);
-    --accent-foreground: oklch(0.912 0.016 74);
+    --accent-foreground: oklch(0.950 0.012 77);
 
     --destructive: oklch(0.577 0.245 27.325);
 
-    /* Borders – warme taupe rand (#C9BCA8-zone) */
-    --border: oklch(0.805 0.028 72);
-    --input: oklch(0.855 0.024 72);
+    /* BORDERS = warme taupe rand */
+    --border: oklch(0.858 0.022 74);
+    --input: oklch(0.878 0.020 74);
     --ring: oklch(0.502 0.052 122);
 
-    /* Charts – olijfgroene schaal */
+    /* Charts — olijfgroene schaal */
     --chart-1: oklch(0.502 0.052 122);
     --chart-2: oklch(0.580 0.046 122);
     --chart-3: oklch(0.660 0.036 122);
-    --chart-4: oklch(0.750 0.026 122);
-    --chart-5: oklch(0.860 0.016 72);
+    --chart-4: oklch(0.760 0.024 74);
+    --chart-5: oklch(0.880 0.016 74);
 
     --radius: 0.625rem;
-    --sidebar: oklch(0.896 0.020 72);
+    --sidebar: oklch(0.896 0.016 74);
     --sidebar-foreground: oklch(0.148 0.020 120);
-    --sidebar-primary: oklch(0.148 0.020 120);
-    --sidebar-primary-foreground: oklch(0.912 0.016 74);
+    --sidebar-primary: oklch(0.502 0.052 122);
+    --sidebar-primary-foreground: oklch(0.950 0.012 77);
     --sidebar-accent: oklch(0.502 0.052 122);
-    --sidebar-accent-foreground: oklch(0.912 0.016 74);
-    --sidebar-border: oklch(0.805 0.028 72);
+    --sidebar-accent-foreground: oklch(0.950 0.012 77);
+    --sidebar-border: oklch(0.858 0.022 74);
     --sidebar-ring: oklch(0.502 0.052 122);
 }
 
 .dark {
-    /* Donker gebaseerd op #21231B */
     --background: oklch(0.148 0.020 120);
-    --foreground: oklch(0.912 0.016 74);
+    --foreground: oklch(0.950 0.012 77);
     --card: oklch(0.192 0.024 120);
-    --card-foreground: oklch(0.912 0.016 74);
+    --card-foreground: oklch(0.950 0.012 77);
     --popover: oklch(0.192 0.024 120);
-    --popover-foreground: oklch(0.912 0.016 74);
-    --primary: oklch(0.912 0.016 74);
+    --popover-foreground: oklch(0.950 0.012 77);
+    --primary: oklch(0.620 0.056 122);
     --primary-foreground: oklch(0.148 0.020 120);
     --secondary: oklch(0.235 0.028 120);
-    --secondary-foreground: oklch(0.912 0.016 74);
+    --secondary-foreground: oklch(0.950 0.012 77);
     --muted: oklch(0.218 0.024 120);
     --muted-foreground: oklch(0.640 0.040 122);
     --accent: oklch(0.620 0.056 122);
@@ -88,11 +87,11 @@
     --chart-1: oklch(0.620 0.056 122);
     --chart-2: oklch(0.540 0.048 122);
     --chart-3: oklch(0.440 0.040 122);
-    --chart-4: oklch(0.330 0.030 122);
-    --chart-5: oklch(0.235 0.020 122);
+    --chart-4: oklch(0.330 0.028 122);
+    --chart-5: oklch(0.235 0.020 120);
     --sidebar: oklch(0.192 0.024 120);
-    --sidebar-foreground: oklch(0.912 0.016 74);
-    --sidebar-primary: oklch(0.912 0.016 74);
+    --sidebar-foreground: oklch(0.950 0.012 77);
+    --sidebar-primary: oklch(0.620 0.056 122);
     --sidebar-primary-foreground: oklch(0.148 0.020 120);
     --sidebar-accent: oklch(0.620 0.056 122);
     --sidebar-accent-foreground: oklch(0.148 0.020 120);
