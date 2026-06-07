@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -127,88 +128,110 @@ function StarRow({ count }: { count: number }) {
 
 function Nav() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-sm md:px-12">
-      <a href="#" aria-label="Zen Spa home">
-        <ZenSpaLogo className="h-7 w-auto text-foreground" />
-      </a>
-      <nav className="hidden items-center gap-8 text-sm md:flex">
-        <a href="#benefits" className="text-muted-foreground hover:text-foreground transition-colors">
-          Philosophy
+    <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 md:px-12">
+      {/* Left half: cream bg; right half: transparent over image */}
+      <div className="bg-background/90 absolute inset-0 w-full backdrop-blur-md md:w-1/2" />
+      <div className="relative flex w-full items-center justify-between">
+        <a href="#" aria-label="Zen Spa home">
+          <ZenSpaLogo className="h-7 w-auto text-foreground" />
         </a>
-        <a href="#treatments" className="text-muted-foreground hover:text-foreground transition-colors">
-          Treatments
-        </a>
-        <a href="#testimonials" className="text-muted-foreground hover:text-foreground transition-colors">
-          Stories
-        </a>
-        <Button size="sm" asChild>
-          <a href="#booking">Book a Visit</a>
+        <nav className="hidden items-center gap-8 text-sm md:flex">
+          <a href="#benefits" className="text-muted-foreground hover:text-foreground transition-colors">
+            Philosophy
+          </a>
+          <a href="#treatments" className="text-muted-foreground hover:text-foreground transition-colors">
+            Treatments
+          </a>
+          <a href="#testimonials" className="text-muted-foreground hover:text-foreground transition-colors">
+            Stories
+          </a>
+          <Button size="sm" asChild>
+            <a href="#booking">Book a Visit</a>
+          </Button>
+        </nav>
+        <Button size="sm" className="md:hidden" asChild>
+          <a href="#booking">Book</a>
         </Button>
-      </nav>
-      <Button size="sm" className="md:hidden" asChild>
-        <a href="#booking">Book</a>
-      </Button>
+      </div>
     </header>
   )
 }
 
 function Hero() {
   return (
-    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-6 text-center">
-      {/* Decorative background rings */}
-      <div className="border-primary/10 absolute h-[600px] w-[600px] rounded-full border" />
-      <div className="border-primary/7 absolute h-[800px] w-[800px] rounded-full border" />
-      <div className="border-primary/4 absolute h-[1000px] w-[1000px] rounded-full border" />
+    <section className="relative flex min-h-svh flex-col md:flex-row">
+      {/* ── LEFT: text panel ───────────────────────────────── */}
+      <div className="bg-background relative z-10 flex flex-col justify-center px-8 py-32 md:w-1/2 md:px-14 lg:px-20">
+        {/* Subtle decorative rings behind text */}
+        <div className="border-primary/8 pointer-events-none absolute right-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/2 rounded-full border" />
+        <div className="border-primary/5 pointer-events-none absolute right-0 top-1/2 h-[700px] w-[700px] -translate-y-1/2 translate-x-1/2 rounded-full border" />
 
-      <div className="relative z-10 flex max-w-3xl flex-col items-center gap-6">
-        <Badge variant="secondary" className="rounded-full px-4 py-1 text-xs tracking-widest uppercase">
-          Luxury Wellness Retreat
-        </Badge>
+        <div className="relative flex max-w-lg flex-col gap-7">
+          <Badge
+            variant="outline"
+            className="border-primary/40 text-primary w-fit rounded-full px-4 py-1 text-xs tracking-widest uppercase"
+          >
+            House of Beauty
+          </Badge>
 
-        <h1 className="font-heading text-5xl leading-[1.1] tracking-tight md:text-7xl">
-          Restore.{" "}
-          <span className="text-primary italic">Renew.</span>
-          <br />
-          Rediscover.
-        </h1>
+          <h1 className="font-heading text-5xl leading-[1.05] tracking-tight lg:text-6xl xl:text-7xl">
+            Restore.{" "}
+            <span className="text-primary italic">Renew.</span>
+            <br />
+            Rediscover.
+          </h1>
 
-        <p className="text-muted-foreground max-w-xl text-base leading-relaxed md:text-lg">
-          Step into a sanctuary where ancient healing traditions meet modern
-          luxury. Every treatment is a curated ritual — crafted to bring you
-          back to yourself.
-        </p>
+          <p className="text-muted-foreground max-w-sm text-base leading-relaxed">
+            Step into a sanctuary where ancient healing traditions meet modern
+            luxury. Every treatment is a curated ritual — crafted to bring you
+            back to yourself.
+          </p>
 
-        <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row">
-          <Button size="lg" className="gap-2 px-8" asChild>
-            <a href="#booking">
-              Reserve Your Ritual <ChevronRight className="h-4 w-4" />
-            </a>
-          </Button>
-          <Button size="lg" variant="ghost" asChild>
-            <a href="#treatments">Explore Treatments</a>
-          </Button>
-        </div>
-
-        <div className="mt-4 flex items-center gap-6 text-sm">
-          <div className="text-center">
-            <p className="font-heading text-2xl">12+</p>
-            <p className="text-muted-foreground text-xs tracking-wide">Treatments</p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button size="lg" className="gap-2 px-8" asChild>
+              <a href="#booking">
+                Reserve Your Ritual <ChevronRight className="h-4 w-4" />
+              </a>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <a href="#treatments">Explore Treatments</a>
+            </Button>
           </div>
-          <Separator orientation="vertical" className="h-8" />
-          <div className="text-center">
-            <p className="font-heading text-2xl">4.9</p>
-            <p className="text-muted-foreground text-xs tracking-wide">Avg. Rating</p>
-          </div>
-          <Separator orientation="vertical" className="h-8" />
-          <div className="text-center">
-            <p className="font-heading text-2xl">8k+</p>
-            <p className="text-muted-foreground text-xs tracking-wide">Guests Served</p>
+
+          <div className="mt-2 flex items-center gap-6 text-sm">
+            <div>
+              <p className="font-heading text-2xl">12+</p>
+              <p className="text-muted-foreground text-xs tracking-wide">Treatments</p>
+            </div>
+            <Separator orientation="vertical" className="h-8" />
+            <div>
+              <p className="font-heading text-2xl">4.9</p>
+              <p className="text-muted-foreground text-xs tracking-wide">Avg. Rating</p>
+            </div>
+            <Separator orientation="vertical" className="h-8" />
+            <div>
+              <p className="font-heading text-2xl">8k+</p>
+              <p className="text-muted-foreground text-xs tracking-wide">Guests Served</p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t to-transparent" />
+      {/* ── RIGHT: hero image ──────────────────────────────── */}
+      <div className="relative h-72 md:h-auto md:w-1/2">
+        <Image
+          src="/hero.jpg"
+          alt="Guest enjoying a relaxing facial treatment at Zen Spa"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+        {/* Subtle left-edge blend into the cream panel on desktop */}
+        <div className="from-background pointer-events-none absolute inset-y-0 left-0 hidden w-12 bg-gradient-to-r to-transparent md:block" />
+        {/* Bottom fade on mobile */}
+        <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t to-transparent md:hidden" />
+      </div>
     </section>
   )
 }
