@@ -5,100 +5,99 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-    /* ── Exact brand palette ─────────────────────────────────────
-       #F6F2EA  Gebroken wit    → pagina-achtergrond
-       #E8E1D2  Warm beige      → secties & cards
-       #6F785C  Donkergroen     → logo, accenten, prijzen, iconen
-       #1F2119  Zwartgroen      → buttons "Boek nu", labels, tekst
+    /* ── Exact brand palette (ZenSpa Rebranding PDF) ────────────
+       #EAE1D6  Gebroken wit / cream   → pagina-achtergrond
+       #E6D7C7  Zandbeige              → secties & cards
+       #C9BCA8  Taupe mid-ton          → subtiele accenten
+       #74795E  Olijfgroen             → logo, accenten, iconen
+       #21231B  Zwartgroen             → buttons, labels, tekst
     ──────────────────────────────────────────────────────────── */
 
-    /* #F6F2EA – gebroken wit / pagina-achtergrond */
-    --background: oklch(0.961 0.012 84);
-    /* #1F2119 – zwartgroen / body-tekst */
-    --foreground: oklch(0.142 0.022 118);
+    /* #EAE1D6 – gebroken wit / pagina-achtergrond */
+    --background: oklch(0.912 0.016 74);
+    /* #21231B – zwartgroen / body-tekst */
+    --foreground: oklch(0.148 0.020 120);
 
-    /* Cards & popovers: warm beige #E8E1D2 */
-    --card: oklch(0.903 0.018 81);
-    --card-foreground: oklch(0.142 0.022 118);
-    --popover: oklch(0.903 0.018 81);
-    --popover-foreground: oklch(0.142 0.022 118);
+    /* Cards: #E6D7C7 zandbeige */
+    --card: oklch(0.881 0.024 71);
+    --card-foreground: oklch(0.148 0.020 120);
+    --popover: oklch(0.881 0.024 71);
+    --popover-foreground: oklch(0.148 0.020 120);
 
-    /* PRIMARY = #1F2119 – buttons "Boek nu" & labels */
-    --primary: oklch(0.142 0.022 118);
-    --primary-foreground: oklch(0.961 0.012 84);
+    /* PRIMARY = #21231B – buttons "Boek nu" & labels */
+    --primary: oklch(0.148 0.020 120);
+    --primary-foreground: oklch(0.912 0.016 74);
 
-    /* SECONDARY = warm beige #E8E1D2 */
-    --secondary: oklch(0.903 0.018 81);
-    --secondary-foreground: oklch(0.142 0.022 118);
+    /* SECONDARY = #E6D7C7 zandbeige */
+    --secondary: oklch(0.881 0.024 71);
+    --secondary-foreground: oklch(0.148 0.020 120);
 
-    /* MUTED – lichtere beige voor sectie-achtergronden */
-    --muted: oklch(0.940 0.013 83);
-    --muted-foreground: oklch(0.476 0.038 118);
+    /* MUTED – lichter dan card, voor sectie-wisselingen */
+    --muted: oklch(0.896 0.020 72);
+    --muted-foreground: oklch(0.470 0.036 118);
 
-    /* ACCENT = #6F785C – donkergroen / olijfgroen voor accenten */
-    --accent: oklch(0.495 0.060 118);
-    --accent-foreground: oklch(0.961 0.012 84);
+    /* ACCENT = #74795E – olijfgroen voor accenten & iconen */
+    --accent: oklch(0.502 0.052 122);
+    --accent-foreground: oklch(0.912 0.016 74);
 
     --destructive: oklch(0.577 0.245 27.325);
 
-    /* Borders – warme beige rand */
-    --border: oklch(0.876 0.020 81);
-    --input: oklch(0.876 0.020 81);
-    --ring: oklch(0.495 0.060 118);
+    /* Borders – warme taupe rand (#C9BCA8-zone) */
+    --border: oklch(0.805 0.028 72);
+    --input: oklch(0.855 0.024 72);
+    --ring: oklch(0.502 0.052 122);
 
     /* Charts – olijfgroene schaal */
-    --chart-1: oklch(0.495 0.060 118);
-    --chart-2: oklch(0.570 0.052 118);
-    --chart-3: oklch(0.660 0.040 118);
-    --chart-4: oklch(0.760 0.028 118);
-    --chart-5: oklch(0.870 0.016 118);
+    --chart-1: oklch(0.502 0.052 122);
+    --chart-2: oklch(0.580 0.046 122);
+    --chart-3: oklch(0.660 0.036 122);
+    --chart-4: oklch(0.750 0.026 122);
+    --chart-5: oklch(0.860 0.016 72);
 
     --radius: 0.625rem;
-    --sidebar: oklch(0.940 0.013 83);
-    --sidebar-foreground: oklch(0.142 0.022 118);
-    --sidebar-primary: oklch(0.142 0.022 118);
-    --sidebar-primary-foreground: oklch(0.961 0.012 84);
-    --sidebar-accent: oklch(0.495 0.060 118);
-    --sidebar-accent-foreground: oklch(0.961 0.012 84);
-    --sidebar-border: oklch(0.876 0.020 81);
-    --sidebar-ring: oklch(0.495 0.060 118);
+    --sidebar: oklch(0.896 0.020 72);
+    --sidebar-foreground: oklch(0.148 0.020 120);
+    --sidebar-primary: oklch(0.148 0.020 120);
+    --sidebar-primary-foreground: oklch(0.912 0.016 74);
+    --sidebar-accent: oklch(0.502 0.052 122);
+    --sidebar-accent-foreground: oklch(0.912 0.016 74);
+    --sidebar-border: oklch(0.805 0.028 72);
+    --sidebar-ring: oklch(0.502 0.052 122);
 }
 
 .dark {
-    /* Donker gebaseerd op #1F2119 */
-    --background: oklch(0.142 0.022 118);
-    --foreground: oklch(0.961 0.012 84);
-    --card: oklch(0.188 0.026 118);
-    --card-foreground: oklch(0.961 0.012 84);
-    --popover: oklch(0.188 0.026 118);
-    --popover-foreground: oklch(0.961 0.012 84);
-    /* Primary op donkere achtergrond: gebroken wit */
-    --primary: oklch(0.961 0.012 84);
-    --primary-foreground: oklch(0.142 0.022 118);
-    --secondary: oklch(0.230 0.028 118);
-    --secondary-foreground: oklch(0.961 0.012 84);
-    --muted: oklch(0.215 0.024 118);
-    --muted-foreground: oklch(0.638 0.042 118);
-    /* Accent in donkere modus: lichter olijfgroen */
-    --accent: oklch(0.620 0.062 118);
-    --accent-foreground: oklch(0.142 0.022 118);
+    /* Donker gebaseerd op #21231B */
+    --background: oklch(0.148 0.020 120);
+    --foreground: oklch(0.912 0.016 74);
+    --card: oklch(0.192 0.024 120);
+    --card-foreground: oklch(0.912 0.016 74);
+    --popover: oklch(0.192 0.024 120);
+    --popover-foreground: oklch(0.912 0.016 74);
+    --primary: oklch(0.912 0.016 74);
+    --primary-foreground: oklch(0.148 0.020 120);
+    --secondary: oklch(0.235 0.028 120);
+    --secondary-foreground: oklch(0.912 0.016 74);
+    --muted: oklch(0.218 0.024 120);
+    --muted-foreground: oklch(0.640 0.040 122);
+    --accent: oklch(0.620 0.056 122);
+    --accent-foreground: oklch(0.148 0.020 120);
     --destructive: oklch(0.704 0.191 22.216);
     --border: oklch(1 0 0 / 10%);
     --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.620 0.062 118);
-    --chart-1: oklch(0.620 0.062 118);
-    --chart-2: oklch(0.540 0.052 118);
-    --chart-3: oklch(0.440 0.042 118);
-    --chart-4: oklch(0.330 0.030 118);
-    --chart-5: oklch(0.230 0.020 118);
-    --sidebar: oklch(0.188 0.026 118);
-    --sidebar-foreground: oklch(0.961 0.012 84);
-    --sidebar-primary: oklch(0.961 0.012 84);
-    --sidebar-primary-foreground: oklch(0.142 0.022 118);
-    --sidebar-accent: oklch(0.620 0.062 118);
-    --sidebar-accent-foreground: oklch(0.142 0.022 118);
+    --ring: oklch(0.620 0.056 122);
+    --chart-1: oklch(0.620 0.056 122);
+    --chart-2: oklch(0.540 0.048 122);
+    --chart-3: oklch(0.440 0.040 122);
+    --chart-4: oklch(0.330 0.030 122);
+    --chart-5: oklch(0.235 0.020 122);
+    --sidebar: oklch(0.192 0.024 120);
+    --sidebar-foreground: oklch(0.912 0.016 74);
+    --sidebar-primary: oklch(0.912 0.016 74);
+    --sidebar-primary-foreground: oklch(0.148 0.020 120);
+    --sidebar-accent: oklch(0.620 0.056 122);
+    --sidebar-accent-foreground: oklch(0.148 0.020 120);
     --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.620 0.062 118);
+    --sidebar-ring: oklch(0.620 0.056 122);
 }
 
 @theme inline {
