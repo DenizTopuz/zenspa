@@ -118,7 +118,7 @@ function StarRow({ count }: { count: number }) {
   return (
     <div className="flex gap-0.5">
       {Array.from({ length: count }).map((_, i) => (
-        <Star key={i} className="text-primary h-3.5 w-3.5 fill-current" />
+        <Star key={i} className="text-accent h-3.5 w-3.5 fill-current" />
       ))}
     </div>
   )
@@ -163,20 +163,20 @@ function Hero() {
       {/* ── LEFT: text panel ───────────────────────────────── */}
       <div className="bg-background relative z-10 flex flex-col justify-center px-8 py-32 md:w-1/2 md:px-14 lg:px-20">
         {/* Subtle decorative rings behind text */}
-        <div className="border-primary/8 pointer-events-none absolute right-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/2 rounded-full border" />
-        <div className="border-primary/5 pointer-events-none absolute right-0 top-1/2 h-[700px] w-[700px] -translate-y-1/2 translate-x-1/2 rounded-full border" />
+        <div className="border-accent/8 pointer-events-none absolute right-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/2 rounded-full border" />
+        <div className="border-accent/5 pointer-events-none absolute right-0 top-1/2 h-[700px] w-[700px] -translate-y-1/2 translate-x-1/2 rounded-full border" />
 
         <div className="relative flex max-w-lg flex-col gap-7">
           <Badge
             variant="outline"
-            className="border-primary/40 text-primary w-fit rounded-full px-4 py-1 text-xs tracking-widest uppercase"
+            className="border-accent/40 text-accent w-fit rounded-full px-4 py-1 text-xs tracking-widest uppercase"
           >
             House of Beauty
           </Badge>
 
           <h1 className="font-heading text-5xl leading-[1.05] tracking-tight lg:text-6xl xl:text-7xl">
             Restore.{" "}
-            <span className="text-primary italic">Renew.</span>
+            <span className="text-accent italic">Renew.</span>
             <br />
             Rediscover.
           </h1>
@@ -245,7 +245,7 @@ function Benefits() {
             Our Philosophy
           </Badge>
           <h2 className="font-heading mb-4 text-4xl md:text-5xl">
-            Wellness rooted in <span className="text-primary italic">nature</span>
+            Wellness rooted in <span className="text-accent italic">nature</span>
           </h2>
           <p className="text-muted-foreground mx-auto max-w-md text-base leading-relaxed">
             We believe true well-being starts with what you put on — and into — your body. Everything we offer is guided by that principle.
@@ -258,7 +258,7 @@ function Benefits() {
             return (
               <Card key={b.title} className="group border-border/60 relative overflow-hidden transition-shadow hover:shadow-md">
                 <CardContent className="flex flex-col gap-4 p-6">
-                  <div className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-full">
+                  <div className="bg-accent/10 text-accent flex h-10 w-10 items-center justify-center rounded-full">
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
@@ -284,7 +284,7 @@ function Treatments() {
             The Menu
           </Badge>
           <h2 className="font-heading mb-4 text-4xl md:text-5xl">
-            Curated <span className="text-primary italic">rituals</span> for every need
+            Curated <span className="text-accent italic">rituals</span> for every need
           </h2>
           <p className="text-muted-foreground mx-auto max-w-md text-base leading-relaxed">
             Each treatment is a complete experience — not just a service. Our therapists guide you through every step.
@@ -303,7 +303,7 @@ function Treatments() {
                     <h3 className="font-heading text-xl">{t.title}</h3>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="font-heading text-2xl text-primary">{t.price}</p>
+                    <p className="font-heading text-2xl text-accent">{t.price}</p>
                     <p className="text-muted-foreground flex items-center justify-end gap-1 text-xs">
                       <Clock className="h-3 w-3" />
                       {t.duration}
@@ -317,7 +317,7 @@ function Treatments() {
                   {t.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="bg-primary/8 text-primary rounded-full px-3 py-0.5 text-xs"
+                      className="bg-accent/8 text-accent rounded-full px-3 py-0.5 text-xs"
                     >
                       {tag}
                     </span>
@@ -345,7 +345,7 @@ function Testimonials() {
             Guest Stories
           </Badge>
           <h2 className="font-heading mb-4 text-4xl md:text-5xl">
-            Words from our <span className="text-primary italic">guests</span>
+            Words from our <span className="text-accent italic">guests</span>
           </h2>
         </div>
 
@@ -360,7 +360,7 @@ function Testimonials() {
                 <Separator />
                 <div className="flex items-center gap-3">
                   <Avatar className="h-9 w-9">
-                    <AvatarFallback className="bg-primary/15 text-primary text-xs font-medium">
+                    <AvatarFallback className="bg-accent/15 text-accent text-xs font-medium">
                       {t.initials}
                     </AvatarFallback>
                   </Avatar>
@@ -382,7 +382,7 @@ function BookingCTA() {
   return (
     <section id="booking" className="px-6 py-24 md:px-12">
       <div className="mx-auto max-w-3xl">
-        <Card className="border-primary/20 bg-primary/5 overflow-hidden">
+        <Card className="border-accent/20 bg-accent/5 overflow-hidden">
           <CardContent className="flex flex-col items-center gap-8 px-8 py-16 text-center md:px-16">
             <div>
               <Badge variant="outline" className="mb-4 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
@@ -390,7 +390,7 @@ function BookingCTA() {
               </Badge>
               <h2 className="font-heading mb-4 text-4xl md:text-5xl">
                 Your moment of<br />
-                <span className="text-primary italic">stillness</span> awaits
+                <span className="text-accent italic">stillness</span> awaits
               </h2>
               <p className="text-muted-foreground mx-auto max-w-sm text-base leading-relaxed">
                 Book directly and receive a complimentary botanical welcome drink and access to our thermal pool before your treatment.
