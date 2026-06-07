@@ -6,22 +6,22 @@
 
 :root {
     /* ── Brand palette — lichte modus ───────────────────────────
-       #EAE1D6  Primair / achtergrond  → pagina & basiskleur
+       #E6D7C7  Primair / achtergrond  → pagina & basiskleur
        #74795E  Olijfgroen             → buttons, links, avatar
        #21231B  Zwartgroen             → alle tekst
-       Cards    Lichte tinten van #EAE1D6 met voldoende contrast
+       Cards    Lichte tinten van #E6D7C7 met voldoende contrast
     ──────────────────────────────────────────────────────────── */
 
-    /* ACHTERGROND = #EAE1D6 warm crème */
-    --background: oklch(0.912 0.016 74);
+    /* ACHTERGROND = #F5F0E8 linnen wit */
+    --background: oklch(0.962 0.014 79);
 
     /* TEKST = #21231B zwartgroen */
     --foreground: oklch(0.148 0.020 120);
 
-    /* CARDS = lichter dan achtergrond → crème-wit tint */
-    --card: oklch(0.950 0.012 77);
+    /* CARDS = lichter dan achtergrond → warm gebroken wit */
+    --card: oklch(0.982 0.008 77);
     --card-foreground: oklch(0.148 0.020 120);
-    --popover: oklch(0.950 0.012 77);
+    --popover: oklch(0.982 0.008 77);
     --popover-foreground: oklch(0.148 0.020 120);
 
     /* PRIMARY = #74795E olijfgroen → buttons, links */
