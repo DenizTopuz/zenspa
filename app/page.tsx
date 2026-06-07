@@ -14,74 +14,67 @@ import {
   Phone,
   MapPin,
   ChevronRight,
+  Check,
+  ArrowRight,
 } from "lucide-react"
 import { ZenSpaLogo } from "@/components/logo"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
-const benefits = [
-  {
-    icon: Leaf,
-    title: "100% Natural",
-    description:
-      "Every product and treatment uses ethically sourced, organic botanicals free from harsh chemicals.",
-  },
-  {
-    icon: Droplets,
-    title: "Deep Hydration",
-    description:
-      "Our mineral-rich waters and hydrotherapy pools nourish skin from the inside out.",
-  },
-  {
-    icon: Wind,
-    title: "Stress Relief",
-    description:
-      "Science-backed relaxation techniques designed to reset your nervous system completely.",
-  },
-  {
-    icon: Sparkles,
-    title: "Radiant Results",
-    description:
-      "Visible rejuvenation after a single visit, with cumulative benefits that last for weeks.",
-  },
+const services = [
+  { icon: Sparkles, title: "Facials",            subtitle: "Glow & Renewal" },
+  { icon: Wind,     title: "Massage",            subtitle: "Deep Relaxation" },
+  { icon: Droplets, title: "Body Wraps",         subtitle: "Nourish & Detox" },
+  { icon: Leaf,     title: "Hydrotherapy",       subtitle: "Mineral Soaks" },
+  { icon: Sparkles, title: "Manicures",          subtitle: "Hand Rituals" },
+  { icon: Droplets, title: "Aromatherapy",       subtitle: "Scent Journeys" },
 ]
 
-const treatments = [
+const pricingPlans = [
   {
-    badge: "Signature",
-    title: "Zen Renewal Ritual",
-    description:
-      "A full-body journey combining hot stone massage, aromatic body wrap, and a personalised facial tailored to your skin.",
-    duration: "120 min",
-    price: "$280",
-    tags: ["Stone Therapy", "Aromatherapy", "Facial"],
-  },
-  {
-    badge: "Popular",
-    title: "Alpine Mineral Soak",
-    description:
-      "Immerse yourself in our signature mineral-infused waters sourced from mountain springs, followed by a restorative scalp ritual.",
-    duration: "90 min",
-    price: "$195",
-    tags: ["Hydrotherapy", "Scalp Ritual"],
-  },
-  {
-    badge: "New",
-    title: "Bamboo Fusion Massage",
-    description:
-      "Warm bamboo canes glide across muscles to release deep-seated tension while grounding essential oils calm the mind.",
-    duration: "75 min",
-    price: "$165",
-    tags: ["Deep Tissue", "Bamboo", "Essential Oils"],
-  },
-  {
-    badge: "Classic",
-    title: "Luminous Glow Facial",
-    description:
-      "A triple-enzyme exfoliation paired with vitamin-C infusion and jade-roller lymphatic drainage for a lit-from-within complexion.",
+    name: "Essentials",
+    tagline: "Your first ritual",
+    price: "$125",
     duration: "60 min",
-    price: "$140",
-    tags: ["Exfoliation", "Vitamin C", "Lymphatic"],
+    features: [
+      "Signature facial or body massage",
+      "Botanical welcome drink",
+      "Locker & robe included",
+      "Thermal pool access (30 min)",
+    ],
+    cta: "Reserve Now",
+    highlight: false,
+  },
+  {
+    name: "Signature",
+    tagline: "Our most loved",
+    price: "$225",
+    duration: "90 min",
+    features: [
+      "Full-body ritual of your choice",
+      "Botanical welcome drink",
+      "Locker & heated robe",
+      "Thermal pool access (1 hr)",
+      "Personalised take-home blend",
+    ],
+    cta: "Reserve Now",
+    highlight: true,
+  },
+  {
+    name: "Prestige",
+    tagline: "The complete escape",
+    price: "$325",
+    duration: "120 min",
+    features: [
+      "Dual treatment (body + facial)",
+      "Botanical welcome drink",
+      "Premium robe & slippers",
+      "Unlimited thermal pool access",
+      "Personalised take-home blend",
+      "Dedicated therapist consultation",
+    ],
+    cta: "Reserve Now",
+    highlight: false,
   },
 ]
 
@@ -112,6 +105,21 @@ const testimonials = [
   },
 ]
 
+const blogPosts = [
+  {
+    tag: "Wellness",
+    date: "April 12, 2025",
+    title: "The ancient art of botanical bathing — and why it works",
+    excerpt: "Discover how mineral-rich herbal baths have been used across cultures for centuries to restore body and mind.",
+  },
+  {
+    tag: "Skincare",
+    date: "March 28, 2025",
+    title: "5 rituals our therapists do every morning before 8am",
+    excerpt: "The simple daily habits that keep our team's skin luminous, their energy calm, and their mindset centred.",
+  },
+]
+
 // ─── Components ──────────────────────────────────────────────────────────────
 
 function StarRow({ count }: { count: number }) {
@@ -128,28 +136,30 @@ function StarRow({ count }: { count: number }) {
 
 function Nav() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 md:px-12">
-      {/* Left half: cream bg; right half: transparent over image */}
-      <div className="bg-background/90 absolute inset-0 w-full backdrop-blur-md md:w-1/2" />
+    <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 md:px-14">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 to-transparent" />
       <div className="relative flex w-full items-center justify-between">
         <a href="#" aria-label="Zen Spa home">
-          <ZenSpaLogo className="h-7 w-auto text-foreground" />
+          <ZenSpaLogo className="h-7 w-auto text-white" />
         </a>
         <nav className="hidden items-center gap-8 text-sm md:flex">
-          <a href="#benefits" className="text-muted-foreground hover:text-foreground transition-colors">
-            Philosophy
+          <a href="#services" className="text-white/80 hover:text-white transition-colors">
+            Services
           </a>
-          <a href="#treatments" className="text-muted-foreground hover:text-foreground transition-colors">
-            Treatments
+          <a href="#about" className="text-white/80 hover:text-white transition-colors">
+            About
           </a>
-          <a href="#testimonials" className="text-muted-foreground hover:text-foreground transition-colors">
+          <a href="#pricing" className="text-white/80 hover:text-white transition-colors">
+            Pricing
+          </a>
+          <a href="#stories" className="text-white/80 hover:text-white transition-colors">
             Stories
           </a>
-          <Button size="sm" asChild>
+          <Button size="sm" className="bg-white text-foreground hover:bg-white/90" asChild>
             <a href="#booking">Book a Visit</a>
           </Button>
         </nav>
-        <Button size="sm" className="md:hidden" asChild>
+        <Button size="sm" className="md:hidden bg-white text-foreground hover:bg-white/90" asChild>
           <a href="#booking">Book</a>
         </Button>
       </div>
@@ -159,114 +169,141 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-svh flex-col md:flex-row">
-      {/* ── LEFT: text panel ───────────────────────────────── */}
-      <div className="bg-background relative z-10 flex flex-col justify-center px-8 py-32 md:w-1/2 md:px-14 lg:px-20">
-        {/* Subtle decorative rings behind text */}
-        <div className="border-accent/8 pointer-events-none absolute right-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/2 rounded-full border" />
-        <div className="border-accent/5 pointer-events-none absolute right-0 top-1/2 h-[700px] w-[700px] -translate-y-1/2 translate-x-1/2 rounded-full border" />
+    <section className="relative flex min-h-svh items-center justify-center overflow-hidden">
+      {/* Background image */}
+      <Image
+        src="/hero.jpg"
+        alt="Zen Spa — luxury wellness treatments"
+        fill
+        priority
+        className="object-cover object-center"
+        sizes="100vw"
+      />
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/45" />
 
-        <div className="relative flex max-w-lg flex-col gap-7">
-          <Badge
-            variant="outline"
-            className="border-accent/40 text-accent w-fit rounded-full px-4 py-1 text-xs tracking-widest uppercase"
-          >
-            House of Beauty
-          </Badge>
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center text-white">
+        <Badge className="bg-white/15 text-white border-white/30 rounded-full px-5 py-1.5 text-xs tracking-widest uppercase backdrop-blur-sm">
+          House of Beauty
+        </Badge>
 
-          <h1 className="font-heading text-5xl leading-[1.05] tracking-tight lg:text-6xl xl:text-7xl">
-            Restore.{" "}
-            <span className="text-accent italic">Renew.</span>
-            <br />
-            Rediscover.
-          </h1>
+        <h1 className="font-heading max-w-3xl text-5xl leading-[1.05] tracking-tight md:text-6xl lg:text-7xl xl:text-8xl">
+          Luxury spa treatments for your{" "}
+          <span className="italic">well-being</span>
+        </h1>
 
-          <p className="text-muted-foreground max-w-sm text-base leading-relaxed">
-            Step into a sanctuary where ancient healing traditions meet modern
-            luxury. Every treatment is a curated ritual — crafted to bring you
-            back to yourself.
-          </p>
+        <p className="max-w-lg text-base leading-relaxed text-white/80">
+          Step into a sanctuary where ancient healing traditions meet modern luxury.
+          Every treatment is a curated ritual — crafted to bring you back to yourself.
+        </p>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button size="lg" className="gap-2 px-8" asChild>
-              <a href="#booking">
-                Reserve Your Ritual <ChevronRight className="h-4 w-4" />
-              </a>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <a href="#treatments">Explore Treatments</a>
-            </Button>
+        <div className="flex flex-col items-center gap-3 sm:flex-row">
+          <Button size="lg" className="bg-accent hover:bg-accent/90 gap-2 px-10 text-white" asChild>
+            <a href="#booking">
+              Reserve Your Ritual <ChevronRight className="h-4 w-4" />
+            </a>
+          </Button>
+          <Button size="lg" variant="outline" className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm px-10" asChild>
+            <a href="#services">All Services</a>
+          </Button>
+        </div>
+
+        {/* Stats row */}
+        <div className="mt-4 flex items-center gap-8 text-sm text-white/70">
+          <div className="text-center">
+            <p className="font-heading text-2xl text-white">12+</p>
+            <p className="text-xs tracking-wide">Treatments</p>
           </div>
-
-          <div className="mt-2 flex items-center gap-6 text-sm">
-            <div>
-              <p className="font-heading text-2xl">12+</p>
-              <p className="text-muted-foreground text-xs tracking-wide">Treatments</p>
-            </div>
-            <Separator orientation="vertical" className="h-8" />
-            <div>
-              <p className="font-heading text-2xl">4.9</p>
-              <p className="text-muted-foreground text-xs tracking-wide">Avg. Rating</p>
-            </div>
-            <Separator orientation="vertical" className="h-8" />
-            <div>
-              <p className="font-heading text-2xl">8k+</p>
-              <p className="text-muted-foreground text-xs tracking-wide">Guests Served</p>
-            </div>
+          <div className="h-8 w-px bg-white/20" />
+          <div className="text-center">
+            <p className="font-heading text-2xl text-white">4.9</p>
+            <p className="text-xs tracking-wide">Avg. Rating</p>
+          </div>
+          <div className="h-8 w-px bg-white/20" />
+          <div className="text-center">
+            <p className="font-heading text-2xl text-white">8k+</p>
+            <p className="text-xs tracking-wide">Guests Served</p>
           </div>
         </div>
       </div>
 
-      {/* ── RIGHT: hero image ──────────────────────────────── */}
-      <div className="relative h-72 md:h-auto md:w-1/2">
-        <Image
-          src="/hero.jpg"
-          alt="Guest enjoying a relaxing facial treatment at Zen Spa"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
-        {/* Subtle left-edge blend into the cream panel on desktop */}
-        <div className="from-background pointer-events-none absolute inset-y-0 left-0 hidden w-12 bg-gradient-to-r to-transparent md:block" />
-        {/* Bottom fade on mobile */}
-        <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t to-transparent md:hidden" />
-      </div>
+      {/* Bottom fade */}
+      <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t to-transparent" />
     </section>
   )
 }
 
-function Benefits() {
+function Services() {
   return (
-    <section id="benefits" className="px-6 py-24 md:px-12">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-16 text-center">
-          <Badge variant="outline" className="mb-4 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
-            Our Philosophy
-          </Badge>
-          <h2 className="font-heading mb-4 text-4xl md:text-5xl">
-            Wellness rooted in <span className="text-accent italic">nature</span>
-          </h2>
-          <p className="text-muted-foreground mx-auto max-w-md text-base leading-relaxed">
-            We believe true well-being starts with what you put on — and into — your body. Everything we offer is guided by that principle.
-          </p>
+    <section id="services" className="px-6 py-24 md:px-14">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-14 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <Badge variant="outline" className="mb-3 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
+              What We Offer
+            </Badge>
+            <h2 className="font-heading text-4xl md:text-5xl">
+              Our <span className="text-accent italic">treatments</span>
+            </h2>
+          </div>
+          <a href="#pricing" className="text-accent flex items-center gap-1.5 text-sm font-medium hover:gap-3 transition-all">
+            View all services <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {benefits.map((b) => {
-            const Icon = b.icon
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:gap-6">
+          {services.map((s, i) => {
+            const Icon = s.icon
             return (
-              <Card key={b.title} className="group border-border/60 relative overflow-hidden transition-shadow hover:shadow-md">
-                <CardContent className="flex flex-col gap-4 p-6">
-                  <div className="bg-accent/10 text-accent flex h-10 w-10 items-center justify-center rounded-full">
+              <div
+                key={s.title}
+                className="group relative overflow-hidden rounded-2xl aspect-[4/5] cursor-pointer"
+              >
+                {/* Background: alternating olive/linen gradient tiles */}
+                <div
+                  className={`absolute inset-0 transition-transform duration-500 group-hover:scale-105 ${
+                    i % 3 === 0
+                      ? "bg-gradient-to-br from-accent/80 to-accent"
+                      : i % 3 === 1
+                      ? "bg-gradient-to-br from-secondary to-muted"
+                      : "bg-gradient-to-br from-accent/60 to-accent/90"
+                  }`}
+                />
+                {/* Leaf texture overlay on even cards */}
+                {i % 2 === 0 && (
+                  <Image
+                    src="/bg-leaves.jpg"
+                    alt=""
+                    fill
+                    className="object-cover mix-blend-overlay opacity-20"
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                  />
+                )}
+                <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-7">
+                  <div
+                    className={`mb-3 flex h-10 w-10 items-center justify-center rounded-full ${
+                      i % 3 === 1 ? "bg-accent/15 text-accent" : "bg-white/20 text-white"
+                    }`}
+                  >
                     <Icon className="h-5 w-5" />
                   </div>
-                  <div>
-                    <h3 className="font-heading mb-1 text-lg">{b.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{b.description}</p>
-                  </div>
-                </CardContent>
-              </Card>
+                  <p
+                    className={`font-heading text-xl ${
+                      i % 3 === 1 ? "text-foreground" : "text-white"
+                    }`}
+                  >
+                    {s.title}
+                  </p>
+                  <p
+                    className={`text-xs mt-0.5 ${
+                      i % 3 === 1 ? "text-muted-foreground" : "text-white/70"
+                    }`}
+                  >
+                    {s.subtitle}
+                  </p>
+                </div>
+              </div>
             )
           })}
         </div>
@@ -275,57 +312,146 @@ function Benefits() {
   )
 }
 
-function Treatments() {
+function About() {
   return (
-    <section id="treatments" className="bg-muted/40 px-6 py-24 md:px-12">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-16 text-center">
-          <Badge variant="outline" className="mb-4 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
-            The Menu
+    <section id="about" className="px-6 pb-24 md:px-14">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid items-center gap-12 md:grid-cols-2 md:gap-20">
+          {/* Text */}
+          <div className="flex flex-col gap-7">
+            <div>
+              <Badge variant="outline" className="mb-3 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
+                Our Philosophy
+              </Badge>
+              <h2 className="font-heading text-4xl leading-[1.1] md:text-5xl">
+                Wellness rooted{" "}
+                <span className="text-accent italic">in nature</span>
+              </h2>
+            </div>
+            <p className="text-muted-foreground leading-relaxed">
+              At Zen Spa, we believe true well-being starts with what you put on —
+              and into — your body. Every product we use is ethically sourced, every
+              ritual thoughtfully designed, and every visit a step toward lasting
+              renewal.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Founded on the principles of slow beauty and mindful restoration,
+              our House of Beauty is a sanctuary designed to help you reconnect
+              with the very best version of yourself.
+            </p>
+            <div className="grid grid-cols-2 gap-6 pt-2">
+              {[
+                { label: "100% Natural", sub: "All products" },
+                { label: "Certified", sub: "Therapists" },
+                { label: "Award-winning", sub: "Since 2018" },
+                { label: "Eco-certified", sub: "Sustainable" },
+              ].map((item) => (
+                <div key={item.label} className="flex flex-col gap-0.5">
+                  <p className="font-heading text-lg">{item.label}</p>
+                  <p className="text-muted-foreground text-sm">{item.sub}</p>
+                </div>
+              ))}
+            </div>
+            <div>
+              <Button variant="outline" className="gap-2" asChild>
+                <a href="#pricing">
+                  Explore our rituals <ArrowRight className="h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
+
+          {/* Image */}
+          <div className="relative">
+            <div className="relative h-[480px] overflow-hidden rounded-2xl md:h-[600px]">
+              <Image
+                src="/hero.jpg"
+                alt="Zen Spa — serene treatment environment"
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            {/* Floating stat card */}
+            <div className="bg-card border-border/60 absolute -bottom-6 -left-6 rounded-2xl border p-5 shadow-lg md:-left-10">
+              <p className="font-heading text-3xl">8k+</p>
+              <p className="text-muted-foreground text-sm">Happy guests</p>
+              <div className="mt-2 flex -space-x-2">
+                {["SR", "MT", "LM", "KV"].map((init) => (
+                  <div
+                    key={init}
+                    className="bg-accent/20 text-accent flex h-7 w-7 items-center justify-center rounded-full border-2 border-white text-[9px] font-medium"
+                  >
+                    {init}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Pricing() {
+  return (
+    <section id="pricing" className="bg-muted/30 px-6 py-24 md:px-14">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-14 text-center">
+          <Badge variant="outline" className="mb-3 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
+            Investment in Yourself
           </Badge>
           <h2 className="font-heading mb-4 text-4xl md:text-5xl">
-            Curated <span className="text-accent italic">rituals</span> for every need
+            Choose your <span className="text-accent italic">ritual</span>
           </h2>
           <p className="text-muted-foreground mx-auto max-w-md text-base leading-relaxed">
-            Each treatment is a complete experience — not just a service. Our therapists guide you through every step.
+            Every plan includes access to our thermal facilities. Direct booking
+            always includes a complimentary botanical welcome drink.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {treatments.map((t) => (
-            <Card key={t.title} className="group border-border/60 overflow-hidden transition-shadow hover:shadow-md">
-              <CardContent className="flex flex-col gap-4 p-6">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex flex-col gap-1">
-                    <Badge variant="secondary" className="w-fit rounded-full text-xs">
-                      {t.badge}
-                    </Badge>
-                    <h3 className="font-heading text-xl">{t.title}</h3>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p className="font-heading text-2xl text-accent">{t.price}</p>
-                    <p className="text-muted-foreground flex items-center justify-end gap-1 text-xs">
-                      <Clock className="h-3 w-3" />
-                      {t.duration}
-                    </p>
-                  </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          {pricingPlans.map((plan) => (
+            <Card
+              key={plan.name}
+              className={`relative overflow-hidden ${
+                plan.highlight
+                  ? "border-accent/50 shadow-lg ring-1 ring-accent/20"
+                  : "border-border/60"
+              }`}
+            >
+              {plan.highlight && (
+                <div className="bg-accent absolute inset-x-0 top-0 py-1.5 text-center text-xs font-medium tracking-widest text-white uppercase">
+                  Most Popular
                 </div>
-
-                <p className="text-muted-foreground text-sm leading-relaxed">{t.description}</p>
-
-                <div className="flex flex-wrap gap-2">
-                  {t.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="bg-accent/8 text-accent rounded-full px-3 py-0.5 text-xs"
-                    >
-                      {tag}
-                    </span>
+              )}
+              <CardContent className={`flex flex-col gap-6 p-7 ${plan.highlight ? "pt-11" : ""}`}>
+                <div>
+                  <p className="text-muted-foreground mb-1 text-xs tracking-widest uppercase">{plan.tagline}</p>
+                  <h3 className="font-heading text-2xl">{plan.name}</h3>
+                </div>
+                <div className="flex items-end gap-1">
+                  <p className="font-heading text-4xl">{plan.price}</p>
+                  <p className="text-muted-foreground mb-1 text-sm">/ session</p>
+                </div>
+                <Separator />
+                <ul className="flex flex-col gap-3">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2.5 text-sm">
+                      <span className="bg-accent/10 text-accent mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full">
+                        <Check className="h-2.5 w-2.5" />
+                      </span>
+                      {f}
+                    </li>
                   ))}
-                </div>
-
-                <Button variant="outline" size="sm" className="mt-1 w-full" asChild>
-                  <a href="#booking">Book This Treatment</a>
+                </ul>
+                <Button
+                  className={`mt-auto w-full ${plan.highlight ? "" : "variant-outline"}`}
+                  variant={plan.highlight ? "default" : "outline"}
+                  asChild
+                >
+                  <a href="#booking">{plan.cta}</a>
                 </Button>
               </CardContent>
             </Card>
@@ -338,13 +464,13 @@ function Treatments() {
 
 function Testimonials() {
   return (
-    <section id="testimonials" className="px-6 py-24 md:px-12">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-16 text-center">
-          <Badge variant="outline" className="mb-4 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
+    <section id="stories" className="px-6 py-24 md:px-14">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-14 text-center">
+          <Badge variant="outline" className="mb-3 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
             Guest Stories
           </Badge>
-          <h2 className="font-heading mb-4 text-4xl md:text-5xl">
+          <h2 className="font-heading text-4xl md:text-5xl">
             Words from our <span className="text-accent italic">guests</span>
           </h2>
         </div>
@@ -352,20 +478,20 @@ function Testimonials() {
         <div className="grid gap-6 md:grid-cols-3">
           {testimonials.map((t) => (
             <Card key={t.name} className="border-border/60 flex flex-col">
-              <CardContent className="flex flex-grow flex-col gap-4 p-6">
+              <CardContent className="flex flex-grow flex-col gap-5 p-7">
                 <StarRow count={t.stars} />
-                <p className="text-muted-foreground flex-grow text-sm leading-relaxed">
+                <p className="text-muted-foreground flex-grow text-base leading-relaxed">
                   &ldquo;{t.quote}&rdquo;
                 </p>
                 <Separator />
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-9 w-9">
+                  <Avatar className="h-10 w-10">
                     <AvatarFallback className="bg-accent/15 text-accent text-xs font-medium">
                       {t.initials}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-sm font-medium">{t.name}</p>
+                    <p className="font-medium">{t.name}</p>
                     <p className="text-muted-foreground text-xs">{t.role}</p>
                   </div>
                 </div>
@@ -378,49 +504,110 @@ function Testimonials() {
   )
 }
 
-function BookingCTA() {
+function Blog() {
   return (
-    <section id="booking" className="px-6 py-24 md:px-12">
-      <div className="mx-auto max-w-3xl">
-        <Card className="border-accent/20 bg-accent/5 overflow-hidden">
-          <CardContent className="flex flex-col items-center gap-8 px-8 py-16 text-center md:px-16">
-            <div>
-              <Badge variant="outline" className="mb-4 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
-                Reserve Your Visit
-              </Badge>
-              <h2 className="font-heading mb-4 text-4xl md:text-5xl">
-                Your moment of<br />
-                <span className="text-accent italic">stillness</span> awaits
-              </h2>
-              <p className="text-muted-foreground mx-auto max-w-sm text-base leading-relaxed">
-                Book directly and receive a complimentary botanical welcome drink and access to our thermal pool before your treatment.
-              </p>
-            </div>
+    <section className="bg-muted/30 px-6 py-24 md:px-14">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-14 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <Badge variant="outline" className="mb-3 rounded-full px-4 py-1 text-xs tracking-widest uppercase">
+              Journal
+            </Badge>
+            <h2 className="font-heading text-4xl md:text-5xl">
+              Wellness <span className="text-accent italic">insights</span>
+            </h2>
+          </div>
+          <a href="#" className="text-accent flex items-center gap-1.5 text-sm font-medium hover:gap-3 transition-all">
+            All articles <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
 
-            <div className="flex flex-col items-center gap-3 sm:flex-row">
-              <Button size="lg" className="gap-2 px-10">
-                <Phone className="h-4 w-4" />
-                Call to Book
-              </Button>
-              <Button size="lg" variant="outline" className="gap-2 px-10">
-                Book Online
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
+        <div className="grid gap-8 md:grid-cols-2">
+          {blogPosts.map((post, i) => (
+            <a key={post.title} href="#" className="group flex flex-col gap-5 cursor-pointer">
+              <div className="relative h-56 overflow-hidden rounded-2xl">
+                <Image
+                  src={i === 0 ? "/hero.jpg" : "/bg-leaves.jpg"}
+                  alt={post.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                  <span className="bg-accent/10 text-accent rounded-full px-3 py-0.5">{post.tag}</span>
+                  <span>{post.date}</span>
+                </div>
+                <h3 className="font-heading text-xl leading-snug group-hover:text-accent transition-colors">
+                  {post.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{post.excerpt}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
-            <div className="flex flex-col items-center gap-4 text-sm sm:flex-row">
-              <span className="text-muted-foreground flex items-center gap-1.5">
-                <MapPin className="h-4 w-4" />
-                12 Serenity Lane, Wellness Quarter
-              </span>
-              <Separator orientation="vertical" className="hidden h-4 sm:block" />
-              <span className="text-muted-foreground flex items-center gap-1.5">
-                <Clock className="h-4 w-4" />
-                Open daily 9am – 9pm
-              </span>
-            </div>
-          </CardContent>
-        </Card>
+function Newsletter() {
+  return (
+    <section id="booking" className="bg-accent px-6 py-24 md:px-14">
+      <div className="mx-auto flex max-w-2xl flex-col items-center gap-8 text-center text-white">
+        <div>
+          <p className="mb-3 text-xs tracking-widest uppercase text-white/60">Reserve Your Visit</p>
+          <h2 className="font-heading text-4xl leading-tight md:text-5xl">
+            Your moment of{" "}
+            <span className="italic">stillness</span> awaits
+          </h2>
+        </div>
+        <p className="max-w-md text-base leading-relaxed text-white/75">
+          Book directly and receive a complimentary botanical welcome drink and
+          access to our thermal pool before your treatment.
+        </p>
+
+        {/* Email signup */}
+        <div className="flex w-full max-w-md gap-2">
+          <input
+            type="email"
+            placeholder="Your email address"
+            className="flex-1 rounded-full bg-white/15 px-5 py-3 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/20 border border-white/20"
+          />
+          <Button className="rounded-full bg-white text-accent hover:bg-white/90 px-6 font-medium shrink-0">
+            Subscribe
+          </Button>
+        </div>
+
+        <Separator className="bg-white/20 w-full" />
+
+        <div className="flex flex-col items-center gap-4 text-sm text-white/70 sm:flex-row">
+          <span className="flex items-center gap-2">
+            <Phone className="h-4 w-4" />
+            +31 (0)20 123 4567
+          </span>
+          <div className="hidden h-4 w-px bg-white/20 sm:block" />
+          <span className="flex items-center gap-2">
+            <MapPin className="h-4 w-4" />
+            12 Serenity Lane, Amsterdam
+          </span>
+          <div className="hidden h-4 w-px bg-white/20 sm:block" />
+          <span className="flex items-center gap-2">
+            <Clock className="h-4 w-4" />
+            Open daily 9am – 9pm
+          </span>
+        </div>
+
+        <div className="flex gap-6">
+          <Button size="lg" className="bg-white text-accent hover:bg-white/90 gap-2 px-10">
+            Book Online <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button size="lg" variant="outline" className="border-white/40 text-white bg-white/10 hover:bg-white/20 gap-2 px-8">
+            <Phone className="h-4 w-4" /> Call Us
+          </Button>
+        </div>
       </div>
     </section>
   )
@@ -428,16 +615,57 @@ function BookingCTA() {
 
 function Footer() {
   return (
-    <footer className="border-border/40 border-t px-6 py-8 md:px-12">
-      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-sm sm:flex-row">
-        <ZenSpaLogo className="h-5 w-auto text-foreground" />
-        <p className="text-muted-foreground text-xs">
-          © 2025 Zen Spa. All rights reserved.
-        </p>
-        <div className="text-muted-foreground flex gap-4 text-xs">
-          <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
-          <a href="#" className="hover:text-foreground transition-colors">Terms</a>
-          <a href="#" className="hover:text-foreground transition-colors">Contact</a>
+    <footer className="bg-foreground px-6 py-14 text-white md:px-14">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid gap-10 md:grid-cols-4">
+          {/* Brand */}
+          <div className="flex flex-col gap-4 md:col-span-1">
+            <ZenSpaLogo className="h-6 w-auto text-white" />
+            <p className="text-white/50 text-sm leading-relaxed">
+              A sanctuary for the senses. House of Beauty since 2018.
+            </p>
+            <div className="flex gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 text-white/50 hover:text-white hover:border-white/50 cursor-pointer transition-colors">
+                <span className="text-xs">IG</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Services */}
+          <div className="flex flex-col gap-3">
+            <p className="text-xs tracking-widest uppercase text-white/40">Services</p>
+            {["Facials", "Massage", "Body Wraps", "Hydrotherapy", "Manicures"].map((s) => (
+              <a key={s} href="#services" className="text-sm text-white/60 hover:text-white transition-colors">{s}</a>
+            ))}
+          </div>
+
+          {/* Company */}
+          <div className="flex flex-col gap-3">
+            <p className="text-xs tracking-widest uppercase text-white/40">Company</p>
+            {["About Us", "Our Philosophy", "Gift Cards", "Careers", "Press"].map((s) => (
+              <a key={s} href="#about" className="text-sm text-white/60 hover:text-white transition-colors">{s}</a>
+            ))}
+          </div>
+
+          {/* Hours */}
+          <div className="flex flex-col gap-3">
+            <p className="text-xs tracking-widest uppercase text-white/40">Visit Us</p>
+            <p className="text-sm text-white/60">12 Serenity Lane</p>
+            <p className="text-sm text-white/60">Amsterdam</p>
+            <p className="text-sm text-white/60 mt-2">Mon–Sun: 9am – 9pm</p>
+            <a href="tel:+31201234567" className="text-sm text-white/60 hover:text-white transition-colors">+31 (0)20 123 4567</a>
+          </div>
+        </div>
+
+        <Separator className="my-10 bg-white/10" />
+
+        <div className="flex flex-col items-center justify-between gap-4 text-xs text-white/30 sm:flex-row">
+          <p>© 2025 Zen Spa. All rights reserved.</p>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-white/60 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white/60 transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white/60 transition-colors">Cookie Settings</a>
+          </div>
         </div>
       </div>
     </footer>
@@ -452,10 +680,12 @@ export default function Page() {
       <Nav />
       <main>
         <Hero />
-        <Benefits />
-        <Treatments />
+        <Services />
+        <About />
+        <Pricing />
         <Testimonials />
-        <BookingCTA />
+        <Blog />
+        <Newsletter />
       </main>
       <Footer />
     </>
