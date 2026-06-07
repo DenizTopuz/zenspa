@@ -13,8 +13,8 @@ import {
   Phone,
   MapPin,
   ChevronRight,
-  Flower2,
 } from "lucide-react"
+import { ZenSpaLogo } from "@/components/logo"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -128,10 +128,9 @@ function StarRow({ count }: { count: number }) {
 function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-sm md:px-12">
-      <div className="flex items-center gap-2">
-        <Flower2 className="text-primary h-5 w-5" />
-        <span className="font-heading text-lg tracking-wide">Zen Spa</span>
-      </div>
+      <a href="#" aria-label="Zen Spa home">
+        <ZenSpaLogo className="h-7 w-auto text-foreground" />
+      </a>
       <nav className="hidden items-center gap-8 text-sm md:flex">
         <a href="#benefits" className="text-muted-foreground hover:text-foreground transition-colors">
           Philosophy
@@ -408,10 +407,7 @@ function Footer() {
   return (
     <footer className="border-border/40 border-t px-6 py-8 md:px-12">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-sm sm:flex-row">
-        <div className="flex items-center gap-2">
-          <Flower2 className="text-primary h-4 w-4" />
-          <span className="font-heading">Zen Spa</span>
-        </div>
+        <ZenSpaLogo className="h-5 w-auto text-foreground" />
         <p className="text-muted-foreground text-xs">
           © 2025 Zen Spa. All rights reserved.
         </p>
