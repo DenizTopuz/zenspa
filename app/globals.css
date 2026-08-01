@@ -151,5 +151,42 @@
     }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
     }
+}
+
+/* ── Scroll reveal ─────────────────────────────────────────────── */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reveal-item.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Hero entrance animations ──────────────────────────────────── */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-animate {
+  opacity: 0;
+  animation: hero-fade-up 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* ── Reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hero-animate {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  html { scroll-behavior: auto; }
 }
