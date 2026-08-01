@@ -157,26 +157,22 @@ function Hero() {
           style={{ animationDelay: "0ms" }}
         >
           <span className="inline-flex rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-[12px] font-semibold tracking-[0.18em] uppercase text-white backdrop-blur-sm">
-            House of Beauty
+            Zen Spa · Almere Buiten
           </span>
         </div>
 
         <h1
-          className="hero-animate font-heading text-[62px] leading-[1.02] tracking-tight text-white md:text-[86px] lg:text-[110px]"
+          className="hero-animate font-heading text-[36px] leading-[1.06] tracking-tight text-white sm:text-[52px] md:text-[72px] lg:text-[88px]"
           style={{ animationDelay: "110ms" }}
         >
-          Luxe spa rituelen<br />
-          voor jouw{" "}
-          <em className="not-italic text-white/80">welzijn</em>
+          Schoonheidssalon in Almere Buiten
         </h1>
 
         <p
           className="hero-animate max-w-[540px] text-[17px] leading-[1.85] text-white/68"
           style={{ animationDelay: "210ms" }}
         >
-          Stap binnen in een sanctuary waar eeuwenoude helende tradities
-          samenkomen met moderne luxe. Elk ritueel, zorgvuldig samengesteld
-          voor jou.
+          Persoonlijke gezichtsbehandelingen voor een stralende huid en pure ontspanning.
         </p>
 
         <div
@@ -203,17 +199,15 @@ function Hero() {
         <ChevronDown className="h-4 w-4 animate-bounce text-white/35" />
       </div>
 
-      {/* Bottom fade to page bg */}
-      <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t to-transparent" aria-hidden />
     </section>
   )
 }
 
 function Pillars() {
   return (
-    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 rounded-t-[48px] bg-background md:-mt-48 md:rounded-t-[64px]">
+    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 rounded-t-[48px] bg-background pb-16 md:-mt-48 md:rounded-t-[64px] md:pb-24">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
-        <div className="grid divide-y divide-border/30 md:grid-cols-3 md:divide-x md:divide-y-0">
+        <div className="grid md:grid-cols-3">
           {pillars.map((p, i) => {
             const Icon = p.icon
             return (
