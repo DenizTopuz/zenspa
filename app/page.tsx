@@ -201,13 +201,13 @@ function Hero() {
           className="hero-animate"
           style={{ animationDelay: "0ms" }}
         >
-          <span className="inline-flex rounded-full border border-white/25 bg-white/10 px-5 py-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-white backdrop-blur-sm">
+          <span className="inline-flex rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-[12px] font-semibold tracking-[0.18em] uppercase text-white backdrop-blur-sm">
             House of Beauty
           </span>
         </div>
 
         <h1
-          className="hero-animate font-heading text-[52px] leading-[1.04] tracking-tight text-white md:text-[70px] lg:text-[86px]"
+          className="hero-animate font-heading text-[62px] leading-[1.02] tracking-tight text-white md:text-[86px] lg:text-[110px]"
           style={{ animationDelay: "110ms" }}
         >
           Luxury spa treatments<br />
@@ -216,7 +216,7 @@ function Hero() {
         </h1>
 
         <p
-          className="hero-animate max-w-[480px] text-[15px] leading-[1.8] text-white/68"
+          className="hero-animate max-w-[540px] text-[17px] leading-[1.85] text-white/68"
           style={{ animationDelay: "210ms" }}
         >
           Stap binnen in een sanctuary waar eeuwenoude helende tradities
@@ -230,13 +230,13 @@ function Hero() {
         >
           <a
             href="#contact"
-            className="rounded-full bg-accent px-9 py-[14px] text-[14px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-lg hover:shadow-accent/30"
+            className="rounded-full bg-accent px-11 py-5 text-[15px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-lg hover:shadow-accent/30"
           >
             Afspraak maken
           </a>
           <a
             href="#services"
-            className="flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-9 py-[14px] text-[14px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+            className="flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-11 py-5 text-[15px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
           >
             Ontdek behandelingen <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
@@ -248,17 +248,17 @@ function Hero() {
         className="hero-animate absolute bottom-10 left-1/2 z-10 -translate-x-1/2 hidden sm:block"
         style={{ animationDelay: "440ms" }}
       >
-        <div className="flex items-center gap-8 rounded-full border border-white/15 bg-white/10 px-8 py-4 backdrop-blur-md">
+        <div className="flex items-center gap-10 rounded-full border border-white/15 bg-white/10 px-10 py-5 backdrop-blur-md">
           {[
             { n: "12+", l: "Behandelingen" },
             { n: "4.9", l: "Gemiddeld review" },
             { n: "8k+", l: "Tevreden gasten" },
           ].map((s, i) => (
-            <div key={s.n} className="flex items-center gap-8">
+            <div key={s.n} className="flex items-center gap-10">
               {i > 0 && <div className="h-5 w-px bg-white/20" aria-hidden />}
               <div className="text-center">
-                <p className="font-heading text-xl font-semibold text-white">{s.n}</p>
-                <p className="text-[11px] text-white/55">{s.l}</p>
+                <p className="font-heading text-2xl font-semibold text-white">{s.n}</p>
+                <p className="text-[12px] text-white/55">{s.l}</p>
               </div>
             </div>
           ))}
@@ -285,13 +285,13 @@ function Pillars() {
             const Icon = p.icon
             return (
               <Reveal key={p.title} delay={i * 90}>
-                <div className="flex items-center gap-5 py-9 md:px-10 lg:px-14">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent/10" aria-hidden>
-                    <Icon className="h-5 w-5 text-accent" />
+                <div className="flex items-center gap-6 py-12 md:px-12 lg:px-16">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent/10" aria-hidden>
+                    <Icon className="h-6 w-6 text-accent" />
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">{p.title}</p>
-                    <p className="mt-0.5 text-[13px] text-muted-foreground">{p.desc}</p>
+                    <p className="text-[15px] font-medium text-foreground">{p.title}</p>
+                    <p className="mt-1 text-[14px] text-muted-foreground">{p.desc}</p>
                   </div>
                 </div>
               </Reveal>
@@ -305,27 +305,27 @@ function Pillars() {
 
 function Services() {
   return (
-    <section id="services" className="py-28 md:py-36 lg:py-48" aria-labelledby="services-heading">
+    <section id="services" className="py-36 md:py-48 lg:py-64" aria-labelledby="services-heading">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
-        <div className="flex flex-col gap-12 lg:flex-row lg:gap-20 xl:gap-28">
+        <div className="flex flex-col gap-16 lg:flex-row lg:gap-24 xl:gap-32">
 
           {/* ── Left sticky sidebar ── */}
-          <Reveal className="lg:sticky lg:top-28 lg:w-72 lg:shrink-0 lg:self-start">
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
+          <Reveal className="lg:sticky lg:top-28 lg:w-[340px] lg:shrink-0 lg:self-start">
+            <div className="flex flex-col gap-8">
+              <div className="flex items-center gap-2.5">
+                <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
                 <SectionLabel>Wat we aanbieden</SectionLabel>
               </div>
 
               <h2
                 id="services-heading"
-                className="font-heading text-[38px] leading-[1.07] tracking-tight md:text-[44px]"
+                className="font-heading text-[46px] leading-[1.06] tracking-tight md:text-[58px]"
               >
                 Zorgvuldige<br />rituelen voor{" "}
                 <em className="not-italic text-accent">elk verlangen.</em>
               </h2>
 
-              <p className="text-[14px] leading-[1.75] text-muted-foreground">
+              <p className="text-[15px] leading-[1.8] text-muted-foreground">
                 Van gezichtsbehandelingen tot ontspanningsmassages — elk ritueel is
                 zorgvuldig samengesteld met de reinste botanische ingrediënten en
                 uitgevoerd door gecertificeerde therapeuten.
@@ -333,49 +333,49 @@ function Services() {
 
               <a
                 href="#pricing"
-                className="inline-flex w-fit items-center gap-2 rounded-full border border-foreground/20 px-6 py-3 text-[13px] font-medium text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
+                className="inline-flex w-fit items-center gap-2.5 rounded-full border border-foreground/20 px-8 py-4 text-[14px] font-medium text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
               >
-                Volledig behandelingsoverzicht <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                Volledig behandelingsoverzicht <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
             </div>
           </Reveal>
 
           {/* ── Right card list ── */}
-          <div className="flex flex-1 flex-col gap-4">
+          <div className="flex flex-1 flex-col gap-5">
             {services.map((s, i) => (
               <Reveal key={s.title} delay={i * 60}>
                 <a
                   href="#pricing"
-                  className="group flex overflow-hidden rounded-2xl border border-border/40 bg-card transition-all duration-300 hover:border-border/70 hover:shadow-lg hover:shadow-foreground/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+                  className="group flex overflow-hidden rounded-2xl border border-border/40 bg-card transition-all duration-300 hover:border-border/70 hover:shadow-xl hover:shadow-foreground/6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
                   aria-label={s.title}
                 >
                   {/* Portrait image */}
-                  <div className="relative h-36 w-[120px] shrink-0 overflow-hidden md:h-40 md:w-[136px]">
+                  <div className="relative h-48 w-[155px] shrink-0 overflow-hidden md:h-56 md:w-[190px]">
                     <Image
                       src={s.image}
                       alt=""
                       fill
                       aria-hidden
                       className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] ${s.imgPos}`}
-                      sizes="136px"
+                      sizes="190px"
                     />
                   </div>
 
                   {/* Content */}
-                  <div className="flex flex-1 flex-col justify-center gap-2.5 p-5 md:p-6">
+                  <div className="flex flex-1 flex-col justify-center gap-3 p-7 md:p-9">
                     {s.popular && (
-                      <span className="inline-flex w-fit rounded-full bg-secondary px-3 py-1 text-[11px] font-semibold tracking-wide text-foreground/70">
+                      <span className="inline-flex w-fit rounded-full bg-secondary px-4 py-1.5 text-[12px] font-semibold tracking-wide text-foreground/70">
                         Meest populair
                       </span>
                     )}
-                    <p className="font-heading text-[22px] leading-snug tracking-tight text-foreground md:text-[24px]">
+                    <p className="font-heading text-[26px] leading-snug tracking-tight text-foreground md:text-[30px]">
                       {s.title}
                     </p>
-                    <p className="text-[13px] leading-relaxed text-muted-foreground">
+                    <p className="text-[15px] leading-[1.75] text-muted-foreground">
                       {s.desc}
                     </p>
-                    <span className="mt-1 inline-flex items-center gap-1.5 text-[12px] font-medium text-accent underline underline-offset-4 decoration-accent/40 transition-all duration-200 group-hover:gap-2.5 group-hover:decoration-accent">
-                      Verken behandeling <ArrowRight className="h-3 w-3" aria-hidden />
+                    <span className="mt-1 inline-flex items-center gap-2 text-[13px] font-medium text-accent underline underline-offset-4 decoration-accent/40 transition-all duration-200 group-hover:gap-3 group-hover:decoration-accent">
+                      Verken behandeling <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                     </span>
                   </div>
                 </a>
@@ -391,7 +391,7 @@ function Services() {
 
 function About() {
   return (
-    <section id="about" className="bg-muted/25 py-28 md:py-36 lg:py-48" aria-labelledby="about-heading">
+    <section id="about" className="bg-muted/25 py-36 md:py-48 lg:py-64" aria-labelledby="about-heading">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
         <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-28">
 
@@ -434,7 +434,7 @@ function About() {
             <Reveal delay={80}>
               <h2
                 id="about-heading"
-                className="font-heading text-[38px] leading-[1.1] tracking-tight md:text-[50px]"
+                className="font-heading text-[46px] leading-[1.07] tracking-tight md:text-[62px]"
               >
                 Wellness geworteld<br />
                 <em className="not-italic text-accent">in de natuur</em>
@@ -463,8 +463,8 @@ function About() {
                   { n: "4.9",  l: "Gemiddelde beoordeling" },
                 ].map((s) => (
                   <div key={s.l}>
-                    <p className="font-heading text-3xl">{s.n}</p>
-                    <p className="mt-0.5 text-[13px] text-muted-foreground">{s.l}</p>
+                    <p className="font-heading text-4xl">{s.n}</p>
+                    <p className="mt-1 text-[14px] text-muted-foreground">{s.l}</p>
                   </div>
                 ))}
               </div>
@@ -472,7 +472,7 @@ function About() {
             <Reveal delay={300}>
               <a
                 href="#pricing"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-[14px] text-[14px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:gap-3 hover:shadow-md hover:shadow-accent/20"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-10 py-5 text-[15px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:gap-3 hover:shadow-md hover:shadow-accent/20"
               >
                 Ontdek onze rituelen <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
@@ -486,17 +486,17 @@ function About() {
 
 function Pricing() {
   return (
-    <section id="pricing" className="py-28 md:py-36 lg:py-48" aria-labelledby="pricing-heading">
+    <section id="pricing" className="py-36 md:py-48 lg:py-64" aria-labelledby="pricing-heading">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
-        <Reveal className="mb-14 flex flex-col items-center gap-4 text-center">
+        <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
           <SectionLabel>Tarieven</SectionLabel>
           <h2
             id="pricing-heading"
-            className="font-heading text-[40px] leading-[1.08] tracking-tight md:text-[52px]"
+            className="font-heading text-[52px] leading-[1.06] tracking-tight md:text-[68px]"
           >
             Kies jouw <em className="not-italic text-accent">ritueel</em>
           </h2>
-          <p className="max-w-lg text-[15px] leading-relaxed text-muted-foreground">
+          <p className="max-w-lg text-[16px] leading-relaxed text-muted-foreground">
             Elk arrangement biedt toegang tot onze thermische faciliteiten. Directe
             booking is altijd inclusief een gratis botanische welkomstdrank.
           </p>
@@ -506,7 +506,7 @@ function Pricing() {
           {pricingPlans.map((plan, i) => (
             <Reveal key={plan.name} delay={i * 85}>
               <div
-                className={`relative flex h-full flex-col rounded-3xl border p-8 transition-shadow duration-300 hover:shadow-lg ${
+                className={`relative flex h-full flex-col rounded-3xl border p-10 transition-shadow duration-300 hover:shadow-xl ${
                   plan.highlight
                     ? "border-accent/35 bg-accent/5 shadow-md ring-1 ring-accent/20"
                     : "border-border/50 bg-card"
@@ -519,25 +519,25 @@ function Pricing() {
                 )}
 
                 {/* Plan header */}
-                <div className="mb-6">
-                  <p className="mb-1 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase">
+                <div className="mb-8">
+                  <p className="mb-1.5 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase">
                     {plan.tagline}
                   </p>
-                  <h3 className="font-heading text-2xl">{plan.name}</h3>
+                  <h3 className="font-heading text-3xl">{plan.name}</h3>
                 </div>
 
                 {/* Price */}
-                <div className="mb-6 flex items-end gap-1.5 border-b border-border/40 pb-6">
-                  <span className="font-heading text-5xl">{plan.price}</span>
-                  <span className="mb-1.5 text-[13px] text-muted-foreground">
+                <div className="mb-8 flex items-end gap-2 border-b border-border/40 pb-8">
+                  <span className="font-heading text-7xl leading-none">{plan.price}</span>
+                  <span className="mb-2 text-[14px] text-muted-foreground">
                     / {plan.duration}
                   </span>
                 </div>
 
                 {/* Features */}
-                <ul className="mb-8 flex flex-1 flex-col gap-3.5">
+                <ul className="mb-10 flex flex-1 flex-col gap-4">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-[14px]">
+                    <li key={f} className="flex items-start gap-3.5 text-[15px]">
                       <span
                         aria-hidden
                         className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/12 text-accent"
@@ -552,7 +552,7 @@ function Pricing() {
                 {/* CTA */}
                 <a
                   href="#contact"
-                  className={`rounded-full py-3.5 text-center text-[14px] font-medium transition-all duration-300 ${
+                  className={`rounded-full py-4 text-center text-[15px] font-medium transition-all duration-300 ${
                     plan.highlight
                       ? "bg-accent text-white hover:bg-accent/88 hover:shadow-md hover:shadow-accent/20"
                       : "border border-border text-foreground hover:border-accent/50 hover:text-accent"
@@ -571,29 +571,29 @@ function Pricing() {
 
 function Process() {
   return (
-    <section className="bg-accent py-28 md:py-36" aria-labelledby="process-heading">
+    <section className="bg-accent py-36 md:py-48" aria-labelledby="process-heading">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
-        <Reveal className="mb-16 flex flex-col items-center gap-4 text-center">
-          <span className="text-[11px] font-semibold tracking-[0.18em] text-white/45 uppercase">
+        <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
+          <span className="text-[12px] font-semibold tracking-[0.2em] text-white/45 uppercase">
             Hoe het werkt
           </span>
           <h2
             id="process-heading"
-            className="font-heading text-[40px] leading-[1.08] tracking-tight text-white md:text-[52px]"
+            className="font-heading text-[52px] leading-[1.06] tracking-tight text-white md:text-[68px]"
           >
             Jouw weg naar{" "}
             <em className="not-italic text-white/65">wellness</em>
           </h2>
         </Reveal>
 
-        <div className="grid gap-10 md:grid-cols-4 md:gap-8">
+        <div className="grid gap-12 md:grid-cols-4 md:gap-10">
           {processSteps.map((s, i) => (
             <Reveal key={s.num} delay={i * 85}>
-              <div className="flex flex-col gap-4">
-                <span className="font-heading text-5xl text-white/18">{s.num}</span>
+              <div className="flex flex-col gap-5">
+                <span className="font-heading text-7xl leading-none text-white/18">{s.num}</span>
                 <div className="h-px bg-white/15" aria-hidden />
-                <h3 className="font-heading text-[20px] text-white">{s.title}</h3>
-                <p className="text-[14px] leading-[1.75] text-white/58">{s.desc}</p>
+                <h3 className="font-heading text-[22px] text-white">{s.title}</h3>
+                <p className="text-[15px] leading-[1.78] text-white/58">{s.desc}</p>
               </div>
             </Reveal>
           ))}
@@ -605,31 +605,31 @@ function Process() {
 
 function Testimonials() {
   return (
-    <section id="stories" className="py-28 md:py-36 lg:py-48" aria-labelledby="testimonials-heading">
+    <section id="stories" className="py-36 md:py-48 lg:py-64" aria-labelledby="testimonials-heading">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
-        <Reveal className="mb-14 flex flex-col items-center gap-4 text-center">
+        <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
           <SectionLabel>Gastervaringen</SectionLabel>
           <h2
             id="testimonials-heading"
-            className="font-heading text-[40px] leading-[1.08] tracking-tight md:text-[52px]"
+            className="font-heading text-[52px] leading-[1.06] tracking-tight md:text-[68px]"
           >
             Woorden van onze{" "}
             <em className="not-italic text-accent">gasten</em>
           </h2>
         </Reveal>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {testimonials.map((t, i) => (
             <Reveal key={t.name} delay={i * 85}>
-              <div className="flex h-full flex-col gap-6 rounded-3xl border border-border/50 bg-card p-8">
+              <div className="flex h-full flex-col gap-7 rounded-3xl border border-border/50 bg-card p-10">
                 <StarRow count={t.stars} />
-                <p className="flex-1 text-[15px] leading-[1.85] text-muted-foreground">
+                <p className="flex-1 text-[17px] leading-[1.85] text-muted-foreground">
                   &ldquo;{t.quote}&rdquo;
                 </p>
-                <div className="flex items-center gap-4 border-t border-border/40 pt-5">
+                <div className="flex items-center gap-4 border-t border-border/40 pt-6">
                   <div
                     aria-hidden
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent/15 text-[12px] font-semibold text-accent"
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-[13px] font-semibold text-accent"
                   >
                     {t.initials}
                   </div>
@@ -649,14 +649,14 @@ function Testimonials() {
 
 function Journal() {
   return (
-    <section className="bg-muted/25 py-28 md:py-36" aria-labelledby="journal-heading">
+    <section className="bg-muted/25 py-36 md:py-48" aria-labelledby="journal-heading">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
-        <Reveal className="mb-14 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div className="flex flex-col gap-3">
+        <Reveal className="mb-20 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-4">
             <SectionLabel>Wellness journal</SectionLabel>
             <h2
               id="journal-heading"
-              className="font-heading text-[40px] leading-[1.08] tracking-tight md:text-[52px]"
+              className="font-heading text-[52px] leading-[1.06] tracking-tight md:text-[68px]"
             >
               Inzichten &{" "}
               <em className="not-italic text-accent">inspiratie</em>
@@ -691,10 +691,10 @@ function Journal() {
                     </span>
                     <span className="text-[12px] text-muted-foreground">{post.date}</span>
                   </div>
-                  <h3 className="font-heading text-[22px] leading-snug transition-colors duration-200 group-hover:text-accent">
+                  <h3 className="font-heading text-[28px] leading-snug transition-colors duration-200 group-hover:text-accent">
                     {post.title}
                   </h3>
-                  <p className="text-[14px] leading-[1.75] text-muted-foreground">{post.excerpt}</p>
+                  <p className="text-[15px] leading-[1.78] text-muted-foreground">{post.excerpt}</p>
                 </div>
               </a>
             </Reveal>
@@ -720,31 +720,31 @@ function CtaBand() {
 
       <Reveal className="relative z-10 mx-auto flex max-w-2xl flex-col items-center gap-8 px-5 text-center">
         <div className="flex flex-col gap-4">
-          <span className="text-[11px] font-semibold tracking-[0.18em] text-white/45 uppercase">
+          <span className="text-[12px] font-semibold tracking-[0.2em] text-white/45 uppercase">
             Reserveer je bezoek
           </span>
           <h2
             id="cta-heading"
-            className="font-heading text-[44px] leading-[1.06] tracking-tight text-white md:text-[58px]"
+            className="font-heading text-[52px] leading-[1.05] tracking-tight text-white md:text-[72px]"
           >
             Jouw moment van<br />
             <em className="not-italic text-white/72">stilte</em> wacht
           </h2>
         </div>
-        <p className="max-w-[440px] text-[15px] leading-[1.8] text-white/65">
+        <p className="max-w-[480px] text-[16px] leading-[1.8] text-white/65">
           Boek direct en ontvang een gratis botanische welkomstdrank en toegang tot
           ons thermische bad voor je behandeling.
         </p>
         <div className="flex flex-col items-center gap-3 sm:flex-row">
           <a
             href="#"
-            className="flex items-center gap-2 rounded-full bg-white px-10 py-[14px] text-[14px] font-medium text-accent transition-all duration-300 hover:bg-white/92 hover:gap-3 hover:shadow-xl hover:shadow-black/15"
+            className="flex items-center gap-2.5 rounded-full bg-white px-12 py-5 text-[15px] font-medium text-accent transition-all duration-300 hover:bg-white/92 hover:gap-3.5 hover:shadow-xl hover:shadow-black/15"
           >
             Online boeken <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
           <a
             href="tel:+31201234567"
-            className="flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-10 py-[14px] text-[14px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+            className="flex items-center gap-2.5 rounded-full border border-white/30 bg-white/10 px-12 py-5 text-[15px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
           >
             <Phone className="h-4 w-4" aria-hidden /> Bel ons
           </a>
@@ -765,13 +765,13 @@ function CtaBand() {
 
 function Footer() {
   return (
-    <footer className="bg-foreground px-5 py-16 text-white md:px-10 lg:px-16">
+    <footer className="bg-foreground px-5 py-24 text-white md:px-10 lg:px-16">
       <div className="mx-auto max-w-[1400px]">
-        <div className="grid gap-12 md:grid-cols-4">
+        <div className="grid gap-14 md:grid-cols-4">
           {/* Brand */}
-          <div className="flex flex-col gap-5">
-            <ZenSpaLogo className="h-7 w-auto text-white" />
-            <p className="text-[13px] leading-[1.75] text-white/42">
+          <div className="flex flex-col gap-6">
+            <ZenSpaLogo className="h-9 w-auto text-white" />
+            <p className="text-[14px] leading-[1.8] text-white/42">
               Een sanctuary voor de zintuigen.<br />House of Beauty since 2018.
             </p>
             <a
@@ -793,7 +793,7 @@ function Footer() {
                 <a
                   key={s}
                   href="#services"
-                  className="text-[13px] text-white/50 transition-colors hover:text-white"
+                  className="text-[14px] text-white/50 transition-colors hover:text-white"
                 >
                   {s}
                 </a>
@@ -810,7 +810,7 @@ function Footer() {
               <a
                 key={s}
                 href="#about"
-                className="text-[13px] text-white/50 transition-colors hover:text-white"
+                className="text-[14px] text-white/50 transition-colors hover:text-white"
               >
                 {s}
               </a>
@@ -836,7 +836,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-[11px] text-white/22 sm:flex-row">
+        <div className="mt-20 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-10 text-[12px] text-white/22 sm:flex-row">
           <p>© 2025 Zen Spa. Alle rechten voorbehouden.</p>
           <nav aria-label="Juridisch" className="flex gap-6">
             <a href="#" className="transition-colors hover:text-white/50">Privacybeleid</a>

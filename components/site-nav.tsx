@@ -40,19 +40,19 @@ export function SiteNav() {
             : 'bg-transparent'
         )}
       >
-        <div className="mx-auto flex h-20 max-w-[1400px] items-center justify-between px-5 md:px-10 lg:px-16">
+        <div className="mx-auto flex h-24 max-w-[1400px] items-center justify-between px-5 md:px-10 lg:px-16">
           {/* Logo */}
           <a href="#" aria-label="Zen Spa home" className="shrink-0">
             <ZenSpaLogo
               className={cn(
-                'h-8 w-auto transition-colors duration-500',
+                'h-10 w-auto transition-colors duration-500',
                 scrolled ? 'text-foreground' : 'text-white'
               )}
             />
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-9 text-[13px] tracking-wide lg:flex" aria-label="Primaire navigatie">
+          <nav className="hidden items-center gap-10 text-[14px] tracking-wide lg:flex" aria-label="Primaire navigatie">
             {links.map((l) => (
               <a
                 key={l.href}
@@ -74,7 +74,7 @@ export function SiteNav() {
             <a
               href="#contact"
               className={cn(
-                'hidden rounded-full px-7 py-3 text-[13px] font-medium transition-all duration-300 lg:block',
+                'hidden rounded-full px-9 py-4 text-[14px] font-medium transition-all duration-300 lg:block',
                 scrolled
                   ? 'bg-accent text-white hover:bg-accent/90 hover:shadow-md hover:shadow-accent/20'
                   : 'border border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20'
