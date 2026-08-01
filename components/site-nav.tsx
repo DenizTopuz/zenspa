@@ -32,14 +32,14 @@ export function SiteNav() {
 
   return (
     <>
-      {/* Floating pill nav */}
+      {/* Floating pill nav — always light/opaque, dark text (Lumiera style) */}
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
         <div
           className={cn(
-            'mx-auto flex max-w-[1400px] items-center gap-4 rounded-2xl px-5 py-3 transition-all duration-500 md:px-7 md:py-3.5',
+            'mx-auto flex max-w-[1400px] items-center gap-4 rounded-[28px] bg-background/96 px-5 py-3 backdrop-blur-xl transition-all duration-500 md:px-8 md:py-4',
             scrolled
-              ? 'bg-background/96 shadow-[0_2px_28px_rgba(0,0,0,0.07)] backdrop-blur-xl border border-border/20'
-              : 'border border-white/14 bg-white/8 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.12)]'
+              ? 'border border-border/30 shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
+              : 'border border-border/20 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
           )}
         >
           {/* Left — nav links */}
@@ -48,12 +48,7 @@ export function SiteNav() {
               <a
                 key={l.href}
                 href={l.href}
-                className={cn(
-                  'text-[13.5px] tracking-wide transition-colors duration-300',
-                  scrolled
-                    ? 'text-muted-foreground hover:text-foreground'
-                    : 'text-white/78 hover:text-white'
-                )}
+                className="text-[13.5px] tracking-wide text-muted-foreground transition-colors duration-200 hover:text-foreground"
               >
                 {l.label}
               </a>
@@ -63,12 +58,7 @@ export function SiteNav() {
           {/* Center — logo */}
           <div className="flex flex-1 justify-center lg:flex-none">
             <a href="#" aria-label="Zen Spa home">
-              <ZenSpaLogo
-                className={cn(
-                  'h-9 w-auto transition-colors duration-500',
-                  scrolled ? 'text-foreground' : 'text-white'
-                )}
-              />
+              <ZenSpaLogo className="h-9 w-auto text-foreground" />
             </a>
           </div>
 
@@ -76,12 +66,7 @@ export function SiteNav() {
           <div className="flex flex-1 items-center justify-end gap-3">
             <a
               href="tel:+31201234567"
-              className={cn(
-                'hidden items-center gap-2 text-[13px] transition-colors duration-300 xl:flex',
-                scrolled
-                  ? 'text-muted-foreground hover:text-foreground'
-                  : 'text-white/62 hover:text-white'
-              )}
+              className="hidden items-center gap-1.5 text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground xl:flex"
             >
               <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
               +31 (0)20 123 4567
@@ -89,15 +74,10 @@ export function SiteNav() {
 
             <a
               href="#contact"
-              className={cn(
-                'hidden items-center gap-2 rounded-full px-6 py-3 text-[13.5px] font-medium transition-all duration-300 lg:flex',
-                scrolled
-                  ? 'bg-accent text-white hover:bg-accent/88 hover:shadow-md hover:shadow-accent/20'
-                  : 'border border-white/26 bg-white/12 text-white hover:bg-white/22'
-              )}
+              className="hidden items-center gap-1.5 rounded-full border border-foreground/18 px-6 py-2.5 text-[13.5px] font-medium text-foreground transition-all duration-200 hover:bg-foreground hover:text-background lg:flex"
             >
               Afspraak maken
-              <span className="text-[11px] opacity-70">›</span>
+              <span className="text-[12px]">›</span>
             </a>
 
             {/* Mobile hamburger */}
@@ -105,12 +85,7 @@ export function SiteNav() {
               onClick={() => setOpen(true)}
               aria-label="Menu openen"
               aria-expanded={open}
-              className={cn(
-                'flex h-9 w-9 items-center justify-center rounded-full transition-colors lg:hidden',
-                scrolled
-                  ? 'text-foreground hover:bg-muted'
-                  : 'text-white hover:bg-white/10'
-              )}
+              className="flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted lg:hidden"
             >
               <Menu className="h-5 w-5" />
             </button>
