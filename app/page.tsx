@@ -1,6 +1,6 @@
 import Image from "next/image"
 import {
-  Leaf, Droplets, Wind, Sparkles, Star,
+  Leaf, Droplets, Sparkles, Star,
   Clock, Phone, MapPin, ArrowRight, Check, ChevronDown,
 } from "lucide-react"
 import { ZenSpaLogo } from "@/components/logo"
@@ -11,46 +11,46 @@ import { Reveal } from "@/components/reveal"
 
 const services = [
   {
-    icon: Sparkles,
     title: "Gezichtsbehandelingen",
-    desc: "Op maat gemaakte rituelen voor een stralende, gezonde huid.",
-    dark: true,
-    pos: "object-top",
+    desc: "Op maat gemaakte rituelen voor een stralende, gezonde huid. Van diepe reiniging tot vitamin-C infusie.",
+    image: "/hero.jpg",
+    imgPos: "object-center",
+    popular: true,
   },
   {
-    icon: Wind,
     title: "Massage & Ontspanning",
-    desc: "Wetenschappelijk onderbouwde ontspanningstechnieken voor lichaam en geest.",
-    dark: false,
-    pos: "",
+    desc: "Wetenschappelijk onderbouwde ontspanningstechnieken die je zenuwstelsel volledig resetten.",
+    image: "/bg-leaves.jpg",
+    imgPos: "object-center",
+    popular: true,
   },
   {
-    icon: Droplets,
     title: "Lichaamsbehandelingen",
-    desc: "Verzorgende wraps en scrubs met organische botanische ingrediënten.",
-    dark: true,
-    pos: "object-center",
+    desc: "Verzorgende wraps en scrubs met organische botanische ingrediënten, vrij van schadelijke stoffen.",
+    image: "/bg-leaves.jpg",
+    imgPos: "object-top",
+    popular: false,
   },
   {
-    icon: Leaf,
     title: "Hydrotherapie",
-    desc: "Mineraalrijke watertherapie die van binnenuit nourishment verschaft.",
-    dark: false,
-    pos: "",
+    desc: "Mineraalrijke watertherapie die van binnenuit nourishment verschaft en de huid hernieuwt.",
+    image: "/hero.jpg",
+    imgPos: "object-top",
+    popular: false,
   },
   {
-    icon: Sparkles,
     title: "Hand- & Nagelzorg",
-    desc: "Luxueuze handbehandelingen als aanvulling op jouw wellnessritueel.",
-    dark: true,
-    pos: "object-bottom",
+    desc: "Luxueuze handbehandelingen als aanvulling op jouw wellnessritueel. Verwennerij voor elk detail.",
+    image: "/bg-leaves.jpg",
+    imgPos: "object-bottom",
+    popular: false,
   },
   {
-    icon: Droplets,
     title: "Aromatherapie",
-    desc: "Geurreizen met essentiële oliën die kalmeren en verjongen.",
-    dark: false,
-    pos: "",
+    desc: "Geurreizen met essentiële oliën die kalmeren, verjongen en de geest in balans brengen.",
+    image: "/bg-leaves.jpg",
+    imgPos: "object-center",
+    popular: false,
   },
 ]
 
@@ -307,75 +307,82 @@ function Services() {
   return (
     <section id="services" className="py-28 md:py-36 lg:py-48" aria-labelledby="services-heading">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
-        {/* Header row */}
-        <Reveal className="mb-14 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div className="flex flex-col gap-3">
-            <SectionLabel>Onze behandelingen</SectionLabel>
-            <h2
-              id="services-heading"
-              className="font-heading text-[40px] leading-[1.08] tracking-tight md:text-[52px]"
-            >
-              Zorgvuldige rituelen<br />
-              voor elk{" "}
-              <em className="not-italic text-accent">verlangen</em>
-            </h2>
-          </div>
-          <a
-            href="#pricing"
-            className="flex shrink-0 items-center gap-2 text-[13px] font-medium text-accent transition-all duration-200 hover:gap-3"
-          >
-            Alle behandelingen <ArrowRight className="h-4 w-4" aria-hidden />
-          </a>
-        </Reveal>
+        <div className="flex flex-col gap-12 lg:flex-row lg:gap-20 xl:gap-28">
 
-        {/* 3-col grid */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
-          {services.map((s, i) => {
-            const Icon = s.icon
-            return (
-              <Reveal key={s.title} delay={i * 65}>
+          {/* ── Left sticky sidebar ── */}
+          <Reveal className="lg:sticky lg:top-28 lg:w-72 lg:shrink-0 lg:self-start">
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
+                <SectionLabel>Wat we aanbieden</SectionLabel>
+              </div>
+
+              <h2
+                id="services-heading"
+                className="font-heading text-[38px] leading-[1.07] tracking-tight md:text-[44px]"
+              >
+                Zorgvuldige<br />rituelen voor{" "}
+                <em className="not-italic text-accent">elk verlangen.</em>
+              </h2>
+
+              <p className="text-[14px] leading-[1.75] text-muted-foreground">
+                Van gezichtsbehandelingen tot ontspanningsmassages — elk ritueel is
+                zorgvuldig samengesteld met de reinste botanische ingrediënten en
+                uitgevoerd door gecertificeerde therapeuten.
+              </p>
+
+              <a
+                href="#pricing"
+                className="inline-flex w-fit items-center gap-2 rounded-full border border-foreground/20 px-6 py-3 text-[13px] font-medium text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
+              >
+                Volledig behandelingsoverzicht <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+              </a>
+            </div>
+          </Reveal>
+
+          {/* ── Right card list ── */}
+          <div className="flex flex-1 flex-col gap-4">
+            {services.map((s, i) => (
+              <Reveal key={s.title} delay={i * 60}>
                 <a
                   href="#pricing"
-                  className="group relative flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+                  className="group flex overflow-hidden rounded-2xl border border-border/40 bg-card transition-all duration-300 hover:border-border/70 hover:shadow-lg hover:shadow-foreground/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
                   aria-label={s.title}
                 >
-                  {s.dark ? (
-                    <>
-                      <Image
-                        src="/bg-leaves.jpg"
-                        alt=""
-                        fill
-                        aria-hidden
-                        className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] ${s.pos}`}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
-                      <div className="relative p-7">
-                        <p className="font-heading text-[22px] leading-snug text-white">{s.title}</p>
-                        <p className="mt-1.5 text-[13px] leading-relaxed text-white/60">{s.desc}</p>
-                        <span className="mt-4 inline-flex items-center gap-1.5 text-[12px] font-medium text-white/50 transition-all group-hover:gap-2.5 group-hover:text-white">
-                          Meer info <ArrowRight className="h-3 w-3" aria-hidden />
-                        </span>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="absolute inset-0 flex flex-col bg-secondary p-7">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent/12" aria-hidden>
-                        <Icon className="h-5 w-5 text-accent" />
-                      </div>
-                      <div className="mt-auto">
-                        <p className="font-heading text-[22px] leading-snug text-foreground">{s.title}</p>
-                        <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">{s.desc}</p>
-                        <span className="mt-4 inline-flex items-center gap-1.5 text-[12px] font-medium text-accent transition-all group-hover:gap-2.5">
-                          Meer info <ArrowRight className="h-3 w-3" aria-hidden />
-                        </span>
-                      </div>
-                    </div>
-                  )}
+                  {/* Portrait image */}
+                  <div className="relative h-36 w-[120px] shrink-0 overflow-hidden md:h-40 md:w-[136px]">
+                    <Image
+                      src={s.image}
+                      alt=""
+                      fill
+                      aria-hidden
+                      className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] ${s.imgPos}`}
+                      sizes="136px"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex flex-1 flex-col justify-center gap-2.5 p-5 md:p-6">
+                    {s.popular && (
+                      <span className="inline-flex w-fit rounded-full bg-secondary px-3 py-1 text-[11px] font-semibold tracking-wide text-foreground/70">
+                        Meest populair
+                      </span>
+                    )}
+                    <p className="font-heading text-[22px] leading-snug tracking-tight text-foreground md:text-[24px]">
+                      {s.title}
+                    </p>
+                    <p className="text-[13px] leading-relaxed text-muted-foreground">
+                      {s.desc}
+                    </p>
+                    <span className="mt-1 inline-flex items-center gap-1.5 text-[12px] font-medium text-accent underline underline-offset-4 decoration-accent/40 transition-all duration-200 group-hover:gap-2.5 group-hover:decoration-accent">
+                      Verken behandeling <ArrowRight className="h-3 w-3" aria-hidden />
+                    </span>
+                  </div>
                 </a>
               </Reveal>
-            )
-          })}
+            ))}
+          </div>
+
         </div>
       </div>
     </section>
