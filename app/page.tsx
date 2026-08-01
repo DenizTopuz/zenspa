@@ -211,7 +211,7 @@ function Hero() {
 
 function Pillars() {
   return (
-    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 rounded-t-[48px] border-b border-border/30 bg-background md:-mt-48 md:rounded-t-[64px]">
+    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 rounded-t-[48px] bg-background md:-mt-48 md:rounded-t-[64px]">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
         <div className="grid divide-y divide-border/30 md:grid-cols-3 md:divide-x md:divide-y-0">
           {pillars.map((p, i) => {
