@@ -6,6 +6,7 @@ import { Menu, X, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
+  { href: '/',         label: 'Home' },
   { href: '#services', label: 'Behandelingen' },
   { href: '#about',    label: 'Over ons' },
   { href: '#pricing',  label: 'Prijzen' },
@@ -32,52 +33,51 @@ export function SiteNav() {
 
   return (
     <>
-      {/* Floating pill nav — always light/opaque, dark text (Lumiera style) */}
-      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
+      <header className="fixed inset-x-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">
         <div
           className={cn(
-            'mx-auto flex max-w-[1400px] items-center gap-4 rounded-[28px] bg-background/96 px-5 py-3 backdrop-blur-xl transition-all duration-500 md:px-8 md:py-4',
+            'mx-auto flex max-w-[1480px] items-center rounded-[100px] bg-white px-8 py-4 transition-all duration-500 md:px-12 md:py-5',
             scrolled
-              ? 'border border-border/30 shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
-              : 'border border-border/20 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
+              ? 'shadow-[0_6px_48px_rgba(0,0,0,0.13)]'
+              : 'shadow-[0_2px_28px_rgba(0,0,0,0.08)]'
           )}
         >
           {/* Left — nav links */}
-          <nav className="hidden flex-1 items-center gap-7 lg:flex" aria-label="Primaire navigatie">
+          <nav className="hidden flex-1 items-center gap-9 lg:flex" aria-label="Primaire navigatie">
             {links.map((l) => (
               <a
-                key={l.href}
+                key={l.label}
                 href={l.href}
-                className="text-[13.5px] tracking-wide text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                className="text-[15px] text-foreground/65 transition-colors duration-200 hover:text-foreground"
               >
                 {l.label}
               </a>
             ))}
           </nav>
 
-          {/* Center — logo */}
+          {/* Center — logo (kept larger to match Lumiera proportions) */}
           <div className="flex flex-1 justify-center lg:flex-none">
-            <a href="#" aria-label="Zen Spa home">
-              <ZenSpaLogo className="h-9 w-auto text-foreground" />
+            <a href="/" aria-label="Zen Spa home">
+              <ZenSpaLogo className="h-12 w-auto text-foreground" />
             </a>
           </div>
 
           {/* Right — phone + CTA + mobile button */}
-          <div className="flex flex-1 items-center justify-end gap-3">
+          <div className="flex flex-1 items-center justify-end gap-4">
             <a
               href="tel:+31201234567"
-              className="hidden items-center gap-1.5 text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground xl:flex"
+              className="hidden items-center gap-2 text-[14px] text-foreground/55 transition-colors duration-200 hover:text-foreground xl:flex"
             >
-              <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              <Phone className="h-4 w-4 shrink-0" aria-hidden />
               +31 (0)20 123 4567
             </a>
 
             <a
               href="#contact"
-              className="hidden items-center gap-1.5 rounded-full border border-foreground/18 px-6 py-2.5 text-[13.5px] font-medium text-foreground transition-all duration-200 hover:bg-foreground hover:text-background lg:flex"
+              className="hidden items-center gap-2 rounded-full border border-foreground/22 px-7 py-3 text-[15px] font-medium text-foreground transition-all duration-200 hover:bg-foreground hover:text-white lg:flex"
             >
               Afspraak maken
-              <span className="text-[12px]">›</span>
+              <span aria-hidden>›</span>
             </a>
 
             {/* Mobile hamburger */}
@@ -85,7 +85,7 @@ export function SiteNav() {
               onClick={() => setOpen(true)}
               aria-label="Menu openen"
               aria-expanded={open}
-              className="flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted lg:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-gray-100 lg:hidden"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -99,25 +99,25 @@ export function SiteNav() {
         aria-modal="true"
         aria-label="Navigatiemenu"
         className={cn(
-          'fixed inset-0 z-[100] flex flex-col bg-background transition-opacity duration-400 lg:hidden',
+          'fixed inset-0 z-[100] flex flex-col bg-white transition-opacity duration-400 lg:hidden',
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         )}
       >
-        <div className="flex h-20 shrink-0 items-center justify-between px-5">
-          <ZenSpaLogo className="h-8 w-auto text-foreground" />
+        <div className="flex h-24 shrink-0 items-center justify-between px-8">
+          <ZenSpaLogo className="h-12 w-auto text-foreground" />
           <button
             onClick={close}
             aria-label="Menu sluiten"
-            className="flex h-10 w-10 items-center justify-center rounded-full text-foreground hover:bg-muted"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-foreground hover:bg-gray-100"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <nav className="flex flex-1 flex-col items-center justify-center gap-8" aria-label="Mobiele navigatie">
+        <nav className="flex flex-1 flex-col items-center justify-center gap-10" aria-label="Mobiele navigatie">
           {links.map((l, i) => (
             <a
-              key={l.href}
+              key={l.label}
               href={l.href}
               onClick={close}
               className="font-heading text-4xl text-foreground transition-colors hover:text-accent"
@@ -133,7 +133,7 @@ export function SiteNav() {
           <a
             href="#contact"
             onClick={close}
-            className="mt-6 rounded-full bg-accent px-10 py-4 text-[14px] font-medium text-white transition-all hover:bg-accent/90"
+            className="mt-4 rounded-full border border-foreground/25 px-10 py-4 text-[16px] font-medium text-foreground transition-all hover:bg-foreground hover:text-white"
             style={{
               opacity: open ? 1 : 0,
               transition: `opacity 0.35s ease ${links.length * 55 + 40}ms`,
