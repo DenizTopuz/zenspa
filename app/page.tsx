@@ -137,7 +137,7 @@ function StarRow({ count }: { count: number }) {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden" aria-label="Introductie">
+    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden rounded-b-[40px] md:rounded-b-[56px]" aria-label="Introductie">
       {/* Background image */}
       <Image
         src="/hero.jpg"
@@ -165,9 +165,9 @@ function Hero() {
           className="hero-animate font-heading text-[62px] leading-[1.02] tracking-tight text-white md:text-[86px] lg:text-[110px]"
           style={{ animationDelay: "110ms" }}
         >
-          Luxury spa treatments<br />
-          for your{" "}
-          <em className="not-italic text-white/80">well-being</em>
+          Luxe spa rituelen<br />
+          voor jouw{" "}
+          <em className="not-italic text-white/80">welzijn</em>
         </h1>
 
         <p

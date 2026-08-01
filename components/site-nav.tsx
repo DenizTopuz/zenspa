@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { ZenSpaLogo } from '@/components/logo'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
@@ -17,7 +17,7 @@ export function SiteNav() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const handle = () => setScrolled(window.scrollY > 80)
+    const handle = () => setScrolled(window.scrollY > 60)
     handle()
     window.addEventListener('scroll', handle, { passive: true })
     return () => window.removeEventListener('scroll', handle)
@@ -32,36 +32,27 @@ export function SiteNav() {
 
   return (
     <>
-      <header
-        className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-all duration-500',
-          scrolled
-            ? 'bg-background/96 backdrop-blur-lg border-b border-border/30 shadow-sm'
-            : 'bg-transparent'
-        )}
-      >
-        <div className="mx-auto flex h-24 max-w-[1400px] items-center justify-between px-5 md:px-10 lg:px-16">
-          {/* Logo */}
-          <a href="#" aria-label="Zen Spa home" className="shrink-0">
-            <ZenSpaLogo
-              className={cn(
-                'h-10 w-auto transition-colors duration-500',
-                scrolled ? 'text-foreground' : 'text-white'
-              )}
-            />
-          </a>
-
-          {/* Desktop nav */}
-          <nav className="hidden items-center gap-10 text-[14px] tracking-wide lg:flex" aria-label="Primaire navigatie">
+      {/* Floating pill nav */}
+      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
+        <div
+          className={cn(
+            'mx-auto flex max-w-[1400px] items-center gap-4 rounded-2xl px-5 py-3 transition-all duration-500 md:px-7 md:py-3.5',
+            scrolled
+              ? 'bg-background/96 shadow-[0_2px_28px_rgba(0,0,0,0.07)] backdrop-blur-xl border border-border/20'
+              : 'border border-white/14 bg-white/8 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.12)]'
+          )}
+        >
+          {/* Left — nav links */}
+          <nav className="hidden flex-1 items-center gap-7 lg:flex" aria-label="Primaire navigatie">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 className={cn(
-                  'transition-colors duration-300',
+                  'text-[13.5px] tracking-wide transition-colors duration-300',
                   scrolled
                     ? 'text-muted-foreground hover:text-foreground'
-                    : 'text-white/75 hover:text-white'
+                    : 'text-white/78 hover:text-white'
                 )}
               >
                 {l.label}
@@ -69,18 +60,44 @@ export function SiteNav() {
             ))}
           </nav>
 
-          {/* Desktop CTA */}
-          <div className="flex items-center gap-3">
+          {/* Center — logo */}
+          <div className="flex flex-1 justify-center lg:flex-none">
+            <a href="#" aria-label="Zen Spa home">
+              <ZenSpaLogo
+                className={cn(
+                  'h-9 w-auto transition-colors duration-500',
+                  scrolled ? 'text-foreground' : 'text-white'
+                )}
+              />
+            </a>
+          </div>
+
+          {/* Right — phone + CTA + mobile button */}
+          <div className="flex flex-1 items-center justify-end gap-3">
+            <a
+              href="tel:+31201234567"
+              className={cn(
+                'hidden items-center gap-2 text-[13px] transition-colors duration-300 xl:flex',
+                scrolled
+                  ? 'text-muted-foreground hover:text-foreground'
+                  : 'text-white/62 hover:text-white'
+              )}
+            >
+              <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              +31 (0)20 123 4567
+            </a>
+
             <a
               href="#contact"
               className={cn(
-                'hidden rounded-full px-9 py-4 text-[14px] font-medium transition-all duration-300 lg:block',
+                'hidden items-center gap-2 rounded-full px-6 py-3 text-[13.5px] font-medium transition-all duration-300 lg:flex',
                 scrolled
-                  ? 'bg-accent text-white hover:bg-accent/90 hover:shadow-md hover:shadow-accent/20'
-                  : 'border border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20'
+                  ? 'bg-accent text-white hover:bg-accent/88 hover:shadow-md hover:shadow-accent/20'
+                  : 'border border-white/26 bg-white/12 text-white hover:bg-white/22'
               )}
             >
               Afspraak maken
+              <span className="text-[11px] opacity-70">›</span>
             </a>
 
             {/* Mobile hamburger */}
@@ -89,7 +106,7 @@ export function SiteNav() {
               aria-label="Menu openen"
               aria-expanded={open}
               className={cn(
-                'flex h-10 w-10 items-center justify-center rounded-full transition-colors lg:hidden',
+                'flex h-9 w-9 items-center justify-center rounded-full transition-colors lg:hidden',
                 scrolled
                   ? 'text-foreground hover:bg-muted'
                   : 'text-white hover:bg-white/10'
@@ -108,10 +125,9 @@ export function SiteNav() {
         aria-label="Navigatiemenu"
         className={cn(
           'fixed inset-0 z-[100] flex flex-col bg-background transition-opacity duration-400 lg:hidden',
-          open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         )}
       >
-        {/* Close bar */}
         <div className="flex h-20 shrink-0 items-center justify-between px-5">
           <ZenSpaLogo className="h-8 w-auto text-foreground" />
           <button
@@ -123,7 +139,6 @@ export function SiteNav() {
           </button>
         </div>
 
-        {/* Nav links */}
         <nav className="flex flex-1 flex-col items-center justify-center gap-8" aria-label="Mobiele navigatie">
           {links.map((l, i) => (
             <a
@@ -140,7 +155,6 @@ export function SiteNav() {
               {l.label}
             </a>
           ))}
-
           <a
             href="#contact"
             onClick={close}
