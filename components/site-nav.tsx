@@ -36,10 +36,10 @@ export function SiteNav() {
       <header className="fixed inset-x-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">
         <div
           className={cn(
-            'mx-auto flex max-w-[1480px] items-center rounded-[100px] bg-white/70 px-8 py-4 backdrop-blur-2xl transition-all duration-500 md:px-12 md:py-5',
+            'mx-auto flex max-w-[1480px] items-center rounded-[100px] border border-white/30 px-8 py-4 backdrop-blur-lg transition-all duration-500 md:px-12 md:py-5',
             scrolled
-              ? 'shadow-[0_6px_48px_rgba(0,0,0,0.13)]'
-              : 'shadow-[0_2px_28px_rgba(0,0,0,0.07)]'
+              ? 'bg-white/82 shadow-[0_6px_48px_rgba(0,0,0,0.11)]'
+              : 'bg-white/18 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
           )}
         >
           {/* Left — nav links */}
