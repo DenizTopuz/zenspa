@@ -198,29 +198,7 @@ function Hero() {
         </div>
       </div>
 
-      {/* Stats pill */}
-      <div
-        className="hero-animate absolute bottom-10 left-1/2 z-10 -translate-x-1/2 hidden sm:block"
-        style={{ animationDelay: "440ms" }}
-      >
-        <div className="flex items-center gap-10 rounded-full border border-white/15 bg-white/10 px-10 py-5 backdrop-blur-md">
-          {[
-            { n: "12+", l: "Behandelingen" },
-            { n: "4.9", l: "Gemiddeld review" },
-            { n: "8k+", l: "Tevreden gasten" },
-          ].map((s, i) => (
-            <div key={s.n} className="flex items-center gap-10">
-              {i > 0 && <div className="h-5 w-px bg-white/20" aria-hidden />}
-              <div className="text-center">
-                <p className="font-heading text-2xl font-semibold text-white">{s.n}</p>
-                <p className="text-[12px] text-white/55">{s.l}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
+{/* Scroll indicator */}
       <div className="absolute bottom-8 right-8 z-10 hidden flex-col items-center gap-1.5 md:flex" aria-hidden>
         <ChevronDown className="h-4 w-4 animate-bounce text-white/35" />
       </div>
