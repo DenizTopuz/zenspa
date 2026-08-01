@@ -36,10 +36,10 @@ export function SiteNav() {
       <header className="fixed inset-x-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">
         <div
           className={cn(
-            'mx-auto flex max-w-[1480px] items-center rounded-[100px] border border-white/30 px-8 py-4 backdrop-blur-lg transition-all duration-500 md:px-12 md:py-5',
+            'mx-auto flex max-w-[1480px] items-center rounded-[100px] border px-8 py-5 backdrop-blur-lg transition-all duration-500 md:px-12 md:py-6',
             scrolled
-              ? 'bg-white/82 shadow-[0_6px_48px_rgba(0,0,0,0.11)]'
-              : 'bg-white/18 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
+              ? 'border-foreground/10 bg-white shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
+              : 'border-white/30 bg-white/18 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
           )}
         >
           {/* Left — nav links */}
@@ -48,17 +48,27 @@ export function SiteNav() {
               <a
                 key={l.label}
                 href={l.href}
-                className="text-[15px] text-foreground/65 transition-colors duration-200 hover:text-foreground"
+                className={cn(
+                  'whitespace-nowrap text-[17px] transition-colors duration-300',
+                  scrolled
+                    ? 'text-foreground/65 hover:text-foreground'
+                    : 'text-white/85 hover:text-white'
+                )}
               >
                 {l.label}
               </a>
             ))}
           </nav>
 
-          {/* Center — logo (kept larger to match Lumiera proportions) */}
+          {/* Center — logo */}
           <div className="flex flex-1 justify-center lg:flex-none">
             <a href="/" aria-label="Zen Spa home">
-              <ZenSpaLogo className="h-12 w-auto text-foreground" />
+              <ZenSpaLogo
+                className={cn(
+                  'h-14 w-auto transition-colors duration-300',
+                  scrolled ? 'text-foreground' : 'text-white'
+                )}
+              />
             </a>
           </div>
 
@@ -66,7 +76,12 @@ export function SiteNav() {
           <div className="flex flex-1 items-center justify-end gap-4">
             <a
               href="tel:+31201234567"
-              className="hidden items-center gap-2 text-[14px] text-foreground/55 transition-colors duration-200 hover:text-foreground xl:flex"
+              className={cn(
+                'hidden items-center gap-2 text-[15px] transition-colors duration-300 xl:flex',
+                scrolled
+                  ? 'text-foreground/55 hover:text-foreground'
+                  : 'text-white/75 hover:text-white'
+              )}
             >
               <Phone className="h-4 w-4 shrink-0" aria-hidden />
               +31 (0)20 123 4567
@@ -74,7 +89,12 @@ export function SiteNav() {
 
             <a
               href="#contact"
-              className="hidden items-center gap-2 rounded-full border border-foreground/22 px-7 py-3 text-[15px] font-medium text-foreground transition-all duration-200 hover:bg-foreground hover:text-white lg:flex"
+              className={cn(
+                'hidden items-center gap-2 rounded-full border px-7 py-3.5 text-[16px] font-medium transition-all duration-300 lg:flex',
+                scrolled
+                  ? 'border-foreground/22 text-foreground hover:bg-foreground hover:text-white'
+                  : 'border-white/50 text-white hover:bg-white/20'
+              )}
             >
               Afspraak maken
               <span aria-hidden>›</span>
@@ -85,9 +105,14 @@ export function SiteNav() {
               onClick={() => setOpen(true)}
               aria-label="Menu openen"
               aria-expanded={open}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-gray-100 lg:hidden"
+              className={cn(
+                'flex h-10 w-10 items-center justify-center rounded-full transition-colors lg:hidden',
+                scrolled
+                  ? 'text-foreground hover:bg-gray-100'
+                  : 'text-white hover:bg-white/15'
+              )}
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-6 w-6" />
             </button>
           </div>
         </div>
