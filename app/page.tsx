@@ -3,56 +3,11 @@ import {
   Leaf, Droplets, Sparkles, Star,
   Clock, Phone, MapPin, ArrowRight, Check, ChevronDown,
 } from "lucide-react"
-import { ZenSpaLogo } from "@/components/logo"
 import { SiteNav } from "@/components/site-nav"
+import { SiteFooter } from "@/components/site-footer"
 import { Reveal } from "@/components/reveal"
-
-// ─── Data ────────────────────────────────────────────────────────────────────
-
-const services = [
-  {
-    title: "Gezichtsbehandelingen",
-    desc: "Op maat gemaakte rituelen voor een stralende, gezonde huid. Van diepe reiniging tot vitamin-C infusie.",
-    image: "/hero.jpg",
-    imgPos: "object-center",
-    popular: true,
-  },
-  {
-    title: "Massage & Ontspanning",
-    desc: "Wetenschappelijk onderbouwde ontspanningstechnieken die je zenuwstelsel volledig resetten.",
-    image: "/bg-leaves.jpg",
-    imgPos: "object-center",
-    popular: true,
-  },
-  {
-    title: "Lichaamsbehandelingen",
-    desc: "Verzorgende wraps en scrubs met organische botanische ingrediënten, vrij van schadelijke stoffen.",
-    image: "/bg-leaves.jpg",
-    imgPos: "object-top",
-    popular: false,
-  },
-  {
-    title: "Hydrotherapie",
-    desc: "Mineraalrijke watertherapie die van binnenuit nourishment verschaft en de huid hernieuwt.",
-    image: "/hero.jpg",
-    imgPos: "object-top",
-    popular: false,
-  },
-  {
-    title: "Hand- & Nagelzorg",
-    desc: "Luxueuze handbehandelingen als aanvulling op jouw wellnessritueel. Verwennerij voor elk detail.",
-    image: "/bg-leaves.jpg",
-    imgPos: "object-bottom",
-    popular: false,
-  },
-  {
-    title: "Aromatherapie",
-    desc: "Geurreizen met essentiële oliën die kalmeren, verjongen en de geest in balans brengen.",
-    image: "/bg-leaves.jpg",
-    imgPos: "object-center",
-    popular: false,
-  },
-]
+import { StackCards } from "@/components/stack-cards"
+import { serviceCategories } from "@/lib/services-data"
 
 const pillars = [
   { icon: Leaf,     title: "100% Natuurlijk",          desc: "Ethisch ingekochte organische ingrediënten" },
@@ -305,7 +260,7 @@ function Pillars() {
 
 function Services() {
   return (
-    <section id="services" className="py-36 md:py-48 lg:py-64" aria-labelledby="services-heading">
+    <section id="services" className="pt-36 pb-20 md:pt-48 md:pb-28 lg:pt-64 lg:pb-36" aria-labelledby="services-heading">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
         <div className="flex flex-col gap-16 lg:flex-row lg:gap-24 xl:gap-32">
 
@@ -340,48 +295,8 @@ function Services() {
             </div>
           </Reveal>
 
-          {/* ── Right card list ── */}
-          <div className="flex flex-1 flex-col gap-5">
-            {services.map((s, i) => (
-              <Reveal key={s.title} delay={i * 60}>
-                <a
-                  href="#pricing"
-                  className="group flex overflow-hidden rounded-2xl border border-border/40 bg-card transition-all duration-300 hover:border-border/70 hover:shadow-xl hover:shadow-foreground/6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-                  aria-label={s.title}
-                >
-                  {/* Portrait image */}
-                  <div className="relative h-48 w-[155px] shrink-0 overflow-hidden md:h-56 md:w-[190px]">
-                    <Image
-                      src={s.image}
-                      alt=""
-                      fill
-                      aria-hidden
-                      className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] ${s.imgPos}`}
-                      sizes="190px"
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex flex-1 flex-col justify-center gap-3 p-7 md:p-9">
-                    {s.popular && (
-                      <span className="inline-flex w-fit rounded-full bg-secondary px-4 py-1.5 text-[12px] font-semibold tracking-wide text-foreground/70">
-                        Meest populair
-                      </span>
-                    )}
-                    <p className="font-heading text-[26px] leading-snug tracking-tight text-foreground md:text-[30px]">
-                      {s.title}
-                    </p>
-                    <p className="text-[15px] leading-[1.75] text-muted-foreground">
-                      {s.desc}
-                    </p>
-                    <span className="mt-1 inline-flex items-center gap-2 text-[13px] font-medium text-accent underline underline-offset-4 decoration-accent/40 transition-all duration-200 group-hover:gap-3 group-hover:decoration-accent">
-                      Verken behandeling <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-                    </span>
-                  </div>
-                </a>
-              </Reveal>
-            ))}
-          </div>
+          {/* ── Right: stacking cards ── */}
+          <StackCards services={serviceCategories} />
 
         </div>
       </div>
@@ -763,92 +678,6 @@ function CtaBand() {
   )
 }
 
-function Footer() {
-  return (
-    <footer className="bg-foreground px-5 py-24 text-white md:px-10 lg:px-16">
-      <div className="mx-auto max-w-[1400px]">
-        <div className="grid gap-14 md:grid-cols-4">
-          {/* Brand */}
-          <div className="flex flex-col gap-6">
-            <ZenSpaLogo className="h-9 w-auto text-white" />
-            <p className="text-[14px] leading-[1.8] text-white/42">
-              Een sanctuary voor de zintuigen.<br />House of Beauty since 2018.
-            </p>
-            <a
-              href="#"
-              aria-label="Instagram"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-[11px] font-medium text-white/42 transition-colors hover:border-white/35 hover:text-white/70"
-            >
-              IG
-            </a>
-          </div>
-
-          {/* Treatments */}
-          <nav aria-label="Behandelingen" className="flex flex-col gap-4">
-            <p className="text-[10px] font-semibold tracking-widest text-white/30 uppercase">
-              Behandelingen
-            </p>
-            {["Gezichtsbehandelingen", "Massage", "Lichaamsbehandelingen", "Hydrotherapie", "Hand & Nagels"].map(
-              (s) => (
-                <a
-                  key={s}
-                  href="#services"
-                  className="text-[14px] text-white/50 transition-colors hover:text-white"
-                >
-                  {s}
-                </a>
-              )
-            )}
-          </nav>
-
-          {/* Company */}
-          <nav aria-label="Bedrijf" className="flex flex-col gap-4">
-            <p className="text-[10px] font-semibold tracking-widest text-white/30 uppercase">
-              Bedrijf
-            </p>
-            {["Over ons", "Onze filosofie", "Cadeaubonnen", "Vacatures", "Pers"].map((s) => (
-              <a
-                key={s}
-                href="#about"
-                className="text-[14px] text-white/50 transition-colors hover:text-white"
-              >
-                {s}
-              </a>
-            ))}
-          </nav>
-
-          {/* Visit */}
-          <div className="flex flex-col gap-4">
-            <p className="text-[10px] font-semibold tracking-widest text-white/30 uppercase">
-              Bezoek ons
-            </p>
-            <address className="not-italic">
-              <p className="text-[13px] text-white/50">Serenity Lane 12</p>
-              <p className="text-[13px] text-white/50">Amsterdam</p>
-              <p className="mt-3 text-[13px] text-white/50">Ma–zo: 9:00 – 21:00</p>
-              <a
-                href="tel:+31201234567"
-                className="mt-1 block text-[13px] text-white/50 transition-colors hover:text-white"
-              >
-                +31 (0)20 123 4567
-              </a>
-            </address>
-          </div>
-        </div>
-
-        <div className="mt-20 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-10 text-[12px] text-white/22 sm:flex-row">
-          <p>© 2025 Zen Spa. Alle rechten voorbehouden.</p>
-          <nav aria-label="Juridisch" className="flex gap-6">
-            <a href="#" className="transition-colors hover:text-white/50">Privacybeleid</a>
-            <a href="#" className="transition-colors hover:text-white/50">Algemene voorwaarden</a>
-            <a href="#" className="transition-colors hover:text-white/50">Cookiebeleid</a>
-          </nav>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Page() {
@@ -866,7 +695,7 @@ export default function Page() {
         <Journal />
         <CtaBand />
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   )
 }
