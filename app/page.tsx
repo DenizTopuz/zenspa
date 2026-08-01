@@ -137,7 +137,7 @@ function StarRow({ count }: { count: number }) {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden rounded-b-[40px] md:rounded-b-[56px]" aria-label="Introductie">
+    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden" aria-label="Introductie">
       {/* Background image */}
       <Image
         src="/hero.jpg"
@@ -233,7 +233,7 @@ function Hero() {
 
 function Pillars() {
   return (
-    <section aria-label="Onze kernwaarden" className="border-b border-border/30">
+    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-16 rounded-t-[48px] border-b border-border/30 bg-background md:-mt-24 md:rounded-t-[64px]">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
         <div className="grid divide-y divide-border/30 md:grid-cols-3 md:divide-x md:divide-y-0">
           {pillars.map((p, i) => {
