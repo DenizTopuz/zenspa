@@ -169,7 +169,7 @@ function Hero() {
           className="hero-animate max-w-[540px] text-[17px] leading-[1.85] text-white/68"
           style={{ animationDelay: "210ms" }}
         >
-          Persoonlijke gezichtsbehandelingen voor een stralende huid en pure ontspanning.
+          Persoonlijke schoonheidsbehandelingen voor verzorging, uitstraling en ontspanning.
         </p>
 
         <div
@@ -202,20 +202,22 @@ function Hero() {
 
 function Pillars() {
   return (
-    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 overflow-hidden rounded-t-[48px] bg-background pb-16 md:-mt-48 md:rounded-t-[64px] md:pb-24">
-      <div className="relative overflow-hidden py-11 md:py-14">
+    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 overflow-hidden rounded-t-[80px] bg-background pb-16 md:-mt-48 md:rounded-t-[112px] md:pb-24">
+      <div className="relative overflow-hidden py-12 md:py-16">
         {/* Fade left */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-44 bg-gradient-to-r from-background to-transparent md:w-64" aria-hidden />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-48 bg-gradient-to-r from-background to-transparent md:w-72" aria-hidden />
         {/* Fade right */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-44 bg-gradient-to-l from-background to-transparent md:w-64" aria-hidden />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-48 bg-gradient-to-l from-background to-transparent md:w-72" aria-hidden />
         <div className="marquee-track">
           {[...marqueeItems, ...marqueeItems].map((item, i) => {
             const Icon = item.icon
             return (
-              <span key={i} className="inline-flex shrink-0 items-center gap-3 px-10 text-[16px] text-foreground/60 md:px-14 md:text-[17px]">
-                <Icon className="h-5 w-5 shrink-0 text-accent/70" aria-hidden />
+              <span key={i} className="inline-flex shrink-0 items-center gap-5 px-10 font-heading text-[22px] text-foreground/65 md:px-16 md:text-[28px]">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent/15 md:h-16 md:w-16">
+                  <Icon className="h-7 w-7 text-accent md:h-8 md:w-8" aria-hidden />
+                </span>
                 {item.label}
-                <span className="ml-8 text-foreground/20" aria-hidden>·</span>
+                <span className="ml-6 text-foreground/20" aria-hidden>·</span>
               </span>
             )
           })}
