@@ -1,6 +1,6 @@
 import Image from "next/image"
 import {
-  Star,
+  Star, BadgeCheck, Leaf, Lock, Sparkles, Users,
   Clock, Phone, MapPin, ArrowRight, Check, ChevronDown,
 } from "lucide-react"
 import { SiteNav } from "@/components/site-nav"
@@ -9,10 +9,13 @@ import { Reveal } from "@/components/reveal"
 import { StackCards } from "@/components/stack-cards"
 import { serviceCategories } from "@/lib/services-data"
 
-const stats = [
-  { value: "20+",   label: "Jaar ervaring" },
-  { value: "1000+", label: "Tevreden klanten" },
-  { value: "25+",   label: "Behandelingen" },
+const marqueeItems = [
+  { icon: BadgeCheck, label: "Gecertificeerd" },
+  { icon: Leaf,       label: "Natuurlijke producten" },
+  { icon: Lock,       label: "Privacy" },
+  { icon: Sparkles,   label: "25+ behandelingen" },
+  { icon: Clock,      label: "20+ jaar ervaring" },
+  { icon: Users,      label: "1000+ tevreden klanten" },
 ]
 
 const pricingPlans = [
@@ -206,20 +209,18 @@ function Hero() {
 function Pillars() {
   return (
     <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 rounded-t-[48px] bg-background pb-16 md:-mt-48 md:rounded-t-[64px] md:pb-24">
-      <div className="mx-auto max-w-[1600px] px-8 md:px-16 lg:px-24">
-        <div className="grid grid-cols-3">
-          {stats.map((s, i) => (
-            <Reveal key={s.label} delay={i * 90}>
-              <div className="flex flex-col items-center justify-center gap-2 py-12 text-center md:py-16">
-                <span className="font-heading text-[44px] leading-none tracking-tight text-foreground md:text-[64px] lg:text-[76px]">
-                  {s.value}
-                </span>
-                <span className="text-[12px] uppercase tracking-[0.14em] text-muted-foreground md:text-[13px]">
-                  {s.label}
-                </span>
-              </div>
-            </Reveal>
-          ))}
+      <div className="overflow-hidden py-11 md:py-14">
+        <div className="marquee-track">
+          {[...marqueeItems, ...marqueeItems].map((item, i) => {
+            const Icon = item.icon
+            return (
+              <span key={i} className="inline-flex shrink-0 items-center gap-3 px-10 text-[14px] text-foreground/60 md:px-12 md:text-[15px]">
+                <Icon className="h-[18px] w-[18px] shrink-0 text-accent/70" aria-hidden />
+                {item.label}
+                <span className="ml-6 text-foreground/20" aria-hidden>·</span>
+              </span>
+            )
+          })}
         </div>
       </div>
     </section>
