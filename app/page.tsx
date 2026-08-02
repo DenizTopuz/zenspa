@@ -1,6 +1,6 @@
 import Image from "next/image"
 import {
-  Leaf, Droplets, Sparkles, Star,
+  Star,
   Clock, Phone, MapPin, ArrowRight, Check, ChevronDown,
 } from "lucide-react"
 import { SiteNav } from "@/components/site-nav"
@@ -9,10 +9,10 @@ import { Reveal } from "@/components/reveal"
 import { StackCards } from "@/components/stack-cards"
 import { serviceCategories } from "@/lib/services-data"
 
-const pillars = [
-  { icon: Leaf,     title: "100% Natuurlijk",          desc: "Ethisch ingekochte organische ingrediënten" },
-  { icon: Sparkles, title: "Gecertificeerde therapeuten", desc: "Voortdurend bijgeschoold en gecertificeerd" },
-  { icon: Droplets, title: "Duurzaam & bewust",          desc: "Milieuvriendelijke praktijken en verpakkingen" },
+const stats = [
+  { value: "20+",   label: "Jaar ervaring" },
+  { value: "1000+", label: "Tevreden klanten" },
+  { value: "25+",   label: "Behandelingen" },
 ]
 
 const pricingPlans = [
@@ -206,24 +206,20 @@ function Hero() {
 function Pillars() {
   return (
     <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 rounded-t-[48px] bg-background pb-16 md:-mt-48 md:rounded-t-[64px] md:pb-24">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
-        <div className="grid md:grid-cols-3">
-          {pillars.map((p, i) => {
-            const Icon = p.icon
-            return (
-              <Reveal key={p.title} delay={i * 90}>
-                <div className="flex items-center gap-6 py-12 md:px-12 lg:px-16">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent/10" aria-hidden>
-                    <Icon className="h-6 w-6 text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-[15px] font-medium text-foreground">{p.title}</p>
-                    <p className="mt-1 text-[14px] text-muted-foreground">{p.desc}</p>
-                  </div>
-                </div>
-              </Reveal>
-            )
-          })}
+      <div className="mx-auto max-w-[1600px] px-8 md:px-16 lg:px-24">
+        <div className="grid grid-cols-3">
+          {stats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 90}>
+              <div className="flex flex-col items-center justify-center gap-2 py-12 text-center md:py-16">
+                <span className="font-heading text-[44px] leading-none tracking-tight text-foreground md:text-[64px] lg:text-[76px]">
+                  {s.value}
+                </span>
+                <span className="text-[12px] uppercase tracking-[0.14em] text-muted-foreground md:text-[13px]">
+                  {s.label}
+                </span>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
