@@ -7,6 +7,7 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { Reveal } from "@/components/reveal"
 import { StackCards } from "@/components/stack-cards"
+import { ParallaxHeroImage } from "@/components/parallax-hero-image"
 import { serviceCategories } from "@/lib/services-data"
 
 const marqueeItems = [
@@ -141,15 +142,8 @@ function StarRow({ count }: { count: number }) {
 function Hero() {
   return (
     <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden" aria-label="Introductie">
-      {/* Background image */}
-      <Image
-        src="/hero.jpg"
-        alt="Zen Spa — luxe wellnessbehandelingen"
-        fill
-        priority
-        className="object-cover object-center"
-        sizes="100vw"
-      />
+      {/* Background image — parallax */}
+      <ParallaxHeroImage />
       {/* Depth overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/42 to-black/68" />
 
@@ -209,15 +203,19 @@ function Hero() {
 function Pillars() {
   return (
     <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 rounded-t-[48px] bg-background pb-16 md:-mt-48 md:rounded-t-[64px] md:pb-24">
-      <div className="overflow-hidden py-11 md:py-14">
+      <div className="relative overflow-hidden py-11 md:py-14">
+        {/* Fade left */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-background to-transparent" aria-hidden />
+        {/* Fade right */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-background to-transparent" aria-hidden />
         <div className="marquee-track">
           {[...marqueeItems, ...marqueeItems].map((item, i) => {
             const Icon = item.icon
             return (
-              <span key={i} className="inline-flex shrink-0 items-center gap-3 px-10 text-[14px] text-foreground/60 md:px-12 md:text-[15px]">
-                <Icon className="h-[18px] w-[18px] shrink-0 text-accent/70" aria-hidden />
+              <span key={i} className="inline-flex shrink-0 items-center gap-3 px-10 text-[16px] text-foreground/60 md:px-14 md:text-[17px]">
+                <Icon className="h-5 w-5 shrink-0 text-accent/70" aria-hidden />
                 {item.label}
-                <span className="ml-6 text-foreground/20" aria-hidden>·</span>
+                <span className="ml-8 text-foreground/20" aria-hidden>·</span>
               </span>
             )
           })}
