@@ -202,12 +202,12 @@ function Hero() {
 
 function Pillars() {
   return (
-    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 rounded-t-[48px] bg-background pb-16 md:-mt-48 md:rounded-t-[64px] md:pb-24">
+    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 overflow-hidden rounded-t-[48px] bg-background pb-16 md:-mt-48 md:rounded-t-[64px] md:pb-24">
       <div className="relative overflow-hidden py-11 md:py-14">
         {/* Fade left */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-background to-transparent" aria-hidden />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-44 bg-gradient-to-r from-background to-transparent md:w-64" aria-hidden />
         {/* Fade right */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-background to-transparent" aria-hidden />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-44 bg-gradient-to-l from-background to-transparent md:w-64" aria-hidden />
         <div className="marquee-track">
           {[...marqueeItems, ...marqueeItems].map((item, i) => {
             const Icon = item.icon
