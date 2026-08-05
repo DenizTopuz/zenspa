@@ -217,7 +217,6 @@ function Pillars() {
                   <Icon className="h-7 w-7 text-accent md:h-8 md:w-8" aria-hidden />
                 </span>
                 {item.label}
-                <span className="ml-6 text-foreground/20" aria-hidden>·</span>
               </span>
             )
           })}
