@@ -229,7 +229,7 @@ function Pillars() {
 function Services() {
   return (
     <section id="services" className="pt-36 pb-20 md:pt-48 md:pb-28 lg:pt-64 lg:pb-36" aria-labelledby="services-heading">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
+      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
         <div className="flex flex-col gap-16 lg:flex-row lg:gap-24 xl:gap-32">
 
           {/* ── Left sticky sidebar ── */}
@@ -274,93 +274,116 @@ function Services() {
 
 function About() {
   return (
-    <section id="about" className="bg-muted/25 py-36 md:py-48 lg:py-64" aria-labelledby="about-heading">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
-        <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-28">
-
-          {/* Image column */}
-          <Reveal>
-            <div className="relative">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
-                <Image
-                  src="/hero.jpg"
-                  alt="Serene behandelruimte van Zen Spa"
-                  fill
-                  className="object-cover object-center"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              </div>
-              {/* Floating stat card */}
-              <div className="absolute -bottom-6 -right-3 rounded-2xl bg-card px-6 py-5 shadow-xl shadow-black/8 md:-right-10">
-                <p className="font-heading text-4xl">8k+</p>
-                <p className="mt-0.5 text-[13px] text-muted-foreground">Tevreden gasten</p>
-                <div className="mt-3 flex -space-x-2">
-                  {["SR", "MT", "LM", "KV"].map((init) => (
-                    <div
-                      key={init}
-                      aria-hidden
-                      className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-card bg-accent/20 text-[9px] font-semibold text-accent"
-                    >
-                      {init}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Reveal>
+    <section id="about" className="py-36 md:py-48 lg:py-64" aria-labelledby="about-heading">
+      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
+        <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-28 xl:gap-36">
 
           {/* Text column */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-7">
             <Reveal>
               <SectionLabel>Onze filosofie</SectionLabel>
             </Reveal>
             <Reveal delay={80}>
               <h2
                 id="about-heading"
-                className="font-heading text-[46px] leading-[1.07] tracking-tight md:text-[62px]"
+                className="font-heading text-[46px] leading-[1.07] tracking-tight md:text-[58px] lg:text-[68px]"
               >
-                Wellness geworteld<br />
-                <em className="not-italic text-accent">in de natuur</em>
+                Een plek gebouwd<br />rondom één ding:{" "}
+                <em className="not-italic text-accent">Jij.</em>
               </h2>
             </Reveal>
             <Reveal delay={140}>
-              <p className="text-[15px] leading-[1.85] text-muted-foreground">
-                Bij Zen Spa geloven we dat echt welzijn begint met wat je op — en in — je
-                lichaam aanbrengt. Elk product dat we gebruiken is ethisch ingekocht, elk
-                ritueel doordacht ontworpen, en elk bezoek een stap naar blijvende vernieuwing.
+              <p className="max-w-[480px] text-[16px] leading-[1.85] text-muted-foreground">
+                Sommige plekken zijn ontworpen om indruk te maken. Zen Spa is ontworpen om te herstellen.
+                Wij meten succes niet in hoe een bezoek eruitziet, maar in hoe jij je voelt als je vertrekt —
+                lichter, helderder en meer verbonden met jezelf.
               </p>
             </Reveal>
             <Reveal delay={190}>
-              <p className="text-[15px] leading-[1.85] text-muted-foreground">
-                Opgericht op de principes van slow beauty en bewuste herstel, is ons House
-                of Beauty een sanctuary ontworpen om je te helpen reconnecten met de beste
-                versie van jezelf.
-              </p>
-            </Reveal>
-            <Reveal delay={240}>
-              <div className="grid grid-cols-2 gap-6 border-t border-border/40 pt-8">
+              <ul className="flex flex-col gap-3.5">
                 {[
-                  { n: "100%", l: "Natuurlijke producten" },
-                  { n: "7+",   l: "Jaar ervaring" },
-                  { n: "12+",  l: "Unieke behandelingen" },
-                  { n: "4.9",  l: "Gemiddelde beoordeling" },
-                ].map((s) => (
-                  <div key={s.l}>
-                    <p className="font-heading text-4xl">{s.n}</p>
-                    <p className="mt-1 text-[14px] text-muted-foreground">{s.l}</p>
-                  </div>
+                  "Gecertificeerde schoonheidsspecialisten",
+                  "100% natuurlijke en biologische producten",
+                  "Private behandelkamers, rustige sessies",
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3.5 text-[15px]">
+                    <span
+                      aria-hidden
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/12 text-accent"
+                    >
+                      <Check className="h-3 w-3" />
+                    </span>
+                    {item}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </Reveal>
-            <Reveal delay={300}>
+            <Reveal delay={260}>
               <a
-                href="#pricing"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-10 py-5 text-[15px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:gap-3 hover:shadow-md hover:shadow-accent/20"
+                href="#contact"
+                className="inline-flex w-fit items-center gap-2.5 rounded-full bg-accent px-10 py-5 text-[15px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:gap-3.5 hover:shadow-md hover:shadow-accent/20"
               >
-                Ontdek onze rituelen <ArrowRight className="h-4 w-4" aria-hidden />
+                Ons verhaal <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
             </Reveal>
           </div>
+
+          {/* Image column */}
+          <Reveal>
+            <div className="relative">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
+                <Image
+                  src="/bg-leaves.jpg"
+                  alt="Zen Spa — luxe schoonheidsbehandeling in een serene omgeving"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+
+              {/* Circular stamp badge */}
+              <div className="absolute -left-5 top-10 md:-left-8">
+                <div className="relative flex h-[108px] w-[108px] items-center justify-center rounded-full border border-foreground/12 bg-background shadow-xl md:h-[128px] md:w-[128px]">
+                  <svg
+                    className="absolute inset-0 h-full w-full"
+                    viewBox="0 0 128 128"
+                    aria-hidden
+                  >
+                    <defs>
+                      <path
+                        id="stamp-arc"
+                        d="M 64,64 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0"
+                      />
+                    </defs>
+                    <text
+                      fill="currentColor"
+                      className="text-foreground/40"
+                      style={{ fontSize: "8px", fontWeight: 600, letterSpacing: "0.22em" }}
+                    >
+                      <textPath href="#stamp-arc" startOffset="4%">
+                        SCHOONHEIDSSALON · ALMERE BUITEN ·
+                      </textPath>
+                    </text>
+                  </svg>
+                  <div className="text-center">
+                    <p className="font-heading text-[28px] leading-none md:text-[34px]">20+</p>
+                    <p className="mt-1 text-[8px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                      Jaar<br />ervaring
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Frosted caption */}
+              <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 rounded-2xl bg-black/42 px-5 py-4 backdrop-blur-md">
+                <Sparkles className="h-4 w-4 shrink-0 text-white/70" aria-hidden />
+                <p className="text-[13px] font-medium leading-snug text-white">
+                  Wij doen niet aan snelle oplossingen. Wij doen aan diepe rust.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
         </div>
       </div>
     </section>
@@ -370,7 +393,7 @@ function About() {
 function Pricing() {
   return (
     <section id="pricing" className="py-36 md:py-48 lg:py-64" aria-labelledby="pricing-heading">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
+      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
         <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
           <SectionLabel>Tarieven</SectionLabel>
           <h2
@@ -455,7 +478,7 @@ function Pricing() {
 function Process() {
   return (
     <section className="bg-accent py-36 md:py-48" aria-labelledby="process-heading">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
+      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
         <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
           <span className="text-[12px] font-semibold tracking-[0.2em] text-white/45 uppercase">
             Hoe het werkt
@@ -489,7 +512,7 @@ function Process() {
 function Testimonials() {
   return (
     <section id="stories" className="py-36 md:py-48 lg:py-64" aria-labelledby="testimonials-heading">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
+      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
         <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
           <SectionLabel>Gastervaringen</SectionLabel>
           <h2
@@ -533,7 +556,7 @@ function Testimonials() {
 function Journal() {
   return (
     <section className="bg-muted/25 py-36 md:py-48" aria-labelledby="journal-heading">
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-16">
+      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
         <Reveal className="mb-20 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-4">
             <SectionLabel>Wellness journal</SectionLabel>
