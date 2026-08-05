@@ -33,23 +33,23 @@ export function SiteNav() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">
+      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
         <div
           className={cn(
-            'mx-auto flex max-w-[1480px] items-center rounded-[100px] border px-8 py-5 backdrop-blur-lg transition-all duration-500 md:px-12 md:py-6',
+            'mx-auto flex max-w-[1840px] items-center rounded-[100px] border px-8 py-5 backdrop-blur-lg transition-all duration-500 md:px-14 md:py-6',
             scrolled
               ? 'border-foreground/10 bg-white shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
               : 'border-white/30 bg-white/18 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
           )}
         >
           {/* Left — nav links */}
-          <nav className="hidden flex-1 items-center gap-9 lg:flex" aria-label="Primaire navigatie">
+          <nav className="hidden flex-1 items-center gap-10 lg:flex" aria-label="Primaire navigatie">
             {links.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
                 className={cn(
-                  'whitespace-nowrap text-[17px] transition-colors duration-300',
+                  'whitespace-nowrap text-[19px] font-medium transition-colors duration-300',
                   scrolled
                     ? 'text-foreground/65 hover:text-foreground'
                     : 'text-white/85 hover:text-white'
@@ -65,7 +65,7 @@ export function SiteNav() {
             <a href="/" aria-label="Zen Spa home">
               <ZenSpaLogo
                 className={cn(
-                  'h-14 w-auto transition-colors duration-300',
+                  'h-16 w-auto transition-colors duration-300',
                   scrolled ? 'text-foreground' : 'text-white'
                 )}
               />
@@ -77,7 +77,7 @@ export function SiteNav() {
             <a
               href="tel:+31201234567"
               className={cn(
-                'hidden items-center gap-2 text-[15px] transition-colors duration-300 xl:flex',
+                'hidden items-center gap-2 text-[17px] transition-colors duration-300 xl:flex',
                 scrolled
                   ? 'text-foreground/55 hover:text-foreground'
                   : 'text-white/75 hover:text-white'
@@ -90,7 +90,7 @@ export function SiteNav() {
             <a
               href="#contact"
               className={cn(
-                'hidden items-center gap-2 rounded-full border px-7 py-3.5 text-[16px] font-medium transition-all duration-300 lg:flex',
+                'hidden items-center gap-2 rounded-full border px-7 py-3.5 text-[18px] font-medium transition-all duration-300 lg:flex',
                 scrolled
                   ? 'border-foreground/22 text-foreground hover:bg-foreground hover:text-white'
                   : 'border-white/50 text-white hover:bg-white/20'

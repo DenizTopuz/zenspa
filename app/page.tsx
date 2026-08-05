@@ -178,13 +178,13 @@ function Hero() {
         >
           <a
             href="#contact"
-            className="rounded-full bg-accent px-11 py-5 text-[15px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-lg hover:shadow-accent/30"
+            className="rounded-full bg-accent px-11 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-lg hover:shadow-accent/30"
           >
             Afspraak maken
           </a>
           <a
             href="#services"
-            className="flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-11 py-5 text-[15px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+            className="flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-11 py-5 text-[17px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
           >
             Ontdek behandelingen <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
@@ -256,7 +256,7 @@ function Services() {
 
               <a
                 href="#pricing"
-                className="inline-flex w-fit items-center gap-2.5 rounded-full border border-foreground/20 px-8 py-4 text-[14px] font-medium text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
+                className="inline-flex w-fit items-center gap-2.5 rounded-full border border-foreground/20 px-8 py-4 text-[16px] font-medium text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
               >
                 Volledig behandelingsoverzicht <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
@@ -321,7 +321,7 @@ function About() {
             <Reveal delay={260}>
               <a
                 href="#contact"
-                className="inline-flex w-fit items-center gap-2.5 rounded-full bg-accent px-10 py-5 text-[15px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:gap-3.5 hover:shadow-md hover:shadow-accent/20"
+                className="inline-flex w-fit items-center gap-2.5 rounded-full bg-accent px-10 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:gap-3.5 hover:shadow-md hover:shadow-accent/20"
               >
                 Ons verhaal <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
@@ -458,7 +458,7 @@ function Pricing() {
                 {/* CTA */}
                 <a
                   href="#contact"
-                  className={`rounded-full py-4 text-center text-[15px] font-medium transition-all duration-300 ${
+                  className={`rounded-full py-4 text-center text-[17px] font-medium transition-all duration-300 ${
                     plan.highlight
                       ? "bg-accent text-white hover:bg-accent/88 hover:shadow-md hover:shadow-accent/20"
                       : "border border-border text-foreground hover:border-accent/50 hover:text-accent"
@@ -644,13 +644,13 @@ function CtaBand() {
         <div className="flex flex-col items-center gap-3 sm:flex-row">
           <a
             href="#"
-            className="flex items-center gap-2.5 rounded-full bg-white px-12 py-5 text-[15px] font-medium text-accent transition-all duration-300 hover:bg-white/92 hover:gap-3.5 hover:shadow-xl hover:shadow-black/15"
+            className="flex items-center gap-2.5 rounded-full bg-white px-12 py-5 text-[17px] font-medium text-accent transition-all duration-300 hover:bg-white/92 hover:gap-3.5 hover:shadow-xl hover:shadow-black/15"
           >
             Online boeken <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
           <a
             href="tel:+31201234567"
-            className="flex items-center gap-2.5 rounded-full border border-white/30 bg-white/10 px-12 py-5 text-[15px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+            className="flex items-center gap-2.5 rounded-full border border-white/30 bg-white/10 px-12 py-5 text-[17px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
           >
             <Phone className="h-4 w-4" aria-hidden /> Bel ons
           </a>
