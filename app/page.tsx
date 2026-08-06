@@ -1,7 +1,7 @@
 import Image from "next/image"
 import {
   Star, BadgeCheck, Leaf, Lock, Sparkles, Users,
-  Clock, Phone, MapPin, ArrowRight, Check, ChevronDown,
+  Clock, ArrowRight, Check, ChevronDown,
 } from "lucide-react"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -10,6 +10,7 @@ import { ServicesCarousel } from "@/components/services-carousel"
 import { ParallaxHeroImage } from "@/components/parallax-hero-image"
 import { CountUp } from "@/components/count-up"
 import { CtaBand } from "@/components/cta-band"
+import { Behandelingen } from "@/components/behandelingen"
 import { serviceCategories } from "@/lib/services-data"
 
 const marqueeItems = [
@@ -21,50 +22,6 @@ const marqueeItems = [
   { icon: Users,      label: "1000+ tevreden klanten" },
 ]
 
-const pricingPlans = [
-  {
-    name: "Essentials",
-    tagline: "Jouw eerste ritueel",
-    price: "$125",
-    duration: "60 min",
-    features: [
-      "Signature facial of ontspanningsmassage",
-      "Botanische welkomstdrank",
-      "Lockers & badjas inbegrepen",
-      "Thermisch bad (30 min)",
-    ],
-    highlight: false,
-  },
-  {
-    name: "Signature",
-    tagline: "Onze meest geliefde",
-    price: "$225",
-    duration: "90 min",
-    features: [
-      "Full-body ritueel naar keuze",
-      "Botanische welkomstdrank",
-      "Verwarmde badjas",
-      "Thermisch bad (1 uur)",
-      "Persoonlijk take-home blend",
-    ],
-    highlight: true,
-  },
-  {
-    name: "Prestige",
-    tagline: "De complete ervaring",
-    price: "$325",
-    duration: "120 min",
-    features: [
-      "Dubbele behandeling (lichaam + gezicht)",
-      "Botanische welkomstdrank",
-      "Premium badjas & slippers",
-      "Onbeperkt thermisch bad",
-      "Persoonlijk take-home blend",
-      "Persoonlijk therapeutenconsultatie",
-    ],
-    highlight: false,
-  },
-]
 
 const processSteps = [
   { num: "01", title: "Kies jouw behandeling", desc: "Blader door ons menu en kies het ritueel dat het beste bij jou past." },
@@ -375,90 +332,6 @@ function About() {
   )
 }
 
-function Pricing() {
-  return (
-    <section id="pricing" className="py-36 md:py-48 lg:py-64" aria-labelledby="pricing-heading">
-      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-        <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
-          <SectionLabel>Tarieven</SectionLabel>
-          <h2
-            id="pricing-heading"
-            className="font-heading text-[52px] leading-[1.06] tracking-tight md:text-[68px]"
-          >
-            Kies jouw <em className="not-italic text-accent">ritueel</em>
-          </h2>
-          <p className="max-w-lg text-[16px] leading-relaxed text-muted-foreground">
-            Elk arrangement biedt toegang tot onze thermische faciliteiten. Directe
-            booking is altijd inclusief een gratis botanische welkomstdrank.
-          </p>
-        </Reveal>
-
-        <div className="grid gap-5 md:grid-cols-3">
-          {pricingPlans.map((plan, i) => (
-            <Reveal key={plan.name} delay={i * 85}>
-              <div
-                className={`relative flex h-full flex-col rounded-3xl border p-10 transition-shadow duration-300 hover:shadow-xl ${
-                  plan.highlight
-                    ? "border-accent/35 bg-accent/5 shadow-md ring-1 ring-accent/20"
-                    : "border-border/50 bg-card"
-                }`}
-              >
-                {plan.highlight && (
-                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-accent px-5 py-1.5 text-[11px] font-semibold tracking-widest text-white uppercase">
-                    Meest populair
-                  </span>
-                )}
-
-                {/* Plan header */}
-                <div className="mb-8">
-                  <p className="mb-1.5 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase">
-                    {plan.tagline}
-                  </p>
-                  <h3 className="font-heading text-3xl">{plan.name}</h3>
-                </div>
-
-                {/* Price */}
-                <div className="mb-8 flex items-end gap-2 border-b border-border/40 pb-8">
-                  <span className="font-heading text-7xl leading-none">{plan.price}</span>
-                  <span className="mb-2 text-[14px] text-muted-foreground">
-                    / {plan.duration}
-                  </span>
-                </div>
-
-                {/* Features */}
-                <ul className="mb-10 flex flex-1 flex-col gap-4">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3.5 text-[15px]">
-                      <span
-                        aria-hidden
-                        className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/12 text-accent"
-                      >
-                        <Check className="h-3 w-3" />
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA */}
-                <a
-                  href="#contact"
-                  className={`rounded-full py-4 text-center text-[17px] font-medium transition-all duration-300 ${
-                    plan.highlight
-                      ? "bg-accent text-white hover:bg-accent/88 hover:shadow-md hover:shadow-accent/20"
-                      : "border border-border text-foreground hover:border-accent/50 hover:text-accent"
-                  }`}
-                >
-                  Reserveer nu
-                </a>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 function Process() {
   return (
@@ -610,7 +483,7 @@ export default function Page() {
         <Stats />
         <ServicesCarousel services={serviceCategories} />
         <CtaBand />
-        <Pricing />
+        <Behandelingen />
         <Process />
         <Testimonials />
         <Journal />

@@ -102,15 +102,15 @@ export function CtaBand() {
         </p>
         <div className="flex flex-col items-center gap-4 text-[13px] text-white/42 sm:flex-row sm:gap-6">
           <span className="flex items-center gap-2">
-            <MapPin className="h-3.5 w-3.5" aria-hidden /> Serenity Lane 12, Amsterdam
+            <MapPin className="h-3.5 w-3.5" aria-hidden /> Kretastraat 77, Almere
           </span>
           <span className="hidden h-3 w-px bg-white/20 sm:block" aria-hidden />
           <span className="flex items-center gap-2">
-            <Clock className="h-3.5 w-3.5" aria-hidden /> Dagelijks 9:00 – 21:00
+            <Clock className="h-3.5 w-3.5" aria-hidden /> Ma, Wo, Vr: 10:00 – 18:00
           </span>
           <span className="hidden h-3 w-px bg-white/20 sm:block" aria-hidden />
-          <a href="tel:+31201234567" className="flex items-center gap-2 transition-colors hover:text-white/70">
-            <Phone className="h-3.5 w-3.5" aria-hidden /> +31 (0)20 123 4567
+          <a href="tel:0653207729" className="flex items-center gap-2 transition-colors hover:text-white/70">
+            <Phone className="h-3.5 w-3.5" aria-hidden /> 06 53 20 77 29
           </a>
         </div>
       </div>
