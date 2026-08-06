@@ -164,29 +164,31 @@ export function Behandelingen() {
           </p>
         </div>
 
-        {/* Tabs with icons */}
+        {/* Tabs — single unified pill container */}
         <div
-          className="mb-12 flex flex-wrap justify-center gap-2"
+          className="mb-12 rounded-[2rem] bg-accent/[0.07] p-2"
           role="tablist"
           aria-label="Behandelcategorieën"
         >
-          {TABS.map(({ key, label, icon: Icon }) => (
-            <button
-              key={key}
-              role="tab"
-              aria-selected={active === key}
-              aria-controls={`tab-panel-${key}`}
-              onClick={() => setActive(key)}
-              className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-5 py-2.5 text-[14px] font-medium transition-all duration-200 ${
-                active === key
-                  ? 'border-accent bg-accent text-white'
-                  : 'border-foreground/20 text-foreground/55 hover:border-foreground/40 hover:text-foreground'
-              }`}
-            >
-              <Icon className="h-4 w-4 shrink-0" aria-hidden />
-              {label}
-            </button>
-          ))}
+          <div className="grid grid-cols-2 gap-1 sm:grid-cols-4">
+            {TABS.map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                role="tab"
+                aria-selected={active === key}
+                aria-controls={`tab-panel-${key}`}
+                onClick={() => setActive(key)}
+                className={`flex cursor-pointer items-center justify-center gap-2.5 rounded-[1.5rem] px-4 py-4 text-[13px] font-semibold transition-all duration-200 sm:px-5 sm:text-[14px] ${
+                  active === key
+                    ? 'bg-white text-accent shadow-md shadow-foreground/8'
+                    : 'text-foreground/50 hover:text-foreground/75'
+                }`}
+              >
+                <Icon className="h-5 w-5 shrink-0" aria-hidden />
+                <span className="whitespace-nowrap">{label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Panel */}
