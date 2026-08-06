@@ -11,7 +11,7 @@ interface CountUpProps {
 export function CountUp({ target, suffix = '', duration = 2200 }: CountUpProps) {
   const [count, setCount] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
-  const started = useRef(false)
+  const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
     const el = ref.current
@@ -24,24 +24,38 @@ export function CountUp({ target, suffix = '', duration = 2200 }: CountUpProps) 
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true
+        if (rafRef.current !== null) {
+          cancelAnimationFrame(rafRef.current)
+          rafRef.current = null
+        }
+
+        if (entry.isIntersecting) {
+          setCount(0)
           const start = performance.now()
           const step = (now: number) => {
             const progress = Math.min((now - start) / duration, 1)
             const eased = 1 - Math.pow(1 - progress, 3)
             setCount(Math.floor(eased * target))
-            if (progress < 1) requestAnimationFrame(step)
-            else setCount(target)
+            if (progress < 1) {
+              rafRef.current = requestAnimationFrame(step)
+            } else {
+              setCount(target)
+              rafRef.current = null
+            }
           }
-          requestAnimationFrame(step)
-          observer.disconnect()
+          rafRef.current = requestAnimationFrame(step)
+        } else {
+          setCount(0)
         }
       },
       { threshold: 0.3 }
     )
+
     observer.observe(el)
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
+    }
   }, [target, duration])
 
   const formatted = count.toLocaleString('nl-NL')

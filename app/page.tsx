@@ -228,10 +228,10 @@ function Pillars() {
 }
 
 const statsItems = [
-  { target: 2400, suffix: '+', label: 'Gasten verwelkomd' },
+  { target: 1000, suffix: '+', label: 'Klanten verwelkomd' },
   { target: 98,   suffix: '%', label: 'Klanttevredenheid' },
-  { target: 24,   suffix: '+', label: 'Expert therapeuten' },
-  { target: 14,   suffix: '+', label: 'Jaar ervaring' },
+  { target: 100,  suffix: '%', label: 'Gecertificeerd' },
+  { target: 20,   suffix: '+', label: 'Jaar ervaring' },
 ]
 
 function Stats() {
@@ -393,7 +393,7 @@ function About() {
                       style={{ fontSize: "8px", fontWeight: 600, letterSpacing: "0.32em" }}
                     >
                       <textPath href="#stamp-arc" startOffset="0%">
-                        ZEN SPA · TWINTIG JAAR VAKMANSCHAP · ALMERE BUITEN ·
+                        ZEN SPA · 20+ JAAR ERVARING · ALMERE BUITEN ·
                       </textPath>
                     </text>
                   </svg>
