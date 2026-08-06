@@ -189,8 +189,21 @@
   will-change: transform;
 }
 
+/* ── Stamp spin ────────────────────────────────────────────────── */
+@keyframes stamp-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.stamp-rotate {
+  animation: stamp-spin 16s linear infinite;
+  transform-origin: center;
+}
+
 /* ── Reduced motion ────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
+  .stamp-rotate {
+    animation: none !important;
+  }
   .reveal-item {
     opacity: 1 !important;
     transform: none !important;

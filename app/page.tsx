@@ -8,6 +8,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { Reveal } from "@/components/reveal"
 import { StackCards } from "@/components/stack-cards"
 import { ParallaxHeroImage } from "@/components/parallax-hero-image"
+import { CountUp } from "@/components/count-up"
 import { serviceCategories } from "@/lib/services-data"
 
 const marqueeItems = [
@@ -202,7 +203,7 @@ function Hero() {
 
 function Pillars() {
   return (
-    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 overflow-hidden rounded-t-[80px] bg-background pb-16 md:-mt-48 md:rounded-t-[112px] md:pb-24">
+    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 overflow-hidden rounded-t-[80px] bg-background pb-4 md:-mt-48 md:rounded-t-[112px] md:pb-6">
       <div className="relative overflow-hidden py-12 md:py-16">
         {/* Fade left */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-48 bg-gradient-to-r from-background to-transparent md:w-72" aria-hidden />
@@ -226,14 +227,45 @@ function Pillars() {
   )
 }
 
+const statsItems = [
+  { target: 2400, suffix: '+', label: 'Gasten verwelkomd' },
+  { target: 98,   suffix: '%', label: 'Klanttevredenheid' },
+  { target: 24,   suffix: '+', label: 'Expert therapeuten' },
+  { target: 14,   suffix: '+', label: 'Jaar ervaring' },
+]
+
+function Stats() {
+  return (
+    <section className="py-20 md:py-28">
+      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-4 md:gap-0">
+          {statsItems.map((item, i) => (
+            <Reveal key={item.label} delay={i * 90}>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="font-heading text-[52px] leading-none tracking-tight md:text-[64px] lg:text-[76px]">
+                    <CountUp target={item.target} suffix={item.suffix} />
+                  </span>
+                  <span className="text-[28px] text-accent md:text-[34px]" aria-hidden>↑</span>
+                </div>
+                <p className="text-[16px] text-muted-foreground md:text-[18px]">{item.label}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Services() {
   return (
     <section id="services" className="pt-36 pb-20 md:pt-48 md:pb-28 lg:pt-64 lg:pb-36" aria-labelledby="services-heading">
-      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
+      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <div className="flex flex-col gap-16 lg:flex-row lg:gap-24 xl:gap-32">
 
           {/* ── Left sticky sidebar ── */}
-          <Reveal className="lg:sticky lg:top-28 lg:w-[340px] lg:shrink-0 lg:self-start">
+          <Reveal className="lg:sticky lg:top-28 lg:w-[420px] lg:shrink-0 lg:self-start">
             <div className="flex flex-col gap-8">
               <div className="flex items-center gap-2.5">
                 <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
@@ -274,44 +306,44 @@ function Services() {
 
 function About() {
   return (
-    <section id="about" className="py-36 md:py-48 lg:py-64" aria-labelledby="about-heading">
-      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
-        <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-28 xl:gap-36">
+    <section id="about" className="pt-14 pb-28 md:pt-16 md:pb-40 lg:pt-20 lg:pb-52" aria-labelledby="about-heading">
+      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
           {/* Text column */}
-          <div className="flex flex-col gap-7">
+          <div className="flex flex-col gap-8">
             <Reveal>
-              <SectionLabel>Onze filosofie</SectionLabel>
+              <span className="text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">Onze filosofie</span>
             </Reveal>
             <Reveal delay={80}>
               <h2
                 id="about-heading"
-                className="font-heading text-[46px] leading-[1.07] tracking-tight md:text-[58px] lg:text-[68px]"
+                className="font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px] lg:text-[68px] xl:text-[80px]"
               >
-                Een plek gebouwd<br />rondom één ding:{" "}
+                Een plek gebouwd rondom één ding:{" "}
                 <em className="not-italic text-accent">Jij.</em>
               </h2>
             </Reveal>
             <Reveal delay={140}>
-              <p className="max-w-[480px] text-[16px] leading-[1.85] text-muted-foreground">
+              <p className="text-[17px] leading-[1.85] text-muted-foreground md:text-[18px]">
                 Sommige plekken zijn ontworpen om indruk te maken. Zen Spa is ontworpen om te herstellen.
                 Wij meten succes niet in hoe een bezoek eruitziet, maar in hoe jij je voelt als je vertrekt —
                 lichter, helderder en meer verbonden met jezelf.
               </p>
             </Reveal>
             <Reveal delay={190}>
-              <ul className="flex flex-col gap-3.5">
+              <ul className="flex flex-col gap-4">
                 {[
                   "Gecertificeerde schoonheidsspecialisten",
                   "100% natuurlijke en biologische producten",
                   "Private behandelkamers, rustige sessies",
                 ].map((item) => (
-                  <li key={item} className="flex items-center gap-3.5 text-[15px]">
+                  <li key={item} className="flex items-center gap-4 text-[17px]">
                     <span
                       aria-hidden
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/12 text-accent"
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/12 text-accent"
                     >
-                      <Check className="h-3 w-3" />
+                      <Check className="h-3.5 w-3.5" />
                     </span>
                     {item}
                   </li>
@@ -331,7 +363,7 @@ function About() {
           {/* Image column */}
           <Reveal>
             <div className="relative">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
+              <div className="relative aspect-square overflow-hidden rounded-[48px]">
                 <Image
                   src="/bg-leaves.jpg"
                   alt="Zen Spa — luxe schoonheidsbehandeling in een serene omgeving"
@@ -342,10 +374,10 @@ function About() {
               </div>
 
               {/* Circular stamp badge */}
-              <div className="absolute -left-5 top-10 md:-left-8">
-                <div className="relative flex h-[108px] w-[108px] items-center justify-center rounded-full border border-foreground/12 bg-background shadow-xl md:h-[128px] md:w-[128px]">
+              <div className="absolute -left-8 top-8 md:-left-14">
+                <div className="relative flex h-[160px] w-[160px] items-center justify-center rounded-full border border-foreground/12 bg-background shadow-xl md:h-[200px] md:w-[200px]">
                   <svg
-                    className="absolute inset-0 h-full w-full"
+                    className="absolute inset-0 h-full w-full stamp-rotate"
                     viewBox="0 0 128 128"
                     aria-hidden
                   >
@@ -358,26 +390,23 @@ function About() {
                     <text
                       fill="currentColor"
                       className="text-foreground/40"
-                      style={{ fontSize: "8px", fontWeight: 600, letterSpacing: "0.22em" }}
+                      style={{ fontSize: "8px", fontWeight: 600, letterSpacing: "0.32em" }}
                     >
-                      <textPath href="#stamp-arc" startOffset="4%">
-                        SCHOONHEIDSSALON · ALMERE BUITEN ·
+                      <textPath href="#stamp-arc" startOffset="0%">
+                        ZEN SPA · TWINTIG JAAR VAKMANSCHAP · ALMERE BUITEN ·
                       </textPath>
                     </text>
                   </svg>
                   <div className="text-center">
-                    <p className="font-heading text-[28px] leading-none md:text-[34px]">20+</p>
-                    <p className="mt-1 text-[8px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                      Jaar<br />ervaring
-                    </p>
+                    <p className="font-heading text-[48px] leading-none md:text-[58px]">20<span className="text-[22px] md:text-[26px]">+</span></p>
                   </div>
                 </div>
               </div>
 
               {/* Frosted caption */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 rounded-2xl bg-black/42 px-5 py-4 backdrop-blur-md">
-                <Sparkles className="h-4 w-4 shrink-0 text-white/70" aria-hidden />
-                <p className="text-[13px] font-medium leading-snug text-white">
+              <div className="absolute bottom-5 left-5 right-5 flex items-center gap-4 rounded-2xl bg-black/42 px-6 py-5 backdrop-blur-md md:px-8 md:py-6">
+                <Sparkles className="h-6 w-6 shrink-0 text-white/70 md:h-7 md:w-7" aria-hidden />
+                <p className="text-[15px] font-medium leading-snug text-white md:text-[17px]">
                   Wij doen niet aan snelle oplossingen. Wij doen aan diepe rust.
                 </p>
               </div>
@@ -393,7 +422,7 @@ function About() {
 function Pricing() {
   return (
     <section id="pricing" className="py-36 md:py-48 lg:py-64" aria-labelledby="pricing-heading">
-      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
+      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
           <SectionLabel>Tarieven</SectionLabel>
           <h2
@@ -478,7 +507,7 @@ function Pricing() {
 function Process() {
   return (
     <section className="bg-accent py-36 md:py-48" aria-labelledby="process-heading">
-      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
+      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
           <span className="text-[12px] font-semibold tracking-[0.2em] text-white/45 uppercase">
             Hoe het werkt
@@ -512,7 +541,7 @@ function Process() {
 function Testimonials() {
   return (
     <section id="stories" className="py-36 md:py-48 lg:py-64" aria-labelledby="testimonials-heading">
-      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
+      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
           <SectionLabel>Gastervaringen</SectionLabel>
           <h2
@@ -556,7 +585,7 @@ function Testimonials() {
 function Journal() {
   return (
     <section className="bg-muted/25 py-36 md:py-48" aria-labelledby="journal-heading">
-      <div className="mx-auto max-w-[1600px] px-8 md:px-14 lg:px-24">
+      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <Reveal className="mb-20 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-4">
             <SectionLabel>Wellness journal</SectionLabel>
@@ -678,8 +707,9 @@ export default function Page() {
       <main>
         <Hero />
         <Pillars />
-        <Services />
         <About />
+        <Stats />
+        <Services />
         <Pricing />
         <Process />
         <Testimonials />
