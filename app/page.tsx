@@ -609,11 +609,11 @@ export default function Page() {
         <About />
         <Stats />
         <ServicesCarousel services={serviceCategories} />
+        <CtaBand />
         <Pricing />
         <Process />
         <Testimonials />
         <Journal />
-        <CtaBand />
       </main>
       <SiteFooter />
     </>

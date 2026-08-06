@@ -2,9 +2,9 @@
 
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { ArrowRight, Phone, MapPin, Clock } from 'lucide-react'
+import { MapPin, Clock, Phone } from 'lucide-react'
 
-function ParallaxBg() {
+function useParallax(speed: number) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -17,54 +17,57 @@ function ParallaxBg() {
       if (!section) return
       const rect = section.getBoundingClientRect()
       const progress = -rect.top / window.innerHeight
-      el.style.transform = `translateY(${progress * 60}px)`
+      el.style.transform = `translateY(${progress * speed}px)`
     }
 
     handle()
     window.addEventListener('scroll', handle, { passive: true })
     return () => window.removeEventListener('scroll', handle)
-  }, [])
+  }, [speed])
 
-  return (
-    <div
-      ref={ref}
-      className="absolute inset-x-0 -bottom-[15%] -top-[15%]"
-      style={{ willChange: 'transform' }}
-    >
-      <Image
-        src="/hero.jpg"
-        alt=""
-        fill
-        aria-hidden
-        className="object-cover object-center"
-        sizes="100vw"
-      />
-    </div>
-  )
+  return ref
 }
 
 export function CtaBand() {
+  const bgRef    = useParallax(120)  // photo moves faster
+  const logoRef  = useParallax(48)   // logo drifts slower — second layer feel
+
   return (
     <section
       id="contact"
       className="relative overflow-hidden py-44 md:py-56"
       aria-labelledby="cta-heading"
     >
-      {/* Parallax background */}
-      <ParallaxBg />
+      {/* Parallax background photo */}
+      <div
+        ref={bgRef}
+        className="absolute inset-x-0 -bottom-[20%] -top-[20%]"
+        style={{ willChange: 'transform' }}
+      >
+        <Image
+          src="/hero.jpg"
+          alt=""
+          fill
+          aria-hidden
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+      </div>
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/58" />
 
-      {/* Beeldlogo watermark — very subtle, large, centred */}
+      {/* Beeldlogo watermark — slower parallax layer */}
       <div
+        ref={logoRef}
         aria-hidden
         className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.055]"
+        style={{ willChange: 'transform' }}
       >
         <svg
           viewBox="0 0 151.15 89.22"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-[640px] max-w-[80vw] text-white"
+          className="w-[700px] max-w-[85vw] text-white"
           fill="currentColor"
         >
           <path d="M92.62,36.13c.31-2.41.33-5.21-.37-8.08-3.4-14.02-14.47-24.79-16.6-26.76-.2-.19-.51-.19-.71,0-2.13,1.97-13.2,12.74-16.6,26.76-.7,2.88-.68,5.67-.37,8.08.42,3.23,1.5,6.34,3.06,9.2,2.94,5.38,11.56,21.63,13.75,30.93.13.54.9.54,1.02,0,2.19-9.29,10.82-25.55,13.75-30.93,1.56-2.86,2.64-5.96,3.06-9.2Z"/>
@@ -97,12 +100,6 @@ export function CtaBand() {
           Jouw therapeut staat klaar. Jouw kamer wacht.<br className="hidden sm:block" />
           Het enige wat ontbreekt, ben jij.
         </p>
-        <a
-          href="#"
-          className="flex items-center gap-2.5 rounded-full bg-white px-12 py-5 text-[17px] font-medium text-foreground transition-all duration-300 hover:gap-4 hover:bg-white/92 hover:shadow-xl hover:shadow-black/20"
-        >
-          Begin je ritueel <ArrowRight className="h-4 w-4" aria-hidden />
-        </a>
         <div className="flex flex-col items-center gap-4 text-[13px] text-white/42 sm:flex-row sm:gap-6">
           <span className="flex items-center gap-2">
             <MapPin className="h-3.5 w-3.5" aria-hidden /> Serenity Lane 12, Amsterdam
