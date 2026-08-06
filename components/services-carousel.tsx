@@ -70,8 +70,8 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
         />
         {/* Hover: dark top-to-bottom gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-        {/* Hover: price */}
-        <div className="absolute left-5 top-5 -translate-y-2 opacity-0 transition-all duration-400 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+        {/* Hover: price — clip-path sweeps top-to-bottom to reveal in place */}
+        <div className="absolute left-5 top-5 [clip-path:inset(0_0_100%_0)] transition-[clip-path] duration-500 ease-out group-hover:[clip-path:inset(0_0_0%_0)]">
           <p className="font-heading text-[28px] font-semibold leading-none text-white drop-shadow">
             Vanaf €{minEuro(service)}
           </p>
@@ -81,10 +81,10 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
       {/* Bottom bar */}
       <div className="flex items-center justify-between gap-3 p-5">
         <div className="min-w-0">
-          <p className="truncate text-[15px] font-semibold leading-tight text-foreground">
+          <p className="truncate text-[17px] font-semibold leading-tight text-foreground">
             {service.title}
           </p>
-          <p className="mt-1 truncate text-[12px] leading-snug text-muted-foreground">
+          <p className="mt-1 truncate text-[13px] leading-snug text-muted-foreground">
             {treatmentNames(service)}
           </p>
         </div>
