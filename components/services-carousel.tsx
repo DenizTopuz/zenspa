@@ -70,8 +70,8 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
         />
         {/* Hover: dark top-to-bottom gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-        {/* Hover: price — clip-path sweeps top-to-bottom to reveal in place */}
-        <div className="absolute left-5 top-5 [clip-path:inset(0_0_100%_0)] transition-[clip-path] duration-500 ease-out group-hover:[clip-path:inset(0_0_0%_0)]">
+        {/* Hover: price — fades in while falling from above into final position */}
+        <div className="absolute left-5 top-5 -translate-y-5 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
           <p className="font-heading text-[28px] font-semibold leading-none text-white drop-shadow">
             Vanaf €{minEuro(service)}
           </p>
@@ -216,16 +216,16 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
         <button
           onClick={prev}
           aria-label="Vorige behandeling"
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-foreground/20 text-foreground transition-all duration-300 hover:border-foreground hover:bg-foreground hover:text-background"
+          className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border border-foreground/20 text-foreground transition-all duration-300 hover:border-foreground hover:bg-foreground hover:text-background"
         >
-          <ArrowLeft className="h-5 w-5" />
+          <ArrowLeft className="h-6 w-6" />
         </button>
         <button
           onClick={next}
           aria-label="Volgende behandeling"
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-foreground/20 text-foreground transition-all duration-300 hover:border-foreground hover:bg-foreground hover:text-background"
+          className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border border-foreground/20 text-foreground transition-all duration-300 hover:border-foreground hover:bg-foreground hover:text-background"
         >
-          <ArrowRight className="h-5 w-5" />
+          <ArrowRight className="h-6 w-6" />
         </button>
       </div>
     </section>
