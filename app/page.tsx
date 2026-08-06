@@ -9,6 +9,7 @@ import { Reveal } from "@/components/reveal"
 import { ServicesCarousel } from "@/components/services-carousel"
 import { ParallaxHeroImage } from "@/components/parallax-hero-image"
 import { CountUp } from "@/components/count-up"
+import { CtaBand } from "@/components/cta-band"
 import { serviceCategories } from "@/lib/services-data"
 
 const marqueeItems = [
@@ -595,63 +596,6 @@ function Journal() {
   )
 }
 
-function CtaBand() {
-  return (
-    <section id="contact" className="relative overflow-hidden py-32 md:py-44" aria-labelledby="cta-heading">
-      <Image
-        src="/hero.jpg"
-        alt=""
-        fill
-        aria-hidden
-        className="object-cover object-center"
-        sizes="100vw"
-      />
-      <div className="absolute inset-0 bg-accent/82" />
-
-      <Reveal className="relative z-10 mx-auto flex max-w-2xl flex-col items-center gap-8 px-5 text-center">
-        <div className="flex flex-col gap-4">
-          <span className="text-[12px] font-semibold tracking-[0.2em] text-white/45 uppercase">
-            Reserveer je bezoek
-          </span>
-          <h2
-            id="cta-heading"
-            className="font-heading text-[52px] leading-[1.05] tracking-tight text-white md:text-[72px]"
-          >
-            Jouw moment van<br />
-            <em className="not-italic text-white/72">stilte</em> wacht
-          </h2>
-        </div>
-        <p className="max-w-[480px] text-[16px] leading-[1.8] text-white/65">
-          Boek direct en ontvang een gratis botanische welkomstdrank en toegang tot
-          ons thermische bad voor je behandeling.
-        </p>
-        <div className="flex flex-col items-center gap-3 sm:flex-row">
-          <a
-            href="#"
-            className="flex items-center gap-2.5 rounded-full bg-white px-12 py-5 text-[17px] font-medium text-accent transition-all duration-300 hover:bg-white/92 hover:gap-3.5 hover:shadow-xl hover:shadow-black/15"
-          >
-            Online boeken <ArrowRight className="h-4 w-4" aria-hidden />
-          </a>
-          <a
-            href="tel:+31201234567"
-            className="flex items-center gap-2.5 rounded-full border border-white/30 bg-white/10 px-12 py-5 text-[17px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
-          >
-            <Phone className="h-4 w-4" aria-hidden /> Bel ons
-          </a>
-        </div>
-        <div className="flex flex-col items-center gap-4 text-[13px] text-white/50 sm:flex-row sm:gap-6">
-          <span className="flex items-center gap-2">
-            <MapPin className="h-4 w-4" aria-hidden /> Serenity Lane 12, Amsterdam
-          </span>
-          <span className="hidden h-4 w-px bg-white/20 sm:block" aria-hidden />
-          <span className="flex items-center gap-2">
-            <Clock className="h-4 w-4" aria-hidden /> Dagelijks 9:00 – 21:00
-          </span>
-        </div>
-      </Reveal>
-    </section>
-  )
-}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
