@@ -6,7 +6,7 @@ import {
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { Reveal } from "@/components/reveal"
-import { StackCards } from "@/components/stack-cards"
+import { ServicesCarousel } from "@/components/services-carousel"
 import { ParallaxHeroImage } from "@/components/parallax-hero-image"
 import { CountUp } from "@/components/count-up"
 import { serviceCategories } from "@/lib/services-data"
@@ -238,7 +238,7 @@ function Stats() {
   return (
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4 md:gap-0">
+        <div className="grid grid-cols-2 gap-10 md:flex md:justify-between md:items-start">
           {statsItems.map((item, i) => (
             <Reveal key={item.label} delay={i * 90}>
               <div className="flex flex-col gap-3">
@@ -258,51 +258,6 @@ function Stats() {
   )
 }
 
-function Services() {
-  return (
-    <section id="services" className="pt-36 pb-20 md:pt-48 md:pb-28 lg:pt-64 lg:pb-36" aria-labelledby="services-heading">
-      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-        <div className="flex flex-col gap-16 lg:flex-row lg:gap-24 xl:gap-32">
-
-          {/* ── Left sticky sidebar ── */}
-          <Reveal className="lg:sticky lg:top-28 lg:w-[420px] lg:shrink-0 lg:self-start">
-            <div className="flex flex-col gap-8">
-              <div className="flex items-center gap-2.5">
-                <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
-                <SectionLabel>Wat we aanbieden</SectionLabel>
-              </div>
-
-              <h2
-                id="services-heading"
-                className="font-heading text-[46px] leading-[1.06] tracking-tight md:text-[58px]"
-              >
-                Zorgvuldige<br />rituelen voor{" "}
-                <em className="not-italic text-accent">elk verlangen.</em>
-              </h2>
-
-              <p className="text-[15px] leading-[1.8] text-muted-foreground">
-                Van gezichtsbehandelingen tot ontspanningsmassages — elk ritueel is
-                zorgvuldig samengesteld met de reinste botanische ingrediënten en
-                uitgevoerd door gecertificeerde therapeuten.
-              </p>
-
-              <a
-                href="#pricing"
-                className="inline-flex w-fit items-center gap-2.5 rounded-full border border-foreground/20 px-8 py-4 text-[16px] font-medium text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
-              >
-                Volledig behandelingsoverzicht <ArrowRight className="h-4 w-4" aria-hidden />
-              </a>
-            </div>
-          </Reveal>
-
-          {/* ── Right: stacking cards ── */}
-          <StackCards services={serviceCategories} />
-
-        </div>
-      </div>
-    </section>
-  )
-}
 
 function About() {
   return (
@@ -393,7 +348,7 @@ function About() {
                       style={{ fontSize: "8px", fontWeight: 600, letterSpacing: "0.32em" }}
                     >
                       <textPath href="#stamp-arc" startOffset="0%">
-                        ZEN SPA · 20+ JAAR ERVARING · ALMERE BUITEN ·
+                        20 JAAR ERVARING   ·   20 JAAR ERVARING   ·
                       </textPath>
                     </text>
                   </svg>
@@ -709,7 +664,7 @@ export default function Page() {
         <Pillars />
         <About />
         <Stats />
-        <Services />
+        <ServicesCarousel services={serviceCategories} />
         <Pricing />
         <Process />
         <Testimonials />
