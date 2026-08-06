@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { Clock, Sparkles, User, Pen, Scissors } from 'lucide-react'
 
@@ -143,6 +143,24 @@ function TreatmentCard({ t }: { t: Treatment }) {
 export function Behandelingen() {
   const [active, setActive] = useState<TabKey>('gezicht')
   const tab = DATA[active]
+  const activeIdx = TABS.findIndex(t => t.key === active)
+
+  // Sliding white indicator
+  const gridRef = useRef<HTMLDivElement>(null)
+  const btnRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const [ind, setInd] = useState<{ left: number; width: number } | null>(null)
+
+  useEffect(() => {
+    const measure = () => {
+      const btn = btnRefs.current[activeIdx]
+      const grid = gridRef.current
+      if (!btn || !grid) return
+      setInd({ left: btn.offsetLeft, width: btn.offsetWidth })
+    }
+    measure()
+    window.addEventListener('resize', measure, { passive: true })
+    return () => window.removeEventListener('resize', measure)
+  }, [activeIdx])
 
   return (
     <section id="pricing" aria-labelledby="behandelingen-heading" className="py-24 md:py-36 lg:py-48">
@@ -164,28 +182,42 @@ export function Behandelingen() {
           </p>
         </div>
 
-        {/* Tabs — single unified pill container */}
+        {/* Tabs — sliding pill */}
         <div
-          className="mb-12 rounded-[2rem] bg-accent/[0.07] p-2"
+          className="mx-auto mb-14 max-w-5xl rounded-full bg-accent/[0.07] p-3"
           role="tablist"
           aria-label="Behandelcategorieën"
         >
-          <div className="grid grid-cols-2 gap-1 sm:grid-cols-4">
-            {TABS.map(({ key, label, icon: Icon }) => (
+          <div ref={gridRef} className="relative grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {/* Sliding white indicator */}
+            {ind && (
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 rounded-full bg-white shadow-md shadow-foreground/8"
+                style={{
+                  left:  ind.left,
+                  width: ind.width,
+                  transition: 'left 0.38s cubic-bezier(0.4, 0, 0.2, 1)',
+                }}
+              />
+            )}
+
+            {TABS.map(({ key, label, icon: Icon }, idx) => (
               <button
                 key={key}
+                ref={(el) => { btnRefs.current[idx] = el }}
                 role="tab"
                 aria-selected={active === key}
                 aria-controls={`tab-panel-${key}`}
                 onClick={() => setActive(key)}
-                className={`flex cursor-pointer items-center justify-center gap-2.5 rounded-[1.5rem] px-4 py-4 text-[13px] font-semibold transition-all duration-200 sm:px-5 sm:text-[14px] ${
+                className={`relative z-10 flex cursor-pointer items-center justify-center gap-3 whitespace-nowrap rounded-full px-4 py-5 transition-colors duration-200 hover:text-foreground sm:px-5 ${
                   active === key
-                    ? 'bg-white text-accent shadow-md shadow-foreground/8'
-                    : 'text-foreground/50 hover:text-foreground/75'
+                    ? 'text-accent'
+                    : 'text-foreground/40 hover:bg-white/45'
                 }`}
               >
-                <Icon className="h-5 w-5 shrink-0" aria-hidden />
-                <span className="whitespace-nowrap">{label}</span>
+                <Icon className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" aria-hidden />
+                <span className="font-heading text-[19px] leading-none sm:text-[21px]">{label}</span>
               </button>
             ))}
           </div>
