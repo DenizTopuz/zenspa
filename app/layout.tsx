@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Nunito_Sans, EB_Garamond } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { SmoothScroll } from "@/components/smooth-scroll"
 import { cn } from "@/lib/utils";
 
 const ebGaramondHeading = EB_Garamond({subsets:['latin'],variable:'--font-heading'});
@@ -25,7 +26,10 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, "font-sans", nunitoSans.variable, ebGaramondHeading.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <SmoothScroll />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

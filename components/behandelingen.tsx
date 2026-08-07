@@ -101,35 +101,50 @@ const DATA: Record<TabKey, TabData> = {
 
 function TreatmentCard({ t }: { t: Treatment }) {
   return (
-    <div className="flex gap-5">
-      {/* Oval / capsule image */}
-      <div className="relative h-[136px] w-[84px] shrink-0 overflow-hidden rounded-full">
-        <Image
-          src={t.image ?? '/hero.jpg'}
-          alt=""
-          fill
-          aria-hidden
-          className="object-cover object-center"
-          sizes="84px"
-        />
+    <div className="flex gap-6 py-5 md:gap-8">
+      {/* Oval image — border ring + padding */}
+      <div className="shrink-0 rounded-full border border-foreground/12 p-1.5">
+        <div className="relative h-[152px] w-[96px] overflow-hidden rounded-full">
+          <Image
+            src={t.image ?? '/hero.jpg'}
+            alt=""
+            fill
+            aria-hidden
+            className="object-cover object-center"
+            sizes="96px"
+          />
+        </div>
       </div>
 
       {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-1.5">
-        <p className="text-[15px] font-semibold leading-snug text-foreground md:text-[16px]">{t.name}</p>
-        <div className="h-px bg-foreground/10" aria-hidden />
-        <p className="font-heading text-[22px] leading-none text-accent md:text-[24px]">{t.price}</p>
-        <p className="text-[13px] leading-[1.6] text-muted-foreground">{t.description}</p>
+      <div className="flex min-w-0 flex-1 flex-col justify-center gap-3">
+        {/* Name ── line ── Price */}
+        <div className="flex min-w-0 items-center gap-4">
+          <p className="min-w-0 font-heading text-[24px] font-semibold leading-snug md:text-[27px]">
+            {t.name}
+          </p>
+          <div className="h-px min-w-[16px] flex-1 shrink-0 bg-foreground/15" aria-hidden />
+          <p className="shrink-0 font-heading text-[24px] font-semibold md:text-[27px]">
+            {t.price}
+          </p>
+        </div>
+
+        {/* Description */}
+        <p className="text-[16px] leading-[1.65] text-muted-foreground md:text-[17px]">
+          {t.description}
+        </p>
+
+        {/* Pills */}
         {(t.duration || t.tag) && (
-          <div className="mt-1 flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {t.duration && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-accent/8 px-2.5 py-1 text-[11px] font-medium text-accent">
-                <Clock className="h-3 w-3" aria-hidden />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/18 px-4 py-2 text-[14px] text-foreground/55">
+                <Clock className="h-4 w-4" aria-hidden />
                 {t.duration}
               </span>
             )}
             {t.tag && (
-              <span className="rounded-full bg-accent px-2.5 py-1 text-[11px] font-medium text-white">
+              <span className="rounded-full bg-accent/10 px-4 py-2 text-[14px] font-medium text-accent">
                 {t.tag}
               </span>
             )}
@@ -184,11 +199,11 @@ export function Behandelingen() {
 
         {/* Tabs — sliding pill */}
         <div
-          className="mx-auto mb-14 max-w-5xl rounded-full bg-accent/[0.07] p-3"
+          className="mx-auto mb-14 w-full rounded-full bg-accent/[0.07] p-3 sm:w-fit"
           role="tablist"
           aria-label="Behandelcategorieën"
         >
-          <div ref={gridRef} className="relative grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div ref={gridRef} className="relative grid grid-cols-2 gap-2 sm:flex sm:gap-2">
             {/* Sliding white indicator */}
             {ind && (
               <div
@@ -217,7 +232,7 @@ export function Behandelingen() {
                 }`}
               >
                 <Icon className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" aria-hidden />
-                <span className="font-heading text-[19px] leading-none sm:text-[21px]">{label}</span>
+                <span className="font-heading font-semibold text-[19px] leading-none sm:text-[21px]">{label}</span>
               </button>
             ))}
           </div>
@@ -228,6 +243,7 @@ export function Behandelingen() {
           id={`tab-panel-${active}`}
           role="tabpanel"
           key={active}
+          className="animate-in fade-in duration-500 ease-out"
         >
           {tab.groups.map((group, gi) => (
             <div key={gi} className={gi > 0 ? 'mt-14' : ''}>
@@ -236,7 +252,7 @@ export function Behandelingen() {
                   {group.subtitle}
                 </p>
               )}
-              <div className="grid gap-8 sm:grid-cols-2 md:gap-10 lg:gap-12">
+              <div className="grid sm:grid-cols-2 gap-x-10 gap-y-0">
                 {group.items.map((t) => (
                   <TreatmentCard key={t.name} t={t} />
                 ))}
