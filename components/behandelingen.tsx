@@ -117,7 +117,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
       </div>
 
       {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-3">
+      <div className="flex min-w-0 flex-1 flex-col justify-start gap-3">
         {/* Name ── line ── Price */}
         <div className="flex min-w-0 items-center gap-4">
           <p className="min-w-0 font-heading text-[24px] font-semibold leading-snug md:text-[27px]">
