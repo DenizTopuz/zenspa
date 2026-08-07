@@ -306,12 +306,16 @@ function About() {
                       style={{ fontSize: "8px", fontWeight: 600, letterSpacing: "0.32em" }}
                     >
                       <textPath href="#stamp-arc" startOffset="0%">
-                        20 JAAR ERVARING   ·   20 JAAR ERVARING   ·
+                        20+ JAAR ERVARING   ·
+                      </textPath>
+                      <textPath href="#stamp-arc" startOffset="50%">
+                        20+ JAAR ERVARING   ·
                       </textPath>
                     </text>
                   </svg>
-                  <div className="text-center">
-                    <p className="font-heading text-[48px] leading-none md:text-[58px]">20<span className="text-[22px] md:text-[26px]">+</span></p>
+                  <div className="flex items-center justify-center">
+                    <span className="font-heading text-[48px] leading-none md:text-[58px]">20</span>
+                    <span className="font-heading text-[22px] leading-none md:text-[26px] self-center pb-1">+</span>
                   </div>
                 </div>
               </div>
