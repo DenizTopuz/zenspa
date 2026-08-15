@@ -37,7 +37,7 @@ function AccordionItem({
         aria-expanded={open}
         className="flex w-full items-center justify-between gap-6 py-7 text-left transition-colors duration-200 hover:text-accent"
       >
-        <span className="font-heading text-[22px] leading-snug tracking-tight md:text-[26px]">
+        <span className="font-heading text-[22px] font-semibold leading-snug tracking-tight md:text-[26px]">
           {q}
         </span>
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-foreground/18 text-foreground/60 transition-all duration-300">
