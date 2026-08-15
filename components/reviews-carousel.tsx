@@ -73,12 +73,12 @@ export function ReviewsCarousel() {
           </p>
         </div>
 
-        {/* Card */}
-        <div className="mx-auto max-w-[1280px] overflow-hidden rounded-3xl">
-          <div className="grid md:grid-cols-[2fr_3fr]">
+        {/* Card — full section width, fixed height so slides never jump */}
+        <div className="overflow-hidden rounded-3xl">
+          <div className="grid md:h-[620px] md:grid-cols-[2fr_3fr] lg:h-[680px]">
 
-            {/* Left — image */}
-            <div className="relative min-h-[280px] md:min-h-[560px]">
+            {/* Left — image, fills fixed height */}
+            <div className="relative min-h-[260px] md:min-h-0">
               <Image
                 key={idx}
                 src={t.image}
@@ -86,24 +86,24 @@ export function ReviewsCarousel() {
                 fill
                 aria-hidden
                 className="object-cover object-center"
-                sizes="(max-width: 768px) 100vw, 500px"
+                sizes="(max-width: 768px) 100vw, 700px"
               />
             </div>
 
             {/* Right — quote panel */}
-            <div className="flex flex-col justify-between gap-10 bg-foreground/[0.04] p-10 md:p-14 lg:p-16">
+            <div className="flex flex-col justify-between bg-foreground/[0.04] p-10 md:p-14 lg:p-20">
 
-              <div className="flex flex-col gap-7">
+              <div className="flex flex-col gap-8">
                 {/* Opening quote mark */}
                 <span
-                  className="font-heading text-[88px] leading-[0.8] text-foreground/20 md:text-[104px]"
+                  className="font-heading text-[96px] leading-[0.75] text-foreground/18 md:text-[120px]"
                   aria-hidden
                 >
                   &ldquo;
                 </span>
 
-                {/* Quote */}
-                <p className="font-heading text-[24px] leading-[1.35] tracking-tight md:text-[28px] lg:text-[32px]">
+                {/* Quote — fixed min-height keeps card stable across slides */}
+                <p className="min-h-[160px] font-heading text-[26px] leading-[1.35] tracking-tight md:text-[30px] lg:text-[36px]">
                   {t.quote}
                 </p>
 
@@ -111,7 +111,7 @@ export function ReviewsCarousel() {
                 <Stars count={t.stars} />
 
                 {/* Attribution */}
-                <p className="text-[16px] text-foreground/50">
+                <p className="text-[17px] text-foreground/50">
                   — {t.name}, {t.location}
                 </p>
               </div>
