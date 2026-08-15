@@ -36,7 +36,7 @@ export function SiteNav() {
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
         <div
           className={cn(
-            'mx-auto flex max-w-[1840px] items-center rounded-[100px] border px-4 py-3 backdrop-blur-lg transition-all duration-500 md:px-5 md:py-4',
+            'mx-auto flex max-w-[1840px] items-center rounded-[100px] border py-3 pl-8 pr-3 backdrop-blur-lg transition-all duration-500 md:py-4 md:pl-10 md:pr-4',
             scrolled
               ? 'border-foreground/10 bg-white shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
               : 'border-white/30 bg-white/18 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'

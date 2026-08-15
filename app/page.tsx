@@ -1,6 +1,6 @@
 import Image from "next/image"
 import {
-  Star, BadgeCheck, Leaf, Lock, Sparkles, Users,
+  BadgeCheck, Leaf, Lock, Sparkles, Users,
   Clock, ArrowRight, Check, ChevronDown,
 } from "lucide-react"
 import { SiteNav } from "@/components/site-nav"
@@ -11,6 +11,7 @@ import { ParallaxHeroImage } from "@/components/parallax-hero-image"
 import { CountUp } from "@/components/count-up"
 import { CtaBand } from "@/components/cta-band"
 import { Behandelingen } from "@/components/behandelingen"
+import { ReviewsCarousel } from "@/components/reviews-carousel"
 import { serviceCategories } from "@/lib/services-data"
 
 const marqueeItems = [
@@ -30,32 +31,6 @@ const processSteps = [
   { num: "04", title: "Voel het verschil",     desc: "Verlaat ons als een vernieuwde versie van jezelf." },
 ]
 
-const testimonials = [
-  {
-    name: "Sophia R.",
-    role: "Bezocht maart 2025",
-    initials: "SR",
-    quote:
-      "Zen Spa voelde als een andere wereld. Het Zen Renewal Ritual liet mijn huid stralen en mijn geest volledig tot rust komen. Ik heb jaren niet zo goed geslapen.",
-    stars: 5,
-  },
-  {
-    name: "Marcus T.",
-    role: "Maandelijks lid",
-    initials: "MT",
-    quote:
-      "De Alpine Mineral Soak heeft mijn benadering van zelfzorg fundamenteel veranderd. De therapeuten zijn van wereldklasse en de ambiance is ongeëvenaard.",
-    stars: 5,
-  },
-  {
-    name: "Lena M.",
-    role: "Bezocht januari 2025",
-    initials: "LM",
-    quote:
-      "Elk detail is doordacht — van de warme botanische welkomstdrank tot de verwarmde badjassen. De meest luxueuze twee uur die ik ooit aan mezelf heb besteed.",
-    stars: 5,
-  },
-]
 
 const blogPosts = [
   {
@@ -86,15 +61,6 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-function StarRow({ count }: { count: number }) {
-  return (
-    <div className="flex gap-1" aria-label={`${count} van 5 sterren`}>
-      {Array.from({ length: count }).map((_, i) => (
-        <Star key={i} className="h-4 w-4 fill-accent text-accent" aria-hidden />
-      ))}
-    </div>
-  )
-}
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
 
@@ -371,49 +337,6 @@ function Process() {
   )
 }
 
-function Testimonials() {
-  return (
-    <section id="stories" className="py-36 md:py-48 lg:py-64" aria-labelledby="testimonials-heading">
-      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-        <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
-          <SectionLabel>Gastervaringen</SectionLabel>
-          <h2
-            id="testimonials-heading"
-            className="font-heading text-[52px] leading-[1.06] tracking-tight md:text-[68px]"
-          >
-            Woorden van onze{" "}
-            <em className="not-italic text-accent">gasten</em>
-          </h2>
-        </Reveal>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {testimonials.map((t, i) => (
-            <Reveal key={t.name} delay={i * 85}>
-              <div className="flex h-full flex-col gap-7 rounded-3xl border border-border/50 bg-card p-10">
-                <StarRow count={t.stars} />
-                <p className="flex-1 text-[17px] leading-[1.85] text-muted-foreground">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <div className="flex items-center gap-4 border-t border-border/40 pt-6">
-                  <div
-                    aria-hidden
-                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-[13px] font-semibold text-accent"
-                  >
-                    {t.initials}
-                  </div>
-                  <div>
-                    <p className="text-[14px] font-medium">{t.name}</p>
-                    <p className="text-[12px] text-muted-foreground">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 function Journal() {
   return (
@@ -489,7 +412,7 @@ export default function Page() {
         <CtaBand />
         <Behandelingen />
         <Process />
-        <Testimonials />
+        <ReviewsCarousel />
         <Journal />
       </main>
       <SiteFooter />

@@ -2,28 +2,9 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Clock, Sparkles, User, Pen, Scissors } from 'lucide-react'
-
-type Treatment = {
-  name: string
-  duration?: string
-  price: string
-  description: string
-  tag?: string
-  image?: string
-}
-
-type Group = {
-  subtitle?: string
-  items: Treatment[]
-}
-
-type TabData = {
-  groups: Group[]
-  footerNote?: string
-}
-
-type TabKey = 'gezicht' | 'lichaam' | 'pmu' | 'ontharen'
+import { DATA, type TabKey, type Treatment } from '@/lib/behandelingen-data'
 
 const TABS: { key: TabKey; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { key: 'gezicht',  label: 'Gezicht',              icon: Sparkles },
@@ -32,76 +13,12 @@ const TABS: { key: TabKey; label: string; icon: React.ComponentType<{ className?
   { key: 'ontharen', label: 'Ontharen',             icon: Scissors },
 ]
 
-const A = '/hero.jpg'
-const B = '/bg-leaves.jpg'
-
-const DATA: Record<TabKey, TabData> = {
-  gezicht: {
-    groups: [{
-      items: [
-        { name: 'Mini Zen Moment',             duration: '30 min',  price: '€30',    image: A, description: 'Een snelle opfrisser met reiniging en gerichte hydratatie voor jouw huid.' },
-        { name: 'Basis Gezichtsbehandeling',   duration: '50 min',  price: '€62,50', image: B, description: 'Grondige reiniging, peeling en basishuidverzorging afgestemd op jouw huidtype.' },
-        { name: 'Classic Gezichtsbehandeling', duration: '80 min',  price: '€70',    image: A, description: 'Onze meest geliefde behandeling: uitgebreide verzorging voor een stralende huid.' },
-        { name: 'Deluxe Gezichtsbehandeling',  duration: '120 min', price: '€85',    image: B, description: 'De ultieme gezichtsverzorging met extra masker, massage en verwennende stappen.' },
-        { name: 'Herenbehandeling',            duration: '80 min',  price: '€70',    image: A, description: 'Speciaal voor de mannelijke huid — poriënreiniging, hydratatie en dieptewerking.' },
-        { name: '65+ Behandeling',             duration: '50 min',  price: '€55',    image: B, description: 'Zachte, voedende behandeling op maat voor de rijpere huid.' },
-        { name: 'Tienerbehandeling',           duration: '50 min',  price: '€45',    image: A, description: 'Milde huidverzorging voor jonge huid met aandacht voor onzuiverheden.' },
-        { name: 'Microneedling',               duration: '60 min',  price: '€95',    image: B, description: 'Stimuleert huidvernieuwing en collageenproductie voor verfijnde poriën.', tag: 'Nieuw' },
-        { name: 'Galvanic Spa',                duration: '30 min',  price: '€45',    image: A, description: 'Iontoforese voor diepgaande productopname en een direct zichtbare huidgloed.' },
-      ]
-    }]
-  },
-  lichaam: {
-    groups: [{
-      items: [
-        { name: 'Rugbehandeling',               duration: '30 min',     price: '€40', image: A, description: 'Grondige reiniging, peeling en verzorging van de rug — ideaal bij vermoeidheid of onzuiverheden.' },
-        { name: 'Pedicure incl. voetenscrub',   duration: 'ca. 60 min', price: '€45', image: B, description: 'Volledige voetverzorging met exfoliërende scrub voor zijdezachte voeten en verzorgde nagels.' },
-      ]
-    }]
-  },
-  pmu: {
-    groups: [
-      {
-        subtitle: 'Wenkbrauwen',
-        items: [
-          { name: 'Hairstroke / Microblading',                price: '€200',       image: A, description: 'Haar-voor-haar techniek voor ultranaturlijke, goed gevulde wenkbrauwen.' },
-          { name: 'Powder / Ombre Brows',                     price: '€250',       image: B, description: 'Zachte poederkleur die vervaagt van licht naar donker voor een make-up effect.' },
-          { name: 'Combi Brows',                              price: '€270',       image: A, description: 'Combinatie van hairstroke en powder voor volle, definitieve wenkbrauwen.' },
-          { name: 'Ontbrekende stukjes / littekens opvullen', price: 'Vanaf €100', image: B, description: 'Correctie en camouflage van kale plekken, asymmetrie of littekens.' },
-        ]
-      },
-      {
-        subtitle: 'Ogen',
-        items: [
-          { name: 'Infralash / Deepliner (boven of onder)', price: '€150', image: A, description: 'Subtiele kleurlijn langs de wimperrand voor meer diepte en expressie.' },
-          { name: 'Deepliner (boven én onder)',             price: '€220', image: B, description: 'Volledige permanente eyeliner voor een intensere, tijdloze blik.' },
-        ]
-      },
-      {
-        subtitle: 'Lippen',
-        items: [
-          { name: 'Lipliner',  price: '€275', image: A, description: 'Precieze permanente lipomlijning voor een vollere, symmetrische mond.' },
-          { name: 'Full Lips', price: '€350', image: B, description: 'Volledige kleurpigmentatie van lip tot lip voor een permanent mooie mond.' },
-        ]
-      }
-    ]
-  },
-  ontharen: {
-    footerNote: 'Mondkapje is verplicht bij alle onthaarbehandelingen.',
-    groups: [{
-      items: [
-        { name: '1 zone',                   price: '€5',  image: A, description: 'Bovenlip, kin, kaaklyn of onderrug.' },
-        { name: 'Bovenlip + kin',           price: '€9',  image: B, description: 'Twee zones gecombineerd in één efficiënte behandeling.' },
-        { name: 'Bovenlip + kin + kaaklyn', price: '€15', image: A, description: 'Drie zones in één sessie voor volledig gezichtsontharing.' },
-        { name: 'Extra zone (toeslag)',     price: '+€5', image: B, description: 'Voeg een extra zone toe aan je bestaande behandeling.' },
-      ]
-    }]
-  },
-}
-
 function TreatmentCard({ t }: { t: Treatment }) {
   return (
-    <div className="flex gap-6 py-5 md:gap-8">
+    <Link
+      href={`/behandelingen/${t.slug}`}
+      className="group flex gap-6 py-5 no-underline transition-opacity duration-200 hover:opacity-80 md:gap-8"
+    >
       {/* Oval image — border ring + padding */}
       <div className="shrink-0 rounded-full border border-foreground/12 p-1.5">
         <div className="relative h-[152px] w-[96px] overflow-hidden rounded-full">
@@ -110,7 +27,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
             alt=""
             fill
             aria-hidden
-            className="object-cover object-center"
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
             sizes="96px"
           />
         </div>
@@ -144,14 +61,14 @@ function TreatmentCard({ t }: { t: Treatment }) {
               </span>
             )}
             {t.tag && (
-              <span className="rounded-full bg-accent/10 px-4 py-2 text-[14px] font-medium text-accent">
+              <span className="inline-flex items-center rounded-full border border-accent/40 px-4 py-2 text-[14px] font-medium text-accent">
                 {t.tag}
               </span>
             )}
           </div>
         )}
       </div>
-    </div>
+    </Link>
   )
 }
 
