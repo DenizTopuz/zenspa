@@ -47,17 +47,17 @@ export function SiteFooter() {
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
 
         {/* Contact bar */}
-        <div className="grid grid-cols-2 gap-8 py-12 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-10 py-16 md:grid-cols-4">
           {contactBar.map(({ icon: Icon, label, value, href }) => (
-            <div key={label} className="flex items-start gap-4">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/6">
-                <Icon className="h-5 w-5 text-white/55" aria-hidden />
+            <div key={label} className="flex items-start gap-5">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/6">
+                <Icon className="h-6 w-6 text-white/55" aria-hidden />
               </span>
               <div>
-                <p className="text-[13px] text-white/40">{label}</p>
+                <p className="text-[17px] font-semibold text-white/55">{label}</p>
                 {href
-                  ? <a href={href} className="mt-1 block text-[16px] text-white/80 transition-colors hover:text-white">{value}</a>
-                  : <p className="mt-1 text-[16px] text-white/80">{value}</p>
+                  ? <a href={href} className="mt-1.5 block text-[18px] font-medium text-white/85 transition-colors hover:text-white">{value}</a>
+                  : <p className="mt-1.5 text-[18px] font-medium text-white/85">{value}</p>
                 }
               </div>
             </div>
@@ -71,7 +71,7 @@ export function SiteFooter() {
 
           {/* Newsletter */}
           <div className="flex flex-col gap-6">
-            <ZenSpaLogo className="h-14 w-auto text-white" />
+            <ZenSpaLogo className="h-14 w-auto self-start text-white" />
             <p className="text-[15px] leading-[1.75] text-white/45">
               Maandelijkse wellness tips en exclusieve aanbiedingen.<br />
               Join 1.000+ tevreden klanten.
