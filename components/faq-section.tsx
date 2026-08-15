@@ -71,75 +71,70 @@ export function FaqSection() {
   return (
     <section id="faq" className="py-24 md:py-36 lg:py-48" aria-labelledby="faq-heading">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-        <div className="grid items-start gap-16 lg:grid-cols-[3fr_2fr] lg:gap-20">
 
-          {/* Left — heading + accordion */}
-          <div>
-            <div className="mb-12">
-              <span className="mb-5 block text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">
-                Veelgestelde vragen
-              </span>
-              <h2
-                id="faq-heading"
-                className="font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px] lg:text-[64px]"
-              >
-                Alles wat je wilt weten.
-              </h2>
-              <p className="mt-5 max-w-[520px] text-[17px] leading-[1.85] text-muted-foreground">
-                Alles wat je wilt weten voor je eerste bezoek — en een paar dingen waar je nog niet aan had gedacht.
-              </p>
-            </div>
+        {/* Heading — above the grid so the card aligns with the first question */}
+        <div className="mb-12">
+          <span className="mb-5 block text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">
+            Veelgestelde vragen
+          </span>
+          <h2
+            id="faq-heading"
+            className="font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px] lg:text-[64px]"
+          >
+            Alles wat je wilt weten.
+          </h2>
+          <p className="mt-5 max-w-[520px] text-[17px] leading-[1.85] text-muted-foreground">
+            Alles wat je wilt weten voor je eerste bezoek — en een paar dingen waar je nog niet aan had gedacht.
+          </p>
+        </div>
 
-            {/* First item border-top */}
-            <div className="border-t border-foreground/10">
-              {faqs.map((f, i) => (
-                <AccordionItem
-                  key={f.q}
-                  q={f.q}
-                  a={f.a}
-                  open={openIdx === i}
-                  onToggle={() => toggle(i)}
-                />
-              ))}
-            </div>
+        {/* Grid: accordion | card — both start at the first divider line */}
+        <div className="grid items-stretch gap-12 lg:grid-cols-[3fr_2fr] lg:gap-16">
+
+          {/* Left — accordion */}
+          <div className="border-t border-foreground/10">
+            {faqs.map((f, i) => (
+              <AccordionItem
+                key={f.q}
+                q={f.q}
+                a={f.a}
+                open={openIdx === i}
+                onToggle={() => toggle(i)}
+              />
+            ))}
           </div>
 
-          {/* Right — sticky contact card */}
-          <div className="lg:sticky lg:top-28">
-            <div className="relative overflow-hidden rounded-3xl">
-              {/* Background image */}
-              <Image
-                src="/hero.jpg"
-                alt=""
-                aria-hidden
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 1024px) 100vw, 600px"
-              />
-              {/* Dark overlay */}
-              <div className="absolute inset-0 bg-foreground/60" />
+          {/* Right — card stretches to accordion height */}
+          <div className="relative overflow-hidden rounded-3xl">
+            <Image
+              src="/hero.jpg"
+              alt=""
+              aria-hidden
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 600px"
+            />
+            <div className="absolute inset-0 bg-foreground/58" />
 
-              {/* Content */}
-              <div className="relative flex flex-col items-center gap-8 px-10 py-16 text-center text-white md:px-14 md:py-20">
-                <p className="text-[13px] font-medium tracking-wide text-white/65">
-                  +31 (0)20 123 4567 · Ma–Za, 9:00–18:00
-                </p>
+            <div className="relative flex h-full flex-col items-center justify-center gap-8 px-10 py-16 text-center text-white md:px-14">
+              <p className="text-[13px] font-medium tracking-wide text-white/65">
+                +31 (0)20 123 4567 · Ma–Za, 9:00–18:00
+              </p>
 
-                <h3 className="font-heading text-[36px] leading-[1.1] tracking-tight md:text-[44px]">
-                  Weet je niet waar<br />te beginnen?
-                </h3>
+              <h3 className="font-heading text-[36px] leading-[1.1] tracking-tight md:text-[44px]">
+                Weet je niet waar<br />te beginnen?
+              </h3>
 
-                <p className="max-w-[320px] text-[16px] leading-[1.75] text-white/70">
-                  Ons team helpt je de juiste behandeling te vinden voor jouw huid, doelen en planning.
-                </p>
+              <p className="max-w-[300px] text-[16px] leading-[1.75] text-white/70">
+                Ons team helpt je de juiste behandeling te vinden voor jouw huid, doelen en planning.
+              </p>
 
-                <a
-                  href="/#contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-medium text-foreground transition-all duration-300 hover:bg-white/90 hover:shadow-lg"
-                >
-                  Spreek met ons team ›
-                </a>
-              </div>
+              <a
+                href="/#contact"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-medium text-foreground transition-all duration-300 hover:bg-white/90 hover:shadow-lg"
+              >
+                Spreek met ons team ›
+              </a>
             </div>
           </div>
 
