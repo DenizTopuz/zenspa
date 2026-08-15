@@ -43,6 +43,7 @@ const navCols = [
 
 export function SiteFooter() {
   return (
+    <div className="bg-muted/25">
     <footer className="rounded-t-[80px] bg-foreground text-white md:rounded-t-[112px]">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
 
@@ -54,7 +55,7 @@ export function SiteFooter() {
                 <Icon className="h-6 w-6 text-white/55" aria-hidden />
               </span>
               <div>
-                <p className="text-[17px] font-semibold text-white/55">{label}</p>
+                <p className="font-heading text-[22px] text-white/70">{label}</p>
                 {href
                   ? <a href={href} className="mt-1.5 block text-[18px] font-medium text-white/85 transition-colors hover:text-white">{value}</a>
                   : <p className="mt-1.5 text-[18px] font-medium text-white/85">{value}</p>
@@ -150,5 +151,6 @@ export function SiteFooter() {
 
       </div>
     </footer>
+    </div>
   )
 }
