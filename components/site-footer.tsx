@@ -51,8 +51,8 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 gap-10 py-16 md:grid-cols-4">
           {contactBar.map(({ icon: Icon, label, value, href }) => (
             <div key={label} className="flex items-start gap-5">
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/6">
-                <Icon className="h-6 w-6 text-white/55" aria-hidden />
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/6">
+                <Icon className="h-7 w-7 text-white/55" aria-hidden />
               </span>
               <div>
                 <p className="font-heading text-[22px] text-white/70">{label}</p>
