@@ -12,6 +12,7 @@ import { CountUp } from "@/components/count-up"
 import { CtaBand } from "@/components/cta-band"
 import { Behandelingen } from "@/components/behandelingen"
 import { ReviewsCarousel } from "@/components/reviews-carousel"
+import { FaqSection } from "@/components/faq-section"
 import { serviceCategories } from "@/lib/services-data"
 
 const marqueeItems = [
@@ -413,6 +414,7 @@ export default function Page() {
         <Behandelingen />
         <Process />
         <ReviewsCarousel />
+        <FaqSection />
         <Journal />
       </main>
       <SiteFooter />
