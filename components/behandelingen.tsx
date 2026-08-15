@@ -95,7 +95,7 @@ export function Behandelingen() {
   }, [activeIdx])
 
   return (
-    <section id="pricing" aria-labelledby="behandelingen-heading" className="py-24 md:py-36 lg:py-48">
+    <section id="pricing" aria-labelledby="behandelingen-heading" className="section-fade py-24 md:py-36 lg:py-48">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
 
         {/* Header — centered */}

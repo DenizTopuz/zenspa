@@ -69,7 +69,7 @@ export function FaqSection() {
   const toggle = (i: number) => setOpenIdx(openIdx === i ? null : i)
 
   return (
-    <section id="faq" className="py-24 md:py-36 lg:py-48" aria-labelledby="faq-heading">
+    <section id="faq" className="section-fade py-24 md:py-36 lg:py-48" aria-labelledby="faq-heading">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
 
         {/* Heading — above the grid so the card aligns with the first question */}

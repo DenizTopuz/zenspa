@@ -161,7 +161,7 @@ const statsItems = [
 
 function Stats() {
   return (
-    <section className="py-20 md:py-28">
+    <section className="section-fade py-20 md:py-28">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <div className="grid grid-cols-2 gap-10 md:flex md:justify-between md:items-start">
           {statsItems.map((item, i) => (
@@ -186,7 +186,7 @@ function Stats() {
 
 function About() {
   return (
-    <section id="about" className="pt-14 pb-28 md:pt-16 md:pb-40 lg:pt-20 lg:pb-52" aria-labelledby="about-heading">
+    <section id="about" className="section-fade pt-14 pb-28 md:pt-16 md:pb-40 lg:pt-20 lg:pb-52" aria-labelledby="about-heading">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
@@ -306,7 +306,7 @@ function About() {
 
 function Process() {
   return (
-    <section className="bg-accent py-36 md:py-48" aria-labelledby="process-heading">
+    <section className="section-fade bg-accent py-36 md:py-48" aria-labelledby="process-heading">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
           <span className="text-[12px] font-semibold tracking-[0.2em] text-white/45 uppercase">
@@ -341,7 +341,7 @@ function Process() {
 
 function Journal() {
   return (
-    <section className="bg-muted/25 py-36 md:py-48" aria-labelledby="journal-heading">
+    <section className="section-fade bg-muted/25 py-36 md:py-48" aria-labelledby="journal-heading">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <Reveal className="mb-20 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-4">

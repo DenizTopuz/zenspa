@@ -54,7 +54,7 @@ export function ReviewsCarousel() {
   const next = () => setIdx((i) => (i + 1) % testimonials.length)
 
   return (
-    <section id="stories" className="py-24 md:py-36 lg:py-48" aria-labelledby="reviews-heading">
+    <section id="stories" className="section-fade py-24 md:py-36 lg:py-48" aria-labelledby="reviews-heading">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
 
         {/* Header */}

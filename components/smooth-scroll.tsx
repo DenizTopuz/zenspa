@@ -33,10 +33,26 @@ export function SmoothScroll() {
 
     document.addEventListener('click', handleClick)
 
+    // Section fade-in
+    const sections = document.querySelectorAll<HTMLElement>('.section-fade')
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('section-visible')
+            sectionObserver.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.06, rootMargin: '0px 0px -60px 0px' },
+    )
+    sections.forEach((s) => sectionObserver.observe(s))
+
     return () => {
       cancelAnimationFrame(raf)
       lenis.destroy()
       document.removeEventListener('click', handleClick)
+      sectionObserver.disconnect()
     }
   }, [])
 

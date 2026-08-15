@@ -155,6 +155,18 @@
     }
 }
 
+/* ── Section fade-in (whole sections, triggered by IntersectionObserver) ── */
+.section-fade {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.section-fade.section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── Scroll reveal ─────────────────────────────────────────────── */
 .reveal-item {
   opacity: 0;
@@ -203,6 +215,11 @@
 @media (prefers-reduced-motion: reduce) {
   .stamp-rotate {
     animation: none !important;
+  }
+  .section-fade {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
   .reveal-item {
     opacity: 1 !important;

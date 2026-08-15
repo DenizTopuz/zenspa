@@ -142,7 +142,7 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="bg-card py-24 md:py-32"
+      className="section-fade bg-card py-24 md:py-32"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >

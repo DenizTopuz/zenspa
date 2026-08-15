@@ -35,7 +35,7 @@ export function CtaBand() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden py-44 md:py-56"
+      className="section-fade relative overflow-hidden py-44 md:py-56"
       aria-labelledby="cta-heading"
     >
       {/* Parallax background photo */}
