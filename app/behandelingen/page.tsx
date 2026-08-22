@@ -82,10 +82,8 @@ export default function BehandelingenPage() {
         {/* ── Hero ──────────────────────────────────────────────────── */}
         <BehandelingenHero />
 
-        {/* Rounded pullup from hero */}
-        <div className="relative z-10 -mt-20 rounded-t-[80px] bg-background md:-mt-28 md:rounded-t-[112px]" />
-
-        {/* ── Category sections ─────────────────────────────────────── */}
+        {/* ── Category sections (rounded pullup over hero) ──────────── */}
+        <div className="relative z-10 -mt-20 rounded-t-[80px] bg-background md:-mt-28 md:rounded-t-[112px]">
         {CATS.map((cat, catIdx) => {
           const tabData = DATA[cat.key]
           return (
@@ -140,6 +138,7 @@ export default function BehandelingenPage() {
             </section>
           )
         })}
+        </div>
 
         <FaqSection />
       </main>
