@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import {
-  ArrowUpRight, BadgeCheck, Clock, Leaf, Lock, Sparkles, Users,
-} from 'lucide-react'
+import { ArrowUpRight, Clock } from 'lucide-react'
 import { SiteNav } from '@/components/site-nav'
 import { SiteFooter } from '@/components/site-footer'
 import { FaqSection } from '@/components/faq-section'
@@ -10,14 +8,6 @@ import { Reveal } from '@/components/reveal'
 import { BehandelingenHero } from '@/components/behandelingen-hero'
 import { DATA, type TabKey, type Treatment } from '@/lib/behandelingen-data'
 
-const marqueeItems = [
-  { icon: BadgeCheck, label: 'Gecertificeerd' },
-  { icon: Leaf,       label: 'Natuurlijke producten' },
-  { icon: Lock,       label: 'Privacy' },
-  { icon: Sparkles,   label: '25+ behandelingen' },
-  { icon: Clock,      label: '20+ jaar ervaring' },
-  { icon: Users,      label: '1000+ tevreden klanten' },
-]
 
 const CATS: Array<{ key: TabKey; title: string; desc: string }> = [
   {
@@ -92,41 +82,17 @@ export default function BehandelingenPage() {
         {/* ── Hero ──────────────────────────────────────────────────── */}
         <BehandelingenHero />
 
-        {/* ── Marquee pullup ────────────────────────────────────────── */}
-        <section
-          aria-hidden
-          className="relative z-10 -mt-20 overflow-hidden rounded-t-[80px] bg-background md:-mt-28 md:rounded-t-[112px]"
-        >
-          <div className="relative py-12 md:py-16">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-48 bg-gradient-to-r from-background to-transparent md:w-72" aria-hidden />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-48 bg-gradient-to-l from-background to-transparent md:w-72" aria-hidden />
-            <div className="marquee-track">
-              {[...marqueeItems, ...marqueeItems].map((item, i) => {
-                const Icon = item.icon
-                return (
-                  <span
-                    key={i}
-                    className="inline-flex shrink-0 items-center gap-5 px-10 font-heading text-[22px] text-foreground/65 md:px-16 md:text-[28px]"
-                  >
-                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent/15 md:h-16 md:w-16">
-                      <Icon className="h-7 w-7 text-accent md:h-8 md:w-8" aria-hidden />
-                    </span>
-                    {item.label}
-                  </span>
-                )
-              })}
-            </div>
-          </div>
-        </section>
+        {/* Rounded pullup from hero */}
+        <div className="relative z-10 -mt-20 rounded-t-[80px] bg-background md:-mt-28 md:rounded-t-[112px]" />
 
         {/* ── Category sections ─────────────────────────────────────── */}
-        {CATS.map((cat) => {
+        {CATS.map((cat, catIdx) => {
           const tabData = DATA[cat.key]
           return (
             <section
               key={cat.key}
               id={cat.key}
-              className="section-fade py-16 md:py-24 lg:py-32"
+              className={`section-fade ${catIdx === 0 ? 'pt-12 pb-16 md:pt-16 md:pb-24' : 'py-16 md:py-24 lg:py-32'}`}
               aria-labelledby={`${cat.key}-heading`}
             >
               <div className="mx-auto max-w-[1840px] px-4 md:px-6">
