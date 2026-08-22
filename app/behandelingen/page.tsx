@@ -36,7 +36,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group relative overflow-hidden rounded-3xl bg-card
+      className="group relative overflow-hidden rounded-3xl bg-muted/40
                  shadow-[0_2px_10px_rgba(0,0,0,0.08)]
                  transition-all duration-300 ease-out
                  hover:-translate-y-1.5 hover:shadow-[0_6px_24px_rgba(0,0,0,0.13)]
@@ -60,10 +60,10 @@ function TreatmentCard({ t }: { t: Treatment }) {
       </div>
 
       {/* Bottom bar */}
-      <div className="flex items-center justify-between gap-3 p-5">
+      <div className="flex items-center justify-between gap-3 border-t border-foreground/8 bg-card p-5">
         <div className="min-w-0">
           <p className="truncate text-[17px] font-semibold leading-tight">{t.name}</p>
-          <p className="mt-1 text-[15px] font-semibold text-accent">{t.price}</p>
+          <p className="mt-1 text-[16px] font-bold text-accent">{t.price}</p>
         </div>
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">
           <ArrowUpRight className="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-background" />
