@@ -61,7 +61,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
               </span>
             )}
             {t.tag && (
-              <span className="inline-flex items-center rounded-full border border-accent/40 px-4 py-2 text-[14px] font-medium text-accent">
+              <span className="inline-flex items-center rounded-full bg-accent px-4 py-2 text-[14px] font-medium text-white">
                 {t.tag}
               </span>
             )}
