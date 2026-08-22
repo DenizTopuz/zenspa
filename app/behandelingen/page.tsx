@@ -90,7 +90,7 @@ export default function BehandelingenPage() {
             <section
               key={cat.key}
               id={cat.key}
-              className={`section-fade ${catIdx === 0 ? 'pt-12 pb-16 md:pt-16 md:pb-24' : 'py-16 md:py-24 lg:py-32'}`}
+              className={`section-fade ${catIdx === 0 ? 'pt-20 pb-16 md:pt-28 md:pb-24' : 'py-16 md:py-24 lg:py-32'}`}
               aria-labelledby={`${cat.key}-heading`}
             >
               <div className="mx-auto max-w-[1840px] px-4 md:px-6">
