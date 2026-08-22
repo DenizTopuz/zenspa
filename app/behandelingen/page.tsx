@@ -45,10 +45,15 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group overflow-hidden rounded-2xl border border-foreground/8 bg-card transition-all duration-300 hover:-translate-y-1.5 hover:border-foreground/18 hover:shadow-[0_8px_32px_rgba(0,0,0,0.10)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+      className="group relative overflow-hidden rounded-3xl bg-secondary/30
+                 border border-foreground/8
+                 transition-all duration-300 ease-out
+                 hover:-translate-y-1.5 hover:border-foreground/18
+                 hover:shadow-[0_4px_20px_rgba(0,0,0,0.10)]
+                 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
       {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-secondary/30">
+      <div className="relative aspect-[3/4] overflow-hidden">
         <Image
           src={t.image || '/hero.jpg'}
           alt=""
@@ -64,15 +69,15 @@ function TreatmentCard({ t }: { t: Treatment }) {
         )}
       </div>
 
-      {/* Footer */}
-      <div className="flex items-center justify-between gap-3 p-4">
+      {/* Bottom bar */}
+      <div className="flex items-center justify-between gap-3 p-5">
         <div className="min-w-0">
-          <p className="truncate font-heading text-[18px] leading-snug">{t.name}</p>
+          <p className="truncate text-[17px] font-semibold leading-tight">{t.name}</p>
           <p className="mt-0.5 text-[13px] text-muted-foreground">{t.price}</p>
         </div>
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-foreground/15 text-foreground transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">
-          <ArrowUpRight className="h-4 w-4 transition-colors duration-300 group-hover:text-background" />
-        </span>
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">
+          <ArrowUpRight className="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-background" />
+        </div>
       </div>
     </Link>
   )
@@ -138,14 +143,13 @@ export default function BehandelingenPage() {
         </section>
 
         {/* ── Category sections ─────────────────────────────────────── */}
-        {CATS.map((cat, catIdx) => {
+        {CATS.map((cat) => {
           const tabData = DATA[cat.key]
-          const bg = catIdx % 2 === 1 ? 'bg-card' : ''
           return (
             <section
               key={cat.key}
               id={cat.key}
-              className={`section-fade py-24 md:py-36 lg:py-44 ${bg}`}
+              className="section-fade py-24 md:py-36 lg:py-44"
               aria-labelledby={`${cat.key}-heading`}
             >
               <div className="mx-auto max-w-[1840px] px-4 md:px-6">
