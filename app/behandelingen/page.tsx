@@ -47,14 +47,13 @@ function TreatmentCard({ t }: { t: Treatment }) {
     <Link
       href={`/behandelingen/${t.slug}`}
       className="group relative overflow-hidden rounded-3xl bg-secondary/30
-                 border border-foreground/8
                  transition-all duration-300 ease-out
-                 hover:-translate-y-1.5 hover:border-foreground/18
+                 hover:-translate-y-1.5
                  hover:shadow-[0_4px_20px_rgba(0,0,0,0.10)]
                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden rounded-t-3xl">
+      <div className="relative aspect-square overflow-hidden">
         <Image
           src={t.image || '/hero.jpg'}
           alt=""
