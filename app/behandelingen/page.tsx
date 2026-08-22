@@ -53,7 +53,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
         {t.tag && (
-          <span className="absolute left-3 top-3 rounded-full bg-accent px-3 py-1 text-[12px] font-medium text-white shadow-sm">
+          <span className="absolute left-4 top-4 rounded-full bg-accent px-4 py-2 text-[14px] font-semibold text-white shadow-md">
             {t.tag}
           </span>
         )}
