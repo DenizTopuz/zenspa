@@ -54,7 +54,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
       {/* Image */}
-      <div className="relative aspect-[3/4] overflow-hidden">
+      <div className="relative aspect-square overflow-hidden rounded-t-3xl">
         <Image
           src={t.image || '/hero.jpg'}
           alt=""
@@ -96,7 +96,7 @@ export default function BehandelingenPage() {
         {/* ── Marquee pullup ────────────────────────────────────────── */}
         <section
           aria-hidden
-          className="relative z-10 -mt-20 overflow-hidden rounded-t-[80px] bg-background pb-2 md:-mt-28 md:rounded-t-[112px] md:pb-4"
+          className="relative z-10 -mt-20 overflow-hidden rounded-t-[80px] bg-background md:-mt-28 md:rounded-t-[112px]"
         >
           <div className="relative py-12 md:py-16">
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-48 bg-gradient-to-r from-background to-transparent md:w-72" aria-hidden />
@@ -127,7 +127,7 @@ export default function BehandelingenPage() {
             <section
               key={cat.key}
               id={cat.key}
-              className="section-fade py-24 md:py-36 lg:py-44"
+              className="section-fade py-16 md:py-24 lg:py-32"
               aria-labelledby={`${cat.key}-heading`}
             >
               <div className="mx-auto max-w-[1840px] px-4 md:px-6">
