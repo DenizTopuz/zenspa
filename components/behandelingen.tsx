@@ -17,7 +17,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group flex gap-6 py-5 no-underline transition-opacity duration-200 hover:opacity-80 md:gap-8"
+      className="group -mx-4 flex gap-6 rounded-2xl px-4 py-5 no-underline transition-all duration-200 hover:bg-accent/[0.06] md:gap-8"
     >
       {/* Oval image — border ring + padding */}
       <div className="shrink-0 rounded-full border border-foreground/12 p-1.5">
