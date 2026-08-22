@@ -47,9 +47,9 @@ function TreatmentCard({ t }: { t: Treatment }) {
     <Link
       href={`/behandelingen/${t.slug}`}
       className="group relative overflow-hidden rounded-3xl bg-secondary/30
+                 shadow-[0_2px_10px_rgba(0,0,0,0.08)]
                  transition-all duration-300 ease-out
-                 hover:-translate-y-1.5
-                 hover:shadow-[0_4px_20px_rgba(0,0,0,0.10)]
+                 hover:-translate-y-1.5 hover:shadow-[0_6px_24px_rgba(0,0,0,0.13)]
                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
       {/* Image */}
@@ -154,7 +154,7 @@ export default function BehandelingenPage() {
                         </h3>
                       </Reveal>
                     )}
-                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-5 lg:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-4 py-3 sm:grid-cols-3 md:gap-5 lg:grid-cols-4">
                       {group.items.map((t, ti) => (
                         <Reveal key={t.slug} delay={ti * 55}>
                           <TreatmentCard t={t} />
