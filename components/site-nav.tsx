@@ -6,11 +6,11 @@ import { Menu, X, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
-  { href: '/',         label: 'Home' },
-  { href: '#services', label: 'Behandelingen' },
-  { href: '#about',    label: 'Over ons' },
-  { href: '#pricing',  label: 'Prijzen' },
-  { href: '#stories',  label: 'Reviews' },
+  { href: '/',              label: 'Home' },
+  { href: '/behandelingen', label: 'Behandelingen' },
+  { href: '/#about',        label: 'Over ons' },
+  { href: '/#pricing',      label: 'Prijzen' },
+  { href: '/#stories',      label: 'Reviews' },
 ]
 
 export function SiteNav() {
