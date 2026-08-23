@@ -36,7 +36,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group relative overflow-hidden rounded-3xl
+      className="group relative overflow-hidden rounded-3xl bg-card
                  border border-foreground/14
                  shadow-[0_1px_6px_rgba(0,0,0,0.07)]
                  transition-all duration-300 ease-out
@@ -45,7 +45,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden">
+      <div className="relative aspect-square overflow-hidden rounded-t-3xl">
         <Image
           src={t.image || '/hero.jpg'}
           alt=""
@@ -62,8 +62,8 @@ function TreatmentCard({ t }: { t: Treatment }) {
         )}
       </div>
 
-      {/* Bottom bar — opaque bg so the outer rounded-3xl clips visible bottom corners */}
-      <div className="flex items-center justify-between gap-3 bg-secondary p-5">
+      {/* Bottom bar */}
+      <div className="flex items-center justify-between gap-3 bg-secondary/50 p-5 rounded-b-3xl">
         <div className="min-w-0">
           <p className="truncate text-[17px] font-semibold leading-tight">{t.name}</p>
           <p className="mt-1 text-[16px] font-bold text-accent">{t.price}</p>
@@ -121,7 +121,7 @@ export default function BehandelingenPage() {
                         </h3>
                       </Reveal>
                     )}
-                    <div className="grid grid-cols-2 gap-4 py-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4">
                       {group.items.map((t, ti) => (
                         <Reveal key={t.slug} delay={ti * 55}>
                           <TreatmentCard t={t} />
