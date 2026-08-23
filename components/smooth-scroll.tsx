@@ -1,9 +1,13 @@
 'use client'
 
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Lenis from 'lenis'
 
 export function SmoothScroll() {
+  const pathname = usePathname()
+
+  // Lenis smooth scroll — set up once for the lifetime of the app
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.8,
@@ -12,15 +16,12 @@ export function SmoothScroll() {
     })
 
     let raf: number
-
     function loop(time: number) {
       lenis.raf(time)
       raf = requestAnimationFrame(loop)
     }
-
     raf = requestAnimationFrame(loop)
 
-    // Keep anchor-link clicks going through Lenis with the same slow pace
     function handleClick(e: MouseEvent) {
       const anchor = (e.target as Element).closest('a[href^="#"]')
       if (!anchor) return
@@ -30,11 +31,18 @@ export function SmoothScroll() {
       e.preventDefault()
       lenis.scrollTo(target, { offset: -80 })
     }
-
     document.addEventListener('click', handleClick)
 
-    // Section fade-in
-    const sections = document.querySelectorAll<HTMLElement>('.section-fade')
+    return () => {
+      cancelAnimationFrame(raf)
+      lenis.destroy()
+      document.removeEventListener('click', handleClick)
+    }
+  }, [])
+
+  // Section fade-in — re-run on every route change so newly mounted
+  // sections are observed even after client-side navigation
+  useEffect(() => {
     const sectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -46,15 +54,11 @@ export function SmoothScroll() {
       },
       { threshold: 0.06, rootMargin: '0px 0px -60px 0px' },
     )
-    sections.forEach((s) => sectionObserver.observe(s))
-
-    return () => {
-      cancelAnimationFrame(raf)
-      lenis.destroy()
-      document.removeEventListener('click', handleClick)
-      sectionObserver.disconnect()
-    }
-  }, [])
+    document.querySelectorAll<HTMLElement>('.section-fade').forEach((s) =>
+      sectionObserver.observe(s)
+    )
+    return () => sectionObserver.disconnect()
+  }, [pathname])
 
   return null
 }
