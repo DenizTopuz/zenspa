@@ -128,7 +128,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
         {/* ── 3. Pull quote ────────────────────────────────────────── */}
         <section className="section-fade bg-card py-24 md:py-32">
-          <div className="mx-auto max-w-4xl px-6 text-center">
+          <div className="mx-auto max-w-5xl px-4 md:px-6 text-center">
             <Reveal>
               <p className="font-heading text-[26px] leading-[1.5] tracking-tight text-foreground/80 md:text-[34px] lg:text-[40px]">
                 {content.pullQuote}
@@ -139,7 +139,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
         {/* ── 4. Three-column info ─────────────────────────────────── */}
         <section className="section-fade bg-background py-16 md:py-20">
-          <div className="mx-auto max-w-[1400px] px-6">
+          <div className="mx-auto max-w-[1840px] px-4 md:px-6">
             <Reveal>
               <div className="grid grid-cols-1 divide-y divide-foreground/8 md:grid-cols-3 md:divide-x md:divide-y-0">
 
@@ -177,12 +177,12 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
         {/* ── 5. Image + text ──────────────────────────────────────── */}
         <section className="section-fade bg-card py-24 md:py-36 lg:py-44">
-          <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 lg:grid-cols-2 lg:gap-24">
+          <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-4 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
             {/* Image with stamp badge */}
             <Reveal>
               <div className="relative">
-                <div className="aspect-[3/4] overflow-hidden rounded-[40px]">
+                <div className="relative aspect-square overflow-hidden rounded-[48px]">
                   <Image
                     src={t.image ?? '/hero.jpg'}
                     alt={t.name}
@@ -190,17 +190,24 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                     className="object-cover object-center"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
+                  {/* Frosted caption */}
+                  <div className="absolute bottom-5 left-5 right-5 flex items-center gap-4 rounded-2xl bg-black/42 px-6 py-5 backdrop-blur-md md:px-8 md:py-6">
+                    <Sparkles className="h-6 w-6 shrink-0 text-white/70 md:h-7 md:w-7" aria-hidden />
+                    <p className="text-[15px] font-medium leading-snug text-white md:text-[17px]">
+                      {content.pullQuote.split('—')[0].trim()}.
+                    </p>
+                  </div>
                 </div>
 
-                {/* Spinning stamp badge */}
-                <div className="absolute -right-6 top-8 md:-right-12">
-                  <div className="relative flex h-[148px] w-[148px] items-center justify-center rounded-full border border-foreground/12 bg-background shadow-xl md:h-[180px] md:w-[180px]">
+                {/* Spinning stamp badge — left side matching homepage About */}
+                <div className="absolute -left-8 top-8 md:-left-14">
+                  <div className="relative flex h-[160px] w-[160px] items-center justify-center rounded-full border border-foreground/12 bg-background shadow-xl md:h-[200px] md:w-[200px]">
                     <svg className="absolute inset-0 h-full w-full stamp-rotate" viewBox="0 0 128 128" aria-hidden>
                       <defs>
                         <path id="badge-arc" d="M 64,64 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" />
                       </defs>
                       <text fill="currentColor" className="text-foreground/40"
-                        style={{ fontSize: '7.5px', fontWeight: 600, letterSpacing: '0.30em' }}>
+                        style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.32em' }}>
                         <textPath href="#badge-arc" startOffset="0%">ZEN SPA · RITUEEL ·</textPath>
                         <textPath href="#badge-arc" startOffset="50%">ZEN SPA · RITUEEL ·</textPath>
                       </text>
@@ -215,33 +222,38 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
             </Reveal>
 
             {/* Text */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-8">
               <Reveal>
-                <h2 className="font-heading text-[36px] leading-[1.1] tracking-tight md:text-[46px] lg:text-[54px]">
+                <span className="text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">
+                  {t.category ?? 'Behandeling'}
+                </span>
+              </Reveal>
+              <Reveal delay={60}>
+                <h2 className="font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px] lg:text-[68px] xl:text-[80px]">
                   {content.heading}
                 </h2>
               </Reveal>
-              <Reveal delay={60}>
-                <p className="text-[17px] leading-[1.85] text-muted-foreground">
+              <Reveal delay={100}>
+                <p className="text-[17px] leading-[1.85] text-muted-foreground md:text-[18px]">
                   {content.body}
                 </p>
               </Reveal>
-              <Reveal delay={100}>
-                <ul className="flex flex-col gap-3">
+              <Reveal delay={140}>
+                <ul className="flex flex-col gap-4">
                   {content.benefits.map((b, i) => (
-                    <li key={i} className="flex items-center gap-3 text-[16px]">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/12 text-accent">
-                        <Check className="h-3 w-3" aria-hidden />
+                    <li key={i} className="flex items-center gap-4 text-[17px]">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/12 text-accent">
+                        <Check className="h-3.5 w-3.5" aria-hidden />
                       </span>
                       {b}
                     </li>
                   ))}
                 </ul>
               </Reveal>
-              <Reveal delay={140}>
-                <div className="mt-2 border-t border-foreground/10 pt-6">
-                  <p className="mb-3 text-[11px] font-semibold tracking-[0.18em] text-foreground/40 uppercase">Ideaal voor</p>
-                  <p className="text-[16px] leading-[1.7] text-muted-foreground">
+              <Reveal delay={190}>
+                <div className="border-t border-foreground/10 pt-6">
+                  <p className="mb-3 text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">Ideaal voor</p>
+                  <p className="text-[17px] leading-[1.85] text-muted-foreground">
                     {content.idealFor.join(' · ')}
                   </p>
                 </div>
@@ -253,20 +265,23 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
         {/* ── 6. Stats ─────────────────────────────────────────────── */}
         <section className="section-fade bg-background py-20 md:py-28">
-          <div className="mx-auto max-w-[1400px] px-6">
-            <div className="grid grid-cols-2 gap-y-12 lg:grid-cols-4">
+          <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+            <div className="grid grid-cols-2 gap-10 md:flex md:items-start md:justify-between">
               {([
                 { target: 2400, suffix: '+', label: 'Tevreden klanten' },
                 { target: 98,   suffix: '%', label: 'Klanttevredenheid' },
                 { target: 24,   suffix: '+', label: 'Gecertificeerde specialisten' },
                 { target: 14,   suffix: '+', label: 'Jaar ervaring' },
-              ] as const).map(({ target, suffix, label }) => (
-                <Reveal key={label}>
-                  <div className="flex flex-col gap-2 px-4">
-                    <p className="font-heading text-[52px] font-semibold leading-none md:text-[64px]">
-                      <CountUp target={target} suffix={suffix} />
-                    </p>
-                    <p className="text-[15px] text-muted-foreground">{label}</p>
+              ] as const).map(({ target, suffix, label }, i) => (
+                <Reveal key={label} delay={i * 90}>
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="font-heading text-[52px] leading-none tracking-tight md:text-[64px] lg:text-[76px]">
+                        <CountUp target={target} suffix={suffix} />
+                      </span>
+                      <span className="text-[28px] text-accent md:text-[34px]" aria-hidden>↑</span>
+                    </div>
+                    <p className="text-[16px] text-muted-foreground md:text-[18px]">{label}</p>
                   </div>
                 </Reveal>
               ))}
@@ -276,7 +291,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
         {/* ── 7. Process steps ─────────────────────────────────────── */}
         <section className="section-fade bg-secondary/25 py-24 md:py-36">
-          <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 lg:grid-cols-2 lg:gap-24">
+          <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-4 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
             {/* Steps */}
             <div>
@@ -328,11 +343,11 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
         {/* ── 10. Related treatments ───────────────────────────────── */}
         <section className="section-fade bg-card py-24 md:py-32">
-          <div className="mx-auto max-w-[1400px] px-6">
+          <div className="mx-auto max-w-[1840px] px-4 md:px-6">
             <Reveal>
               <div className="mb-12">
-                <h2 className="font-heading text-[36px] tracking-tight md:text-[48px]">Ontdek ook</h2>
-                <p className="mt-2 text-[17px] text-muted-foreground">Meer behandelingen die bij jou passen.</p>
+                <h2 className="font-heading text-[40px] tracking-tight md:text-[54px] lg:text-[68px]">Ontdek ook</h2>
+                <p className="mt-3 text-[17px] text-muted-foreground md:text-[18px]">Meer behandelingen die bij jou passen.</p>
               </div>
             </Reveal>
             <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">

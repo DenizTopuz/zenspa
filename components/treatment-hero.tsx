@@ -82,7 +82,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
             ))}
           </div>
           <span className="text-[12px] font-semibold tracking-[0.14em] uppercase">
-            Vertrouwd bij 1000+ klanten
+            Vertrouwd door 1000+ klanten
           </span>
         </div>
       </div>
