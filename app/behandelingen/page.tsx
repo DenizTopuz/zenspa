@@ -36,7 +36,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group relative overflow-hidden rounded-3xl bg-secondary/55
+      className="group relative overflow-hidden rounded-3xl
                  border border-foreground/14
                  shadow-[0_1px_6px_rgba(0,0,0,0.07)]
                  transition-all duration-300 ease-out
@@ -62,8 +62,8 @@ function TreatmentCard({ t }: { t: Treatment }) {
         )}
       </div>
 
-      {/* Bottom bar */}
-      <div className="flex items-center justify-between gap-3 p-5">
+      {/* Bottom bar — opaque bg so the outer rounded-3xl clips visible bottom corners */}
+      <div className="flex items-center justify-between gap-3 bg-secondary p-5">
         <div className="min-w-0">
           <p className="truncate text-[17px] font-semibold leading-tight">{t.name}</p>
           <p className="mt-1 text-[16px] font-bold text-accent">{t.price}</p>
