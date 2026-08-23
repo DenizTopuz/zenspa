@@ -36,11 +36,12 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group relative overflow-hidden rounded-3xl bg-secondary/30
-                 border border-foreground/8
+      className="group relative overflow-hidden rounded-3xl bg-secondary/55
+                 border border-foreground/14
+                 shadow-[0_1px_6px_rgba(0,0,0,0.07)]
                  transition-all duration-300 ease-out
-                 hover:-translate-y-2 hover:border-foreground/18
-                 hover:shadow-[0_8px_32px_rgba(0,0,0,0.14)]
+                 hover:-translate-y-2 hover:border-foreground/22
+                 hover:shadow-[0_8px_32px_rgba(0,0,0,0.15)]
                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
       {/* Image */}
