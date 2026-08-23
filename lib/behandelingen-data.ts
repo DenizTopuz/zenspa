@@ -96,3 +96,10 @@ export function getAllTreatments(): Treatment[] {
 export function getTreatmentBySlug(slug: string): Treatment | undefined {
   return getAllTreatments().find(t => t.slug === slug)
 }
+
+export function getRelatedTreatments(slug: string, limit = 4): Treatment[] {
+  const all = getAllTreatments()
+  const current = all.find(t => t.slug === slug)
+  const sameCategory = all.filter(t => t.slug !== slug && t.category === current?.category)
+  return (sameCategory.length >= limit ? sameCategory : all.filter(t => t.slug !== slug)).slice(0, limit)
+}

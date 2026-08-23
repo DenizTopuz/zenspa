@@ -51,10 +51,8 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
     <a
       href={`/behandelingen/${service.slug}`}
       className="group relative shrink-0 overflow-hidden rounded-3xl bg-secondary/30
-                 border border-foreground/8
                  transition-all duration-300 ease-out
                  hover:-translate-y-1.5
-                 hover:border-foreground/18
                  hover:shadow-[0_4px_20px_rgba(0,0,0,0.10)]
                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
       style={{ width: `${cardW}px` }}
