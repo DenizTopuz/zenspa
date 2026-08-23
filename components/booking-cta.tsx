@@ -1,12 +1,36 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+
 export function BookingCTA() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const bgRef     = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!sectionRef.current || !bgRef.current) return
+      const rect  = sectionRef.current.getBoundingClientRect()
+      // visibleRatio goes 0→1 as section enters→leaves the viewport
+      const ratio = (window.innerHeight - rect.top) / (window.innerHeight + rect.height)
+      // shift ±80px so edges never show (background overshoots by 160px total)
+      bgRef.current.style.transform = `translateY(${(ratio - 0.5) * -160}px)`
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <section className="relative isolate overflow-hidden">
-      {/* Parallax background — bg-fixed works on desktop; mobile falls back to scroll */}
+    <section ref={sectionRef} className="relative isolate overflow-hidden">
+      {/* Background — oversized vertically to give the parallax room to move */}
       <div
-        className="absolute inset-0 -z-10 scale-110 bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('/hero.jpg')" }}
+        ref={bgRef}
+        className="-z-10 bg-cover bg-center will-change-transform"
+        style={{
+          backgroundImage: "url('/hero.jpg')",
+          position: 'absolute',
+          inset: '-100px 0',
+        }}
       />
 
       {/* Warm amber overlay */}
@@ -20,7 +44,6 @@ export function BookingCTA() {
           className="h-[640px] w-[640px] opacity-[0.07]"
           aria-hidden
         >
-          {/* Lotus mark — same paths as public/logo-variant.svg first <g> */}
           <path fill="white" d="M91.49,35.28c.31-2.41.33-5.21-.37-8.08-3.4-14.02-14.47-24.79-16.6-26.76-.2-.19-.51-.19-.71,0-2.13,1.97-13.2,12.74-16.6,26.76-.7,2.88-.68,5.67-.37,8.08.42,3.23,1.5,6.34,3.06,9.2,2.94,5.38,11.56,21.63,13.75,30.93.13.54.9.54,1.02,0,2.19-9.29,10.82-25.55,13.75-30.93,1.56-2.86,2.64-5.96,3.06-9.2Z"/>
           <path fill="white" d="M18.39,30.8c-.39-.02-.7.3-.7.68.11,17.17,4.15,21.27,5.06,21.98.11.08.24.13.37.13,24.79,1.14,38.86,17.47,43.6,24.14.42.6,1.36.18,1.21-.54C59.08,34.29,23.82,31.05,18.39,30.8Z"/>
           <path fill="white" d="M125.58,53.6c.14,0,.27-.05.37-.13.91-.71,4.95-4.81,5.06-21.98,0-.39-.32-.7-.7-.68-5.43.24-40.69,3.48-49.54,46.4-.15.72.78,1.13,1.21.54,4.74-6.67,18.81-23,43.6-24.14Z"/>
