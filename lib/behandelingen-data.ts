@@ -76,7 +76,6 @@ export const DATA: Record<TabKey, TabData> = {
     ]
   },
   ontharen: {
-    footerNote: 'Mondkapje is verplicht bij alle onthaarbehandelingen.',
     groups: [{
       items: [
         { name: '1 zone',                   slug: 'ontharen-1-zone',       price: '€5',  image: A, category: 'Ontharen', description: 'Bovenlip, kin, kaaklyn of onderrug.' },

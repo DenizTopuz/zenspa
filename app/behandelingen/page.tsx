@@ -4,6 +4,7 @@ import { ArrowUpRight, Clock } from 'lucide-react'
 import { SiteNav } from '@/components/site-nav'
 import { SiteFooter } from '@/components/site-footer'
 import { FaqSection } from '@/components/faq-section'
+import { BookingCTA } from '@/components/booking-cta'
 import { Reveal } from '@/components/reveal'
 import { BehandelingenHero } from '@/components/behandelingen-hero'
 import { DATA, type TabKey, type Treatment } from '@/lib/behandelingen-data'
@@ -45,7 +46,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden rounded-t-3xl">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
         <Image
           src={t.image || '/hero.jpg'}
           alt=""
@@ -143,6 +144,7 @@ export default function BehandelingenPage() {
         })}
         </div>
 
+        <BookingCTA />
         <FaqSection />
       </main>
       <SiteFooter />
