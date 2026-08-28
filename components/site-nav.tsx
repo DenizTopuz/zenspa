@@ -98,7 +98,6 @@ export function SiteNav() {
               )}
             >
               Afspraak maken
-              <span aria-hidden>›</span>
             </a>
 
             {/* Mobile hamburger */}

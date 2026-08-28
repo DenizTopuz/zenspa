@@ -41,9 +41,9 @@ const navCols = [
   },
 ]
 
-export function SiteFooter() {
+export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
   return (
-    <div className="bg-muted/25">
+    <div className={bg}>
     <footer className="rounded-t-[80px] bg-foreground text-white md:rounded-t-[112px]">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
 

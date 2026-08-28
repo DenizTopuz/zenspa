@@ -23,7 +23,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
 
   return (
     <section
-      className="relative flex min-h-[100svh] items-center overflow-hidden"
+      className="relative flex min-h-[58vh] items-center overflow-hidden"
       aria-label={t.name}
     >
       {/* Parallax image */}
@@ -47,7 +47,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/52 to-black/80" />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto w-full max-w-4xl px-6 pb-20 pt-36 text-center text-white md:pb-28 md:pt-44">
+      <div className="relative z-10 w-full pb-16 pt-32 text-center text-white md:pb-20 md:pt-36">
 
         {/* Price */}
         <div className="mb-6 inline-flex items-center rounded-full border border-white/25 bg-white/10 px-5 py-2 text-[14px] font-semibold text-white/90 backdrop-blur-sm">

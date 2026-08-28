@@ -391,7 +391,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         </section>
 
       </main>
-      <SiteFooter />
+      <SiteFooter bg="bg-card" />
     </>
   )
 }
