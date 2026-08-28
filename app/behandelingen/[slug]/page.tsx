@@ -9,6 +9,7 @@ import { ReviewsCarousel } from '@/components/reviews-carousel'
 import { CountUp } from '@/components/count-up'
 import { BookingCTA } from '@/components/booking-cta'
 import { TreatmentHero } from '@/components/treatment-hero'
+import { TrustPillars } from '@/components/trust-pillars'
 import { getTreatmentBySlug, getAllTreatments, getRelatedTreatments } from '@/lib/behandelingen-data'
 
 // ─── Per-category default content ────────────────────────────────────────────
@@ -20,7 +21,6 @@ const CAT: Record<string, {
   heading: string
   body: string
   steps: Array<{ title: string; description: string }>
-  marquee: string
 }> = {
   Gezicht: {
     frequency: 'Elke 4–6 weken',
@@ -35,7 +35,6 @@ const CAT: Record<string, {
       { title: 'Gerichte Behandeling', description: 'Masker en serum op maat voor jouw specifieke huidbehoefte en -doelen.' },
       { title: 'Afsluiting & Advies', description: 'Intensieve hydratatie en persoonlijk thuisverzorgingsadvies voor langdurig resultaat.' },
     ],
-    marquee: 'Op maat · Kwalitatieve producten · Privé behandelkamer · Gecertificeerde specialisten · Op maat · Kwalitatieve producten · Privé behandelkamer · Gecertificeerde specialisten',
   },
   Lichaam: {
     frequency: 'Naar wens',
@@ -65,7 +64,6 @@ const CAT: Record<string, {
       { title: 'Pigmentatie', description: 'Nauwkeurige techniek voor subtiele, natuurlijk ogende resultaten.' },
       { title: 'Nazorg & Touchup', description: 'Genezingsinstructies en gratis touchup na 6–8 weken inbegrepen.' },
     ],
-    marquee: 'Gecertificeerde PMU-artiesten · Huidveilige pigmenten · Privé behandelkamer · Touchup inbegrepen · Gecertificeerde PMU-artiesten · Huidveilige pigmenten · Privé behandelkamer · Touchup inbegrepen',
   },
   Ontharen: {
     frequency: 'Elke 4–6 weken',
@@ -80,7 +78,6 @@ const CAT: Record<string, {
       { title: 'Ontharing', description: 'Nauwkeurige behandeling van de gewenste zones, snel en effectief.' },
       { title: 'Aftercare', description: 'Kalmerende verzorging voor een comfortabel gevoel na de behandeling.' },
     ],
-    marquee: 'Professionele techniek · Hygiënische producten · Privé behandelkamer · Gecertificeerde specialisten · Professionele techniek · Hygiënische producten · Privé behandelkamer · Gecertificeerde specialisten',
   },
 }
 
@@ -117,20 +114,14 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         {/* ── 1. Hero ───────────────────────────────────────────────── */}
         <TreatmentHero t={t} />
 
-        {/* ── 2. Marquee trust strip ───────────────────────────────── */}
-        <div className="section-fade overflow-hidden border-b border-t border-foreground/8 bg-secondary/20 py-5">
-          <div className="marquee-track gap-16 text-[13px] font-semibold tracking-[0.18em] text-foreground/45 uppercase">
-            {content.marquee.split(' · ').map((item, i) => (
-              <span key={i} className="shrink-0 px-8">{item}</span>
-            ))}
-          </div>
-        </div>
+        {/* ── 2. Trust pillars (same as homepage) ─────────────────── */}
+        <TrustPillars />
 
         {/* ── 3. Pull quote ────────────────────────────────────────── */}
         <section className="section-fade bg-card py-24 md:py-32">
           <div className="mx-auto max-w-5xl px-4 md:px-6 text-center">
             <Reveal>
-              <p className="font-heading text-[26px] leading-[1.5] tracking-tight text-foreground/80 md:text-[34px] lg:text-[40px]">
+              <p className="font-heading text-[40px] leading-[1.15] tracking-tight text-foreground/80 md:text-[56px] lg:text-[68px]">
                 {content.pullQuote}
               </p>
             </Reveal>

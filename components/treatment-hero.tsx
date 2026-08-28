@@ -50,9 +50,9 @@ export function TreatmentHero({ t }: { t: Treatment }) {
       <div className="relative z-10 w-full pb-16 pt-32 text-center text-white md:pb-20 md:pt-36">
 
         {/* Price */}
-        <div className="mb-6 inline-flex items-center rounded-full border border-white/25 bg-white/10 px-5 py-2 text-[14px] font-semibold text-white/90 backdrop-blur-sm">
+        <p className="mb-4 font-heading text-[38px] leading-none tracking-tight text-white/75 md:text-[48px]">
           Vanaf {t.price}
-        </div>
+        </p>
 
         {/* Title */}
         <h1 className="font-heading text-[52px] leading-[1.04] tracking-tight md:text-[72px] lg:text-[88px]">
@@ -68,9 +68,9 @@ export function TreatmentHero({ t }: { t: Treatment }) {
         <div className="mt-9">
           <a
             href="/contact"
-            className="inline-flex items-center gap-2.5 rounded-full bg-white px-10 py-4.5 text-[16px] font-semibold text-stone-900 transition-all duration-300 hover:bg-white/90 hover:gap-4"
+            className="inline-flex items-center rounded-full bg-white px-10 py-4.5 text-[16px] font-semibold text-stone-900 transition-all duration-300 hover:bg-white/90"
           >
-            Afspraak maken ›
+            Afspraak maken
           </a>
         </div>
 
