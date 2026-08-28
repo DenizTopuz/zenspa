@@ -118,10 +118,10 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         <TrustPillars />
 
         {/* ── 3. Pull quote ────────────────────────────────────────── */}
-        <section className="section-fade bg-card py-24 md:py-32">
+        <section className="bg-background py-10 md:py-14">
           <div className="mx-auto max-w-5xl px-4 md:px-6 text-center">
             <Reveal>
-              <p className="font-heading text-[40px] leading-[1.15] tracking-tight text-foreground/80 md:text-[56px] lg:text-[68px]">
+              <p className="font-heading text-[32px] leading-[1.2] tracking-tight text-foreground/80 md:text-[44px] lg:text-[54px]">
                 {content.pullQuote}
               </p>
             </Reveal>
@@ -129,31 +129,35 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         </section>
 
         {/* ── 4. Three-column info ─────────────────────────────────── */}
-        <section className="section-fade bg-background py-16 md:py-20">
+        <section className="bg-background py-8 md:py-10">
           <div className="mx-auto max-w-[1840px] px-4 md:px-6">
             <Reveal>
-              <div className="grid grid-cols-1 divide-y divide-foreground/8 md:grid-cols-3 md:divide-x md:divide-y-0">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between">
 
                 {/* Duur */}
-                <div className="flex flex-col items-center gap-3 px-8 py-10 text-center">
+                <div className="flex flex-1 flex-col items-center gap-2 border-b border-foreground/8 px-8 py-6 text-center md:border-b-0">
                   <Clock className="h-6 w-6 text-accent" aria-hidden />
                   <p className="text-[11px] font-semibold tracking-[0.18em] text-foreground/40 uppercase">Duur</p>
-                  <p className="font-heading text-[30px] font-semibold leading-tight">
+                  <p className="font-heading text-[28px] font-semibold leading-tight">
                     {t.duration ?? '—'}
                   </p>
                 </div>
 
+                <div className="hidden h-20 w-px shrink-0 bg-foreground/8 md:block" aria-hidden />
+
                 {/* Frequentie */}
-                <div className="flex flex-col items-center gap-3 px-8 py-10 text-center">
+                <div className="flex flex-1 flex-col items-center gap-2 border-b border-foreground/8 px-8 py-6 text-center md:border-b-0">
                   <CalendarDays className="h-6 w-6 text-accent" aria-hidden />
                   <p className="text-[11px] font-semibold tracking-[0.18em] text-foreground/40 uppercase">Aanbevolen frequentie</p>
-                  <p className="font-heading text-[30px] font-semibold leading-tight">
+                  <p className="font-heading text-[28px] font-semibold leading-tight">
                     {content.frequency}
                   </p>
                 </div>
 
+                <div className="hidden h-20 w-px shrink-0 bg-foreground/8 md:block" aria-hidden />
+
                 {/* Voordelen */}
-                <div className="flex flex-col items-center gap-3 px-8 py-10 text-center">
+                <div className="flex flex-1 flex-col items-center gap-2 px-8 py-6 text-center">
                   <Sparkles className="h-6 w-6 text-accent" aria-hidden />
                   <p className="text-[11px] font-semibold tracking-[0.18em] text-foreground/40 uppercase">Voordelen</p>
                   <p className="font-heading text-[22px] font-semibold leading-snug">
@@ -167,7 +171,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         </section>
 
         {/* ── 5. Image + text ──────────────────────────────────────── */}
-        <section className="section-fade bg-card py-24 md:py-36 lg:py-44">
+        <section className="section-fade bg-background pt-20 pb-16 md:pt-28 md:pb-20 lg:pt-36 lg:pb-24">
           <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-4 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
             {/* Image with stamp badge */}
@@ -190,9 +194,9 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                   </div>
                 </div>
 
-                {/* Spinning stamp badge — left side matching homepage About */}
-                <div className="absolute -left-8 top-8 md:-left-14">
-                  <div className="relative flex h-[160px] w-[160px] items-center justify-center rounded-full border border-foreground/12 bg-background shadow-xl md:h-[200px] md:w-[200px]">
+                {/* Spinning stamp badge — right side */}
+                <div className="absolute -right-8 top-8 md:-right-14">
+                  <div className="relative flex h-[120px] w-[120px] items-center justify-center rounded-full border border-foreground/12 bg-background shadow-xl md:h-[152px] md:w-[152px]">
                     <svg className="absolute inset-0 h-full w-full stamp-rotate" viewBox="0 0 128 128" aria-hidden>
                       <defs>
                         <path id="badge-arc" d="M 64,64 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" />
@@ -214,11 +218,6 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
             {/* Text */}
             <div className="flex flex-col gap-8">
-              <Reveal>
-                <span className="text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">
-                  {t.category ?? 'Behandeling'}
-                </span>
-              </Reveal>
               <Reveal delay={60}>
                 <h2 className="font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px] lg:text-[68px] xl:text-[80px]">
                   {content.heading}
@@ -255,7 +254,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         </section>
 
         {/* ── 6. Stats ─────────────────────────────────────────────── */}
-        <section className="section-fade bg-background py-20 md:py-28">
+        <section className="section-fade bg-background pt-10 pb-20 md:pt-12 md:pb-28">
           <div className="mx-auto max-w-[1840px] px-4 md:px-6">
             <div className="grid grid-cols-2 gap-10 md:flex md:items-start md:justify-between">
               {([
@@ -296,12 +295,12 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                 {content.steps.map((step, i) => (
                   <Reveal key={i} delay={i * 60}>
                     <div className={`flex gap-6 py-6 ${i < content.steps.length - 1 ? 'border-b border-foreground/10' : ''}`}>
-                      <span className="shrink-0 font-heading text-[13px] font-semibold text-foreground/30">
+                      <span className="shrink-0 font-heading text-[17px] font-semibold text-foreground/30 md:text-[19px]">
                         0{i + 1}
                       </span>
                       <div>
-                        <p className="font-heading text-[18px] font-semibold leading-snug">{step.title}</p>
-                        <p className="mt-1.5 text-[15px] leading-[1.7] text-muted-foreground">{step.description}</p>
+                        <p className="font-heading text-[24px] font-semibold leading-snug md:text-[28px]">{step.title}</p>
+                        <p className="mt-2 text-[17px] leading-[1.75] text-muted-foreground md:text-[18px]">{step.description}</p>
                       </div>
                     </div>
                   </Reveal>
@@ -311,7 +310,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
             {/* Image */}
             <Reveal delay={80}>
-              <div className="aspect-[4/5] overflow-hidden rounded-[40px]">
+              <div className="aspect-square overflow-hidden rounded-[48px]">
                 <Image
                   src={t.image === '/hero.jpg' ? '/bg-leaves.jpg' : '/hero.jpg'}
                   alt=""
