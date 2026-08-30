@@ -10,6 +10,8 @@ import { CountUp } from '@/components/count-up'
 import { BookingCTA } from '@/components/booking-cta'
 import { TreatmentHero } from '@/components/treatment-hero'
 import { TrustPillars } from '@/components/trust-pillars'
+import { FaqSection } from '@/components/faq-section'
+import { ContactSection } from '@/components/contact-section'
 import { getTreatmentBySlug, getAllTreatments, getRelatedTreatments } from '@/lib/behandelingen-data'
 
 // ─── Per-category default content ────────────────────────────────────────────
@@ -380,8 +382,14 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
           </div>
         </section>
 
+        {/* ── 11. FAQ ──────────────────────────────────────────────── */}
+        <FaqSection />
+
+        {/* ── 12. Contact form ─────────────────────────────────────── */}
+        <ContactSection />
+
       </main>
-      <SiteFooter bg="bg-card" />
+      <SiteFooter bg="bg-background" />
     </>
   )
 }
