@@ -310,7 +310,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
             {/* Image */}
             <Reveal delay={80}>
-              <div className="aspect-square overflow-hidden rounded-[48px]">
+              <div className="relative aspect-square overflow-hidden rounded-[48px]">
                 <Image
                   src={t.image === '/hero.jpg' ? '/bg-leaves.jpg' : '/hero.jpg'}
                   alt=""
