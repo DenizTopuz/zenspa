@@ -82,7 +82,7 @@ export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
             </p>
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="flex items-center gap-2 rounded-full border border-white/15 bg-white/6 px-5 py-3.5"
+              className="flex max-w-[400px] items-center gap-2 rounded-full border border-white/15 bg-white/6 px-5 py-3.5"
             >
               <input
                 type="email"
