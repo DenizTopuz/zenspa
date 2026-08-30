@@ -54,9 +54,14 @@ export function SmoothScroll() {
       },
       { threshold: 0.06, rootMargin: '0px 0px -60px 0px' },
     )
-    document.querySelectorAll<HTMLElement>('.section-fade').forEach((s) =>
-      sectionObserver.observe(s)
-    )
+    document.querySelectorAll<HTMLElement>('.section-fade').forEach((s) => {
+      const rect = s.getBoundingClientRect()
+      if (rect.top < window.innerHeight - 60 && rect.bottom > 0) {
+        s.classList.add('section-visible')
+      } else {
+        sectionObserver.observe(s)
+      }
+    })
     return () => sectionObserver.disconnect()
   }, [pathname])
 
