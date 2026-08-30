@@ -12,25 +12,25 @@ export const metadata = {
 
 const infoItems = [
   {
-    icon: <Phone className="h-5 w-5 text-accent" aria-hidden />,
+    icon: <Phone className="h-6 w-6 text-foreground/60" aria-hidden />,
     label: 'Telefoon',
     value: '06 53 20 77 29',
     href: 'tel:0653207729',
   },
   {
-    icon: <Mail className="h-5 w-5 text-accent" aria-hidden />,
+    icon: <Mail className="h-6 w-6 text-foreground/60" aria-hidden />,
     label: 'E-mail',
     value: 'info@zenspa.nl',
     href: 'mailto:info@zenspa.nl',
   },
   {
-    icon: <MapPin className="h-5 w-5 text-accent" aria-hidden />,
+    icon: <MapPin className="h-6 w-6 text-foreground/60" aria-hidden />,
     label: 'Adres',
     value: 'Kretastraat 77\n1316 VT Almere',
     href: 'https://maps.google.com/?q=Kretastraat+77+Almere',
   },
   {
-    icon: <Clock className="h-5 w-5 text-accent" aria-hidden />,
+    icon: <Clock className="h-6 w-6 text-foreground/60" aria-hidden />,
     label: 'Openingstijden',
     value: 'Ma, Wo, Vr · 10:00–18:00',
     href: null,
@@ -44,7 +44,7 @@ export default function ContactPage() {
       <main>
 
         {/* ── Hero ──────────────────────────────────────────────────── */}
-        <section className="relative flex min-h-[52vh] items-center overflow-hidden" aria-label="Contact">
+        <section className="relative flex min-h-[65vh] items-center overflow-hidden" aria-label="Contact">
           <div className="absolute inset-x-0 -bottom-[15%] -top-[15%]">
             <Image
               src="/hero.jpg"
@@ -57,7 +57,7 @@ export default function ContactPage() {
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/52 to-black/80" />
-          <div className="relative z-10 w-full py-24 text-center text-white md:py-32">
+          <div className="relative z-10 w-full pt-20 pb-44 text-center text-white md:pt-28 md:pb-56">
             <p className="mb-4 text-[16px] font-semibold tracking-[0.22em] text-white/60 uppercase">
               Zen Spa · Almere
             </p>
@@ -71,21 +71,19 @@ export default function ContactPage() {
         </section>
 
         {/* ── Info bar ──────────────────────────────────────────────── */}
-        <section className="bg-background">
+        <section className="relative z-10 -mt-32 overflow-hidden rounded-t-[80px] bg-background md:-mt-48 md:rounded-t-[112px]">
           <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-            <div className="grid grid-cols-2 divide-foreground/8 border-b border-foreground/8 md:grid-cols-4 md:divide-x">
+            <div className="grid grid-cols-2 gap-10 py-16 md:grid-cols-4">
               {infoItems.map((item) => {
                 const inner = (
-                  <div className="flex flex-col items-center gap-2 px-6 py-8 text-center">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent/8">
+                  <div className="group flex flex-col items-center gap-4 rounded-2xl p-6 text-center transition-colors duration-200 hover:bg-secondary/60">
+                    <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-foreground/12 bg-foreground/5 transition-colors duration-200 group-hover:bg-foreground/10">
                       {item.icon}
                     </span>
-                    <p className="text-[11px] font-semibold tracking-[0.14em] text-foreground/40 uppercase">
-                      {item.label}
-                    </p>
-                    <p className="whitespace-pre-line text-[15px] font-medium leading-snug text-foreground">
-                      {item.value}
-                    </p>
+                    <div>
+                      <p className="font-heading text-[22px] text-foreground/70">{item.label}</p>
+                      <p className="mt-1.5 whitespace-pre-line text-[17px] font-medium leading-snug text-foreground/85">{item.value}</p>
+                    </div>
                   </div>
                 )
                 return item.href ? (
@@ -94,7 +92,6 @@ export default function ContactPage() {
                     href={item.href}
                     target={item.href.startsWith('http') ? '_blank' : undefined}
                     rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="transition-colors hover:bg-secondary/50"
                   >
                     {inner}
                   </a>
@@ -107,10 +104,83 @@ export default function ContactPage() {
         </section>
 
         {/* ── Contact form ──────────────────────────────────────────── */}
-        <ContactSection />
+        <ContactSection className="!pt-10 md:!pt-14" />
 
         {/* ── FAQ ───────────────────────────────────────────────────── */}
         <FaqSection />
+
+        {/* ── Map ───────────────────────────────────────────────────── */}
+        <section className="bg-background" style={{ height: '520px' }}>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2441.7!2d5.2!3d52.37!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609b1d1b4a6c9%3A0x0!2sKretastraat+77%2C+1316+VT+Almere!5e0!3m2!1snl!2snl!4v1!5m2!1snl!2snl&q=Kretastraat+77,+1316+VT+Almere,+Netherlands"
+            width="100%"
+            height="100%"
+            style={{ border: 0, display: 'block' }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Locatie Zen Spa Almere"
+          />
+        </section>
+
+        {/* ── Instagram feed ────────────────────────────────────────── */}
+        <section className="section-fade bg-background py-24 md:py-36">
+          <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+            <div className="mb-10 flex items-end justify-between gap-6">
+              <div>
+                <h2 className="font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px]">
+                  Volg ons op Instagram
+                </h2>
+                <p className="mt-2 text-[17px] text-muted-foreground">@zenspa.almere</p>
+              </div>
+              <a
+                href="https://instagram.com/zenspa.almere"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden shrink-0 items-center gap-2 text-[16px] font-semibold text-foreground underline-offset-4 hover:underline sm:flex"
+              >
+                Volgen op Instagram ›
+              </a>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
+              {[
+                { src: '/hero.jpg',      objectPos: 'object-top' },
+                { src: '/hero.jpg',      objectPos: 'object-center' },
+                { src: '/bg-leaves.jpg', objectPos: 'object-center' },
+                { src: '/hero.jpg',      objectPos: 'object-bottom' },
+                { src: '/bg-leaves.jpg', objectPos: 'object-top' },
+              ].map((img, i) => (
+                <a
+                  key={i}
+                  href="https://instagram.com/zenspa.almere"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative aspect-square overflow-hidden rounded-3xl"
+                >
+                  <Image
+                    src={img.src}
+                    alt=""
+                    fill
+                    aria-hidden
+                    className={`object-cover ${img.objectPos} transition-transform duration-700 group-hover:scale-[1.06]`}
+                    sizes="(max-width: 768px) 50vw, 20vw"
+                  />
+                  <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
+                </a>
+              ))}
+            </div>
+
+            <a
+              href="https://instagram.com/zenspa.almere"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 flex items-center gap-2 text-[16px] font-semibold text-foreground underline-offset-4 hover:underline sm:hidden"
+            >
+              Volgen op Instagram ›
+            </a>
+          </div>
+        </section>
 
       </main>
       <SiteFooter bg="bg-background" />
