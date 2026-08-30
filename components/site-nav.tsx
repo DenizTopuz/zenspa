@@ -7,10 +7,9 @@ import { cn } from '@/lib/utils'
 
 const links = [
   { href: '/',              label: 'Home' },
+  { href: '/#about',        label: 'Over mij' },
   { href: '/behandelingen', label: 'Behandelingen' },
-  { href: '/#about',        label: 'Over ons' },
-  { href: '/#pricing',      label: 'Prijzen' },
-  { href: '/#stories',      label: 'Reviews' },
+  { href: '/contact',       label: 'Contact' },
 ]
 
 export function SiteNav() {
