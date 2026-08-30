@@ -4,10 +4,10 @@ import { MapPin, Clock, Phone, Mail, ArrowRight } from 'lucide-react'
 import { ZenSpaLogo } from '@/components/logo'
 
 const contactBar = [
-  { icon: MapPin, label: 'Adres',          value: 'Kretastraat 77, 1316 VT Almere' },
-  { icon: Clock,  label: 'Openingstijden', value: 'Ma, Wo, Vr · 10:00–18:00' },
-  { icon: Phone,  label: 'Bel ons',        value: '06 53 20 77 29', href: 'tel:0653207729' },
-  { icon: Mail,   label: 'E-mail',         value: 'info@zenspa.nl',  href: 'mailto:info@zenspa.nl' },
+  { icon: MapPin, label: 'Adres',          value: 'Kretastraat 77, 1316 VT Almere', href: 'https://maps.google.com/?q=Kretastraat+77,+1316+VT+Almere', external: true },
+  { icon: Clock,  label: 'Openingstijden', value: 'Ma, Wo, Vr · 10:00–18:00',       href: '/contact' },
+  { icon: Phone,  label: 'Bel ons',        value: '06 53 20 77 29',                  href: 'tel:0653207729' },
+  { icon: Mail,   label: 'E-mail',         value: 'info@zenspa.nl',                  href: 'mailto:info@zenspa.nl' },
 ]
 
 const navCols = [
@@ -49,19 +49,22 @@ export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
 
         {/* Contact bar */}
         <div className="grid grid-cols-2 gap-10 py-16 md:grid-cols-4">
-          {contactBar.map(({ icon: Icon, label, value, href }) => (
-            <div key={label} className="flex items-start gap-5">
-              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/6">
+          {contactBar.map(({ icon: Icon, label, value, href, external }) => (
+            <a
+              key={label}
+              href={href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener noreferrer' : undefined}
+              className="group flex items-start gap-5 transition-opacity duration-200 hover:opacity-70"
+            >
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/6 transition-colors duration-200 group-hover:bg-white/12">
                 <Icon className="h-7 w-7 text-white/55" aria-hidden />
               </span>
               <div>
                 <p className="font-heading text-[22px] text-white/70">{label}</p>
-                {href
-                  ? <a href={href} className="mt-1.5 block text-[18px] font-medium text-white/85 transition-colors hover:text-white">{value}</a>
-                  : <p className="mt-1.5 text-[18px] font-medium text-white/85">{value}</p>
-                }
+                <p className="mt-1.5 text-[18px] font-medium text-white/85">{value}</p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 
