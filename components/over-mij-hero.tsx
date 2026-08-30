@@ -2,19 +2,23 @@
 
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { Star } from 'lucide-react'
-import type { Treatment } from '@/lib/behandelingen-data'
+import Link from 'next/link'
+import { ZenSpaIcon } from '@/components/logo'
 
-export function TreatmentHero({ t }: { t: Treatment }) {
-  const imgRef = useRef<HTMLDivElement>(null)
+export function OverMijHero() {
+  const imgRef  = useRef<HTMLDivElement>(null)
+  const logoRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const el = imgRef.current
-    if (!el) return
+    const img  = imgRef.current
+    const logo = logoRef.current
+    if (!img || !logo) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
     const handle = () => {
       const progress = window.scrollY / window.innerHeight
-      el.style.transform = `translateY(${progress * 120}px)`
+      img.style.transform  = `translateY(${progress * 120}px)`
+      logo.style.transform = `translateY(${progress * 60}px)`
     }
     handle()
     window.addEventListener('scroll', handle, { passive: true })
@@ -22,18 +26,15 @@ export function TreatmentHero({ t }: { t: Treatment }) {
   }, [])
 
   return (
-    <section
-      className="relative flex min-h-[72vh] items-center overflow-hidden"
-      aria-label={t.name}
-    >
-      {/* Parallax image */}
+    <section className="relative flex min-h-[72vh] items-center overflow-hidden" aria-label="Over mij">
+      {/* Parallax photo */}
       <div
         ref={imgRef}
         className="absolute inset-x-0 -bottom-[15%] -top-[15%]"
         style={{ willChange: 'transform' }}
       >
         <Image
-          src={t.image ?? '/hero.jpg'}
+          src="/hero.jpg"
           alt=""
           fill
           aria-hidden
@@ -46,43 +47,35 @@ export function TreatmentHero({ t }: { t: Treatment }) {
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/52 to-black/80" />
 
+      {/* Parallax logo watermark */}
+      <div
+        ref={logoRef}
+        className="pointer-events-none absolute inset-0 flex items-center justify-center"
+        aria-hidden
+        style={{ willChange: 'transform' }}
+      >
+        <ZenSpaIcon className="w-[50vw] max-w-[560px] text-white opacity-[0.08]" />
+      </div>
+
       {/* Content */}
       <div className="relative z-10 w-full py-24 text-center text-white md:py-32">
-
-        {/* Price */}
-        <p className="mb-4 text-[28px] font-semibold tracking-[0.04em] text-white/75">
-          {t.price}
-        </p>
-
-        {/* Title */}
         <h1 className="font-heading text-[52px] leading-[1.04] tracking-tight md:text-[72px] lg:text-[88px]">
-          {t.name}
+          Zen Spa
         </h1>
-
-        {/* Description */}
         <p className="mx-auto mt-5 max-w-[520px] text-[17px] leading-[1.85] text-white/68">
-          {t.description}
+          Gedreven door passie voor huidverzorging en welzijn — meer dan 20 jaar toewijding aan jouw schoonheid.
         </p>
-
-        {/* CTA */}
         <div className="mt-9">
-          <a
+          <Link
             href="/contact"
             className="inline-flex items-center rounded-full bg-white px-10 py-4.5 text-[16px] font-semibold text-stone-900 transition-all duration-300 hover:bg-white/90"
           >
-            Afspraak maken
-          </a>
+            Maak een afspraak
+          </Link>
         </div>
-
-        {/* Social proof */}
         <div className="mt-8 flex items-center justify-center gap-3 text-white/55">
-          <div className="flex items-center gap-0.5">
-            {[1,2,3,4,5].map(i => (
-              <Star key={i} className="h-4 w-4 fill-white/80 text-white/80" aria-hidden />
-            ))}
-          </div>
           <span className="text-[12px] font-semibold tracking-[0.14em] uppercase">
-            Vertrouwd door 1000+ klanten
+            Gecertificeerd · 1000+ tevreden klanten · 20+ jaar ervaring
           </span>
         </div>
       </div>

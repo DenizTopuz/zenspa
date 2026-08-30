@@ -1,20 +1,27 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { ZenSpaLogo } from '@/components/logo'
 import { Menu, X, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
-  { href: '/',              label: 'Home' },
-  { href: '/#about',        label: 'Over mij' },
-  { href: '/behandelingen', label: 'Behandelingen' },
-  { href: '/contact',       label: 'Contact' },
+  { href: '/',               label: 'Home' },
+  { href: '/over-mij',       label: 'Zen Spa' },
+  { href: '/behandelingen',  label: 'Behandelingen' },
+  { href: '/contact',        label: 'Contact' },
 ]
 
 export function SiteNav() {
+  const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === '/'
+    return pathname.startsWith(href)
+  }
 
   useEffect(() => {
     const handle = () => setScrolled(window.scrollY > 60)
@@ -48,12 +55,13 @@ export function SiteNav() {
                 key={l.label}
                 href={l.href}
                 className={cn(
-                  'relative whitespace-nowrap text-[19px] font-medium transition-colors duration-300',
+                  'relative whitespace-nowrap text-[19px] transition-colors duration-300',
                   'after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-[width] after:duration-[650ms] after:ease-out hover:after:w-full',
-                  scrolled
-                    ? 'text-foreground/65 hover:text-foreground'
-                    : 'text-white/85 hover:text-white'
+                  isActive(l.href)
+                    ? cn('font-bold', scrolled ? 'text-foreground' : 'text-white')
+                    : cn('font-medium', scrolled ? 'text-foreground/65 hover:text-foreground' : 'text-white/85 hover:text-white')
                 )}
+                aria-current={isActive(l.href) ? 'page' : undefined}
               >
                 {l.label}
               </a>
@@ -144,7 +152,8 @@ export function SiteNav() {
               key={l.label}
               href={l.href}
               onClick={close}
-              className="font-heading text-4xl text-foreground transition-colors hover:text-accent"
+              aria-current={isActive(l.href) ? 'page' : undefined}
+              className={cn('font-heading text-4xl transition-colors hover:text-accent', isActive(l.href) ? 'font-bold text-accent' : 'text-foreground')}
               style={{
                 opacity: open ? 1 : 0,
                 transform: open ? 'none' : 'translateY(10px)',

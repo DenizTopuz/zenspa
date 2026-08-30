@@ -64,14 +64,10 @@ function AccordionItem({
 }
 
 export function FaqSection() {
-  const [openSet, setOpenSet] = useState<Set<number>>(new Set([0]))
+  const [openIdx, setOpenIdx] = useState<number | null>(0)
 
   const toggle = (i: number) =>
-    setOpenSet((prev) => {
-      const next = new Set(prev)
-      next.has(i) ? next.delete(i) : next.add(i)
-      return next
-    })
+    setOpenIdx((prev) => (prev === i ? null : i))
 
   return (
     <section id="faq" className="section-fade py-24 md:py-36 lg:py-48" aria-labelledby="faq-heading">
@@ -103,7 +99,7 @@ export function FaqSection() {
                 key={f.q}
                 q={f.q}
                 a={f.a}
-                open={openSet.has(i)}
+                open={openIdx === i}
                 onToggle={() => toggle(i)}
               />
             ))}
