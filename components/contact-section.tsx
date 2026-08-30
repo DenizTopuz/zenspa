@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { Phone, MapPin, Clock } from 'lucide-react'
 
 export function ContactSection() {
   const [submitted, setSubmitted] = useState(false)
@@ -27,6 +28,37 @@ export function ContactSection() {
             className="object-cover object-center"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
+
+          {/* Info overlay card */}
+          <div className="absolute inset-x-5 bottom-5 rounded-[28px] bg-foreground/70 p-6 backdrop-blur-md md:inset-x-6 md:bottom-6 md:p-8">
+            {/* Phone — prominent */}
+            <div className="mb-5 flex items-center gap-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/12">
+                <Phone className="h-5 w-5 text-white" aria-hidden />
+              </span>
+              <p className="font-heading text-[22px] leading-none text-white md:text-[26px]">06 53 20 77 29</p>
+            </div>
+
+            <div className="h-px bg-white/12 mb-5" />
+
+            {/* Address + hours grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 shrink-0 text-white/50" aria-hidden />
+                  <p className="text-[11px] font-semibold tracking-[0.14em] text-white/50 uppercase">Adres</p>
+                </div>
+                <p className="text-[14px] leading-[1.5] text-white/80">Kretastraat 77<br />1316 VT Almere</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 shrink-0 text-white/50" aria-hidden />
+                  <p className="text-[11px] font-semibold tracking-[0.14em] text-white/50 uppercase">Openingstijden</p>
+                </div>
+                <p className="text-[14px] leading-[1.5] text-white/80">Ma, Wo, Vr<br />10:00 – 18:00</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Form */}
