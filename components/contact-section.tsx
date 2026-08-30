@@ -62,6 +62,10 @@ export function ContactSection() {
               </div>
               <input type="email" name="email" placeholder="E-mailadres" required className={inputCls} />
               <input type="tel"   name="phone" placeholder="Telefoonnummer"          className={inputCls} />
+              <label className="flex flex-col gap-2">
+                <span className="text-[13px] font-medium tracking-wide text-foreground/50 uppercase">Voorkeursdatum</span>
+                <input type="date" name="date" className={`${inputCls} text-foreground/70`} min={new Date().toISOString().split('T')[0]} />
+              </label>
               <textarea
                 name="message"
                 placeholder="Vertel ons waarvoor je een afspraak wilt maken…"
