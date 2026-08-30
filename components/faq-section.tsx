@@ -64,9 +64,14 @@ function AccordionItem({
 }
 
 export function FaqSection() {
-  const [openIdx, setOpenIdx] = useState<number | null>(0)
+  const [openSet, setOpenSet] = useState<Set<number>>(new Set([0]))
 
-  const toggle = (i: number) => setOpenIdx(openIdx === i ? null : i)
+  const toggle = (i: number) =>
+    setOpenSet((prev) => {
+      const next = new Set(prev)
+      next.has(i) ? next.delete(i) : next.add(i)
+      return next
+    })
 
   return (
     <section id="faq" className="section-fade py-24 md:py-36 lg:py-48" aria-labelledby="faq-heading">
@@ -89,7 +94,7 @@ export function FaqSection() {
         </div>
 
         {/* Grid: accordion | card — both start at the first divider line */}
-        <div className="grid items-stretch gap-12 lg:grid-cols-[3fr_2fr] lg:gap-16">
+        <div className="grid items-stretch gap-12 lg:grid-cols-2 lg:gap-16">
 
           {/* Left — accordion */}
           <div className="border-t border-foreground/10">
@@ -98,7 +103,7 @@ export function FaqSection() {
                 key={f.q}
                 q={f.q}
                 a={f.a}
-                open={openIdx === i}
+                open={openSet.has(i)}
                 onToggle={() => toggle(i)}
               />
             ))}

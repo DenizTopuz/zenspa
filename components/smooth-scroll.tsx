@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Lenis from 'lenis'
 
 export function SmoothScroll() {
   const pathname = usePathname()
+  const lenisRef = useRef<Lenis | null>(null)
 
   // Lenis smooth scroll — set up once for the lifetime of the app
   useEffect(() => {
@@ -14,6 +15,7 @@ export function SmoothScroll() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     })
+    lenisRef.current = lenis
 
     let raf: number
     function loop(time: number) {
@@ -36,9 +38,19 @@ export function SmoothScroll() {
     return () => {
       cancelAnimationFrame(raf)
       lenis.destroy()
+      lenisRef.current = null
       document.removeEventListener('click', handleClick)
     }
   }, [])
+
+  // Scroll to top on route change
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true })
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [pathname])
 
   // Section fade-in — re-run on every route change so newly mounted
   // sections are observed even after client-side navigation
