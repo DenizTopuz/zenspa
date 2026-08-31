@@ -63,14 +63,14 @@ function AccordionItem({
   )
 }
 
-export function FaqSection() {
+export function FaqSection({ className }: { className?: string }) {
   const [openIdx, setOpenIdx] = useState<number | null>(0)
 
   const toggle = (i: number) =>
     setOpenIdx((prev) => (prev === i ? null : i))
 
   return (
-    <section id="faq" className="section-fade py-24 md:py-36 lg:py-48" aria-labelledby="faq-heading">
+    <section id="faq" className={`section-fade py-24 md:py-36 lg:py-48 ${className ?? ''}`} aria-labelledby="faq-heading">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
 
         {/* Heading — above the grid so the card aligns with the first question */}

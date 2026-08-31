@@ -104,7 +104,7 @@ export default function ContactPage() {
         </section>
 
         {/* ── Contact form ──────────────────────────────────────────── */}
-        <ContactSection className="!pt-10 md:!pt-14" />
+        <ContactSection className="!pt-0" />
 
         {/* ── FAQ ───────────────────────────────────────────────────── */}
         <FaqSection />
