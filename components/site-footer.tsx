@@ -48,7 +48,7 @@ export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
 
         {/* Contact bar */}
-        <div className="grid grid-cols-2 gap-10 py-16 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 py-12 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-10 lg:py-16">
           {contactBar.map(({ icon: Icon, label, value, href, external }) => (
             <a
               key={label}
@@ -61,8 +61,8 @@ export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
                 <Icon className="h-7 w-7 text-white/55" aria-hidden />
               </span>
               <div>
-                <p className="font-heading text-[22px] text-white/70">{label}</p>
-                <p className="mt-1.5 text-[18px] font-medium text-white/85">{value}</p>
+                <p className="font-heading text-[18px] text-white/70 md:text-[22px]">{label}</p>
+                <p className="mt-1.5 text-[15px] font-medium text-white/85 md:text-[18px]">{value}</p>
               </div>
             </a>
           ))}

@@ -73,8 +73,8 @@ export function OverMijHero() {
             Maak een afspraak
           </Link>
         </div>
-        <div className="mt-8 flex items-center justify-center gap-3 text-white/55">
-          <span className="text-[12px] font-semibold tracking-[0.14em] uppercase">
+        <div className="mt-8 flex items-center justify-center gap-3 overflow-hidden text-white/55">
+          <span className="truncate text-[12px] font-semibold tracking-[0.14em] uppercase">
             Gecertificeerd · 1000+ tevreden klanten · 20+ jaar ervaring
           </span>
         </div>

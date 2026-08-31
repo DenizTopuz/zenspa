@@ -116,11 +116,11 @@ export function Behandelingen() {
 
         {/* Tabs — sliding pill */}
         <div
-          className="mx-auto mb-14 w-full rounded-full bg-accent/[0.07] p-3 sm:w-fit"
+          className="mx-auto mb-14 w-full rounded-full bg-accent/[0.07] p-3 lg:w-fit"
           role="tablist"
           aria-label="Behandelcategorieën"
         >
-          <div ref={gridRef} className="relative grid grid-cols-2 gap-2 sm:flex sm:gap-2">
+          <div ref={gridRef} className="relative grid grid-cols-2 gap-2 lg:flex lg:gap-2">
             {/* Sliding white indicator */}
             {ind && (
               <div
@@ -169,7 +169,7 @@ export function Behandelingen() {
                   {group.subtitle}
                 </p>
               )}
-              <div className="grid sm:grid-cols-2 gap-x-10 gap-y-0">
+              <div className="grid lg:grid-cols-2 gap-x-10 gap-y-0">
                 {group.items.map((t) => (
                   <TreatmentCard key={t.name} t={t} />
                 ))}

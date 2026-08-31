@@ -197,7 +197,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                 </div>
 
                 {/* Spinning stamp badge — right side */}
-                <div className="absolute -right-8 top-8 md:-right-14">
+                <div className="absolute right-3 top-4 lg:-right-14 lg:top-8">
                   <div className="relative flex h-[120px] w-[120px] items-center justify-center rounded-full border border-foreground/12 bg-background shadow-xl md:h-[152px] md:w-[152px]">
                     <svg className="absolute inset-0 h-full w-full stamp-rotate" viewBox="0 0 128 128" aria-hidden>
                       <defs>

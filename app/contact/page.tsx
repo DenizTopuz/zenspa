@@ -32,7 +32,7 @@ const infoItems = [
   {
     icon: <Clock className="h-6 w-6 text-foreground/60" aria-hidden />,
     label: 'Openingstijden',
-    value: 'Ma, Wo, Vr · 10:00–18:00',
+    value: 'Ma, Wo, Vr\n10:00 – 18:00',
     href: null,
   },
 ]
@@ -73,16 +73,16 @@ export default function ContactPage() {
         {/* ── Info bar ──────────────────────────────────────────────── */}
         <section className="relative z-10 -mt-32 overflow-hidden rounded-t-[80px] bg-background md:-mt-48 md:rounded-t-[112px]">
           <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-            <div className="grid grid-cols-2 gap-10 py-16 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 py-12 md:gap-10 md:grid-cols-4 md:py-16">
               {infoItems.map((item) => {
                 const inner = (
-                  <div className="group flex flex-col items-center gap-4 rounded-2xl p-6 text-center transition-colors duration-200 hover:bg-secondary/60">
-                    <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-foreground/12 bg-foreground/5 transition-colors duration-200 group-hover:bg-foreground/10">
+                  <div className="group flex flex-col items-center gap-3 rounded-2xl p-4 text-center transition-colors duration-200 hover:bg-secondary/60 md:gap-4 md:p-6">
+                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-foreground/12 bg-foreground/5 transition-colors duration-200 group-hover:bg-foreground/10 md:h-16 md:w-16">
                       {item.icon}
                     </span>
                     <div>
-                      <p className="font-heading text-[22px] text-foreground/70">{item.label}</p>
-                      <p className="mt-1.5 whitespace-pre-line text-[17px] font-medium leading-snug text-foreground/85">{item.value}</p>
+                      <p className="font-heading text-[18px] text-foreground/70 md:text-[22px]">{item.label}</p>
+                      <p className="mt-1 whitespace-pre-line text-[13px] font-medium leading-snug text-foreground/85 md:mt-1.5 md:text-[17px]">{item.value}</p>
                     </div>
                   </div>
                 )

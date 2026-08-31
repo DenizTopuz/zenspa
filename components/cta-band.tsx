@@ -97,7 +97,7 @@ export function CtaBand() {
           </h2>
         </div>
         <p className="max-w-[440px] text-[17px] leading-[1.8] text-white/62">
-          Jouw therapeut staat klaar. Jouw kamer wacht.<br className="hidden sm:block" />
+          Jouw therapeut staat klaar. Jouw kamer wacht.<br className="hidden sm:block" />{' '}
           Het enige wat ontbreekt, ben jij.
         </p>
         <div className="flex flex-col items-center gap-4 text-[13px] text-white/42 sm:flex-row sm:gap-6">
