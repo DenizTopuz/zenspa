@@ -342,7 +342,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                 <p className="mt-3 text-[17px] text-muted-foreground md:text-[18px]">Meer behandelingen die bij jou passen.</p>
               </div>
             </Reveal>
-            <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
               {related.map((r, i) => (
                 <Reveal key={r.slug} delay={i * 55}>
                   <Link
@@ -358,7 +358,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                     <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
                       <Image src={r.image || '/hero.jpg'} alt="" fill aria-hidden
                         className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
-                        sizes="(max-width: 640px) 50vw, 25vw" />
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
                       <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       {r.tag && (
                         <span className="absolute left-3 top-3 z-10 rounded-full bg-accent px-3 py-1 text-[12px] font-semibold text-white shadow-md">
@@ -368,7 +368,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                     </div>
                     <div className="flex items-center justify-between gap-3 bg-secondary/50 p-4 rounded-b-3xl">
                       <div className="min-w-0">
-                        <p className="truncate text-[15px] font-semibold leading-tight">{r.name}</p>
+                        <p className="line-clamp-2 text-[15px] font-semibold leading-tight">{r.name}</p>
                         <p className="mt-0.5 text-[14px] font-bold text-accent">{r.price}</p>
                       </div>
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">
@@ -397,7 +397,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                 <p className="mt-3 text-[17px] text-muted-foreground md:text-[18px]">Meer behandelingen die bij jou passen.</p>
               </div>
             </Reveal>
-            <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
               {related.map((r, i) => (
                 <Reveal key={r.slug} delay={i * 55}>
                   <Link
@@ -413,7 +413,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                     <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
                       <Image src={r.image || '/hero.jpg'} alt="" fill aria-hidden
                         className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
-                        sizes="(max-width: 640px) 50vw, 25vw" />
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
                       <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       {r.tag && (
                         <span className="absolute left-3 top-3 z-10 rounded-full bg-accent px-3 py-1 text-[12px] font-semibold text-white shadow-md">
@@ -423,7 +423,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                     </div>
                     <div className="flex items-center justify-between gap-3 bg-secondary/50 p-4 rounded-b-3xl">
                       <div className="min-w-0">
-                        <p className="truncate text-[15px] font-semibold leading-tight">{r.name}</p>
+                        <p className="line-clamp-2 text-[15px] font-semibold leading-tight">{r.name}</p>
                         <p className="mt-0.5 text-[14px] font-bold text-accent">{r.price}</p>
                       </div>
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">

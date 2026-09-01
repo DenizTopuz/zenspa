@@ -53,7 +53,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
           fill
           aria-hidden
           className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" />
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw" />
         {/* Hover: dark top gradient — same as homepage carousel */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         {t.tag && (
@@ -66,7 +66,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
       {/* Bottom bar */}
       <div className="flex items-center justify-between gap-3 bg-secondary/50 p-5 rounded-b-3xl">
         <div className="min-w-0">
-          <p className="truncate text-[17px] font-semibold leading-tight">{t.name}</p>
+          <p className="line-clamp-2 text-[17px] font-semibold leading-tight">{t.name}</p>
           <p className="mt-1 text-[16px] font-bold text-accent">{t.price}</p>
         </div>
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">
@@ -122,7 +122,7 @@ export default function BehandelingenPage() {
                         </h3>
                       </Reveal>
                     )}
-                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
                       {group.items.map((t, ti) => (
                         <Reveal key={t.slug} delay={ti * 55}>
                           <TreatmentCard t={t} />
