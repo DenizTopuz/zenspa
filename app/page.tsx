@@ -161,9 +161,9 @@ const statsItems = [
 
 function Stats() {
   return (
-    <section className="section-fade py-20 md:py-28">
+    <section className="section-fade py-10 md:py-16 lg:py-24">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-        <div className="grid grid-cols-2 gap-10 md:flex md:justify-between md:items-start">
+        <div className="grid grid-cols-2 gap-8 md:gap-10 lg:flex lg:justify-between lg:items-start">
           {statsItems.map((item, i) => (
             <Reveal key={item.label} delay={i * 90}>
               <div className="flex flex-col gap-3">
@@ -186,7 +186,7 @@ function Stats() {
 
 function About() {
   return (
-    <section id="about" className="section-fade pt-14 pb-28 md:pt-16 md:pb-40 lg:pt-20 lg:pb-52" aria-labelledby="about-heading">
+    <section id="about" className="section-fade pt-14 pb-10 md:pt-16 md:pb-20 lg:pt-20 lg:pb-40" aria-labelledby="about-heading">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
@@ -254,7 +254,7 @@ function About() {
               </div>
 
               {/* Circular stamp badge */}
-              <div className="absolute -left-8 top-8 md:-left-14">
+              <div className="absolute left-4 top-4 md:left-6 md:top-6">
                 <div className="relative flex h-[160px] w-[160px] items-center justify-center rounded-full border border-foreground/12 bg-background shadow-xl md:h-[200px] md:w-[200px]">
                   <svg
                     className="absolute inset-0 h-full w-full stamp-rotate"
