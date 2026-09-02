@@ -6,62 +6,60 @@ import Link from 'next/link'
 import { Clock, Sparkles, User, Pen, Scissors } from 'lucide-react'
 import { DATA, type TabKey, type Treatment } from '@/lib/behandelingen-data'
 
-const TABS: { key: TabKey; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-  { key: 'gezicht',  label: 'Gezicht',              icon: Sparkles },
-  { key: 'lichaam',  label: 'Lichaam',              icon: User     },
-  { key: 'pmu',      label: 'Permanente Make-up',   icon: Pen      },
-  { key: 'ontharen', label: 'Ontharen',             icon: Scissors },
+const TABS: { key: TabKey; label: string; labelMobile?: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { key: 'gezicht',  label: 'Gezicht',            icon: Sparkles },
+  { key: 'lichaam',  label: 'Lichaam',            icon: User     },
+  { key: 'pmu',      label: 'Permanente Make-up', labelMobile: 'Perm. Make-up', icon: Pen },
+  { key: 'ontharen', label: 'Ontharen',           icon: Scissors },
 ]
 
 function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group -mx-4 flex gap-6 rounded-2xl px-4 py-5 no-underline transition-all duration-200 hover:bg-accent/[0.06] md:gap-8"
+      className="group flex flex-col border-b border-foreground/[0.08] py-6 no-underline last:border-0"
     >
-      {/* Oval image — border ring + padding */}
-      <div className="shrink-0 rounded-full border border-foreground/12 p-1.5">
-        <div className="relative h-[152px] w-[96px] overflow-hidden rounded-full">
-          <Image
-            src={t.image ?? '/hero.jpg'}
-            alt=""
-            fill
-            aria-hidden
-            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-            sizes="96px"
-          />
-        </div>
+      {/* Landscape image — above content */}
+      <div className="relative mb-5 aspect-[3/2] w-full overflow-hidden rounded-2xl">
+        <Image
+          src={t.image ?? '/hero.jpg'}
+          alt=""
+          fill
+          aria-hidden
+          className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+        />
       </div>
 
       {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col justify-start gap-3">
+      <div className="flex min-w-0 flex-col gap-3">
         {/* Name ── line ── Price */}
         <div className="flex min-w-0 items-center gap-4">
-          <p className="min-w-0 font-heading text-[24px] font-semibold leading-snug md:text-[27px]">
+          <p className="min-w-0 font-heading text-[22px] font-semibold leading-snug md:text-[25px]">
             {t.name}
           </p>
-          <div className="h-px min-w-[16px] flex-1 shrink-0 bg-foreground/15" aria-hidden />
-          <p className="shrink-0 font-heading text-[24px] font-semibold md:text-[27px]">
+          <div className="h-px min-w-[12px] flex-1 shrink-0 bg-foreground/15" aria-hidden />
+          <p className="shrink-0 font-heading text-[22px] font-semibold md:text-[25px]">
             {t.price}
           </p>
         </div>
 
         {/* Description */}
-        <p className="text-[16px] leading-[1.65] text-muted-foreground md:text-[17px]">
+        <p className="text-[15px] leading-[1.65] text-muted-foreground md:text-[16px]">
           {t.description}
         </p>
 
         {/* Pills */}
         {(t.duration || t.tag) && (
-          <div className="flex flex-wrap gap-2">
+          <div className="mt-1 flex flex-wrap gap-2">
             {t.duration && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/18 px-4 py-2 text-[14px] text-foreground/55">
-                <Clock className="h-4 w-4" aria-hidden />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/18 px-3.5 py-1.5 text-[13px] text-foreground/55">
+                <Clock className="h-3.5 w-3.5" aria-hidden />
                 {t.duration}
               </span>
             )}
             {t.tag && (
-              <span className="inline-flex items-center rounded-full bg-accent px-4 py-2 text-[14px] font-semibold text-white">
+              <span className="inline-flex items-center rounded-full bg-accent px-3.5 py-1.5 text-[13px] font-semibold text-white">
                 {t.tag}
               </span>
             )}
@@ -80,14 +78,13 @@ export function Behandelingen() {
   // Sliding white indicator
   const gridRef = useRef<HTMLDivElement>(null)
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([])
-  const [ind, setInd] = useState<{ left: number; width: number } | null>(null)
+  const [ind, setInd] = useState<{ left: number; width: number; top: number; height: number } | null>(null)
 
   useEffect(() => {
     const measure = () => {
       const btn = btnRefs.current[activeIdx]
-      const grid = gridRef.current
-      if (!btn || !grid) return
-      setInd({ left: btn.offsetLeft, width: btn.offsetWidth })
+      if (!btn) return
+      setInd({ left: btn.offsetLeft, width: btn.offsetWidth, top: btn.offsetTop, height: btn.offsetHeight })
     }
     measure()
     window.addEventListener('resize', measure, { passive: true })
@@ -116,25 +113,27 @@ export function Behandelingen() {
 
         {/* Tabs — sliding pill */}
         <div
-          className="mx-auto mb-14 w-full rounded-full bg-accent/[0.07] p-3 lg:w-fit"
+          className="mx-auto mb-14 w-full rounded-2xl bg-accent/[0.07] p-2 md:p-2.5 lg:w-fit lg:rounded-full lg:p-3"
           role="tablist"
           aria-label="Behandelcategorieën"
         >
-          <div ref={gridRef} className="relative grid grid-cols-2 gap-2 lg:flex lg:gap-2">
-            {/* Sliding white indicator */}
+          <div ref={gridRef} className="relative grid grid-cols-2 gap-1.5 md:grid-cols-4 md:gap-2 lg:flex lg:gap-2">
+            {/* Sliding white indicator — uses top+height to avoid spanning multiple rows */}
             {ind && (
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-y-0 rounded-full bg-white shadow-md shadow-foreground/8"
+                className="pointer-events-none absolute rounded-xl bg-white shadow-md shadow-foreground/8 lg:rounded-full"
                 style={{
-                  left:  ind.left,
-                  width: ind.width,
-                  transition: 'left 0.38s cubic-bezier(0.4, 0, 0.2, 1)',
+                  left:   ind.left,
+                  width:  ind.width,
+                  top:    ind.top,
+                  height: ind.height,
+                  transition: 'left 0.38s cubic-bezier(0.4, 0, 0.2, 1), top 0.38s cubic-bezier(0.4, 0, 0.2, 1)',
                 }}
               />
             )}
 
-            {TABS.map(({ key, label, icon: Icon }, idx) => (
+            {TABS.map(({ key, label, labelMobile, icon: Icon }, idx) => (
               <button
                 key={key}
                 ref={(el) => { btnRefs.current[idx] = el }}
@@ -142,14 +141,17 @@ export function Behandelingen() {
                 aria-selected={active === key}
                 aria-controls={`tab-panel-${key}`}
                 onClick={() => setActive(key)}
-                className={`relative z-10 flex cursor-pointer items-center justify-center gap-3 whitespace-nowrap rounded-full px-4 py-5 transition-colors duration-200 hover:text-foreground sm:px-5 ${
+                className={`relative z-10 flex cursor-pointer items-center justify-center gap-2 rounded-xl px-3 py-3 transition-colors duration-200 hover:text-foreground md:gap-2.5 md:rounded-full md:px-4 md:py-3.5 lg:gap-3 lg:px-5 lg:py-5 ${
                   active === key
                     ? 'text-accent'
                     : 'text-foreground/40 hover:bg-white/45'
                 }`}
               >
-                <Icon className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" aria-hidden />
-                <span className="font-heading font-semibold text-[19px] leading-none sm:text-[21px]">{label}</span>
+                <Icon className="h-5 w-5 shrink-0 md:h-6 md:w-6 lg:h-7 lg:w-7" aria-hidden />
+                <span className="font-heading font-semibold leading-none text-[15px] md:text-[18px] lg:text-[21px]">
+                  <span className="md:hidden">{labelMobile ?? label}</span>
+                  <span className="hidden md:inline">{label}</span>
+                </span>
               </button>
             ))}
           </div>
@@ -169,7 +171,7 @@ export function Behandelingen() {
                   {group.subtitle}
                 </p>
               )}
-              <div className="grid lg:grid-cols-2 gap-x-10 gap-y-0">
+              <div className="grid lg:grid-cols-2 gap-x-12">
                 {group.items.map((t) => (
                   <TreatmentCard key={t.name} t={t} />
                 ))}
