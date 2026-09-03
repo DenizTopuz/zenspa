@@ -17,49 +17,62 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group flex flex-col border-b border-foreground/[0.08] py-6 no-underline last:border-0"
+      className="group flex flex-col border-b border-foreground/[0.08] py-6 no-underline last:border-0
+                 lg:-mx-4 lg:flex-row lg:items-start lg:gap-6 lg:rounded-2xl lg:border-b-0
+                 lg:px-4 lg:py-5 lg:transition-all lg:duration-200 lg:hover:bg-accent/[0.06] lg:md:gap-8"
     >
-      {/* Landscape image — above content */}
-      <div className="relative mb-5 aspect-[3/2] w-full overflow-hidden rounded-2xl">
-        <Image
-          src={t.image ?? '/hero.jpg'}
-          alt=""
-          fill
-          aria-hidden
-          className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 1024px) 100vw, 50vw"
-        />
+      {/* Mobile/tablet: short landscape banner with border ring */}
+      <div className="mb-5 rounded-2xl border border-foreground/12 p-1.5 lg:hidden">
+        <div className="relative h-[100px] w-full overflow-hidden rounded-xl md:h-[118px]">
+          <Image
+            src={t.image ?? '/hero.jpg'}
+            alt=""
+            fill
+            aria-hidden
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 1024px) 100vw, 0px"
+          />
+        </div>
+      </div>
+
+      {/* Desktop: original oval portrait */}
+      <div className="hidden shrink-0 rounded-full border border-foreground/12 p-1.5 lg:block">
+        <div className="relative h-[152px] w-[96px] overflow-hidden rounded-full">
+          <Image
+            src={t.image ?? '/hero.jpg'}
+            alt=""
+            fill
+            aria-hidden
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            sizes="96px"
+          />
+        </div>
       </div>
 
       {/* Content */}
-      <div className="flex min-w-0 flex-col gap-3">
-        {/* Name ── line ── Price */}
+      <div className="flex min-w-0 flex-1 flex-col justify-start gap-3">
         <div className="flex min-w-0 items-center gap-4">
-          <p className="min-w-0 font-heading text-[22px] font-semibold leading-snug md:text-[25px]">
+          <p className="min-w-0 font-heading text-[22px] font-semibold leading-snug md:text-[25px] lg:text-[24px] xl:text-[27px]">
             {t.name}
           </p>
           <div className="h-px min-w-[12px] flex-1 shrink-0 bg-foreground/15" aria-hidden />
-          <p className="shrink-0 font-heading text-[22px] font-semibold md:text-[25px]">
+          <p className="shrink-0 font-heading text-[22px] font-semibold md:text-[25px] lg:text-[24px] xl:text-[27px]">
             {t.price}
           </p>
         </div>
-
-        {/* Description */}
-        <p className="text-[15px] leading-[1.65] text-muted-foreground md:text-[16px]">
+        <p className="text-[15px] leading-[1.65] text-muted-foreground md:text-[16px] xl:text-[17px]">
           {t.description}
         </p>
-
-        {/* Pills */}
         {(t.duration || t.tag) && (
           <div className="mt-1 flex flex-wrap gap-2">
             {t.duration && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/18 px-3.5 py-1.5 text-[13px] text-foreground/55">
-                <Clock className="h-3.5 w-3.5" aria-hidden />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/18 px-3.5 py-1.5 text-[13px] text-foreground/55 lg:px-4 lg:py-2 lg:text-[14px]">
+                <Clock className="h-3.5 w-3.5 lg:h-4 lg:w-4" aria-hidden />
                 {t.duration}
               </span>
             )}
             {t.tag && (
-              <span className="inline-flex items-center rounded-full bg-accent px-3.5 py-1.5 text-[13px] font-semibold text-white">
+              <span className="inline-flex items-center rounded-full bg-accent px-3.5 py-1.5 text-[13px] font-semibold text-white lg:px-4 lg:py-2 lg:text-[14px]">
                 {t.tag}
               </span>
             )}

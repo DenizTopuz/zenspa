@@ -14,14 +14,14 @@ function computeMetrics(vw: number) {
   const padding = vw >= 768 ? 24 : 16
 
   if (vw < 768) {
-    // Mobile: 1 full card + equal peeks left & right when mid-scroll
-    // peek = partial - GAP (left peek when card i-1 is sliding out)
-    // right peek = vw - partial - cardW (must equal left peek for symmetry)
-    const peek    = Math.round(vw * 0.064) // ~24px at 375px
-    const partial = peek + GAP             // left peek when scrolled = partial - GAP = peek
-    const cardW   = vw - partial - peek    // = vw - 2*peek - GAP
-    const step    = cardW + GAP
-    return { cardW, step, partial, gradW: Math.round(peek * 0.4) }
+    // Mobile: card left-aligned with section padding (16px).
+    // Right peek shows the next card so users know there's more.
+    // While swiping right, prev card slides in from left (left gradient fades it).
+    const partial    = 16          // matches section px-4 — card aligns with heading text
+    const rightPeek  = 44          // next card peeking on the right (~24px visible after gradient)
+    const cardW      = vw - partial - GAP - rightPeek
+    const step       = cardW + GAP
+    return { cardW, step, partial, gradW: 20 }
   }
 
   if (vw < 1024) {
