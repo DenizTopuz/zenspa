@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
@@ -49,9 +49,19 @@ function Stars({ count }: { count: number }) {
 export function ReviewsCarousel() {
   const [idx, setIdx] = useState(0)
   const t = testimonials[idx]
+  const touchStartX = useRef<number | null>(null)
 
   const prev = () => setIdx((i) => (i - 1 + testimonials.length) % testimonials.length)
   const next = () => setIdx((i) => (i + 1) % testimonials.length)
+
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX }
+  const onTouchEnd   = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const delta = e.changedTouches[0].clientX - touchStartX.current
+    touchStartX.current = null
+    if (delta < -40) next()
+    else if (delta > 40) prev()
+  }
 
   return (
     <section id="stories" className="section-fade py-24 md:py-36 lg:py-48" aria-labelledby="reviews-heading">
@@ -74,7 +84,11 @@ export function ReviewsCarousel() {
         </div>
 
         {/* Card — full section width, fixed height so slides never jump */}
-        <div className="overflow-hidden rounded-3xl">
+        <div
+          className="overflow-hidden rounded-3xl"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
           <div className="grid md:h-[620px] md:grid-cols-[2fr_3fr] lg:h-[680px]">
 
             {/* Left — image, fills fixed height */}

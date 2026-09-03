@@ -8,8 +8,11 @@ export function SmoothScroll() {
   const pathname = usePathname()
   const lenisRef = useRef<Lenis | null>(null)
 
-  // Lenis smooth scroll — set up once for the lifetime of the app
+  // Lenis smooth scroll — desktop only (mobile has native momentum scroll, Lenis can interfere)
   useEffect(() => {
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+    if (isTouch) return
+
     const lenis = new Lenis({
       duration: 1.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

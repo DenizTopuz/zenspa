@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Clock, Sparkles, User, Pen, Scissors } from 'lucide-react'
@@ -88,6 +88,18 @@ export function Behandelingen() {
   const tab = DATA[active]
   const activeIdx = TABS.findIndex(t => t.key === active)
 
+  const panelTouchStartX = useRef<number | null>(null)
+  const onPanelTouchStart = (e: React.TouchEvent) => { panelTouchStartX.current = e.touches[0].clientX }
+  const onPanelTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (panelTouchStartX.current === null) return
+    const delta = e.changedTouches[0].clientX - panelTouchStartX.current
+    panelTouchStartX.current = null
+    if (Math.abs(delta) < 40) return
+    const dir = delta < 0 ? 1 : -1
+    const newIdx = (activeIdx + dir + TABS.length) % TABS.length
+    setActive(TABS[newIdx].key)
+  }, [activeIdx])
+
   // Sliding white indicator
   const gridRef = useRef<HTMLDivElement>(null)
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([])
@@ -170,12 +182,14 @@ export function Behandelingen() {
           </div>
         </div>
 
-        {/* Panel */}
+        {/* Panel — swipeable on mobile to switch categories */}
         <div
           id={`tab-panel-${active}`}
           role="tabpanel"
           key={active}
           className="animate-in fade-in duration-500 ease-out"
+          onTouchStart={onPanelTouchStart}
+          onTouchEnd={onPanelTouchEnd}
         >
           {tab.groups.map((group, gi) => (
             <div key={gi} className={gi > 0 ? 'mt-14' : ''}>

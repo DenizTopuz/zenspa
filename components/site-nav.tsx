@@ -24,10 +24,28 @@ export function SiteNav() {
   }
 
   useEffect(() => {
-    const handle = () => setScrolled(window.scrollY > 60)
+    // Sentinel-based detection is reliable on iOS Safari where scroll events can be unreliable
+    const sentinel = document.createElement('div')
+    sentinel.setAttribute('aria-hidden', 'true')
+    sentinel.style.cssText = 'position:absolute;top:80px;left:0;width:1px;height:1px;pointer-events:none;'
+    document.body.prepend(sentinel)
+
+    const obs = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { threshold: 0 }
+    )
+    obs.observe(sentinel)
+
+    // Scroll event as secondary fallback
+    const handle = () => setScrolled((window.scrollY || document.documentElement.scrollTop) > 60)
     handle()
     window.addEventListener('scroll', handle, { passive: true })
-    return () => window.removeEventListener('scroll', handle)
+
+    return () => {
+      obs.disconnect()
+      sentinel.remove()
+      window.removeEventListener('scroll', handle)
+    }
   }, [])
 
   useEffect(() => {
@@ -112,11 +130,12 @@ export function SiteNav() {
               onClick={() => setOpen(true)}
               aria-label="Menu openen"
               aria-expanded={open}
+              style={{ touchAction: 'manipulation' }}
               className={cn(
-                'flex h-10 w-10 items-center justify-center rounded-full transition-colors lg:hidden',
+                'relative z-10 flex h-12 w-12 items-center justify-center rounded-full transition-colors lg:hidden',
                 scrolled
                   ? 'text-foreground hover:bg-gray-100'
-                  : 'text-white hover:bg-white/15'
+                  : 'bg-white/20 text-white hover:bg-white/30'
               )}
             >
               <Menu className="h-6 w-6" />

@@ -22,33 +22,29 @@ export function CountUp({ target, suffix = '', duration = 2200 }: CountUpProps) 
       return
     }
 
+    const startedRef = { current: false }
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (rafRef.current !== null) {
-          cancelAnimationFrame(rafRef.current)
-          rafRef.current = null
-        }
+        if (!entry.isIntersecting || startedRef.current) return
+        startedRef.current = true
+        observer.disconnect()
 
-        if (entry.isIntersecting) {
-          setCount(0)
-          const start = performance.now()
-          const step = (now: number) => {
-            const progress = Math.min((now - start) / duration, 1)
-            const eased = 1 - Math.pow(1 - progress, 3)
-            setCount(Math.floor(eased * target))
-            if (progress < 1) {
-              rafRef.current = requestAnimationFrame(step)
-            } else {
-              setCount(target)
-              rafRef.current = null
-            }
+        setCount(0)
+        const start = performance.now()
+        const step = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1)
+          const eased = 1 - Math.pow(1 - progress, 3)
+          setCount(Math.floor(eased * target))
+          if (progress < 1) {
+            rafRef.current = requestAnimationFrame(step)
+          } else {
+            setCount(target)
+            rafRef.current = null
           }
-          rafRef.current = requestAnimationFrame(step)
-        } else {
-          setCount(0)
         }
+        rafRef.current = requestAnimationFrame(step)
       },
-      { threshold: 0.3 }
+      { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
     )
 
     observer.observe(el)
