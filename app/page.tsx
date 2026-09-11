@@ -163,17 +163,17 @@ function Stats() {
   return (
     <section className="section-fade py-10 md:py-16 lg:py-24">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-        <div className="grid grid-cols-2 gap-8 md:gap-10 lg:flex lg:justify-between lg:items-start">
+        <div className="grid grid-cols-2 gap-5 md:gap-10 lg:flex lg:items-start lg:justify-between">
           {statsItems.map((item, i) => (
             <Reveal key={item.label} delay={i * 90}>
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-3">
-                  <span className="font-heading text-[52px] leading-none tracking-tight md:text-[64px] lg:text-[76px]">
+              <div className="flex flex-col gap-2 lg:gap-3">
+                <div className="flex items-center gap-2 lg:gap-3">
+                  <span className="font-heading text-[36px] leading-none tracking-tight md:text-[64px] lg:text-[76px]">
                     <CountUp target={item.target} suffix={item.suffix} />
                   </span>
-                  <span className="text-[28px] text-accent md:text-[34px]" aria-hidden>↑</span>
+                  <span className="text-[20px] text-accent md:text-[34px]" aria-hidden>↑</span>
                 </div>
-                <p className="text-[16px] text-muted-foreground md:text-[18px]">{item.label}</p>
+                <p className="text-[13px] text-muted-foreground md:text-[18px]">{item.label}</p>
               </div>
             </Reveal>
           ))}
