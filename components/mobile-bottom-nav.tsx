@@ -46,8 +46,8 @@ export function MobileBottomNav() {
     >
       {/* Pill container — overflow-visible so center button can float above */}
       <div className={cn(
-        'flex items-center justify-around rounded-full border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
-        compact ? 'px-3 py-1' : 'px-3 py-2'
+        'flex items-center justify-around border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
+        compact ? 'rounded-[22px] px-3 py-1' : 'rounded-full px-3 py-2'
       )}>
 
         {/* Left two links */}
@@ -59,7 +59,7 @@ export function MobileBottomNav() {
               href={href}
               className={cn(
                 'flex min-w-[44px] flex-col items-center gap-1 rounded-xl px-2 py-1 transition-colors duration-200',
-                active ? 'text-accent' : 'text-foreground/40'
+                active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
               <Icon
@@ -111,7 +111,7 @@ export function MobileBottomNav() {
               href={href}
               className={cn(
                 'flex min-w-[44px] flex-col items-center gap-1 rounded-xl px-2 py-1 transition-colors duration-200',
-                active ? 'text-accent' : 'text-foreground/40'
+                active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
               <Icon
