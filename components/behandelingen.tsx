@@ -194,7 +194,7 @@ export function Behandelingen() {
           {tab.groups.map((group, gi) => (
             <div key={gi} className={gi > 0 ? 'mt-14' : ''}>
               {group.subtitle && (
-                <p className="mb-3 text-[14px] font-semibold tracking-[0.18em] text-foreground/40 uppercase">
+                <p className="mb-3 mt-6 text-[14px] font-semibold tracking-[0.18em] text-foreground/40 uppercase lg:mt-0">
                   {group.subtitle}
                 </p>
               )}
