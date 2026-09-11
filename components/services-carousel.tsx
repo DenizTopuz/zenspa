@@ -83,10 +83,10 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
           className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] ${service.imgPos}`}
           sizes="(min-width: 1440px) 340px, (min-width: 1024px) 260px, (min-width: 768px) 360px, 200px"
         />
-        {/* Gradient overlay — always on mobile/tablet, hover-only on desktop */}
+        {/* Gradient overlay — hidden on mobile, hover-only on desktop */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent
-                        opacity-100 transition-opacity duration-500
-                        lg:opacity-0 lg:group-hover:opacity-100" />
+                        opacity-0 transition-opacity duration-500
+                        lg:group-hover:opacity-100" />
         {/* Price — always on mobile/tablet, hover-only on desktop */}
         <div className="absolute left-5 top-5
                         translate-y-0 opacity-100
