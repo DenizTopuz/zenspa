@@ -58,6 +58,7 @@ export function SmoothScroll() {
   // Section fade-in — re-run on every route change so newly mounted
   // sections are observed even after client-side navigation
   useEffect(() => {
+    // Lower threshold + no bottom rootMargin = more reliable on iOS Safari
     const sectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -67,17 +68,31 @@ export function SmoothScroll() {
           }
         })
       },
-      { threshold: 0.06, rootMargin: '0px 0px -60px 0px' },
+      { threshold: 0.01, rootMargin: '0px 0px -10px 0px' },
     )
-    document.querySelectorAll<HTMLElement>('.section-fade').forEach((s) => {
+
+    const sections = document.querySelectorAll<HTMLElement>('.section-fade')
+
+    sections.forEach((s) => {
       const rect = s.getBoundingClientRect()
-      if (rect.top < window.innerHeight - 60 && rect.bottom > 0) {
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
         s.classList.add('section-visible')
       } else {
         sectionObserver.observe(s)
       }
     })
-    return () => sectionObserver.disconnect()
+
+    // Safety fallback: reveal any still-hidden sections after 4s (iOS Safari edge cases)
+    const fallback = window.setTimeout(() => {
+      document.querySelectorAll<HTMLElement>('.section-fade:not(.section-visible)').forEach((s) => {
+        s.classList.add('section-visible')
+      })
+    }, 4000)
+
+    return () => {
+      sectionObserver.disconnect()
+      window.clearTimeout(fallback)
+    }
   }, [pathname])
 
   return null

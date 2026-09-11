@@ -44,7 +44,7 @@ export function CountUp({ target, suffix = '', duration = 2200 }: CountUpProps) 
         }
         rafRef.current = requestAnimationFrame(step)
       },
-      { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
+      { threshold: 0.05, rootMargin: '0px' }
     )
 
     observer.observe(el)

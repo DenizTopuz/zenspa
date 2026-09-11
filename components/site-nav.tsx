@@ -139,7 +139,7 @@ export function SiteNav() {
               aria-expanded={open}
               style={{ touchAction: 'manipulation' }}
               className={cn(
-                'relative z-10 flex h-12 w-12 items-center justify-center rounded-full transition-colors lg:hidden',
+                'relative z-10 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors lg:hidden',
                 scrolled
                   ? 'text-foreground hover:bg-gray-100'
                   : 'bg-white/20 text-white hover:bg-white/30'

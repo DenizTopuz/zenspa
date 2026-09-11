@@ -35,7 +35,7 @@ export function CtaBand() {
   return (
     <section
       id="contact"
-      className="section-fade relative overflow-hidden py-44 md:py-56"
+      className="section-fade relative overflow-hidden py-28 lg:py-56"
       aria-labelledby="cta-heading"
     >
       {/* Parallax background photo */}
@@ -54,8 +54,8 @@ export function CtaBand() {
         />
       </div>
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/58" />
+      {/* Dark overlay — lighter on mobile for readability */}
+      <div className="absolute inset-0 bg-black/38 lg:bg-black/58" />
 
       {/* Beeldlogo watermark — slower parallax layer */}
       <div
@@ -85,7 +85,7 @@ export function CtaBand() {
       {/* Content */}
       <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center gap-8 px-5 text-center">
         <div className="flex flex-col gap-5">
-          <span className="text-[12px] font-semibold tracking-[0.22em] text-white/50 uppercase">
+          <span className="text-[12px] font-semibold tracking-[0.22em] text-white/70 uppercase">
             Reserveer je sessie
           </span>
           <h2
@@ -96,11 +96,11 @@ export function CtaBand() {
             begint hier.
           </h2>
         </div>
-        <p className="max-w-[440px] text-[17px] leading-[1.8] text-white/62">
+        <p className="max-w-[440px] text-[17px] leading-[1.8] text-white/80">
           Jouw therapeut staat klaar. Jouw kamer wacht.<br className="hidden sm:block" />{' '}
           Het enige wat ontbreekt, ben jij.
         </p>
-        <div className="flex flex-col items-center gap-4 text-[13px] text-white/42 sm:flex-row sm:gap-6">
+        <div className="flex flex-col items-center gap-4 text-[13px] text-white/65 sm:flex-row sm:gap-6">
           <span className="flex items-center gap-2">
             <MapPin className="h-3.5 w-3.5" aria-hidden /> Kretastraat 77, Almere
           </span>
