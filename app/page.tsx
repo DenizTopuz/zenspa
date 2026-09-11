@@ -128,7 +128,7 @@ function Hero() {
 
 function Pillars() {
   return (
-    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 overflow-hidden rounded-t-[80px] bg-background pb-4 md:-mt-48 md:rounded-t-[112px] md:pb-6">
+    <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 overflow-hidden rounded-t-[40px] bg-background pb-4 md:-mt-48 md:rounded-t-[112px] md:pb-6">
       <div className="relative overflow-hidden py-12 md:py-16">
         {/* Fade left */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-48 bg-gradient-to-r from-background to-transparent md:w-72" aria-hidden />
