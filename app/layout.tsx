@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Nunito_Sans, EB_Garamond } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SmoothScroll } from "@/components/smooth-scroll"
+import { MobileBottomNav } from "@/components/mobile-bottom-nav"
 import { cn } from "@/lib/utils";
 
 const ebGaramondHeading = EB_Garamond({subsets:['latin'],variable:'--font-heading'});
@@ -29,6 +30,7 @@ export default function RootLayout({
         <ThemeProvider>
           <SmoothScroll />
           {children}
+          <MobileBottomNav />
         </ThemeProvider>
       </body>
     </html>

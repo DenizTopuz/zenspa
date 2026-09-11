@@ -47,7 +47,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/52 to-black/80" />
 
       {/* Content */}
-      <div className="relative z-10 w-full py-24 text-center text-white md:py-32">
+      <div className="relative z-10 w-full pt-36 pb-32 text-center text-white md:py-32">
 
         {/* Price */}
         <p className="mb-4 text-[28px] font-semibold tracking-[0.04em] text-white/75">
