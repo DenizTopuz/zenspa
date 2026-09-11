@@ -44,12 +44,9 @@ export function SiteNav() {
         <div
           className={cn(
             'mx-auto flex max-w-[1840px] items-center rounded-[100px] border py-3 pl-8 pr-3 backdrop-blur-lg transition-all duration-500 md:py-4 md:pl-10 md:pr-4',
-            // Mobile: always white/solid (scroll detection unreliable on iOS)
-            'border-foreground/10 bg-white shadow-[0_4px_32px_rgba(0,0,0,0.10)]',
-            // Desktop: transparent over hero, white when scrolled
             scrolled
-              ? 'lg:border-foreground/10 lg:bg-white lg:shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
-              : 'lg:border-white/30 lg:bg-white/18 lg:shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
+              ? 'border-foreground/10 bg-white shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
+              : 'border-white/30 bg-white/18 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
           )}
         >
           {/* Left — nav links */}
@@ -78,9 +75,7 @@ export function SiteNav() {
               <ZenSpaLogo
                 className={cn(
                   'h-16 w-auto transition-colors duration-300',
-                  // Mobile: always dark; Desktop: white over hero, dark when scrolled
-                  'text-foreground',
-                  !scrolled && 'lg:text-white'
+                  scrolled ? 'text-foreground' : 'text-white'
                 )}
               />
             </a>
@@ -119,7 +114,12 @@ export function SiteNav() {
               aria-label="Menu openen"
               aria-expanded={open}
               style={{ touchAction: 'manipulation' }}
-              className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full text-foreground transition-colors hover:bg-gray-100 lg:hidden"
+              className={cn(
+                'relative z-10 flex h-12 w-12 items-center justify-center rounded-full transition-colors lg:hidden',
+                scrolled
+                  ? 'text-foreground hover:bg-gray-100'
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              )}
             >
               <Menu className="h-6 w-6" />
             </button>
