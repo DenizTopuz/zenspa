@@ -24,11 +24,35 @@ export function SiteNav() {
   }
 
   useEffect(() => {
-    // Scroll detection only needed for desktop (mobile always shows scrolled style via CSS)
-    const handle = () => setScrolled(window.scrollY > 60)
+    // IntersectionObserver is more reliable than scroll events on iOS Safari
+    const sentinel = document.createElement('div')
+    sentinel.setAttribute('aria-hidden', 'true')
+    sentinel.style.cssText = 'position:absolute;top:80px;left:0;width:1px;height:1px;pointer-events:none;'
+    document.body.prepend(sentinel)
+
+    const obs = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { threshold: 0 }
+    )
+    obs.observe(sentinel)
+
+    // Scroll + touch events as extra triggers (covers momentum scrolling gaps)
+    const handle = () => {
+      const y = window.scrollY || document.documentElement.scrollTop
+      setScrolled(y > 60)
+    }
     handle()
     window.addEventListener('scroll', handle, { passive: true })
-    return () => window.removeEventListener('scroll', handle)
+    window.addEventListener('touchmove', handle, { passive: true })
+    window.addEventListener('touchend', handle, { passive: true })
+
+    return () => {
+      obs.disconnect()
+      sentinel.remove()
+      window.removeEventListener('scroll', handle)
+      window.removeEventListener('touchmove', handle)
+      window.removeEventListener('touchend', handle)
+    }
   }, [])
 
   useEffect(() => {
