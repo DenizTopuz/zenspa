@@ -70,12 +70,12 @@ export function FaqSection({ className }: { className?: string }) {
     setOpenIdx((prev) => (prev === i ? null : i))
 
   return (
-    <section id="faq" className={`section-fade py-24 md:py-36 lg:py-48 ${className ?? ''}`} aria-labelledby="faq-heading">
-      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+    <section id="faq" className={`section-fade pt-0 pb-12 md:py-36 lg:py-48 ${className ?? ''}`} aria-labelledby="faq-heading">
+      <div className="mx-auto max-w-[1840px] px-5 md:px-6">
 
         {/* Heading — above the grid so the card aligns with the first question */}
         <div className="mb-12">
-          <span className="mb-5 block text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">
+          <span className="mt-10 mb-5 block text-[14px] font-semibold tracking-[0.18em] text-accent uppercase md:mt-0">
             Veelgestelde vragen
           </span>
           <h2

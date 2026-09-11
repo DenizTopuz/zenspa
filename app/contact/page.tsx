@@ -71,8 +71,8 @@ export default function ContactPage() {
         </section>
 
         {/* ── Info bar ──────────────────────────────────────────────── */}
-        <section className="relative z-10 -mt-32 overflow-hidden rounded-t-[80px] bg-background md:-mt-48 md:rounded-t-[112px]">
-          <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+        <section className="relative z-10 -mt-32 overflow-hidden rounded-t-[40px] bg-background md:-mt-48 md:rounded-t-[112px]">
+          <div className="mx-auto max-w-[1840px] px-5 md:px-6">
             <div className="grid grid-cols-2 gap-3 py-12 md:gap-10 md:grid-cols-4 md:py-16">
               {infoItems.map((item) => {
                 const inner = (
@@ -125,7 +125,7 @@ export default function ContactPage() {
 
         {/* ── Instagram feed ────────────────────────────────────────── */}
         <section className="section-fade bg-background py-24 md:py-36">
-          <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+          <div className="mx-auto max-w-[1840px] px-5 md:px-6">
             <div className="mb-10 flex items-end justify-between gap-6">
               <div>
                 <h2 className="font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px]">

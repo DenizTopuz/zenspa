@@ -41,7 +41,7 @@ export default function OverMijPage() {
 
         {/* ── 3. Pull quote ────────────────────────────────────────── */}
         <section className="section-fade bg-background py-10 md:py-14">
-          <div className="mx-auto max-w-5xl px-4 md:px-6 text-center">
+          <div className="mx-auto max-w-5xl px-5 md:px-6 text-center">
             <Reveal>
               <p className="font-heading text-[32px] leading-[1.2] tracking-tight text-foreground/80 md:text-[44px] lg:text-[54px]">
                 Schoonheid is geen masker — het is de zorg die je jezelf gunt, dag na dag.
@@ -52,7 +52,7 @@ export default function OverMijPage() {
 
         {/* ── 4. Three-column info ─────────────────────────────────── */}
         <section className="section-fade bg-background py-8 md:py-10">
-          <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+          <div className="mx-auto max-w-[1840px] px-5 md:px-6">
             <div className="grid grid-cols-1 gap-0 divide-y divide-foreground/8 md:grid-cols-3 md:divide-x md:divide-y-0">
               {[
                 {
@@ -86,8 +86,8 @@ export default function OverMijPage() {
         </section>
 
         {/* ── 5. Image + text ──────────────────────────────────────── */}
-        <section className="section-fade bg-background pt-20 pb-16 md:pt-28 md:pb-20 lg:pt-36 lg:pb-24">
-          <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-4 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
+        <section className="section-fade bg-background pt-0 pb-16 md:pt-28 md:pb-20 lg:pt-36 lg:pb-24">
+          <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-5 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
             <Reveal>
               <div className="relative">
@@ -165,8 +165,8 @@ export default function OverMijPage() {
 
         {/* ── 6. Stats ─────────────────────────────────────────────── */}
         <section className="section-fade bg-background pt-10 pb-20 md:pt-12 md:pb-28">
-          <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-            <div className="grid grid-cols-2 gap-10 md:flex md:items-start md:justify-between">
+          <div className="mx-auto max-w-[1840px] px-5 md:px-6">
+            <div className="grid grid-cols-2 gap-5 md:gap-10 md:flex md:items-start md:justify-between">
               {([
                 { target: 2400, suffix: '+', label: 'Tevreden klanten' },
                 { target: 98,   suffix: '%', label: 'Klanttevredenheid' },
@@ -176,12 +176,12 @@ export default function OverMijPage() {
                 <Reveal key={label} delay={i * 90}>
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-3">
-                      <span className="font-heading text-[52px] leading-none tracking-tight md:text-[64px] lg:text-[76px]">
+                      <span className="font-heading text-[36px] leading-none tracking-tight md:text-[64px] lg:text-[76px]">
                         <CountUp target={target} suffix={suffix} />
                       </span>
-                      <span className="text-[28px] text-accent md:text-[34px]" aria-hidden>↑</span>
+                      <span className="text-[20px] text-accent md:text-[34px]" aria-hidden>↑</span>
                     </div>
-                    <p className="text-[16px] text-muted-foreground md:text-[18px]">{label}</p>
+                    <p className="text-[13px] text-muted-foreground md:text-[18px]">{label}</p>
                   </div>
                 </Reveal>
               ))}
@@ -191,7 +191,7 @@ export default function OverMijPage() {
 
         {/* ── 7. Werkwijze ─────────────────────────────────────────── */}
         <section className="section-fade bg-secondary/25 py-24 md:py-36">
-          <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-4 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
+          <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-5 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
             <div>
               <Reveal>
                 <p className="mb-3 text-[11px] font-semibold tracking-[0.22em] text-accent uppercase">Mijn werkwijze</p>
@@ -237,8 +237,8 @@ export default function OverMijPage() {
         <BookingCTA />
 
         {/* ── 10. Behandelingen ────────────────────────────────────── */}
-        <section className="section-fade bg-card py-24 md:py-32">
-          <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+        <section className="section-fade bg-card pt-24 pb-10 md:py-32">
+          <div className="mx-auto max-w-[1840px] px-5 md:px-6">
             <Reveal>
               <div className="mb-12">
                 <h2 className="font-heading text-[40px] tracking-tight md:text-[54px] lg:text-[68px]">Ontdek ook</h2>
@@ -289,7 +289,7 @@ export default function OverMijPage() {
         <FaqSection />
 
         {/* ── 12. Contact form ─────────────────────────────────────── */}
-        <ContactSection />
+        <ContactSection className="!pt-10 md:!pt-36" />
 
       </main>
       <SiteFooter bg="bg-background" />

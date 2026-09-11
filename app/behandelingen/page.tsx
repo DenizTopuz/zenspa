@@ -87,7 +87,7 @@ export default function BehandelingenPage() {
         <BehandelingenHero />
 
         {/* ── Category sections (rounded pullup over hero) ──────────── */}
-        <div className="relative z-10 -mt-20 rounded-t-[80px] bg-card md:-mt-28 md:rounded-t-[112px]">
+        <div className="relative z-10 -mt-20 rounded-t-[40px] bg-card md:-mt-28 md:rounded-t-[112px]">
         {CATS.map((cat, catIdx) => {
           const tabData = DATA[cat.key]
           return (
@@ -97,7 +97,7 @@ export default function BehandelingenPage() {
               className={`section-fade ${catIdx === 0 ? 'pt-20 pb-16 md:pt-28 md:pb-24' : 'py-16 md:py-24 lg:py-32'}`}
               aria-labelledby={`${cat.key}-heading`}
             >
-              <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+              <div className="mx-auto max-w-[1840px] px-5 md:px-6">
 
                 {/* Section heading */}
                 <Reveal className="mb-16 flex flex-col items-center gap-4 text-center">

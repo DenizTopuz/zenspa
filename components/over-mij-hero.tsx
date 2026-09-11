@@ -58,7 +58,7 @@ export function OverMijHero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full py-24 text-center text-white md:py-32">
+      <div className="relative z-10 w-full px-8 py-36 text-center text-white md:px-0 md:py-32">
         <h1 className="font-heading text-[52px] leading-[1.04] tracking-tight md:text-[72px] lg:text-[88px]">
           Zen Spa
         </h1>
@@ -73,8 +73,8 @@ export function OverMijHero() {
             Maak een afspraak
           </Link>
         </div>
-        <div className="mt-8 flex items-center justify-center gap-3 overflow-hidden text-white/55">
-          <span className="truncate text-[12px] font-semibold tracking-[0.14em] uppercase">
+        <div className="mt-8 pb-4 flex items-center justify-center gap-3 text-white/55">
+          <span className="text-center text-[12px] font-semibold tracking-[0.14em] uppercase leading-relaxed">
             Gecertificeerd · 1000+ tevreden klanten · 20+ jaar ervaring
           </span>
         </div>

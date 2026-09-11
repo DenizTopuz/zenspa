@@ -13,13 +13,13 @@ export function ContactSection({ className }: { className?: string }) {
   return (
     <section
       id="contact"
-      className={`section-fade bg-background py-24 md:py-36 ${className ?? ''}`}
+      className={`section-fade bg-background pt-24 pb-24 md:pt-36 md:pb-36 ${className ?? ''}`}
       aria-labelledby="contact-heading"
     >
-      <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-4 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-16">
+      <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-5 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-16">
 
         {/* Image */}
-        <div className="relative aspect-square overflow-hidden rounded-[48px]">
+        <div className="relative aspect-square overflow-hidden rounded-3xl md:rounded-[48px]">
           <Image
             src="/hero.jpg"
             alt=""

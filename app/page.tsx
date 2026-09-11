@@ -161,8 +161,8 @@ const statsItems = [
 
 function Stats() {
   return (
-    <section className="section-fade py-10 md:py-16 lg:py-24">
-      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+    <section className="section-fade pt-0 pb-10 md:py-16 lg:py-24">
+      <div className="mx-auto max-w-[1840px] px-5 md:px-6">
         <div className="grid grid-cols-2 gap-5 md:gap-10 lg:flex lg:items-start lg:justify-between">
           {statsItems.map((item, i) => (
             <Reveal key={item.label} delay={i * 90}>
@@ -186,8 +186,8 @@ function Stats() {
 
 function About() {
   return (
-    <section id="about" className="section-fade pt-2 pb-6 md:pt-16 md:pb-20 lg:pt-20 lg:pb-40" aria-labelledby="about-heading">
-      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+    <section id="about" className="section-fade bg-background -mt-px pt-0 pb-6 md:mt-0 md:pt-16 md:pb-20 lg:pt-20 lg:pb-40" aria-labelledby="about-heading">
+      <div className="mx-auto max-w-[1840px] px-5 md:px-6">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
           {/* Text column */}
@@ -306,9 +306,9 @@ function About() {
 
 function Process() {
   return (
-    <section className="section-fade bg-accent py-36 md:py-48" aria-labelledby="process-heading">
-      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
-        <Reveal className="mb-20 flex flex-col items-center gap-5 text-center">
+    <section className="section-fade bg-accent py-16 md:py-48" aria-labelledby="process-heading">
+      <div className="mx-auto max-w-[1840px] px-5 md:px-6">
+        <Reveal className="mb-10 flex flex-col items-center gap-5 text-center md:mb-20">
           <span className="text-[12px] font-semibold tracking-[0.2em] text-white/45 uppercase">
             Hoe het werkt
           </span>
@@ -341,8 +341,8 @@ function Process() {
 
 function Journal() {
   return (
-    <section className="section-fade bg-muted/25 py-36 md:py-48" aria-labelledby="journal-heading">
-      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+    <section className="section-fade bg-muted/25 pt-16 pb-36 md:py-48" aria-labelledby="journal-heading">
+      <div className="mx-auto max-w-[1840px] px-5 md:px-6">
         <Reveal className="mb-20 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-4">
             <SectionLabel>Wellness journal</SectionLabel>
@@ -417,7 +417,7 @@ export default function Page() {
         <FaqSection />
         <Journal />
       </main>
-      <SiteFooter />
+      <SiteFooter bg="bg-background" />
     </>
   )
 }

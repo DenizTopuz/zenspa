@@ -85,7 +85,7 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
         />
         {/* Gradient overlay — hidden on mobile, hover-only on desktop */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent
-                        opacity-0 transition-opacity duration-500
+                        hidden lg:block lg:opacity-0 lg:transition-opacity lg:duration-500
                         lg:group-hover:opacity-100" />
         {/* Price — always on mobile/tablet, hover-only on desktop */}
         <div className="absolute left-5 top-5
@@ -122,10 +122,11 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
   const items = [...services, ...services, ...services]
   const START = n
 
-  const idxRef       = useRef(START)
-  const busyRef      = useRef(false)
-  const touchStartX  = useRef<number | null>(null)
-  const pausedRef    = useRef(false)
+  const idxRef        = useRef(START)
+  const busyRef       = useRef(false)
+  const pointerStartX = useRef<number | null>(null)
+  const didDrag       = useRef(false)
+  const pausedRef     = useRef(false)
   const [idx,  setIdx]  = useState(START)
   const [anim, setAnim] = useState(true)
   const [, forceRender] = useState(0)
@@ -160,17 +161,32 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
   const prev = () => { if (!busyRef.current) moveTo(idxRef.current - 1) }
   const next = () => { if (!busyRef.current) moveTo(idxRef.current + 1) }
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    pointerStartX.current = e.clientX
+    didDrag.current = false
     setPaused(true)
+    e.currentTarget.setPointerCapture(e.pointerId)
   }
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return
-    const delta = e.changedTouches[0].clientX - touchStartX.current
-    touchStartX.current = null
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (pointerStartX.current === null) return
+    if (Math.abs(e.clientX - pointerStartX.current) > 5) didDrag.current = true
+  }
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (pointerStartX.current === null) return
+    const delta = e.clientX - pointerStartX.current
+    pointerStartX.current = null
     setPaused(false)
-    if (delta < -40) next()
-    else if (delta > 40) prev()
+    if (Math.abs(delta) < 40) return
+    if (delta < 0) next()
+    else prev()
+  }
+  const onPointerCancel = () => {
+    pointerStartX.current = null
+    setPaused(false)
+  }
+  // Prevent link clicks after a drag
+  const onClickCapture = (e: React.MouseEvent) => {
+    if (didDrag.current) { e.preventDefault(); e.stopPropagation(); didDrag.current = false }
   }
 
   const translateX = partial - idx * step
@@ -179,11 +195,11 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="section-fade bg-card py-24 md:py-32"
+      className="section-fade bg-card pt-16 pb-24 md:py-32"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="mx-auto mb-14 max-w-[1840px] px-4 md:px-6">
+      <div className="mx-auto mb-14 max-w-[1840px] px-5 md:px-6">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-4">
             <span className="text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">
@@ -208,7 +224,7 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
 
       <div
         className="relative overflow-hidden"
-        style={{ marginTop: -SHADOW_PY, marginBottom: -SHADOW_PY }}
+        style={{ marginTop: -SHADOW_PY, marginBottom: -SHADOW_PY, touchAction: 'pan-y' }}
       >
         <div
           aria-hidden
@@ -222,17 +238,21 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
         />
 
         <div
-          className="flex"
+          className="flex cursor-grab active:cursor-grabbing"
           style={{
             gap:           `${GAP}px`,
             paddingTop:    SHADOW_PY,
             paddingBottom: SHADOW_PY,
             transform:     `translateX(${translateX}px)`,
             transition:    anim ? 'transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none',
+            userSelect:    'none',
           }}
           onTransitionEnd={handleTransitionEnd}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerCancel}
+          onClickCapture={onClickCapture}
         >
           {items.map((service, i) => (
             <Card key={`${service.slug}-${i}`} service={service} cardW={cardW} />
@@ -240,7 +260,7 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
         </div>
       </div>
 
-      <div className="mx-auto mt-8 flex max-w-[1840px] gap-3 px-4 md:px-6">
+      <div className="mx-auto mt-8 flex max-w-[1840px] gap-3 px-5 md:px-6">
         <button
           onClick={prev}
           aria-label="Vorige behandeling"

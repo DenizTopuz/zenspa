@@ -65,7 +65,7 @@ export function ReviewsCarousel() {
 
   return (
     <section id="stories" className="section-fade py-24 md:py-36 lg:py-48" aria-labelledby="reviews-heading">
-      <div className="mx-auto max-w-[1840px] px-4 md:px-6">
+      <div className="mx-auto max-w-[1840px] px-5 md:px-6">
 
         {/* Header */}
         <div className="mb-14 flex flex-col items-center gap-5 text-center">
@@ -107,17 +107,17 @@ export function ReviewsCarousel() {
             {/* Right — quote panel */}
             <div className="flex flex-col justify-between bg-foreground/[0.04] p-10 md:p-14 lg:p-20">
 
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-2 md:gap-8">
                 {/* Opening quote mark */}
                 <span
-                  className="font-heading text-[96px] leading-[0.75] text-foreground/18 md:text-[120px]"
+                  className="font-heading text-[64px] leading-[0.75] text-foreground/18 md:text-[120px]"
                   aria-hidden
                 >
                   &ldquo;
                 </span>
 
                 {/* Quote — fixed min-height keeps card stable across slides */}
-                <p className="min-h-[160px] font-heading text-[26px] leading-[1.35] tracking-tight md:text-[30px] lg:text-[36px]">
+                <p className="min-h-[40px] font-heading text-[26px] leading-[1.35] tracking-tight md:min-h-[160px] md:text-[30px] lg:text-[36px]">
                   {t.quote}
                 </p>
 
@@ -131,7 +131,7 @@ export function ReviewsCarousel() {
               </div>
 
               {/* Navigation row */}
-              <div className="flex items-center justify-between">
+              <div className="mt-6 flex items-center justify-between md:mt-0">
                 <div className="flex gap-3">
                   <button
                     onClick={prev}
