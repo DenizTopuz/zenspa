@@ -129,7 +129,7 @@ function Hero() {
 function Pillars() {
   return (
     <section aria-label="Onze kernwaarden" className="relative z-10 -mt-32 overflow-hidden rounded-t-[40px] bg-background pb-4 md:-mt-48 md:rounded-t-[112px] md:pb-6">
-      <div className="relative overflow-hidden py-12 md:py-16">
+      <div className="relative overflow-hidden py-6 md:py-16">
         {/* Fade left */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-48 bg-gradient-to-r from-background to-transparent md:w-72" aria-hidden />
         {/* Fade right */}
@@ -186,7 +186,7 @@ function Stats() {
 
 function About() {
   return (
-    <section id="about" className="section-fade pt-6 pb-6 md:pt-16 md:pb-20 lg:pt-20 lg:pb-40" aria-labelledby="about-heading">
+    <section id="about" className="section-fade pt-2 pb-6 md:pt-16 md:pb-20 lg:pt-20 lg:pb-40" aria-labelledby="about-heading">
       <div className="mx-auto max-w-[1840px] px-4 md:px-6">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
