@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { ChevronLeft, ChevronRight, CheckCircle2, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap } from 'lucide-react'
+import { ChevronLeft, ChevronRight, CheckCircle2, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Tag, Timer } from 'lucide-react'
 import { SiteNav } from '@/components/site-nav'
 import { SiteFooter } from '@/components/site-footer'
 import { MobileBottomNav } from '@/components/mobile-bottom-nav'
@@ -320,8 +320,14 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error }: {
           </span>
           {treatment.duration && (
             <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
-              <span className="h-3.5 w-3.5" />
-              <span className="text-foreground/45">{treatment.duration} · {treatment.price}</span>
+              <Timer className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              <span>{treatment.duration}</span>
+            </span>
+          )}
+          {treatment.price && (
+            <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
+              <Tag className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              <span>{treatment.price}</span>
             </span>
           )}
         </div>
