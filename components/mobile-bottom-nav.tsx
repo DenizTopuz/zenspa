@@ -114,7 +114,7 @@ export function MobileBottomNav() {
 
         {/* Center — Afspraak CTA */}
         <a
-          href="mailto:info@zenspa.nl"
+          href="/boeken"
           className={cn(
             'relative flex flex-col items-center gap-0.5 rounded-full px-3 transition-all duration-300 md:px-5',
             compact ? 'py-0.5' : 'py-1'

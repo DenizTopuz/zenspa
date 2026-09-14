@@ -103,7 +103,7 @@ function Hero() {
           style={{ animationDelay: "310ms" }}
         >
           <a
-            href="mailto:info@zenspa.nl"
+            href="/boeken"
             className="rounded-full bg-accent px-11 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-lg hover:shadow-accent/30"
           >
             Afspraak maken

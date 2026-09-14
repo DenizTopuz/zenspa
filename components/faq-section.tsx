@@ -131,7 +131,7 @@ export function FaqSection({ className }: { className?: string }) {
               </p>
 
               <a
-                href="mailto:info@zenspa.nl"
+                href="/boeken"
                 className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-medium text-foreground transition-all duration-300 hover:bg-white/90 hover:shadow-lg"
               >
                 Spreek met ons team ›

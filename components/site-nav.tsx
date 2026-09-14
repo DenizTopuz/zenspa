@@ -99,7 +99,7 @@ export function SiteNav() {
         <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
           {/* Desktop: afspraak CTA */}
           <a
-            href="mailto:info@zenspa.nl"
+            href="/boeken"
             className={cn(
               'hidden items-center gap-2 whitespace-nowrap rounded-[84px] border px-8 py-4 text-[18px] font-medium transition-all duration-300 lg:flex',
               scrolled
@@ -112,7 +112,7 @@ export function SiteNav() {
 
           {/* Mobile: email icon */}
           <a
-            href="mailto:info@zenspa.nl"
+            href="/boeken"
             aria-label="Stuur een e-mail"
             className={cn(
               'flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 lg:hidden',

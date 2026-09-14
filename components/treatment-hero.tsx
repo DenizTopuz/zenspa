@@ -67,7 +67,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
         {/* CTA */}
         <div className="mt-9">
           <a
-            href="mailto:info@zenspa.nl"
+            href="/boeken"
             className="inline-flex items-center rounded-full bg-white px-10 py-4.5 text-[16px] font-semibold text-stone-900 transition-all duration-300 hover:bg-white/90"
           >
             Afspraak maken
