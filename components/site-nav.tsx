@@ -117,8 +117,8 @@ export function SiteNav() {
             className={cn(
               'flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 lg:hidden',
               scrolled
-                ? 'text-foreground/70 hover:bg-foreground/8'
-                : 'text-white/80 hover:bg-white/20'
+                ? 'text-foreground/70 hover:bg-accent/10 hover:text-accent'
+                : 'text-white/80 hover:bg-white/25'
             )}
           >
             <Mail className="h-5 w-5" aria-hidden />
