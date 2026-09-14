@@ -1,7 +1,79 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { Resend } from 'resend'
 import { createServiceClient } from '@/lib/supabase/server'
 import { getTreatmentBySlug, getTotalSlotMinutes } from '@/lib/behandelingen-data'
 import type { BookingInsert } from '@/lib/supabase/types'
+
+const TEST_OVERRIDE_EMAIL = process.env.EMAIL_TEST_OVERRIDE ?? null
+
+function formatDateNL(iso: string) {
+  return new Date(iso).toLocaleDateString('nl-NL', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    timeZone: 'Europe/Amsterdam',
+  })
+}
+
+function formatTimeNL(iso: string) {
+  return new Date(iso).toLocaleTimeString('nl-NL', {
+    hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Amsterdam',
+  })
+}
+
+async function sendEmails(booking: {
+  id: string
+  treatment_name: string
+  customer_name: string
+  customer_email: string
+  customer_phone: string
+  start_time: string
+  notes: string | null
+}) {
+  if (!process.env.RESEND_API_KEY) return
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  const date = formatDateNL(booking.start_time)
+  const time = formatTimeNL(booking.start_time)
+  const to = (email: string) => TEST_OVERRIDE_EMAIL ?? email
+
+  await Promise.all([
+    // Bevestiging aan klant
+    resend.emails.send({
+      from: 'Zen Spa <noreply@zenspa.nl>',
+      to: [to(booking.customer_email)],
+      subject: 'Je aanvraag is ontvangen – Zen Spa',
+      html: `
+        <p>Hoi ${booking.customer_name},</p>
+        <p>We hebben je aanvraag ontvangen voor:</p>
+        <ul>
+          <li><strong>Behandeling:</strong> ${booking.treatment_name}</li>
+          <li><strong>Datum:</strong> ${date}</li>
+          <li><strong>Tijd:</strong> ${time}</li>
+        </ul>
+        ${booking.notes ? `<p><strong>Opmerking:</strong> ${booking.notes}</p>` : ''}
+        <p>Je ontvangt een bevestiging zodra we je aanvraag hebben goedgekeurd.</p>
+        <p>Met vriendelijke groet,<br/>Zen Spa · House of Beauty</p>
+      `,
+    }),
+    // Melding aan admin
+    resend.emails.send({
+      from: 'Zen Spa Boekingen <noreply@zenspa.nl>',
+      to: [to('info@zenspa.nl')],
+      subject: `Nieuwe aanvraag: ${booking.treatment_name} – ${booking.customer_name}`,
+      html: `
+        <p><strong>Nieuwe boekingsaanvraag</strong></p>
+        <ul>
+          <li><strong>Behandeling:</strong> ${booking.treatment_name}</li>
+          <li><strong>Datum:</strong> ${date}</li>
+          <li><strong>Tijd:</strong> ${time}</li>
+          <li><strong>Naam:</strong> ${booking.customer_name}</li>
+          <li><strong>E-mail:</strong> ${booking.customer_email}</li>
+          <li><strong>Telefoon:</strong> ${booking.customer_phone}</li>
+          ${booking.notes ? `<li><strong>Opmerking:</strong> ${booking.notes}</li>` : ''}
+        </ul>
+        <p>Boeking ID: ${booking.id}</p>
+      `,
+    }),
+  ])
+}
 
 export async function POST(req: NextRequest) {
   let body: unknown
@@ -18,7 +90,6 @@ export async function POST(req: NextRequest) {
     notes,
   } = body as Record<string, string>
 
-  // Basic validation
   if (!treatment_slug || !customer_name || !customer_email || !customer_phone || !start_time) {
     return NextResponse.json({ error: 'Verplichte velden ontbreken' }, { status: 400 })
   }
@@ -42,7 +113,6 @@ export async function POST(req: NextRequest) {
 
   const supabase = createServiceClient()
 
-  // Race-condition check: verify slot is still free
   const { data: conflicts } = await supabase
     .from('bookings')
     .select('id')
@@ -78,5 +148,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Kon de boeking niet opslaan' }, { status: 500 })
   }
 
-  return NextResponse.json({ id: (data as { id: string }).id }, { status: 201 })
+  const id = (data as { id: string }).id
+
+  // Stuur e-mails (fire-and-forget, fouten loggen maar niet blokkeren)
+  sendEmails({
+    id,
+    treatment_name: treatment.name,
+    customer_name: customer_name.trim(),
+    customer_email: customer_email.trim().toLowerCase(),
+    customer_phone: customer_phone.trim(),
+    start_time: startDate.toISOString(),
+    notes: notes?.trim() || null,
+  }).catch((e) => console.error('Email error:', e))
+
+  return NextResponse.json({ id }, { status: 201 })
 }
