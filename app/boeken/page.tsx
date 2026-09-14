@@ -309,7 +309,7 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error }: {
       <div className="rounded-2xl border border-foreground/8 bg-accent/4 p-4">
         <p className="text-[13px] font-semibold text-accent/80 mb-2">Jouw keuze</p>
         <p className="font-semibold text-foreground">{treatment.name}</p>
-        <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 text-[13px] text-foreground/55">
+        <div className="mt-1 flex flex-col gap-y-1 text-[13px] text-foreground/55">
           <span className="flex items-center gap-1"><CalendarDays className="h-3.5 w-3.5" />{formatDateLong(slotStart.slice(0, 10))}</span>
           <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{formatTime(slotStart)}</span>
           {treatment.duration && <span>{treatment.duration} · {treatment.price}</span>}
@@ -348,7 +348,7 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error }: {
         >
           {submitting ? 'Aanvraag versturen…' : 'Aanvraag indienen'}
         </button>
-        <p className="text-center text-[12px] text-foreground/40">Je aanvraag wordt beoordeeld. Je ontvangt een bevestiging via e-mail.</p>
+        <p className="text-[12px] text-foreground/40">Je aanvraag wordt beoordeeld. Je ontvangt een bevestiging via e-mail.</p>
       </form>
     </div>
   )
