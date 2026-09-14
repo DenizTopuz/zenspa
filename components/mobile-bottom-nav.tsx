@@ -46,7 +46,7 @@ export function MobileBottomNav() {
     >
       <div className={cn(
         'flex items-center justify-around border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
-        compact ? 'rounded-[18px] px-3 py-0.5 md:py-1' : 'rounded-full px-3 py-1 md:py-2'
+        compact ? 'rounded-[18px] px-2 py-0.5 md:py-1' : 'rounded-full px-2 py-1 md:py-2'
       )}>
 
         {/* Left two links */}
@@ -57,7 +57,7 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-4 py-1 transition-colors duration-200 md:min-w-[64px] md:px-5 md:gap-1',
+                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-3 py-1 transition-colors duration-200 md:min-w-[64px] md:px-5 md:gap-1',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
@@ -113,7 +113,7 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-4 py-1 transition-colors duration-200 md:min-w-[64px] md:px-5 md:gap-1',
+                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-3 py-1 transition-colors duration-200 md:min-w-[64px] md:px-5 md:gap-1',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
