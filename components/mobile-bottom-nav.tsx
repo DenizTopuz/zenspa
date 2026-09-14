@@ -68,7 +68,7 @@ export function MobileBottomNav() {
                 aria-hidden
               />
               <span className={cn(
-                'leading-none tracking-wide transition-all duration-300',
+                'whitespace-nowrap leading-none tracking-wide transition-all duration-300',
                 compact ? 'text-[8px]' : 'text-[10px]',
                 active ? 'font-bold' : 'font-medium'
               )}>
@@ -120,7 +120,7 @@ export function MobileBottomNav() {
                 aria-hidden
               />
               <span className={cn(
-                'leading-none tracking-wide transition-all duration-300',
+                'whitespace-nowrap leading-none tracking-wide transition-all duration-300',
                 compact ? 'text-[8px]' : 'text-[10px]',
                 active ? 'font-bold' : 'font-medium'
               )}>
