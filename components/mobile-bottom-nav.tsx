@@ -58,7 +58,7 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[44px] flex-col items-center gap-1 rounded-xl px-2 py-1 transition-colors duration-200',
+                'flex min-w-[52px] flex-col items-center gap-1 rounded-full px-3 py-1 transition-colors duration-200',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
@@ -110,7 +110,7 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[44px] flex-col items-center gap-1 rounded-xl px-2 py-1 transition-colors duration-200',
+                'flex min-w-[52px] flex-col items-center gap-1 rounded-full px-3 py-1 transition-colors duration-200',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
