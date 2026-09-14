@@ -42,7 +42,7 @@ export function ContactSection({ className }: { className?: string }) {
             <div className="h-px bg-white/12 mb-5" />
 
             {/* Address + hours grid */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 shrink-0 text-white/50" aria-hidden />
