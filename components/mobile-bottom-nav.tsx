@@ -47,7 +47,7 @@ export function MobileBottomNav() {
       {/* Pill container — overflow-visible so center button can float above */}
       <div className={cn(
         'flex items-center justify-around border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
-        compact ? 'rounded-[22px] px-3 py-1' : 'rounded-full px-3 py-2'
+        compact ? 'rounded-[18px] px-3 py-0.5' : 'rounded-full px-3 py-1'
       )}>
 
         {/* Left two links */}
@@ -58,12 +58,12 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[52px] flex-col items-center gap-1 rounded-full px-4 py-1 transition-colors duration-200',
+                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-4 py-1 transition-colors duration-200',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
               <Icon
-                className={cn('transition-all duration-300', compact ? 'h-[18px] w-[18px]' : 'h-[22px] w-[22px]')}
+                className={cn('transition-all duration-300', compact ? 'h-[16px] w-[16px]' : 'h-[19px] w-[19px]')}
                 strokeWidth={active ? 2.3 : 1.7}
                 aria-hidden
               />
@@ -86,10 +86,10 @@ export function MobileBottomNav() {
         >
           <span className={cn(
             'flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_18px_rgba(0,0,0,0.22)] transition-all duration-300',
-            compact ? 'h-9 w-9' : 'h-12 w-12 -mt-5'
+            compact ? 'h-8 w-8' : 'h-10 w-10 -mt-4'
           )}>
             <CalendarCheck
-              className={cn('transition-all duration-300', compact ? 'h-[18px] w-[18px]' : 'h-[22px] w-[22px]')}
+              className={cn('transition-all duration-300', compact ? 'h-[16px] w-[16px]' : 'h-[19px] w-[19px]')}
               strokeWidth={2}
               aria-hidden
             />
@@ -110,12 +110,12 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[52px] flex-col items-center gap-1 rounded-full px-4 py-1 transition-colors duration-200',
+                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-4 py-1 transition-colors duration-200',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
               <Icon
-                className={cn('transition-all duration-300', compact ? 'h-[18px] w-[18px]' : 'h-[22px] w-[22px]')}
+                className={cn('transition-all duration-300', compact ? 'h-[16px] w-[16px]' : 'h-[19px] w-[19px]')}
                 strokeWidth={active ? 2.3 : 1.7}
                 aria-hidden
               />
