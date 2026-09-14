@@ -44,10 +44,9 @@ export function MobileBottomNav() {
       className="fixed left-4 right-4 z-50 lg:hidden"
       style={{ bottom: 'max(16px, env(safe-area-inset-bottom, 16px))' }}
     >
-      {/* Pill container — overflow-visible so center button can float above */}
       <div className={cn(
         'flex items-center justify-around border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
-        compact ? 'rounded-[18px] px-3 py-0.5' : 'rounded-full px-3 py-1'
+        compact ? 'rounded-[18px] px-3 py-0.5 md:py-1' : 'rounded-full px-3 py-1 md:py-2'
       )}>
 
         {/* Left two links */}
@@ -58,18 +57,20 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-4 py-1 transition-colors duration-200',
+                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-4 py-1 transition-colors duration-200 md:min-w-[64px] md:px-5 md:gap-1',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
               <Icon
-                className={cn('transition-all duration-300', compact ? 'h-[16px] w-[16px]' : 'h-[19px] w-[19px]')}
+                className={cn('transition-all duration-300',
+                  compact ? 'h-[16px] w-[16px] md:h-[20px] md:w-[20px]' : 'h-[19px] w-[19px] md:h-[24px] md:w-[24px]'
+                )}
                 strokeWidth={active ? 2.3 : 1.7}
                 aria-hidden
               />
               <span className={cn(
                 'whitespace-nowrap leading-none tracking-wide transition-all duration-300',
-                compact ? 'text-[8px]' : 'text-[10px]',
+                compact ? 'text-[8px] md:text-[10px]' : 'text-[10px] md:text-[12px]',
                 active ? 'font-bold' : 'font-medium'
               )}>
                 {label}
@@ -86,17 +87,19 @@ export function MobileBottomNav() {
         >
           <span className={cn(
             'flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_18px_rgba(0,0,0,0.22)] transition-all duration-300',
-            compact ? 'h-8 w-8' : 'h-10 w-10 -mt-4'
+            compact ? 'h-8 w-8 md:h-10 md:w-10' : 'h-10 w-10 -mt-4 md:h-13 md:w-13 md:-mt-5'
           )}>
             <CalendarCheck
-              className={cn('transition-all duration-300', compact ? 'h-[16px] w-[16px]' : 'h-[19px] w-[19px]')}
+              className={cn('transition-all duration-300',
+                compact ? 'h-[16px] w-[16px] md:h-[20px] md:w-[20px]' : 'h-[19px] w-[19px] md:h-[24px] md:w-[24px]'
+              )}
               strokeWidth={2}
               aria-hidden
             />
           </span>
           <span className={cn(
             'leading-none tracking-wide font-semibold text-accent transition-all duration-300',
-            compact ? 'text-[0px] opacity-0 h-0' : 'text-[10px] opacity-100'
+            compact ? 'text-[0px] opacity-0 h-0' : 'text-[10px] opacity-100 md:text-[12px]'
           )}>
             Afspraak
           </span>
@@ -110,18 +113,20 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-4 py-1 transition-colors duration-200',
+                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-4 py-1 transition-colors duration-200 md:min-w-[64px] md:px-5 md:gap-1',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
               <Icon
-                className={cn('transition-all duration-300', compact ? 'h-[16px] w-[16px]' : 'h-[19px] w-[19px]')}
+                className={cn('transition-all duration-300',
+                  compact ? 'h-[16px] w-[16px] md:h-[20px] md:w-[20px]' : 'h-[19px] w-[19px] md:h-[24px] md:w-[24px]'
+                )}
                 strokeWidth={active ? 2.3 : 1.7}
                 aria-hidden
               />
               <span className={cn(
                 'whitespace-nowrap leading-none tracking-wide transition-all duration-300',
-                compact ? 'text-[8px]' : 'text-[10px]',
+                compact ? 'text-[8px] md:text-[10px]' : 'text-[10px] md:text-[12px]',
                 active ? 'font-bold' : 'font-medium'
               )}>
                 {label}
