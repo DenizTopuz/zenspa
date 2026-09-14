@@ -161,7 +161,7 @@ const statsItems = [
 
 function Stats() {
   return (
-    <section className="section-fade pt-0 pb-10 md:py-16 lg:py-24">
+    <section className="bg-background pt-0 pb-10 md:py-16 lg:py-24">
       <div className="mx-auto max-w-[1840px] px-5 md:px-6">
         <div className="grid grid-cols-2 gap-5 md:gap-10 lg:flex lg:items-start lg:justify-between">
           {statsItems.map((item, i) => (

@@ -41,12 +41,12 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Paginanavigatie"
-      className="fixed left-4 right-4 z-50 lg:hidden"
+      className="fixed left-2 right-2 z-50 lg:hidden"
       style={{ bottom: 'max(16px, env(safe-area-inset-bottom, 16px))' }}
     >
       <div className={cn(
-        'flex items-center justify-evenly border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
-        compact ? 'rounded-[18px] px-3 py-0.5 md:py-1' : 'rounded-full px-3 py-1 md:py-2'
+        'flex items-center justify-evenly rounded-full border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
+        compact ? 'px-2 py-0.5 md:py-1' : 'px-3 py-1 md:py-2'
       )}>
 
         {/* Left two links */}
@@ -57,7 +57,8 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-3 py-1 transition-colors duration-200 md:min-w-[64px] md:px-5 md:gap-1',
+                'flex flex-col items-center rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
+                compact ? 'gap-0.5 py-0.5' : 'gap-0.5 py-1',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
@@ -82,12 +83,12 @@ export function MobileBottomNav() {
         {/* Center — Afspraak CTA */}
         <a
           href="/#contact"
-          className="flex flex-col items-center gap-1"
+          className={cn('flex flex-col items-center transition-all duration-300', compact ? 'gap-0' : 'gap-1')}
           aria-label="Afspraak maken"
         >
           <span className={cn(
             'flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_18px_rgba(0,0,0,0.22)] transition-all duration-300',
-            compact ? 'h-8 w-8 md:h-10 md:w-10' : 'h-10 w-10 -mt-4 md:h-13 md:w-13 md:-mt-5'
+            compact ? 'h-8 w-8 md:h-10 md:w-10' : 'h-10 w-10 -mt-6 md:h-13 md:w-13 md:-mt-7'
           )}>
             <CalendarCheck
               className={cn('transition-all duration-300',
@@ -113,7 +114,8 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex min-w-[52px] flex-col items-center gap-0.5 rounded-full px-3 py-1 transition-colors duration-200 md:min-w-[64px] md:px-5 md:gap-1',
+                'flex flex-col items-center rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
+                compact ? 'gap-0.5 py-0.5' : 'gap-0.5 py-1',
                 active ? 'bg-accent/10 text-accent' : 'text-foreground/40'
               )}
             >
