@@ -44,7 +44,7 @@ const navCols = [
 export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
   return (
     <div className={bg}>
-    <footer className="rounded-t-[40px] bg-foreground text-white md:rounded-t-[112px]">
+    <footer className="rounded-t-[40px] bg-foreground text-white md:rounded-t-[64px] lg:rounded-t-[112px]">
       <div className="mx-auto max-w-[1840px] px-5 md:px-6">
 
         {/* Contact bar */}
