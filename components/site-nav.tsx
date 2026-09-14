@@ -16,6 +16,8 @@ const links = [
 export function SiteNav() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
+  const lightBg = pathname.startsWith('/boeken')
+  const dark = scrolled || lightBg
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/'
@@ -57,7 +59,7 @@ export function SiteNav() {
       <div
         className={cn(
           'mx-auto flex max-w-[1840px] items-center rounded-[100px] border backdrop-blur-lg transition-all duration-500',
-          scrolled
+          dark
             ? 'border-foreground/10 bg-white py-2 pl-3 pr-2 shadow-[0_4px_32px_rgba(0,0,0,0.10)] md:py-4 md:pl-10 md:pr-4'
             : 'border-white/30 bg-white/18 py-3 pl-4 pr-3 shadow-[0_2px_20px_rgba(0,0,0,0.06)] md:py-4 md:pl-10 md:pr-4'
         )}
@@ -72,8 +74,8 @@ export function SiteNav() {
                 'relative whitespace-nowrap text-[19px] transition-colors duration-300',
                 'after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-[width] after:duration-[650ms] after:ease-out hover:after:w-full',
                 isActive(l.href)
-                  ? cn('font-bold', scrolled ? 'text-foreground' : 'text-white')
-                  : cn('font-medium', scrolled ? 'text-foreground/65 hover:text-foreground' : 'text-white/85 hover:text-white')
+                  ? cn('font-bold', dark ? 'text-foreground' : 'text-white')
+                  : cn('font-medium', dark ? 'text-foreground/65 hover:text-foreground' : 'text-white/85 hover:text-white')
               )}
               aria-current={isActive(l.href) ? 'page' : undefined}
             >
@@ -88,8 +90,8 @@ export function SiteNav() {
             <ZenSpaLogo
               className={cn(
                 'w-auto transition-all duration-500',
-                scrolled ? 'h-8 md:h-16' : 'h-10 md:h-16',
-                scrolled ? 'text-foreground' : 'text-white'
+                dark ? 'h-8 md:h-16' : 'h-10 md:h-16',
+                dark ? 'text-foreground' : 'text-white'
               )}
             />
           </a>
@@ -102,7 +104,7 @@ export function SiteNav() {
             href="/boeken"
             className={cn(
               'hidden items-center gap-2 whitespace-nowrap rounded-[84px] border px-8 py-4 text-[18px] font-medium transition-all duration-300 lg:flex',
-              scrolled
+              dark
                 ? 'border-foreground/22 text-foreground hover:bg-foreground hover:text-white'
                 : 'border-white/50 text-white hover:bg-white/20'
             )}
@@ -116,7 +118,7 @@ export function SiteNav() {
             aria-label="Stuur een e-mail"
             className={cn(
               'flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 lg:hidden',
-              scrolled
+              dark
                 ? 'text-foreground/70 hover:bg-accent/10 hover:text-accent'
                 : 'text-white/80 hover:bg-white/25'
             )}
