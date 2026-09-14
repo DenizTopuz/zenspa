@@ -120,7 +120,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         <TrustPillars />
 
         {/* ── 3. Pull quote ────────────────────────────────────────── */}
-        <section className="section-fade bg-background py-10 md:py-14">
+        <section className="bg-background py-10 md:py-14">
           <div className="mx-auto max-w-5xl px-5 md:px-6 text-center">
             <Reveal>
               <p className="font-heading text-[32px] leading-[1.2] tracking-tight text-foreground/80 md:text-[44px] lg:text-[54px]">
@@ -131,7 +131,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         </section>
 
         {/* ── 4. Three-column info ─────────────────────────────────── */}
-        <section className="section-fade bg-background py-8 md:py-10">
+        <section className="bg-background py-8 md:py-10">
           <div className="mx-auto max-w-[1840px] px-5 md:px-6">
             <Reveal>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -173,7 +173,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         </section>
 
         {/* ── 5. Image + text ──────────────────────────────────────── */}
-        <section className="section-fade bg-background pt-20 pb-16 md:pt-28 md:pb-20 lg:pt-36 lg:pb-24">
+        <section className="bg-background pt-20 pb-16 md:pt-28 md:pb-20 lg:pt-36 lg:pb-24">
           <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-5 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
             {/* Image with stamp badge */}
@@ -256,7 +256,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         </section>
 
         {/* ── 6. Stats ─────────────────────────────────────────────── */}
-        <section className="section-fade bg-background pt-10 pb-20 md:pt-12 md:pb-28">
+        <section className="bg-background pt-10 pb-20 md:pt-12 md:pb-28">
           <div className="mx-auto max-w-[1840px] px-5 md:px-6">
             <div className="grid grid-cols-2 gap-10 md:flex md:items-start md:justify-between">
               {([

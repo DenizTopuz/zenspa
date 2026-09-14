@@ -75,7 +75,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
         </div>
 
         {/* Social proof */}
-        <div className="mt-8 flex items-center justify-center gap-3 text-white/55">
+        <div className="mt-8 flex flex-col items-center justify-center gap-2 text-white/55 sm:flex-row sm:gap-3">
           <div className="flex items-center gap-0.5">
             {[1,2,3,4,5].map(i => (
               <Star key={i} className="h-4 w-4 fill-white/80 text-white/80" aria-hidden />
