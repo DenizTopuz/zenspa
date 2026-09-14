@@ -1,10 +1,10 @@
 import { createServerClient } from '@supabase/ssr'
+import { createClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import type { Database } from './types'
 
-export async function createClient() {
+export async function createSupabaseClient() {
   const cookieStore = await cookies()
-
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -16,15 +16,15 @@ export async function createClient() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             )
-          } catch { /* called from Server Component — cookies are read-only */ }
+          } catch { /* Server Component — read-only */ }
         },
       },
     },
   )
 }
 
+/** Full admin access — bypasses RLS. Only use in server-side API routes. */
 export function createServiceClient() {
-  const { createClient } = require('@supabase/supabase-js') as { createClient: typeof import('@supabase/supabase-js').createClient }
   return createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
