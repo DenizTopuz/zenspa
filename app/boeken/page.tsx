@@ -374,8 +374,8 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error }: {
 // ── Step 4: Bevestiging ───────────────────────────────────────────────────────
 function ConfirmStep({ treatment, slotStart }: { treatment: Treatment; slotStart: string }) {
   return (
-    <div className="py-8 text-center space-y-5">
-      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-accent/10">
+    <div className="py-8 space-y-5">
+      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-accent/10">
         <CheckCircle2 className="h-10 w-10 text-accent" />
       </div>
       <div>
@@ -385,13 +385,30 @@ function ConfirmStep({ treatment, slotStart }: { treatment: Treatment; slotStart
         </p>
       </div>
 
-      <div className="rounded-2xl border border-foreground/8 bg-secondary/15 p-5 text-left space-y-2">
+      <div className="rounded-2xl border border-foreground/8 bg-secondary/15 p-5 space-y-2">
         <p className="text-[13px] font-semibold text-foreground/40 uppercase tracking-wide">Samenvatting</p>
         <p className="font-semibold text-foreground text-[16px]">{treatment.name}</p>
-        <div className="flex flex-wrap gap-x-5 gap-y-1 text-[14px] text-foreground/55">
-          <span className="flex items-center gap-1.5"><CalendarDays className="h-4 w-4 text-accent/60" />{formatDateLong(slotStart.slice(0, 10))}</span>
-          <span className="flex items-center gap-1.5"><Clock className="h-4 w-4 text-accent/60" />{formatTime(slotStart)}</span>
-          {treatment.duration && <span>{treatment.duration} · {treatment.price}</span>}
+        <div className="mt-2 flex flex-col gap-y-1.5 text-[13px] text-foreground/60">
+          <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
+            <CalendarDays className="h-3.5 w-3.5 shrink-0" aria-hidden />
+            <span>{formatDateLong(slotStart.slice(0, 10))}</span>
+          </span>
+          <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
+            <Clock className="h-3.5 w-3.5 shrink-0" aria-hidden />
+            <span>{formatTime(slotStart)}</span>
+          </span>
+          {treatment.duration && (
+            <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
+              <Timer className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              <span>{treatment.duration}</span>
+            </span>
+          )}
+          {treatment.price && (
+            <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
+              <Euro className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              <span>{treatment.price}</span>
+            </span>
+          )}
         </div>
       </div>
 
