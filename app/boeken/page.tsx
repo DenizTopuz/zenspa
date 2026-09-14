@@ -309,10 +309,21 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error }: {
       <div className="rounded-2xl border border-foreground/8 bg-accent/4 p-4">
         <p className="text-[13px] font-semibold text-accent/80 mb-2">Jouw keuze</p>
         <p className="font-semibold text-foreground">{treatment.name}</p>
-        <div className="mt-1 flex flex-col gap-y-1 text-[13px] text-foreground/55">
-          <span className="flex items-center gap-1"><CalendarDays className="h-3.5 w-3.5" />{formatDateLong(slotStart.slice(0, 10))}</span>
-          <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{formatTime(slotStart)}</span>
-          {treatment.duration && <span>{treatment.duration} · {treatment.price}</span>}
+        <div className="mt-2 flex flex-col gap-y-1.5 text-[13px] text-foreground/60">
+          <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
+            <CalendarDays className="h-3.5 w-3.5 shrink-0" aria-hidden />
+            <span>{formatDateLong(slotStart.slice(0, 10))}</span>
+          </span>
+          <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
+            <Clock className="h-3.5 w-3.5 shrink-0" aria-hidden />
+            <span>{formatTime(slotStart)}</span>
+          </span>
+          {treatment.duration && (
+            <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
+              <span className="h-3.5 w-3.5" />
+              <span className="text-foreground/45">{treatment.duration} · {treatment.price}</span>
+            </span>
+          )}
         </div>
       </div>
 
