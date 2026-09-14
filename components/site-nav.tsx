@@ -58,7 +58,7 @@ export function SiteNav() {
         className={cn(
           'mx-auto flex max-w-[1840px] items-center rounded-[100px] border backdrop-blur-lg transition-all duration-500',
           scrolled
-            ? 'border-foreground/10 bg-white py-2 pl-5 pr-2 shadow-[0_4px_32px_rgba(0,0,0,0.10)] md:py-4 md:pl-10 md:pr-4'
+            ? 'border-foreground/10 bg-white py-2 pl-3 pr-2 shadow-[0_4px_32px_rgba(0,0,0,0.10)] md:py-4 md:pl-10 md:pr-4'
             : 'border-white/30 bg-white/18 py-3 pl-4 pr-3 shadow-[0_2px_20px_rgba(0,0,0,0.06)] md:py-4 md:pl-10 md:pr-4'
         )}
       >
@@ -83,7 +83,7 @@ export function SiteNav() {
         </nav>
 
         {/* Center — logo */}
-        <div className="flex flex-1 justify-center lg:flex-none">
+        <div className="flex flex-1 justify-start lg:flex-none lg:justify-center">
           <a href="/" aria-label="Zen Spa home">
             <ZenSpaLogo
               className={cn(
