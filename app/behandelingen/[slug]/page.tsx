@@ -23,6 +23,7 @@ const CAT: Record<string, {
   heading: string
   body: string
   steps: Array<{ title: string; description: string }>
+  marquee?: string
 }> = {
   Gezicht: {
     frequency: 'Elke 4–6 weken',
