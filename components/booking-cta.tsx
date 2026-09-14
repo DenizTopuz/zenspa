@@ -68,7 +68,7 @@ export function BookingCTA() {
           Soms zijn er nog dezelfde dag afspraken beschikbaar. Reserveer jouw moment en laat de rest aan ons over.
         </p>
         <a
-          href="/contact"
+          href="mailto:info@zenspa.nl"
           className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[16px] font-semibold text-stone-900 transition-all duration-300 hover:bg-white/90 hover:gap-3"
         >
           Maak een Afspraak

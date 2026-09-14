@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { ZenSpaIcon } from '@/components/logo'
 
 export function OverMijHero() {
@@ -66,12 +65,12 @@ export function OverMijHero() {
           Gedreven door passie voor huidverzorging en welzijn — meer dan 20 jaar toewijding aan jouw schoonheid.
         </p>
         <div className="mt-9">
-          <Link
-            href="/contact"
+          <a
+            href="mailto:info@zenspa.nl"
             className="inline-flex items-center rounded-full bg-white px-10 py-4.5 text-[16px] font-semibold text-stone-900 transition-all duration-300 hover:bg-white/90"
           >
             Maak een afspraak
-          </Link>
+          </a>
         </div>
         <div className="mt-8 pb-4 flex items-center justify-center gap-3 text-white/55">
           <span className="text-center text-[12px] font-semibold tracking-[0.14em] uppercase leading-relaxed">

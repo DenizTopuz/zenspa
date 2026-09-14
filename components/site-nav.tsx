@@ -99,7 +99,7 @@ export function SiteNav() {
         <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
           {/* Desktop: afspraak CTA */}
           <a
-            href="#contact"
+            href="mailto:info@zenspa.nl"
             className={cn(
               'hidden items-center gap-2 whitespace-nowrap rounded-[84px] border px-8 py-4 text-[18px] font-medium transition-all duration-300 lg:flex',
               scrolled

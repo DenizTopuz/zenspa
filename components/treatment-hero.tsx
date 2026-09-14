@@ -55,7 +55,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
         </p>
 
         {/* Title */}
-        <h1 className="font-heading text-[52px] leading-[1.04] tracking-tight md:text-[72px] lg:text-[88px]">
+        <h1 className="font-heading text-[clamp(28px,8vw,52px)] leading-[1.04] tracking-tight md:text-[72px] lg:text-[88px]">
           {t.name}
         </h1>
 
@@ -67,7 +67,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
         {/* CTA */}
         <div className="mt-9">
           <a
-            href="/contact"
+            href="mailto:info@zenspa.nl"
             className="inline-flex items-center rounded-full bg-white px-10 py-4.5 text-[16px] font-semibold text-stone-900 transition-all duration-300 hover:bg-white/90"
           >
             Afspraak maken
