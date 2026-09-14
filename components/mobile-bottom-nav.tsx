@@ -45,8 +45,8 @@ export function MobileBottomNav() {
       style={{ bottom: 'max(16px, env(safe-area-inset-bottom, 16px))' }}
     >
       <div className={cn(
-        'flex items-center justify-around border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
-        compact ? 'rounded-[18px] px-2 py-0.5 md:py-1' : 'rounded-full px-2 py-1 md:py-2'
+        'flex items-center justify-evenly border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
+        compact ? 'rounded-[18px] px-3 py-0.5 md:py-1' : 'rounded-full px-3 py-1 md:py-2'
       )}>
 
         {/* Left two links */}
