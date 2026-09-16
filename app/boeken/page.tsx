@@ -184,6 +184,8 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
   const [calMonth, setCalMonth] = useState(now.getMonth())
   const [slots, setSlots] = useState<string[]>([])
   const [loadingSlots, setLoadingSlots] = useState(false)
+  const [calOpen, setCalOpen] = useState(!selectedDate)
+  const slotsRef = useRef<HTMLDivElement>(null)
 
   const today = todayAms()
   const maxDate = maxDateAms()
@@ -213,75 +215,107 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
     if (selectedDate) fetchSlots(selectedDate)
   }, [selectedDate, fetchSlots])
 
+  const handleDatePick = (dateStr: string) => {
+    onDateSelect(dateStr)
+    onSlotSelect('')
+    setCalOpen(false)
+    setTimeout(() => slotsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120)
+  }
+
   const days = getCalendarDays(calYear, calMonth)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="font-heading text-[28px] leading-tight tracking-tight md:text-[36px]">Kies een datum</h2>
+        <h2 className="font-heading text-[28px] leading-tight tracking-tight md:text-[36px]">Kies een datum & tijd</h2>
         <p className="mt-1 text-[15px] text-foreground/55">We zijn open op <strong>maandag, woensdag en vrijdag</strong> van 10:00–18:00.</p>
       </div>
 
-      {/* Calendar */}
-      <div className="rounded-2xl border border-foreground/8 bg-secondary/10 p-4 md:p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <button onClick={prevMonth} className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-foreground/6 transition-colors">
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-          <span className="text-[15px] font-semibold">{NL_MONTHS[calMonth]} {calYear}</span>
-          <button onClick={nextMonth} className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-foreground/6 transition-colors">
-            <ChevronRight className="h-4 w-4" />
-          </button>
+      {/* Date chip — collapsed calendar state */}
+      {selectedDate && !calOpen ? (
+        <button
+          onClick={() => setCalOpen(true)}
+          className="flex w-full items-center justify-between rounded-2xl border border-accent/25 bg-accent/5 px-4 py-3.5 transition-colors hover:bg-accent/8"
+        >
+          <div className="flex items-center gap-2.5">
+            <CalendarDays className="h-4 w-4 shrink-0 text-accent" />
+            <span className="text-[15px] font-semibold">{formatDateLong(selectedDate)}</span>
+          </div>
+          <span className="text-[13px] font-medium text-accent">Wijzigen</span>
+        </button>
+      ) : (
+        /* Full calendar */
+        <div className="rounded-2xl border border-foreground/8 bg-secondary/10 p-4 md:p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <button onClick={prevMonth} className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-foreground/6">
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <span className="text-[15px] font-semibold">{NL_MONTHS[calMonth]} {calYear}</span>
+            <button onClick={nextMonth} className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-foreground/6">
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+          <div className="grid grid-cols-7 gap-1 text-center">
+            {NL_DAY_HEADERS.map(d => (
+              <div key={d} className="py-1 text-[11px] font-semibold text-foreground/35">{d}</div>
+            ))}
+            {days.map((dateStr, i) => {
+              if (!dateStr) return <div key={`e-${i}`} />
+              const disabled = dateStr < today || dateStr > maxDate || !isBusinessDay(dateStr)
+              const isSelected = dateStr === selectedDate
+              return (
+                <button
+                  key={dateStr}
+                  disabled={disabled}
+                  onClick={() => handleDatePick(dateStr)}
+                  className={cn(
+                    'aspect-square w-full rounded-full text-[13px] font-medium transition-all duration-150',
+                    isSelected ? 'bg-accent text-white shadow-sm' :
+                    disabled ? 'cursor-not-allowed text-foreground/18' :
+                    'hover:bg-accent/10 text-foreground/70'
+                  )}
+                >
+                  {dateStr.slice(8)}
+                </button>
+              )
+            })}
+          </div>
+          {selectedDate && (
+            <button
+              onClick={() => setCalOpen(false)}
+              className="mt-4 w-full rounded-xl bg-foreground/5 py-2.5 text-[13px] font-medium text-foreground/50 transition-colors hover:bg-foreground/8"
+            >
+              Sluiten
+            </button>
+          )}
         </div>
-
-        <div className="grid grid-cols-7 gap-1 text-center">
-          {NL_DAY_HEADERS.map(d => (
-            <div key={d} className="py-1 text-[11px] font-semibold text-foreground/35">{d}</div>
-          ))}
-          {days.map((dateStr, i) => {
-            if (!dateStr) return <div key={`e-${i}`} />
-            const disabled = dateStr < today || dateStr > maxDate || !isBusinessDay(dateStr)
-            const isSelected = dateStr === selectedDate
-            return (
-              <button
-                key={dateStr}
-                disabled={disabled}
-                onClick={() => { onDateSelect(dateStr); onSlotSelect('') }}
-                className={cn(
-                  'aspect-square w-full rounded-full text-[13px] font-medium transition-all duration-150',
-                  isSelected ? 'bg-accent text-white shadow-sm' :
-                  disabled ? 'cursor-not-allowed text-foreground/18' :
-                  'hover:bg-accent/10 text-foreground/70'
-                )}
-              >
-                {dateStr.slice(8)}
-              </button>
-            )
-          })}
-        </div>
-      </div>
+      )}
 
       {/* Time slots */}
       {selectedDate && (
-        <div>
-          <p className="mb-3 text-[14px] font-semibold text-foreground/60">{formatDateLong(selectedDate)}</p>
+        <div ref={slotsRef}>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.1em] text-foreground/40">
+            {calOpen ? 'Tijden voor ' + formatDateLong(selectedDate) : 'Kies een tijdstip'}
+          </p>
           {loadingSlots ? (
             <div className="flex items-center gap-2 text-[14px] text-foreground/40">
               <Clock className="h-4 w-4 animate-spin" /> Beschikbaarheid laden…
             </div>
           ) : slots.length === 0 ? (
-            <p className="text-[14px] text-foreground/40">Geen beschikbare tijden op deze dag. Kies een andere datum.</p>
+            <div className="rounded-xl border border-foreground/8 bg-secondary/10 p-4 text-center text-[14px] text-foreground/40">
+              Geen beschikbare tijden op deze dag. Kies een andere datum.
+            </div>
           ) : (
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
               {slots.map(iso => (
                 <button
                   key={iso}
                   onClick={() => onSlotSelect(iso)}
                   className={cn(
-                    'rounded-full border px-4 py-2 text-[14px] font-medium transition-all duration-150',
+                    'rounded-xl border py-3 text-center text-[14px] font-medium transition-all duration-150',
                     selectedSlot === iso
                       ? 'border-accent bg-accent text-white shadow-sm'
-                      : 'border-foreground/15 hover:border-accent/50 hover:bg-accent/5 text-foreground/70'
+                      : 'border-foreground/15 text-foreground/70 hover:border-accent/50 hover:bg-accent/5'
                   )}
                 >
                   {formatTime(iso)}
