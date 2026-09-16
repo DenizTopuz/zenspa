@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect, useCallback, Suspense } from 'react'
+import { useState, useEffect, useCallback, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ChevronRight, CheckCircle2, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer, X } from 'lucide-react'
-import { ZenSpaIcon } from '@/components/logo'
+import { ZenSpaLogo } from '@/components/logo'
 import { DATA, getTreatmentBySlug, type Treatment, type TabKey } from '@/lib/behandelingen-data'
 import { cn } from '@/lib/utils'
 
@@ -58,14 +58,17 @@ function getCalendarDays(year: number, month: number): (string | null)[] {
 // ── Step indicator ─────────────────────────────────────────────────────────────
 function StepBar({ step }: { step: number }) {
   const steps = ['Behandeling', 'Datum & tijd', 'Gegevens', 'Bevestiging']
+  const last = steps.length - 1
   return (
-    <div className="mb-10 flex items-center gap-0">
+    <div className="mb-10 flex items-start gap-0">
       {steps.map((label, i) => {
         const num = i + 1
         const done = num < step
         const active = num === step
+        const align = i === 0 ? 'items-start' : i === last ? 'items-end' : 'items-center'
+        const textAlign = i === 0 ? 'text-left' : i === last ? 'text-right' : 'text-center'
         return (
-          <div key={label} className="flex flex-1 flex-col items-center gap-1.5">
+          <div key={label} className={cn('flex flex-1 flex-col gap-1.5', align)}>
             <div className="flex w-full items-center">
               {i > 0 && <div className={cn('h-px flex-1 transition-colors duration-500', done || active ? 'bg-accent' : 'bg-foreground/12')} />}
               <div className={cn(
@@ -74,9 +77,9 @@ function StepBar({ step }: { step: number }) {
               )}>
                 {done ? '✓' : num}
               </div>
-              {i < steps.length - 1 && <div className={cn('h-px flex-1 transition-colors duration-500', done ? 'bg-accent' : 'bg-foreground/12')} />}
+              {i < last && <div className={cn('h-px flex-1 transition-colors duration-500', done ? 'bg-accent' : 'bg-foreground/12')} />}
             </div>
-            <span className={cn('text-[10px] font-medium sm:text-[11px]', active ? 'text-accent' : 'text-foreground/35')}>{label}</span>
+            <span className={cn('text-[10px] font-medium sm:text-[11px]', textAlign, active ? 'text-accent' : 'text-foreground/35')}>{label}</span>
           </div>
         )
       })}
@@ -282,12 +285,13 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
 }
 
 // ── Step 3: Contactgegevens ───────────────────────────────────────────────────
-function ContactStep({ treatment, slotStart, onSubmit, submitting, error }: {
+function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRef }: {
   treatment: Treatment
   slotStart: string
   onSubmit: (data: { name: string; email: string; phone: string; notes: string }) => void
   submitting: boolean
   error: string | null
+  formRef: React.RefObject<HTMLFormElement | null>
 }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -332,6 +336,7 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error }: {
       </div>
 
       <form
+        ref={formRef}
         onSubmit={e => { e.preventDefault(); onSubmit({ name, email, phone, notes }) }}
         className="space-y-3"
       >
@@ -356,13 +361,6 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error }: {
           <p className="rounded-xl bg-red-50 px-4 py-3 text-[13px] text-red-600 border border-red-200">{error}</p>
         )}
 
-        <button
-          type="submit"
-          disabled={submitting}
-          className="mt-2 w-full rounded-full bg-accent py-4 text-[16px] font-semibold text-white transition-all duration-200 hover:bg-accent/88 disabled:opacity-60"
-        >
-          {submitting ? 'Aanvraag versturen…' : 'Aanvraag indienen'}
-        </button>
         <p className="text-[12px] text-foreground/40">Je aanvraag wordt beoordeeld. Je ontvangt een bevestiging via e-mail.</p>
       </form>
     </div>
@@ -418,6 +416,12 @@ function ConfirmStep({ treatment, slotStart }: { treatment: Treatment; slotStart
 }
 
 // ── Main wizard ───────────────────────────────────────────────────────────────
+const NEXT_STEP_LABEL: Record<number, string> = {
+  1: 'Datum & tijd',
+  2: 'Gegevens',
+  3: 'Afspraak aanvragen',
+}
+
 function BookingWizard() {
   const searchParams = useSearchParams()
   const preSlug = searchParams.get('behandeling')
@@ -430,6 +434,7 @@ function BookingWizard() {
   const [slotStart, setSlotStart] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const contactFormRef = useRef<HTMLFormElement>(null)
 
   const canGoNext: Record<number, boolean> = {
     1: !!treatment,
@@ -471,9 +476,8 @@ function BookingWizard() {
     <div className="flex min-h-svh flex-col bg-background">
       {/* ── Mini header ── */}
       <header className="sticky top-0 z-50 flex h-14 shrink-0 items-center justify-between border-b border-foreground/8 bg-background/95 px-4 backdrop-blur-sm md:px-6">
-        <a href="/" className="flex items-center gap-2.5 text-foreground" aria-label="Zen Spa – terug naar home">
-          <ZenSpaIcon className="h-7 w-auto" />
-          <span className="font-heading text-[20px] leading-none tracking-wide">zen spa</span>
+        <a href="/" className="flex items-center text-foreground" aria-label="Zen Spa – terug naar home">
+          <ZenSpaLogo className="h-7 w-auto" />
         </a>
 
         <a
@@ -486,7 +490,7 @@ function BookingWizard() {
       </header>
 
       {/* ── Content ── */}
-      <main className="flex-1 py-8 pb-20">
+      <main className="flex-1 py-8 pb-32">
         <div className="mx-auto max-w-2xl px-5">
           {step < 4 && <StepBar step={step} />}
 
@@ -510,37 +514,50 @@ function BookingWizard() {
                 onSubmit={handleSubmit}
                 submitting={submitting}
                 error={submitError}
+                formRef={contactFormRef}
               />
             )}
             {step === 4 && treatment && slotStart && (
               <ConfirmStep treatment={treatment} slotStart={slotStart} />
             )}
           </div>
-
-          {/* Navigation buttons */}
-          {step < 4 && (
-            <div className={cn('mt-8 flex', step > 1 ? 'justify-between' : 'justify-end')}>
-              {step > 1 && (
-                <button
-                  onClick={() => setStep(s => (s - 1) as 1 | 2 | 3)}
-                  className="flex items-center gap-1.5 rounded-full border border-foreground/15 px-6 py-3 text-[14px] font-medium text-foreground/60 hover:bg-foreground/4 transition-colors"
-                >
-                  <ChevronLeft className="h-4 w-4" /> Terug
-                </button>
-              )}
-              {step < 3 && (
-                <button
-                  disabled={!canGoNext[step]}
-                  onClick={() => setStep(s => (s + 1) as 2 | 3)}
-                  className="flex items-center gap-1.5 rounded-full bg-accent px-8 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:bg-accent/88 disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  Volgende stap <ChevronRight className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-          )}
         </div>
       </main>
+
+      {/* ── Sticky bottom bar ── */}
+      {step < 4 && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-foreground/8 bg-background/96 px-4 py-3 backdrop-blur-sm md:px-6">
+          <div className="mx-auto flex max-w-2xl items-center gap-3">
+            {step > 1 ? (
+              <button
+                onClick={() => setStep(s => (s - 1) as 1 | 2 | 3)}
+                className="flex shrink-0 items-center gap-1 rounded-full border border-foreground/15 px-5 py-3 text-[14px] font-medium text-foreground/55 transition-colors hover:bg-foreground/4"
+              >
+                <ChevronLeft className="h-4 w-4" /> Terug
+              </button>
+            ) : (
+              <div className="shrink-0" />
+            )}
+
+            <button
+              disabled={!canGoNext[step] || (step === 3 && submitting)}
+              onClick={() => {
+                if (step === 3) {
+                  contactFormRef.current?.requestSubmit()
+                } else {
+                  setStep(s => (s + 1) as 2 | 3)
+                }
+              }}
+              className="flex flex-1 items-center justify-center gap-2 rounded-full bg-accent py-3.5 text-[15px] font-semibold text-white transition-all duration-200 hover:bg-accent/88 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {step === 3
+                ? (submitting ? 'Aanvraag versturen…' : 'Afspraak aanvragen')
+                : (<><span>Volgende: {NEXT_STEP_LABEL[step]}</span><ChevronRight className="h-4 w-4" /></>)
+              }
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
