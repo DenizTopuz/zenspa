@@ -76,7 +76,7 @@ function StepBar({ step }: { step: number }) {
               </div>
               {i < steps.length - 1 && <div className={cn('h-px flex-1 transition-colors duration-500', done ? 'bg-accent' : 'bg-foreground/12')} />}
             </div>
-            <span className={cn('hidden text-[11px] font-medium sm:block', active ? 'text-accent' : 'text-foreground/35')}>{label}</span>
+            <span className={cn('text-[10px] font-medium sm:text-[11px]', active ? 'text-accent' : 'text-foreground/35')}>{label}</span>
           </div>
         )
       })}
@@ -476,21 +476,6 @@ function BookingWizard() {
           <span className="font-heading text-[20px] leading-none tracking-wide">zen spa</span>
         </a>
 
-        {/* Progress dots — mobile only */}
-        {step < 4 && (
-          <div className="flex items-center gap-1.5 sm:hidden">
-            {[1, 2, 3].map(n => (
-              <span
-                key={n}
-                className={cn(
-                  'h-1.5 rounded-full transition-all duration-300',
-                  n === step ? 'w-5 bg-accent' : n < step ? 'w-1.5 bg-accent/50' : 'w-1.5 bg-foreground/15'
-                )}
-              />
-            ))}
-          </div>
-        )}
-
         <a
           href="/"
           aria-label="Sluiten"
@@ -503,12 +488,7 @@ function BookingWizard() {
       {/* ── Content ── */}
       <main className="flex-1 py-8 pb-20">
         <div className="mx-auto max-w-2xl px-5">
-          {/* Step bar — hidden on mobile (using dots in header instead) */}
-          {step < 4 && (
-            <div className="hidden sm:block">
-              <StepBar step={step} />
-            </div>
-          )}
+          {step < 4 && <StepBar step={step} />}
 
           <div className="relative">
             {step === 1 && (
