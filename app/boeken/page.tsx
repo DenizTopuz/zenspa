@@ -148,7 +148,7 @@ function TreatmentStep({ selected, onSelect }: {
                 )}
               >
                 {t.image && (
-                  <div className="relative w-[72px] self-stretch shrink-0">
+                  <div className="relative m-[2px] w-[72px] self-stretch shrink-0 overflow-hidden rounded-xl">
                     <Image src={t.image} alt="" fill className="object-cover" sizes="72px" />
                   </div>
                 )}
