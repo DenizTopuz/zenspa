@@ -124,7 +124,7 @@ function TreatmentStep({ selected, onSelect }: {
       {/* Treatment cards */}
       <div className="grid gap-2">
         {DATA[tab].groups.map((group, gi) => (
-          <div key={gi}>
+          <div key={gi} className="min-w-0">
             {group.subtitle && (
               <p className="mb-2 mt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-foreground/40">{group.subtitle}</p>
             )}
@@ -144,11 +144,13 @@ function TreatmentStep({ selected, onSelect }: {
                     <Image src={t.image} alt="" fill className="object-cover" sizes="72px" />
                   </div>
                 )}
-                <div className="flex flex-1 items-center justify-between gap-3 p-3.5">
-                  <div>
-                    <p className={cn('line-clamp-2 text-[15px] font-semibold leading-snug', selected?.slug === t.slug ? 'text-accent' : 'text-foreground')}>{t.name}</p>
-                    {t.tag && <span className="mt-1 inline-block rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">{t.tag}</span>}
-                    <div className="mt-1 flex items-center gap-3 text-[13px] text-foreground/45">
+                <div className="flex min-w-0 flex-1 items-center justify-between gap-3 p-3.5">
+                  <div className="min-w-0">
+                    <div className="flex min-w-0 items-center gap-2">
+                      <p className={cn('min-w-0 truncate text-[15px] font-semibold', selected?.slug === t.slug ? 'text-accent' : 'text-foreground')}>{t.name}</p>
+                      {t.tag && <span className="shrink-0 rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">{t.tag}</span>}
+                    </div>
+                    <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/45">
                       {t.duration && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.duration}</span>}
                       <span>{t.price}</span>
                     </div>
@@ -482,7 +484,7 @@ function BookingWizard() {
   }
 
   return (
-    <div className="flex min-h-svh flex-col bg-background">
+    <div className="flex min-h-svh flex-col bg-background overflow-x-clip">
       {/* ── Mini header ── */}
       <header className="sticky top-0 z-50 flex h-14 shrink-0 items-center justify-between border-b border-foreground/8 bg-background/95 px-4 backdrop-blur-sm md:px-6">
         <a href="/" className="flex items-center text-foreground" aria-label="Zen Spa – terug naar home">
@@ -500,7 +502,7 @@ function BookingWizard() {
 
       {/* ── Content ── */}
       <main className="flex-1 pt-5 pb-32">
-        <div className="mx-auto max-w-2xl px-5">
+        <div className="mx-auto max-w-2xl w-full px-5 overflow-hidden">
           {step < 4 && <StepBar step={step} />}
 
           <div className="relative">
