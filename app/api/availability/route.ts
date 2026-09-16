@@ -6,7 +6,6 @@ const TZ = 'Europe/Amsterdam'
 const BUSINESS_DAYS = new Set([1, 3, 5]) // Mon=1, Wed=3, Fri=5
 const OPEN_HOUR = 10
 const CLOSE_HOUR = 18
-const SLOT_INTERVAL = 15 // minutes
 const MIN_LEAD_MS = 2 * 60 * 60 * 1000 // 2 hours
 const MAX_DAYS_AHEAD = 60
 
@@ -95,7 +94,7 @@ export async function GET(req: NextRequest) {
   const now = Date.now()
   const slots: string[] = []
 
-  for (let m = OPEN_HOUR * 60; m < CLOSE_HOUR * 60; m += SLOT_INTERVAL) {
+  for (let m = OPEN_HOUR * 60; m < CLOSE_HOUR * 60; m += totalMin) {
     const slotStart = toUTC(dateStr, Math.floor(m / 60), m % 60)
     const slotEnd = new Date(slotStart.getTime() + totalMin * 60_000)
 
