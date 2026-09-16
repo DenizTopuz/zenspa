@@ -59,41 +59,33 @@ function getCalendarDays(year: number, month: number): (string | null)[] {
 // ── Step indicator ─────────────────────────────────────────────────────────────
 function StepBar({ step }: { step: number }) {
   const steps = ['Behandeling', 'Datum & tijd', 'Gegevens', 'Bevestiging']
-  const n = steps.length
   return (
-    <div className="mb-10">
-      {/* Circles + lines — flat row so spacing is always equal */}
-      <div className="flex items-center">
-        {steps.map((_, i) => {
+    <div className="mb-5">
+      <div className="flex items-start">
+        {steps.map((label, i) => {
           const num = i + 1
           const done = num < step
           const active = num === step
           return (
             <Fragment key={i}>
               {i > 0 && (
-                <div className={cn('h-px flex-1 transition-colors duration-500', done || active ? 'bg-accent' : 'bg-foreground/12')} />
+                <div className={cn('mt-4 h-px flex-1 transition-colors duration-500', done || active ? 'bg-accent' : 'bg-foreground/12')} />
               )}
-              <div className={cn(
-                'flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold transition-all duration-300',
-                done ? 'bg-accent text-white' : active ? 'border-2 border-accent text-accent' : 'border-2 border-foreground/15 text-foreground/30'
-              )}>
-                {done ? '✓' : num}
+              <div className="flex flex-col items-center gap-1.5">
+                <div className={cn(
+                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold transition-all duration-300',
+                  done ? 'bg-accent text-white' : active ? 'border-2 border-accent text-accent' : 'border-2 border-foreground/15 text-foreground/30'
+                )}>
+                  {done ? '✓' : num}
+                </div>
+                <span className={cn(
+                  'text-[10px] font-medium sm:text-[11px] whitespace-nowrap',
+                  active ? 'text-accent' : 'text-foreground/35'
+                )}>{label}</span>
               </div>
             </Fragment>
           )
         })}
-      </div>
-      {/* Labels row */}
-      <div className="mt-1.5 flex">
-        {steps.map((label, i) => (
-          <div key={i} className={cn(
-            'flex-1 text-[10px] font-medium sm:text-[11px]',
-            i === 0 ? 'text-left' : i === n - 1 ? 'text-right' : 'text-center',
-            (i + 1) === step ? 'text-accent' : 'text-foreground/35'
-          )}>
-            {label}
-          </div>
-        ))}
       </div>
     </div>
   )
@@ -148,17 +140,15 @@ function TreatmentStep({ selected, onSelect }: {
                 )}
               >
                 {t.image && (
-                  <div className="relative m-[2px] w-[72px] self-stretch shrink-0 overflow-hidden rounded-xl">
+                  <div className="relative m-[4px] h-[72px] w-[72px] shrink-0 overflow-hidden rounded-xl">
                     <Image src={t.image} alt="" fill className="object-cover" sizes="72px" />
                   </div>
                 )}
                 <div className="flex flex-1 items-center justify-between gap-3 p-3.5">
                   <div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className={cn('text-[15px] font-semibold', selected?.slug === t.slug ? 'text-accent' : 'text-foreground')}>{t.name}</span>
-                      {t.tag && <span className="rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">{t.tag}</span>}
-                    </div>
-                    <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/45">
+                    <p className={cn('line-clamp-2 text-[15px] font-semibold leading-snug', selected?.slug === t.slug ? 'text-accent' : 'text-foreground')}>{t.name}</p>
+                    {t.tag && <span className="mt-1 inline-block rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">{t.tag}</span>}
+                    <div className="mt-1 flex items-center gap-3 text-[13px] text-foreground/45">
                       {t.duration && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.duration}</span>}
                       <span>{t.price}</span>
                     </div>
@@ -509,7 +499,7 @@ function BookingWizard() {
       </header>
 
       {/* ── Content ── */}
-      <main className="flex-1 py-8 pb-32">
+      <main className="flex-1 pt-5 pb-32">
         <div className="mx-auto max-w-2xl px-5">
           {step < 4 && <StepBar step={step} />}
 
