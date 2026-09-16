@@ -32,6 +32,10 @@ function formatTime(iso: string) {
   return new Date(iso).toLocaleTimeString('nl-NL', { timeZone: TZ, hour: '2-digit', minute: '2-digit' })
 }
 
+function slotHour(iso: string): number {
+  return +new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour: 'numeric', hour12: false }).format(new Date(iso))
+}
+
 function formatDateLong(dateStr: string) {
   const [y, m, d] = dateStr.split('-').map(Number)
   const date = new Date(y, m - 1, d)
@@ -185,6 +189,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
   const [slots, setSlots] = useState<string[]>([])
   const [loadingSlots, setLoadingSlots] = useState(false)
   const [calOpen, setCalOpen] = useState(!selectedDate)
+  const [monthAvail, setMonthAvail] = useState<Record<string, 'green' | 'orange' | 'red'>>({})
   const slotsRef = useRef<HTMLDivElement>(null)
 
   const today = todayAms()
@@ -211,9 +216,23 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
     }
   }, [treatment.slug])
 
+  const fetchMonthAvail = useCallback(async (year: number, month: number) => {
+    const pad = (n: number) => String(n).padStart(2, '0')
+    const monthStr = `${year}-${pad(month + 1)}`
+    try {
+      const res = await fetch(`/api/availability/month?slug=${treatment.slug}&month=${monthStr}`)
+      const json = await res.json()
+      setMonthAvail(json.availability ?? {})
+    } catch { /* ignore */ }
+  }, [treatment.slug])
+
   useEffect(() => {
     if (selectedDate) fetchSlots(selectedDate)
   }, [selectedDate, fetchSlots])
+
+  useEffect(() => {
+    fetchMonthAvail(calYear, calMonth)
+  }, [calYear, calMonth, fetchMonthAvail])
 
   const handleDatePick = (dateStr: string) => {
     onDateSelect(dateStr)
@@ -223,6 +242,26 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
   }
 
   const days = getCalendarDays(calYear, calMonth)
+
+  // Slot groups (inline — no separate React component to avoid hoisting issues)
+  const ochtend = slots.filter(s => slotHour(s) < 12)
+  const middag  = slots.filter(s => slotHour(s) >= 12 && slotHour(s) < 17)
+  const avond   = slots.filter(s => slotHour(s) >= 17)
+
+  const slotBtn = (iso: string) => (
+    <button
+      key={iso}
+      onClick={() => onSlotSelect(iso)}
+      className={cn(
+        'rounded-xl border py-3 text-center text-[14px] font-medium transition-all duration-150',
+        selectedSlot === iso
+          ? 'border-accent bg-accent text-white shadow-sm'
+          : 'border-foreground/15 text-foreground/70 hover:border-accent/50 hover:bg-accent/5'
+      )}
+    >
+      {formatTime(iso)}
+    </button>
+  )
 
   return (
     <div className="space-y-5">
@@ -235,13 +274,16 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
       {selectedDate && !calOpen ? (
         <button
           onClick={() => setCalOpen(true)}
-          className="flex w-full items-center justify-between rounded-2xl border border-accent/25 bg-accent/5 px-4 py-3.5 transition-colors hover:bg-accent/8"
+          className="group flex w-full items-center justify-between rounded-2xl border border-accent/25 bg-accent/5 px-4 py-3.5 transition-colors hover:border-accent/50 hover:bg-accent/10 active:bg-accent/14"
         >
           <div className="flex items-center gap-2.5">
             <CalendarDays className="h-4 w-4 shrink-0 text-accent" />
             <span className="text-[15px] font-semibold">{formatDateLong(selectedDate)}</span>
           </div>
-          <span className="text-[13px] font-medium text-accent">Wijzigen</span>
+          <div className="flex items-center gap-1 text-accent">
+            <span className="text-[13px] font-medium">Wijzigen</span>
+            <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          </div>
         </button>
       ) : (
         /* Full calendar */
@@ -255,7 +297,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>
-          <div className="grid grid-cols-7 gap-1 text-center">
+          <div className="grid grid-cols-7 gap-y-1 gap-x-1 text-center">
             {NL_DAY_HEADERS.map(d => (
               <div key={d} className="py-1 text-[11px] font-semibold text-foreground/35">{d}</div>
             ))}
@@ -263,27 +305,43 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
               if (!dateStr) return <div key={`e-${i}`} />
               const disabled = dateStr < today || dateStr > maxDate || !isBusinessDay(dateStr)
               const isSelected = dateStr === selectedDate
+              const avail = monthAvail[dateStr]
               return (
-                <button
-                  key={dateStr}
-                  disabled={disabled}
-                  onClick={() => handleDatePick(dateStr)}
-                  className={cn(
-                    'aspect-square w-full rounded-full text-[13px] font-medium transition-all duration-150',
-                    isSelected ? 'bg-accent text-white shadow-sm' :
-                    disabled ? 'cursor-not-allowed text-foreground/18' :
-                    'hover:bg-accent/10 text-foreground/70'
-                  )}
-                >
-                  {dateStr.slice(8)}
-                </button>
+                <div key={dateStr} className="flex flex-col items-center gap-[3px]">
+                  <button
+                    disabled={disabled}
+                    onClick={() => handleDatePick(dateStr)}
+                    className={cn(
+                      'aspect-square w-full rounded-full text-[13px] transition-all duration-150',
+                      isSelected
+                        ? 'bg-accent font-semibold text-white shadow-sm'
+                        : disabled
+                        ? 'cursor-not-allowed text-foreground/22'
+                        : 'font-semibold text-foreground hover:bg-accent/12 hover:text-accent'
+                    )}
+                  >
+                    {dateStr.slice(8)}
+                  </button>
+                  <div className={cn(
+                    'h-1.5 w-1.5 rounded-full transition-colors',
+                    avail === 'green'  ? 'bg-emerald-400' :
+                    avail === 'orange' ? 'bg-amber-400'   :
+                    avail === 'red'    ? 'bg-rose-400'    : 'invisible'
+                  )} />
+                </div>
               )
             })}
+          </div>
+          {/* Legend */}
+          <div className="mt-4 flex items-center justify-center gap-4 text-[11px] text-foreground/40">
+            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-400" />Veel plek</span>
+            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-amber-400" />Bijna vol</span>
+            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-rose-400" />Laatste plekjes</span>
           </div>
           {selectedDate && (
             <button
               onClick={() => setCalOpen(false)}
-              className="mt-4 w-full rounded-xl bg-foreground/5 py-2.5 text-[13px] font-medium text-foreground/50 transition-colors hover:bg-foreground/8"
+              className="mt-3 w-full rounded-xl bg-foreground/5 py-2.5 text-[13px] font-medium text-foreground/50 transition-colors hover:bg-foreground/8"
             >
               Sluiten
             </button>
@@ -294,9 +352,6 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
       {/* Time slots */}
       {selectedDate && (
         <div ref={slotsRef}>
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.1em] text-foreground/40">
-            {calOpen ? 'Tijden voor ' + formatDateLong(selectedDate) : 'Kies een tijdstip'}
-          </p>
           {loadingSlots ? (
             <div className="flex items-center gap-2 text-[14px] text-foreground/40">
               <Clock className="h-4 w-4 animate-spin" /> Beschikbaarheid laden…
@@ -306,21 +361,25 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
               Geen beschikbare tijden op deze dag. Kies een andere datum.
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-              {slots.map(iso => (
-                <button
-                  key={iso}
-                  onClick={() => onSlotSelect(iso)}
-                  className={cn(
-                    'rounded-xl border py-3 text-center text-[14px] font-medium transition-all duration-150',
-                    selectedSlot === iso
-                      ? 'border-accent bg-accent text-white shadow-sm'
-                      : 'border-foreground/15 text-foreground/70 hover:border-accent/50 hover:bg-accent/5'
-                  )}
-                >
-                  {formatTime(iso)}
-                </button>
-              ))}
+            <div className="space-y-4">
+              {ochtend.length > 0 && (
+                <div>
+                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-foreground/35">Ochtend</p>
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">{ochtend.map(slotBtn)}</div>
+                </div>
+              )}
+              {middag.length > 0 && (
+                <div>
+                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-foreground/35">Middag</p>
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">{middag.map(slotBtn)}</div>
+                </div>
+              )}
+              {avond.length > 0 && (
+                <div>
+                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-foreground/35">Avond</p>
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">{avond.map(slotBtn)}</div>
+                </div>
+              )}
             </div>
           )}
         </div>
