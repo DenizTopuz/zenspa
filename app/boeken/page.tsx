@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef, Suspense } from 'react'
+import { useState, useEffect, useCallback, useRef, Suspense, Fragment } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ChevronRight, CheckCircle2, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer, X } from 'lucide-react'
+import Image from 'next/image'
 import { ZenSpaLogo } from '@/components/logo'
 import { DATA, getTreatmentBySlug, type Treatment, type TabKey } from '@/lib/behandelingen-data'
 import { cn } from '@/lib/utils'
@@ -58,31 +59,42 @@ function getCalendarDays(year: number, month: number): (string | null)[] {
 // ── Step indicator ─────────────────────────────────────────────────────────────
 function StepBar({ step }: { step: number }) {
   const steps = ['Behandeling', 'Datum & tijd', 'Gegevens', 'Bevestiging']
-  const last = steps.length - 1
+  const n = steps.length
   return (
-    <div className="mb-10 flex items-start gap-0">
-      {steps.map((label, i) => {
-        const num = i + 1
-        const done = num < step
-        const active = num === step
-        const align = i === 0 ? 'items-start' : i === last ? 'items-end' : 'items-center'
-        const textAlign = i === 0 ? 'text-left' : i === last ? 'text-right' : 'text-center'
-        return (
-          <div key={label} className={cn('flex flex-1 flex-col gap-1.5', align)}>
-            <div className="flex w-full items-center">
-              {i > 0 && <div className={cn('h-px flex-1 transition-colors duration-500', done || active ? 'bg-accent' : 'bg-foreground/12')} />}
+    <div className="mb-10">
+      {/* Circles + lines — flat row so spacing is always equal */}
+      <div className="flex items-center">
+        {steps.map((_, i) => {
+          const num = i + 1
+          const done = num < step
+          const active = num === step
+          return (
+            <Fragment key={i}>
+              {i > 0 && (
+                <div className={cn('h-px flex-1 transition-colors duration-500', done || active ? 'bg-accent' : 'bg-foreground/12')} />
+              )}
               <div className={cn(
                 'flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold transition-all duration-300',
                 done ? 'bg-accent text-white' : active ? 'border-2 border-accent text-accent' : 'border-2 border-foreground/15 text-foreground/30'
               )}>
                 {done ? '✓' : num}
               </div>
-              {i < last && <div className={cn('h-px flex-1 transition-colors duration-500', done ? 'bg-accent' : 'bg-foreground/12')} />}
-            </div>
-            <span className={cn('text-[10px] font-medium sm:text-[11px]', textAlign, active ? 'text-accent' : 'text-foreground/35')}>{label}</span>
+            </Fragment>
+          )
+        })}
+      </div>
+      {/* Labels row */}
+      <div className="mt-1.5 flex">
+        {steps.map((label, i) => (
+          <div key={i} className={cn(
+            'flex-1 text-[10px] font-medium sm:text-[11px]',
+            i === 0 ? 'text-left' : i === n - 1 ? 'text-right' : 'text-center',
+            (i + 1) === step ? 'text-accent' : 'text-foreground/35'
+          )}>
+            {label}
           </div>
-        )
-      })}
+        ))}
+      </div>
     </div>
   )
 }
@@ -129,27 +141,34 @@ function TreatmentStep({ selected, onSelect }: {
                 key={t.slug}
                 onClick={() => onSelect(t)}
                 className={cn(
-                  'mb-2 flex w-full items-center justify-between rounded-2xl border p-4 text-left transition-all duration-200',
+                  'mb-2 flex w-full items-center overflow-hidden rounded-2xl border text-left transition-all duration-200',
                   selected?.slug === t.slug
                     ? 'border-accent bg-accent/6 shadow-sm'
                     : 'border-foreground/8 bg-secondary/20 hover:border-accent/40 hover:bg-accent/4'
                 )}
               >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className={cn('text-[15px] font-semibold', selected?.slug === t.slug ? 'text-accent' : 'text-foreground')}>{t.name}</span>
-                    {t.tag && <span className="rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">{t.tag}</span>}
+                {t.image && (
+                  <div className="relative w-[72px] self-stretch shrink-0">
+                    <Image src={t.image} alt="" fill className="object-cover" sizes="72px" />
                   </div>
-                  <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/45">
-                    {t.duration && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.duration}</span>}
-                    <span>{t.price}</span>
+                )}
+                <div className="flex flex-1 items-center justify-between gap-3 p-3.5">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className={cn('text-[15px] font-semibold', selected?.slug === t.slug ? 'text-accent' : 'text-foreground')}>{t.name}</span>
+                      {t.tag && <span className="rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">{t.tag}</span>}
+                    </div>
+                    <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/45">
+                      {t.duration && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.duration}</span>}
+                      <span>{t.price}</span>
+                    </div>
                   </div>
-                </div>
-                <div className={cn(
-                  'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-all',
-                  selected?.slug === t.slug ? 'border-accent bg-accent' : 'border-foreground/20'
-                )}>
-                  {selected?.slug === t.slug && <span className="h-2 w-2 rounded-full bg-white" />}
+                  <div className={cn(
+                    'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-all',
+                    selected?.slug === t.slug ? 'border-accent bg-accent' : 'border-foreground/20'
+                  )}>
+                    {selected?.slug === t.slug && <span className="h-2 w-2 rounded-full bg-white" />}
+                  </div>
                 </div>
               </button>
             ))}
