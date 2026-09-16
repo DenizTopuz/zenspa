@@ -2,10 +2,8 @@
 
 import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { ChevronLeft, ChevronRight, CheckCircle2, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer } from 'lucide-react'
-import { SiteNav } from '@/components/site-nav'
-import { SiteFooter } from '@/components/site-footer'
-import { MobileBottomNav } from '@/components/mobile-bottom-nav'
+import { ChevronLeft, ChevronRight, CheckCircle2, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer, X } from 'lucide-react'
+import { ZenSpaIcon } from '@/components/logo'
 import { DATA, getTreatmentBySlug, type Treatment, type TabKey } from '@/lib/behandelingen-data'
 import { cn } from '@/lib/utils'
 
@@ -470,11 +468,47 @@ function BookingWizard() {
   }
 
   return (
-    <>
-      <SiteNav />
-      <main className="min-h-screen bg-background pt-28 pb-32">
+    <div className="flex min-h-svh flex-col bg-background">
+      {/* ── Mini header ── */}
+      <header className="sticky top-0 z-50 flex h-14 shrink-0 items-center justify-between border-b border-foreground/8 bg-background/95 px-4 backdrop-blur-sm md:px-6">
+        <a href="/" className="flex items-center gap-2.5 text-foreground" aria-label="Zen Spa – terug naar home">
+          <ZenSpaIcon className="h-7 w-auto" />
+          <span className="font-heading text-[20px] leading-none tracking-wide">zen spa</span>
+        </a>
+
+        {/* Progress dots — mobile only */}
+        {step < 4 && (
+          <div className="flex items-center gap-1.5 sm:hidden">
+            {[1, 2, 3].map(n => (
+              <span
+                key={n}
+                className={cn(
+                  'h-1.5 rounded-full transition-all duration-300',
+                  n === step ? 'w-5 bg-accent' : n < step ? 'w-1.5 bg-accent/50' : 'w-1.5 bg-foreground/15'
+                )}
+              />
+            ))}
+          </div>
+        )}
+
+        <a
+          href="/"
+          aria-label="Sluiten"
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/12 text-foreground/50 transition-colors hover:bg-foreground/5 hover:text-foreground"
+        >
+          <X className="h-4 w-4" />
+        </a>
+      </header>
+
+      {/* ── Content ── */}
+      <main className="flex-1 py-8 pb-20">
         <div className="mx-auto max-w-2xl px-5">
-          {step < 4 && <StepBar step={step} />}
+          {/* Step bar — hidden on mobile (using dots in header instead) */}
+          {step < 4 && (
+            <div className="hidden sm:block">
+              <StepBar step={step} />
+            </div>
+          )}
 
           <div className="relative">
             {step === 1 && (
@@ -527,9 +561,7 @@ function BookingWizard() {
           )}
         </div>
       </main>
-      <MobileBottomNav />
-      <SiteFooter />
-    </>
+    </div>
   )
 }
 

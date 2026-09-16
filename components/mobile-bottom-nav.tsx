@@ -20,6 +20,8 @@ export function MobileBottomNav() {
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([null, null, null, null])
   const [pill, setPill] = useState<{ left: number; width: number } | null>(null)
 
+  if (pathname.startsWith('/boeken') || pathname.startsWith('/admin')) return null
+
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/'
     return pathname.startsWith(href)
