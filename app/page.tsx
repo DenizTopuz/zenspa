@@ -306,26 +306,26 @@ function About() {
 
 function Process() {
   return (
-    <section className="section-fade bg-accent py-16 md:py-20 lg:py-48" aria-labelledby="process-heading">
+    <section className="section-fade bg-accent py-10 md:py-20 lg:py-48" aria-labelledby="process-heading">
       <div className="mx-auto max-w-[1840px] px-5 md:px-6">
-        <Reveal className="mb-10 flex flex-col items-center gap-5 text-center md:mb-20">
+        <Reveal className="mb-7 flex flex-col items-center gap-3 text-center md:mb-20 md:gap-5">
           <span className="text-[12px] font-semibold tracking-[0.2em] text-white/45 uppercase">
             Hoe het werkt
           </span>
           <h2
             id="process-heading"
-            className="font-heading text-[52px] leading-[1.06] tracking-tight text-white md:text-[68px]"
+            className="font-heading text-[36px] leading-[1.06] tracking-tight text-white md:text-[68px]"
           >
             Jouw weg naar{" "}
             <em className="not-italic text-white/65">wellness</em>
           </h2>
         </Reveal>
 
-        <div className="grid gap-10 lg:grid-cols-4 lg:gap-10">
+        <div className="grid gap-6 lg:grid-cols-4 lg:gap-10">
           {processSteps.map((s, i) => (
             <Reveal key={s.num} delay={i * 85}>
-              <div className="flex flex-col gap-5">
-                <span className="font-heading text-7xl leading-none text-white/18">{s.num}</span>
+              <div className="flex flex-col gap-3 lg:gap-5">
+                <span className="font-heading text-[48px] leading-none text-white/18 lg:text-7xl">{s.num}</span>
                 <div className="h-px bg-white/15" aria-hidden />
                 <h3 className="font-heading text-[22px] text-white">{s.title}</h3>
                 <p className="text-[15px] leading-[1.78] text-white/58">{s.desc}</p>
