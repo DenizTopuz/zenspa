@@ -18,11 +18,11 @@ function TreatmentCard({ t }: { t: Treatment }) {
     <Link
       href={`/behandelingen/${t.slug}`}
       className="group flex flex-col border-b border-foreground/[0.08] py-6 no-underline last:border-0
-                 lg:-mx-4 lg:flex-row lg:items-start lg:gap-6 lg:rounded-2xl lg:border-b-0
-                 lg:px-4 lg:py-5 lg:transition-all lg:duration-200 lg:hover:bg-accent/[0.06] lg:md:gap-8"
+                 md:-mx-4 md:flex-row md:items-start md:gap-6 md:rounded-2xl md:border-b-0
+                 md:px-4 md:py-5 md:transition-all md:duration-200 md:hover:bg-accent/[0.06] lg:gap-8"
     >
       {/* Mobile/tablet: short landscape banner with border ring */}
-      <div className="mb-5 rounded-2xl border border-foreground/12 p-1.5 lg:hidden">
+      <div className="mb-5 rounded-2xl border border-foreground/12 p-1.5 md:hidden">
         <div className="relative h-[100px] w-full overflow-hidden rounded-xl md:h-[118px]">
           <Image
             src={t.image ?? '/hero.jpg'}
@@ -36,7 +36,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
       </div>
 
       {/* Desktop: original oval portrait */}
-      <div className="hidden shrink-0 rounded-full border border-foreground/12 p-1.5 lg:block">
+      <div className="hidden shrink-0 rounded-full border border-foreground/12 p-1.5 md:block">
         <div className="relative h-[152px] w-[96px] overflow-hidden rounded-full">
           <Image
             src={t.image ?? '/hero.jpg'}
@@ -66,13 +66,13 @@ function TreatmentCard({ t }: { t: Treatment }) {
         {(t.duration || t.tag) && (
           <div className="mt-1 flex flex-wrap gap-2">
             {t.duration && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/18 px-3.5 py-1.5 text-[13px] text-foreground/55 lg:px-4 lg:py-2 lg:text-[14px]">
-                <Clock className="h-3.5 w-3.5 lg:h-4 lg:w-4" aria-hidden />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/18 px-3.5 py-1.5 text-[13px] text-foreground/55 md:px-4 md:py-2 md:text-[14px]">
+                <Clock className="h-3.5 w-3.5 md:h-4 md:w-4" aria-hidden />
                 {t.duration}
               </span>
             )}
             {t.tag && (
-              <span className="inline-flex items-center rounded-full bg-accent px-3.5 py-1.5 text-[13px] font-semibold text-white lg:px-4 lg:py-2 lg:text-[14px]">
+              <span className="inline-flex items-center rounded-full bg-accent px-3.5 py-1.5 text-[13px] font-semibold text-white md:px-4 md:py-2 md:text-[14px]">
                 {t.tag}
               </span>
             )}

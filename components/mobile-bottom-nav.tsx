@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 import { Home, Sparkles, Leaf, Phone, CalendarCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -63,7 +64,7 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Paginanavigatie"
-      className="fixed left-2 right-2 z-50 lg:hidden md:left-1/2 md:right-auto md:w-[480px] md:-translate-x-1/2"
+      className="fixed left-2 right-2 z-50 lg:hidden md:left-1/2 md:right-auto md:w-[520px] md:-translate-x-1/2"
       style={{ bottom: 'max(16px, env(safe-area-inset-bottom, 16px))' }}
     >
       <div
@@ -91,12 +92,12 @@ export function MobileBottomNav() {
         {links.slice(0, 2).map(({ href, label, icon: Icon }, i) => {
           const active = isActive(href)
           return (
-            <a
+            <Link
               key={href}
               href={href}
               ref={el => { linkRefs.current[i] = el }}
               className={cn(
-                'relative flex flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
+                'relative flex flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:flex-1 md:gap-1 md:px-5',
                 compact ? 'py-1' : 'py-1.5',
                 active ? 'text-accent' : 'text-foreground/40'
               )}
@@ -115,7 +116,7 @@ export function MobileBottomNav() {
               )}>
                 {label}
               </span>
-            </a>
+            </Link>
           )
         })}
 
@@ -123,7 +124,7 @@ export function MobileBottomNav() {
         <a
           href="/boeken"
           className={cn(
-            'relative flex flex-col items-center gap-0.5 rounded-full px-3 transition-all duration-300 md:px-5',
+            'relative flex flex-col items-center gap-0.5 rounded-full px-3 transition-all duration-300 md:flex-1 md:px-5',
             compact ? 'py-1' : 'py-1.5'
           )}
           aria-label="Afspraak maken"
@@ -163,12 +164,12 @@ export function MobileBottomNav() {
           const active = isActive(href)
           const refIdx = i + 2
           return (
-            <a
+            <Link
               key={href}
               href={href}
               ref={el => { linkRefs.current[refIdx] = el }}
               className={cn(
-                'relative flex flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
+                'relative flex flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:flex-1 md:gap-1 md:px-5',
                 compact ? 'py-1' : 'py-1.5',
                 active ? 'text-accent' : 'text-foreground/40'
               )}
@@ -187,7 +188,7 @@ export function MobileBottomNav() {
               )}>
                 {label}
               </span>
-            </a>
+            </Link>
           )
         })}
       </div>
