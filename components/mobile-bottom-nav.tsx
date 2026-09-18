@@ -63,7 +63,7 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Paginanavigatie"
-      className="fixed left-2 right-2 z-50 lg:hidden"
+      className="fixed left-2 right-2 z-50 lg:hidden md:left-1/2 md:right-auto md:w-[480px] md:-translate-x-1/2"
       style={{ bottom: 'max(16px, env(safe-area-inset-bottom, 16px))' }}
     >
       <div
