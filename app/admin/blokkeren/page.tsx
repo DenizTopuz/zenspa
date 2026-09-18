@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { ChevronLeft } from 'lucide-react'
 import type { BlockedTimeRow } from '@/lib/supabase/types'
 
 function formatDT(iso: string) {
@@ -74,17 +75,17 @@ export default function AdminBlokkeren() {
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 border-b border-foreground/8 bg-white px-4 py-4 md:px-8">
         <div className="mx-auto flex max-w-4xl items-center justify-between">
-          <div>
-            <h1 className="text-lg font-bold text-foreground">Tijdsloten blokkeren</h1>
-            <p className="text-xs text-foreground/40">Zen Spa Beheer</p>
-          </div>
-          <a href="/admin/boekingen" className="text-sm text-foreground/50 hover:text-foreground">
-            ← Boekingen
-          </a>
+          <h1 className="text-lg font-bold text-foreground">Tijdsloten blokkeren</h1>
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 py-6 md:px-8 space-y-8">
+      <main className="mx-auto max-w-4xl px-4 py-6 md:px-8 space-y-6">
+        {/* Breadcrumb */}
+        <a href="/admin/boekingen" className="inline-flex items-center gap-1 text-base font-medium text-foreground/50 hover:text-foreground transition-colors">
+          <ChevronLeft className="h-4 w-4" aria-hidden />
+          Boekingen
+        </a>
+
         {/* Formulier */}
         <div className="rounded-2xl border border-foreground/8 bg-white p-5 shadow-sm">
           <h2 className="mb-4 font-semibold text-foreground">Periode blokkeren</h2>
