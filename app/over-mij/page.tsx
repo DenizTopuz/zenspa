@@ -189,7 +189,96 @@ export default function OverMijPage() {
           </div>
         </section>
 
-        {/* ── 7. Werkwijze ─────────────────────────────────────────── */}
+        {/* ── 7. Maak kennis ───────────────────────────────────────── */}
+        <section className="section-fade bg-secondary/25 py-20 md:py-28 lg:py-36">
+          <div className="mx-auto max-w-[1840px] px-5 md:px-6">
+            <div className="grid items-center gap-12 lg:grid-cols-[5fr_7fr] lg:gap-20">
+
+              {/* Portrait */}
+              <Reveal>
+                <div className="relative mx-auto max-w-[420px] lg:max-w-none">
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-[48px] ring-1 ring-foreground/10">
+                    <Image
+                      src="/hero.jpg"
+                      alt="Çigdem — specialist bij Zen Spa"
+                      fill
+                      className="object-cover object-top"
+                      sizes="(max-width: 1024px) 100vw, 42vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                  </div>
+                  {/* Accent badge */}
+                  <div className="absolute -bottom-5 right-4 flex h-[96px] w-[96px] flex-col items-center justify-center rounded-full bg-accent text-white shadow-xl md:-bottom-6 md:right-8 md:h-[116px] md:w-[116px]">
+                    <span className="font-heading text-[26px] font-black leading-none md:text-[30px]">20+</span>
+                    <span className="mt-1 text-[10px] font-semibold tracking-widest uppercase">jaar</span>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* Text */}
+              <div className="flex flex-col gap-7 pt-6 lg:pt-0">
+                <Reveal>
+                  <p className="text-[12px] font-semibold tracking-[0.22em] text-accent uppercase">Uw specialist</p>
+                  <h2 className="mt-3 font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px] lg:text-[60px]">
+                    Çigdem<br />
+                    <span className="text-foreground/38">Huidtherapeut & oprichter</span>
+                  </h2>
+                </Reveal>
+
+                <Reveal delay={60}>
+                  <p className="text-[17px] leading-[1.85] text-muted-foreground">
+                    In 2004 opende ik Zen Spa vanuit één overtuiging: elke klant verdient een behandeling die écht bij haar past — geen vaste protocollen, maar luisteren, voelen en aanpassen. Wat begon als een droom is uitgegroeid tot een plek waar duizenden mensen jaarlijks tot rust komen.
+                  </p>
+                </Reveal>
+
+                <Reveal delay={100}>
+                  <p className="text-[17px] leading-[1.85] text-muted-foreground">
+                    Als gecertificeerd huidtherapeut en PMU-specialist blijf ik mezelf continu bijscholen — niet omdat het moet, maar omdat ik het beste wil bieden aan mensen die mij hun vertrouwen geven.
+                  </p>
+                </Reveal>
+
+                {/* Personal quote */}
+                <Reveal delay={140}>
+                  <blockquote className="border-l-2 border-accent py-1 pl-5">
+                    <p className="font-heading text-[21px] italic leading-snug tracking-tight text-foreground/75 md:text-[23px]">
+                      "Jouw huid vertelt een verhaal. Mijn werk is om daarnaar te luisteren — en voor jou te zorgen als een vertrouwde specialist die écht om je geeft."
+                    </p>
+                    <cite className="mt-3 block text-[13px] not-italic font-semibold text-accent">— Çigdem, oprichter Zen Spa</cite>
+                  </blockquote>
+                </Reveal>
+
+                {/* Credentials */}
+                <Reveal delay={180}>
+                  <div className="flex flex-wrap gap-2.5">
+                    {[
+                      'Gecertificeerd huidtherapeut',
+                      'PMU-specialist',
+                      'Erkend wellness-specialist',
+                      'Lid beroepsvereniging',
+                    ].map((badge) => (
+                      <span key={badge} className="inline-flex items-center gap-1.5 rounded-full border border-foreground/12 bg-background px-4 py-2 text-[13px] text-foreground/70">
+                        <Check className="h-3 w-3 shrink-0 text-accent" aria-hidden />
+                        {badge}
+                      </span>
+                    ))}
+                  </div>
+                </Reveal>
+
+                <Reveal delay={220}>
+                  <a
+                    href="/boeken"
+                    className="w-fit inline-flex items-center gap-2.5 rounded-full bg-accent px-10 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-md hover:shadow-accent/20"
+                  >
+                    Maak een afspraak
+                  </a>
+                </Reveal>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ── 8. Werkwijze ─────────────────────────────────────────── */}
         <section className="section-fade bg-secondary/25 py-24 md:py-36">
           <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-5 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
             <div>
@@ -230,7 +319,7 @@ export default function OverMijPage() {
           </div>
         </section>
 
-        {/* ── 8. Reviews ───────────────────────────────────────────── */}
+        {/* ── 9. Reviews ───────────────────────────────────────────── */}
         <ReviewsCarousel />
 
         {/* ── 9. Booking CTA ───────────────────────────────────────── */}
