@@ -99,6 +99,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Verplichte velden ontbreken' }, { status: 400 })
   }
 
+  if (customer_name.length > 100) {
+    return NextResponse.json({ error: 'Naam mag maximaal 100 tekens bevatten' }, { status: 400 })
+  }
+  if (customer_phone.length > 30) {
+    return NextResponse.json({ error: 'Telefoonnummer is te lang' }, { status: 400 })
+  }
+  if (typeof notes === 'string' && notes.length > 500) {
+    return NextResponse.json({ error: 'Opmerking mag maximaal 500 tekens bevatten' }, { status: 400 })
+  }
+
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer_email)) {
     return NextResponse.json({ error: 'Ongeldig e-mailadres' }, { status: 400 })
   }

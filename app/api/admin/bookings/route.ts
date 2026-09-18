@@ -1,14 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { createServiceClient } from '@/lib/supabase/server'
+import { isAdmin } from '@/lib/admin-auth'
 
 const TEST_OVERRIDE_EMAIL = process.env.EMAIL_TEST_OVERRIDE ?? null
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://zenspa.nl'
-
-function isAdmin(req: NextRequest) {
-  const cookie = req.cookies.get('admin_session')?.value
-  return cookie && cookie === process.env.ADMIN_PASSWORD
-}
 
 function esc(s: string) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
