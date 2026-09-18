@@ -107,7 +107,7 @@ export function ReviewsCarousel() {
             {/* Right — quote panel */}
             <div className="flex flex-col justify-between bg-foreground/[0.04] p-10 lg:p-20">
 
-              <div className="flex flex-col gap-2 md:gap-8">
+              <div className="flex flex-col gap-2 md:gap-3 lg:gap-8">
                 {/* Opening quote mark */}
                 <span
                   className="font-heading text-[64px] leading-[0.75] text-foreground/18 md:text-[120px]"
@@ -131,7 +131,7 @@ export function ReviewsCarousel() {
               </div>
 
               {/* Navigation row */}
-              <div className="mt-6 flex items-center justify-between md:mt-0">
+              <div className="mt-6 flex items-center justify-between md:mt-10 lg:mt-0">
                 <div className="flex gap-3">
                   <button
                     onClick={prev}

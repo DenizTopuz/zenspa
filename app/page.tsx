@@ -306,7 +306,7 @@ function About() {
 
 function Process() {
   return (
-    <section className="section-fade bg-accent py-16 md:py-48" aria-labelledby="process-heading">
+    <section className="section-fade bg-accent py-16 md:py-20 lg:py-48" aria-labelledby="process-heading">
       <div className="mx-auto max-w-[1840px] px-5 md:px-6">
         <Reveal className="mb-10 flex flex-col items-center gap-5 text-center md:mb-20">
           <span className="text-[12px] font-semibold tracking-[0.2em] text-white/45 uppercase">
@@ -321,7 +321,7 @@ function Process() {
           </h2>
         </Reveal>
 
-        <div className="grid gap-12 md:grid-cols-4 md:gap-10">
+        <div className="grid gap-10 lg:grid-cols-4 lg:gap-10">
           {processSteps.map((s, i) => (
             <Reveal key={s.num} delay={i * 85}>
               <div className="flex flex-col gap-5">
@@ -417,7 +417,7 @@ export default function Page() {
         <FaqSection />
         <Journal />
       </main>
-      <SiteFooter bg="bg-background" />
+      <SiteFooter bg="bg-muted/25" />
     </>
   )
 }

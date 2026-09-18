@@ -70,7 +70,7 @@ export function FaqSection({ className }: { className?: string }) {
     setOpenIdx((prev) => (prev === i ? null : i))
 
   return (
-    <section id="faq" className={`section-fade pt-0 pb-12 md:py-36 lg:py-48 ${className ?? ''}`} aria-labelledby="faq-heading">
+    <section id="faq" className={`section-fade pt-0 pb-12 md:pt-0 md:pb-20 lg:py-48 ${className ?? ''}`} aria-labelledby="faq-heading">
       <div className="mx-auto max-w-[1840px] px-5 md:px-6">
 
         {/* Heading — above the grid so the card aligns with the first question */}
