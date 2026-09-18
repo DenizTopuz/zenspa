@@ -80,7 +80,7 @@ export function MobileBottomNav() {
             className="pointer-events-none absolute top-1/2 -translate-y-1/2 rounded-full bg-accent/10"
             style={{
               left: pill.left,
-              width: pill.width,
+              width: pill.width - 1,
               height: 'calc(100% - 8px)',
               transition: 'left 0.48s cubic-bezier(0.22,1,0.36,1), width 0.56s cubic-bezier(0.22,1,0.36,1)',
             }}
@@ -96,7 +96,7 @@ export function MobileBottomNav() {
               href={href}
               ref={el => { linkRefs.current[i] = el }}
               className={cn(
-                'relative flex flex-col items-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
+                'relative flex flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
                 compact ? 'py-1' : 'py-1.5',
                 active ? 'text-accent' : 'text-foreground/40'
               )}
@@ -168,7 +168,7 @@ export function MobileBottomNav() {
               href={href}
               ref={el => { linkRefs.current[refIdx] = el }}
               className={cn(
-                'relative flex flex-col items-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
+                'relative flex flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
                 compact ? 'py-1' : 'py-1.5',
                 active ? 'text-accent' : 'text-foreground/40'
               )}

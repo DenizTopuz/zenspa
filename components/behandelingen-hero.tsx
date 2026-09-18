@@ -52,7 +52,7 @@ export function BehandelingenHero() {
         <h1 className="font-heading text-[52px] leading-[1.04] tracking-tight md:text-[76px] lg:text-[92px]">
           Onze Behandelingen
         </h1>
-        <p className="mx-auto mt-8 max-w-[460px] text-[17px] leading-[1.85] text-white/62 md:mt-5">
+        <p className="mx-auto mt-8 mb-8 max-w-[460px] text-[17px] leading-[1.85] text-white/62 md:mt-5 md:mb-0">
           Elk ritueel zorgvuldig samengesteld voor jou.
         </p>
       </div>
