@@ -130,7 +130,7 @@ function TreatmentStep({ selected, onSelect }: {
         {DATA[tab].groups.map((group, gi) => (
           <div key={gi} className="min-w-0">
             {group.subtitle && (
-              <p className="mb-2 mt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-foreground/40">{group.subtitle}</p>
+              <p className="mb-2 mt-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-foreground/40 md:mt-4">{group.subtitle}</p>
             )}
             {group.items.filter(t => t.bookable).map(t => (
               <button
@@ -475,14 +475,16 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRe
 function ConfirmStep({ treatment, slotStart }: { treatment: Treatment; slotStart: string }) {
   return (
     <div className="py-8 space-y-5">
-      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-accent/10">
-        <CheckCircle2 className="h-10 w-10 text-accent" />
-      </div>
-      <div>
-        <h2 className="font-heading text-[32px] tracking-tight md:text-[40px]">Aanvraag ontvangen!</h2>
-        <p className="mt-2 text-[16px] text-foreground/55">
-          We nemen zo snel mogelijk contact met je op om de afspraak te bevestigen.
-        </p>
+      <div className="flex flex-col gap-3">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
+          <CheckCircle2 className="h-8 w-8 text-accent" />
+        </div>
+        <div>
+          <h2 className="font-heading text-[32px] tracking-tight md:text-[40px]">Aanvraag ontvangen!</h2>
+          <p className="mt-2 text-[16px] text-foreground/55">
+            We nemen zo snel mogelijk contact met je op om de afspraak te bevestigen.
+          </p>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-foreground/8 bg-secondary/15 p-5 space-y-2">
@@ -512,7 +514,7 @@ function ConfirmStep({ treatment, slotStart }: { treatment: Treatment; slotStart
         </div>
       </div>
 
-      <a href="/" className="inline-block mt-4 rounded-full border border-foreground/15 px-8 py-3 text-[14px] font-medium text-foreground/60 hover:bg-foreground/4 transition-colors">
+      <a href="/" className="block w-full text-center rounded-full border border-foreground/15 px-8 py-3 text-[14px] font-medium text-foreground/60 hover:bg-foreground/4 transition-colors md:mt-2 md:inline-block md:w-auto">
         Terug naar de homepage
       </a>
     </div>
