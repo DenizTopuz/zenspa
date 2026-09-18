@@ -186,7 +186,7 @@ function Stats() {
 
 function About() {
   return (
-    <section id="about" className="bg-background -mt-2 pt-2 pb-6 md:mt-0 md:pt-16 md:pb-20 lg:pt-20 lg:pb-40" aria-labelledby="about-heading">
+    <section id="about" className="relative bg-background -mt-2 pt-2 pb-6 md:mt-0 md:pt-16 md:pb-20 lg:pt-20 lg:pb-40" aria-labelledby="about-heading">
       <div className="mx-auto max-w-[1840px] px-5 md:px-6">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-10 xl:gap-14">
 
