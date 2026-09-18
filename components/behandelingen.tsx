@@ -138,7 +138,7 @@ export function Behandelingen() {
 
         {/* Tabs — sliding pill */}
         <div
-          className="mx-auto w-full rounded-2xl bg-accent/[0.07] p-2 md:p-2.5 lg:mb-14 lg:w-fit lg:rounded-full lg:p-3"
+          className="mx-auto w-full rounded-2xl bg-accent/[0.07] p-2 md:mb-8 md:p-2.5 lg:mb-14 lg:w-fit lg:rounded-full lg:p-3"
           role="tablist"
           aria-label="Behandelcategorieën"
         >
