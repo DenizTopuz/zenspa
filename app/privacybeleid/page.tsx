@@ -14,7 +14,7 @@ export default function PrivacybeleidPage() {
       <main>
 
         {/* ── Hero ── */}
-        <section className="relative flex min-h-[55vh] items-center overflow-hidden" aria-label="Privacybeleid">
+        <section className="relative flex min-h-[72vh] items-center overflow-hidden" aria-label="Privacybeleid">
           <div className="absolute inset-x-0 -bottom-[15%] -top-[15%]">
             <Image
               src="/hero.jpg"

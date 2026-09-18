@@ -14,7 +14,7 @@ export default function AlgemeneVoorwaardenPage() {
       <main>
 
         {/* ── Hero ── */}
-        <section className="relative flex min-h-[55vh] items-center overflow-hidden" aria-label="Algemene voorwaarden">
+        <section className="relative flex min-h-[72vh] items-center overflow-hidden" aria-label="Algemene voorwaarden">
           <div className="absolute inset-x-0 -bottom-[15%] -top-[15%]">
             <Image
               src="/bg-leaves.jpg"
