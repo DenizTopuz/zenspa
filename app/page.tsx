@@ -341,7 +341,7 @@ function Process() {
 
 function Journal() {
   return (
-    <section className="section-fade bg-muted/25 pt-16 pb-36 md:py-48" aria-labelledby="journal-heading">
+    <section className="section-fade bg-muted/25 pt-16 pb-36 md:pb-48 lg:py-48" aria-labelledby="journal-heading">
       <div className="mx-auto max-w-[1840px] px-5 md:px-6">
         <Reveal className="mb-20 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-4">

@@ -89,10 +89,10 @@ export function ReviewsCarousel() {
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          <div className="grid md:h-[620px] md:grid-cols-[2fr_3fr] lg:h-[680px]">
+          <div className="grid lg:h-[680px] lg:grid-cols-[2fr_3fr]">
 
             {/* Left — image, fills fixed height */}
-            <div className="relative min-h-[260px] md:min-h-0">
+            <div className="relative min-h-[300px] md:min-h-[380px] lg:min-h-0">
               <Image
                 key={idx}
                 src={t.image}
@@ -100,12 +100,12 @@ export function ReviewsCarousel() {
                 fill
                 aria-hidden
                 className="object-cover object-center"
-                sizes="(max-width: 768px) 100vw, 700px"
+                sizes="(max-width: 1024px) 100vw, 700px"
               />
             </div>
 
             {/* Right — quote panel */}
-            <div className="flex flex-col justify-between bg-foreground/[0.04] p-10 md:p-14 lg:p-20">
+            <div className="flex flex-col justify-between bg-foreground/[0.04] p-10 lg:p-20">
 
               <div className="flex flex-col gap-2 md:gap-8">
                 {/* Opening quote mark */}
@@ -117,7 +117,7 @@ export function ReviewsCarousel() {
                 </span>
 
                 {/* Quote — fixed min-height keeps card stable across slides */}
-                <p className="min-h-[40px] font-heading text-[26px] leading-[1.35] tracking-tight md:min-h-[160px] md:text-[30px] lg:text-[36px]">
+                <p className="min-h-[40px] font-heading text-[26px] leading-[1.35] tracking-tight md:text-[30px] lg:min-h-[160px] lg:text-[36px]">
                   {t.quote}
                 </p>
 
