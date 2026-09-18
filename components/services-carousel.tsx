@@ -83,10 +83,10 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
           className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] ${service.imgPos}`}
           sizes="(min-width: 1440px) 340px, (min-width: 1024px) 260px, (min-width: 768px) 360px, 200px"
         />
-        {/* Gradient overlay — hidden on mobile, hover-only on desktop */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent
-                        hidden lg:block lg:opacity-0 lg:transition-opacity lg:duration-500
-                        lg:group-hover:opacity-100" />
+        {/* Top gradient — always visible (price legibility), stronger on desktop hover */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 to-transparent
+                        lg:inset-0 lg:h-auto lg:from-black/68 lg:via-black/26 lg:opacity-0
+                        lg:transition-opacity lg:duration-500 lg:group-hover:opacity-100" />
         {/* Price — always on mobile/tablet, hover-only on desktop */}
         <div className="absolute left-5 top-5
                         translate-y-0 opacity-100
@@ -199,7 +199,7 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="mx-auto mb-14 max-w-[1840px] px-5 md:px-6">
+      <div className="mx-auto mb-8 max-w-[1840px] px-5 md:px-6 md:mb-14">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-4">
             <span className="text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">
@@ -233,7 +233,7 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 bg-gradient-to-l from-card via-card/60 to-transparent"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden bg-gradient-to-l from-card via-card/60 to-transparent md:block"
           style={{ width: `${gradW}px` }}
         />
 
