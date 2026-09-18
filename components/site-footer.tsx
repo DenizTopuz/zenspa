@@ -26,8 +26,8 @@ const navCols = [
     links: [
       { label: "FAQ's",                href: '/#faq' },
       { label: 'Cadeaubonnen',         href: '#' },
-      { label: 'Privacybeleid',        href: '#' },
-      { label: 'Algemene voorwaarden', href: '#' },
+      { label: 'Privacybeleid',        href: '/privacybeleid' },
+      { label: 'Algemene voorwaarden', href: '/algemene-voorwaarden' },
     ],
   },
   {
