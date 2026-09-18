@@ -461,6 +461,21 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRe
           <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} placeholder="Bijzonderheden, wensen of vragen…" className={`${inputCls} resize-none`} />
         </div>
 
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            required
+            className="mt-[3px] h-4 w-4 shrink-0 accent-accent"
+          />
+          <span className="text-[13px] text-foreground/55 leading-relaxed">
+            Ik ga akkoord met de{' '}
+            <a href="/privacybeleid" className="text-accent underline underline-offset-2" target="_blank" rel="noopener noreferrer">
+              privacyverklaring
+            </a>
+            {' '}en geef toestemming voor het verwerken van mijn gegevens. <span className="text-accent">*</span>
+          </span>
+        </label>
+
         {error && (
           <p className="rounded-xl bg-red-50 px-4 py-3 text-[13px] text-red-600 border border-red-200">{error}</p>
         )}

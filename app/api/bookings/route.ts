@@ -5,6 +5,11 @@ import { getTreatmentBySlug, getTotalSlotMinutes } from '@/lib/behandelingen-dat
 import type { BookingInsert } from '@/lib/supabase/types'
 
 const TEST_OVERRIDE_EMAIL = process.env.EMAIL_TEST_OVERRIDE ?? null
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://zenspa.nl'
+
+function esc(s: string) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
 
 function formatDateNL(iso: string) {
   return new Date(iso).toLocaleDateString('nl-NL', {
@@ -32,42 +37,42 @@ async function sendEmails(booking: {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const date = formatDateNL(booking.start_time)
   const time = formatTimeNL(booking.start_time)
+  const cancelLink = `${BASE_URL}/annuleren?id=${booking.id}`
   const to = (email: string) => TEST_OVERRIDE_EMAIL ?? email
 
   await Promise.all([
-    // Bevestiging aan klant
     resend.emails.send({
       from: 'Zen Spa <noreply@zenspa.nl>',
       to: [to(booking.customer_email)],
       subject: 'Je aanvraag is ontvangen – Zen Spa',
       html: `
-        <p>Hoi ${booking.customer_name},</p>
+        <p>Hoi ${esc(booking.customer_name)},</p>
         <p>We hebben je aanvraag ontvangen voor:</p>
         <ul>
-          <li><strong>Behandeling:</strong> ${booking.treatment_name}</li>
+          <li><strong>Behandeling:</strong> ${esc(booking.treatment_name)}</li>
           <li><strong>Datum:</strong> ${date}</li>
           <li><strong>Tijd:</strong> ${time}</li>
         </ul>
-        ${booking.notes ? `<p><strong>Opmerking:</strong> ${booking.notes}</p>` : ''}
+        ${booking.notes ? `<p><strong>Opmerking:</strong> ${esc(booking.notes)}</p>` : ''}
         <p>Je ontvangt een bevestiging zodra we je aanvraag hebben goedgekeurd.</p>
+        <p>Wil je de afspraak annuleren? Dat kan via <a href="${cancelLink}">deze link</a>.</p>
         <p>Met vriendelijke groet,<br/>Zen Spa · House of Beauty</p>
       `,
     }),
-    // Melding aan admin
     resend.emails.send({
       from: 'Zen Spa Boekingen <noreply@zenspa.nl>',
       to: [to('info@zenspa.nl')],
-      subject: `Nieuwe aanvraag: ${booking.treatment_name} – ${booking.customer_name}`,
+      subject: `Nieuwe aanvraag: ${esc(booking.treatment_name)} – ${esc(booking.customer_name)}`,
       html: `
         <p><strong>Nieuwe boekingsaanvraag</strong></p>
         <ul>
-          <li><strong>Behandeling:</strong> ${booking.treatment_name}</li>
+          <li><strong>Behandeling:</strong> ${esc(booking.treatment_name)}</li>
           <li><strong>Datum:</strong> ${date}</li>
           <li><strong>Tijd:</strong> ${time}</li>
-          <li><strong>Naam:</strong> ${booking.customer_name}</li>
-          <li><strong>E-mail:</strong> ${booking.customer_email}</li>
-          <li><strong>Telefoon:</strong> ${booking.customer_phone}</li>
-          ${booking.notes ? `<li><strong>Opmerking:</strong> ${booking.notes}</li>` : ''}
+          <li><strong>Naam:</strong> ${esc(booking.customer_name)}</li>
+          <li><strong>E-mail:</strong> ${esc(booking.customer_email)}</li>
+          <li><strong>Telefoon:</strong> ${esc(booking.customer_phone)}</li>
+          ${booking.notes ? `<li><strong>Opmerking:</strong> ${esc(booking.notes)}</li>` : ''}
         </ul>
         <p>Boeking ID: ${booking.id}</p>
       `,
@@ -98,6 +103,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Ongeldig e-mailadres' }, { status: 400 })
   }
 
+  if (customer_phone.replace(/\D/g, '').length < 9) {
+    return NextResponse.json({ error: 'Ongeldig telefoonnummer (minimaal 9 cijfers)' }, { status: 400 })
+  }
+
   const treatment = getTreatmentBySlug(treatment_slug)
   if (!treatment?.bookable) {
     return NextResponse.json({ error: 'Behandeling niet gevonden' }, { status: 404 })
@@ -110,9 +119,40 @@ export async function POST(req: NextRequest) {
 
   const totalMin = getTotalSlotMinutes(treatment)
   const endDate = new Date(startDate.getTime() + totalMin * 60_000)
-
   const supabase = createServiceClient()
+  const normalizedEmail = customer_email.trim().toLowerCase()
 
+  // Rate limit: max 3 boekingen per e-mailadres per 24 uur (elke status)
+  const since24h = new Date(Date.now() - 24 * 60 * 60_000).toISOString()
+  const { count: recentCount } = await supabase
+    .from('bookings')
+    .select('id', { count: 'exact', head: true })
+    .eq('customer_email', normalizedEmail)
+    .gte('created_at', since24h)
+
+  if ((recentCount ?? 0) >= 3) {
+    return NextResponse.json(
+      { error: 'Te veel aanvragen. Probeer het morgen opnieuw of neem contact met ons op.' },
+      { status: 429 },
+    )
+  }
+
+  // Dubbele boeking voorkomen: zelfde e-mail met openstaande aanvraag
+  const { data: existing } = await supabase
+    .from('bookings')
+    .select('id')
+    .eq('customer_email', normalizedEmail)
+    .in('status', ['pending', 'confirmed'])
+    .limit(1)
+
+  if (existing && existing.length > 0) {
+    return NextResponse.json(
+      { error: 'Je hebt al een openstaande aanvraag. Neem contact op als je iets wilt wijzigen.' },
+      { status: 409 },
+    )
+  }
+
+  // Slot-conflictcheck: tijdstip nog beschikbaar?
   const { data: conflicts } = await supabase
     .from('bookings')
     .select('id')
@@ -132,7 +172,7 @@ export async function POST(req: NextRequest) {
     treatment_slug,
     treatment_name: treatment.name,
     customer_name:  customer_name.trim(),
-    customer_email: customer_email.trim().toLowerCase(),
+    customer_email: normalizedEmail,
     customer_phone: customer_phone.trim(),
     start_time: startDate.toISOString(),
     end_time:   endDate.toISOString(),
@@ -150,12 +190,11 @@ export async function POST(req: NextRequest) {
 
   const id = (data as { id: string }).id
 
-  // Stuur e-mails (fire-and-forget, fouten loggen maar niet blokkeren)
   sendEmails({
     id,
     treatment_name: treatment.name,
     customer_name: customer_name.trim(),
-    customer_email: customer_email.trim().toLowerCase(),
+    customer_email: normalizedEmail,
     customer_phone: customer_phone.trim(),
     start_time: startDate.toISOString(),
     notes: notes?.trim() || null,
