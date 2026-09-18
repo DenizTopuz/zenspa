@@ -57,8 +57,8 @@ export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
               rel={external ? 'noopener noreferrer' : undefined}
               className="group flex items-start gap-5 rounded-2xl p-4 -m-4 transition-colors duration-200 hover:bg-white/8"
             >
-              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/6 transition-colors duration-200 group-hover:bg-white/14">
-                <Icon className="h-7 w-7 text-white/55" aria-hidden />
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/6 transition-colors duration-200 group-hover:bg-white/14 md:h-16 md:w-16">
+                <Icon className="h-[22px] w-[22px] text-white/55 md:h-7 md:w-7" aria-hidden />
               </span>
               <div>
                 <p className="font-heading text-[18px] text-white/70 md:text-[22px]">{label}</p>

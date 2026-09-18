@@ -312,7 +312,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
                     disabled={disabled}
                     onClick={() => handleDatePick(dateStr)}
                     className={cn(
-                      'aspect-square w-full rounded-full text-[13px] transition-all duration-150',
+                      'h-9 w-9 rounded-full text-[13px] transition-all duration-150',
                       isSelected
                         ? 'bg-accent font-semibold text-white shadow-sm'
                         : disabled
@@ -333,7 +333,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
             })}
           </div>
           {/* Legend */}
-          <div className="mt-4 flex items-center justify-center gap-4 text-[11px] text-foreground/40">
+          <div className="mt-5 border-t border-foreground/8 pt-4 flex items-center justify-center gap-4 text-[11px] text-foreground/40">
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-400" />Veel plek</span>
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-amber-400" />Bijna vol</span>
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-rose-400" />Laatste plekjes</span>

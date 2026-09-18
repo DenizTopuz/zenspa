@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { ZenSpaLogo } from '@/components/logo'
-import { Phone, Mail } from 'lucide-react'
+import { Phone, Mail, CalendarCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
@@ -114,7 +114,7 @@ export function SiteNav() {
 
           {/* Mobile: email icon */}
           <a
-            href="/boeken"
+            href="mailto:info@zenspa.nl"
             aria-label="Stuur een e-mail"
             className={cn(
               'flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 lg:hidden',
@@ -126,13 +126,27 @@ export function SiteNav() {
             <Mail className="h-5 w-5" aria-hidden />
           </a>
 
-          {/* Mobile: phone icon with accent background */}
+          {/* Mobile: phone icon */}
           <a
             href="tel:0653207729"
             aria-label="Bel ons"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white shadow-[0_2px_12px_rgba(0,0,0,0.18)] transition-all duration-300 hover:bg-accent/85 lg:hidden"
+            className={cn(
+              'flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 lg:hidden',
+              dark
+                ? 'text-foreground/70 hover:bg-accent/10 hover:text-accent'
+                : 'text-white/80 hover:bg-white/25'
+            )}
           >
             <Phone className="h-5 w-5" aria-hidden />
+          </a>
+
+          {/* Mobile: appointment icon with accent background */}
+          <a
+            href="/boeken"
+            aria-label="Afspraak maken"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white shadow-[0_2px_12px_rgba(0,0,0,0.18)] transition-all duration-300 hover:bg-accent/85 lg:hidden"
+          >
+            <CalendarCheck className="h-5 w-5" aria-hidden />
           </a>
         </div>
       </div>
