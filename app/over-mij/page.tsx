@@ -210,7 +210,7 @@ export default function OverMijPage() {
                   {/* Accent badge */}
                   <div className="absolute -bottom-5 right-4 flex h-[96px] w-[96px] flex-col items-center justify-center rounded-full bg-accent text-white shadow-xl md:-bottom-6 md:right-8 md:h-[116px] md:w-[116px]">
                     <span className="font-heading text-[26px] font-black leading-none md:text-[30px]">20+</span>
-                    <span className="mt-1 text-[10px] font-semibold tracking-widest uppercase">jaar</span>
+                    <span className="mt-1 text-[9px] font-semibold tracking-wider uppercase leading-tight text-center">jaar<br/>ervaring</span>
                   </div>
                 </div>
               </Reveal>
