@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, Suspense, Fragment } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { ChevronLeft, ChevronRight, CheckCircle2, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer, X } from 'lucide-react'
 import Image from 'next/image'
 import { ZenSpaLogo } from '@/components/logo'
 import { DATA, getTreatmentBySlug, type Treatment, type TabKey } from '@/lib/behandelingen-data'
@@ -475,16 +475,11 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRe
 function ConfirmStep({ treatment, slotStart }: { treatment: Treatment; slotStart: string }) {
   return (
     <div className="py-8 space-y-5">
-      <div className="flex flex-col gap-3">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
-          <CheckCircle2 className="h-8 w-8 text-accent" />
-        </div>
-        <div>
-          <h2 className="font-heading text-[32px] tracking-tight md:text-[40px]">Aanvraag ontvangen!</h2>
-          <p className="mt-2 text-[16px] text-foreground/55">
-            We nemen zo snel mogelijk contact met je op om de afspraak te bevestigen.
-          </p>
-        </div>
+      <div>
+        <h2 className="font-heading text-[32px] tracking-tight md:text-[40px]">Aanvraag ontvangen!</h2>
+        <p className="mt-3 text-[16px] text-foreground/55">
+          We nemen zo snel mogelijk contact met je op om de afspraak te bevestigen.
+        </p>
       </div>
 
       <div className="rounded-2xl border border-foreground/8 bg-secondary/15 p-5 space-y-2">
