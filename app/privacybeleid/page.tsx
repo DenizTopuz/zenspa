@@ -41,11 +41,11 @@ export default function PrivacybeleidPage() {
         <section className="relative z-10 -mt-32 overflow-hidden rounded-t-[40px] bg-background md:-mt-48 md:rounded-t-[112px]">
           <div className="mx-auto max-w-[760px] px-5 py-20 md:px-6 md:py-32">
             <div className="prose prose-stone max-w-none text-[16px] leading-[1.85] text-foreground/80
-              [&_h2]:font-heading [&_h2]:text-[28px] [&_h2]:font-semibold [&_h2]:leading-snug [&_h2]:tracking-tight [&_h2]:text-foreground [&_h2]:mt-12 [&_h2]:mb-4 [&_h2:first-child]:mt-0
+              [&_h2]:font-heading [&_h2]:text-[28px] [&_h2]:font-semibold [&_h2]:leading-snug [&_h2]:tracking-tight [&_h2]:text-foreground [&_h2]:mt-7 [&_h2]:mb-3 [&_h2:first-child]:mt-0
               [&_h3]:font-heading [&_h3]:text-[20px] [&_h3]:font-semibold [&_h3]:text-foreground [&_h3]:mt-8 [&_h3]:mb-3
               [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:pl-5 [&_li]:mb-1.5">
 
-              <p className="text-[14px] text-foreground/45">Laatst bijgewerkt: september 2025</p>
+              <p className="text-[14px] text-foreground/45">Laatst bijgewerkt: 18 september 2026</p>
 
               <h2>1. Wie zijn wij?</h2>
               <p>
