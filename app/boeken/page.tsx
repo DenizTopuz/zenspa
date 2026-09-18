@@ -117,7 +117,7 @@ function TreatmentStep({ selected, onSelect }: {
             onClick={() => setTab(t.key)}
             className={cn(
               'flex-1 rounded-full py-2 text-[13px] font-medium transition-all duration-200',
-              tab === t.key ? 'bg-background text-foreground shadow-sm' : 'text-foreground/50 hover:text-foreground/70'
+              tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/50 hover:text-foreground/70'
             )}
           >
             {t.label}
