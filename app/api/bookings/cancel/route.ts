@@ -3,7 +3,7 @@ import { Resend } from 'resend'
 import { createServiceClient } from '@/lib/supabase/server'
 
 const TEST_OVERRIDE_EMAIL = process.env.EMAIL_TEST_OVERRIDE ?? null
-const FROM_DOMAIN = TEST_OVERRIDE_EMAIL ? 'onboarding@resend.dev' : 'noreply@zenspa.nl'
+const FROM_DOMAIN = TEST_OVERRIDE_EMAIL ? 'onboarding@resend.dev' : 'info@zenspa.nl'
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 function esc(s: string) {
