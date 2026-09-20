@@ -55,6 +55,13 @@ export function SiteNav() {
   }, [])
 
   return (
+    <>
+    <a
+      href="#main-content"
+      className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg focus:outline-none"
+    >
+      Ga naar inhoud
+    </a>
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
       <div
         className={cn(
@@ -151,5 +158,6 @@ export function SiteNav() {
         </div>
       </div>
     </header>
+    </>
   )
 }

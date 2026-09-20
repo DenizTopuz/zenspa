@@ -52,9 +52,6 @@ function useCarouselMetrics() {
   return m
 }
 
-function minEuro(cat: ServiceCategory) {
-  return Math.min(...cat.treatments.map((t) => parseInt(t.price.replace('€', ''))))
-}
 function treatmentNames(cat: ServiceCategory) {
   return cat.treatments.map((t) => t.name.split('–')[0].trim()).join(' · ')
 }
@@ -65,7 +62,7 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
   const imgH = Math.round(cardW * 1.3)
   return (
     <a
-      href={`/behandelingen/${service.slug}`}
+      href="/behandelingen"
       className="group relative shrink-0 overflow-hidden rounded-3xl bg-secondary/30
                  transition-all duration-300 ease-out
                  hover:-translate-y-1.5
@@ -83,20 +80,9 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
           className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] ${service.imgPos}`}
           sizes="(min-width: 1440px) 340px, (min-width: 1024px) 260px, (min-width: 768px) 360px, 200px"
         />
-        {/* Top gradient — always visible (price legibility), stronger on desktop hover */}
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 to-transparent
-                        lg:inset-0 lg:h-auto lg:from-black/68 lg:via-black/26 lg:opacity-0
-                        lg:transition-opacity lg:duration-500 lg:group-hover:opacity-100" />
-        {/* Price — always on mobile/tablet, hover-only on desktop */}
-        <div className="absolute left-5 top-5
-                        translate-y-0 opacity-100
-                        transition-all duration-500 ease-out
-                        lg:-translate-y-5 lg:opacity-0
-                        lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
-          <p className="font-heading text-[26px] font-semibold leading-none text-white drop-shadow md:text-[28px]">
-            Vanaf €{minEuro(service)}
-          </p>
-        </div>
+        {/* Bottom gradient for title legibility on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent
+                        opacity-0 transition-opacity duration-500 lg:group-hover:opacity-100" />
       </div>
 
       <div className="flex items-center justify-between gap-3 p-5">
@@ -214,7 +200,7 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
             </h2>
           </div>
           <a
-            href="#pricing"
+            href="/behandelingen"
             className="hidden shrink-0 items-center gap-2 text-[17px] font-medium text-accent underline underline-offset-4 transition-all duration-200 hover:gap-3 md:flex"
           >
             Volledig overzicht <ArrowRight className="h-4 w-4" aria-hidden />

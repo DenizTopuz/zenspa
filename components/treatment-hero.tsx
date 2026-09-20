@@ -23,7 +23,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
 
   return (
     <section
-      className="relative flex min-h-[72vh] items-center overflow-hidden"
+      className="relative flex min-h-[72vh] items-center overflow-hidden pb-20"
       aria-label={t.name}
     >
       {/* Parallax image */}
@@ -47,7 +47,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/52 to-black/80" />
 
       {/* Content */}
-      <div className="relative z-10 w-full px-8 pt-36 pb-36 text-center text-white md:px-0 md:py-32">
+      <div className="relative z-10 w-full px-8 text-center text-white md:px-0">
 
         {/* Price */}
         <p className="mb-4 text-[28px] font-semibold tracking-[0.04em] text-white/75">
@@ -60,12 +60,12 @@ export function TreatmentHero({ t }: { t: Treatment }) {
         </h1>
 
         {/* Description */}
-        <p className="mx-auto mt-5 max-w-[520px] text-[17px] leading-[1.85] text-white/68">
+        <p className="mx-auto mt-3 max-w-[520px] text-[17px] leading-[1.75] text-white/68">
           {t.description}
         </p>
 
         {/* CTA */}
-        <div className="mt-9">
+        <div className="mt-5">
           <a
             href="/boeken"
             className="inline-flex items-center rounded-full bg-white px-10 py-4.5 text-[16px] font-semibold text-stone-900 transition-all duration-300 hover:bg-white/90"
@@ -75,7 +75,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
         </div>
 
         {/* Social proof */}
-        <div className="mt-8 flex flex-col items-center justify-center gap-2 text-white/55 sm:flex-row sm:gap-3">
+        <div className="mt-5 flex flex-col items-center justify-center gap-2 text-white/55 sm:flex-row sm:gap-3">
           <div className="flex items-center gap-0.5">
             {[1,2,3,4,5].map(i => (
               <Star key={i} className="h-4 w-4 fill-white/80 text-white/80" aria-hidden />

@@ -15,9 +15,9 @@ const navCols = [
     heading: 'Ontdekken',
     links: [
       { label: 'Home',          href: '/' },
-      { label: 'Behandelingen', href: '/#pricing' },
-      { label: 'Over ons',      href: '/#about' },
-      { label: 'Prijzen',       href: '/#pricing' },
+      { label: 'Behandelingen', href: '/behandelingen' },
+      { label: 'Over ons',      href: '/over-mij' },
+      { label: 'Prijzen',       href: '/behandelingen' },
       { label: 'Reviews',       href: '/#stories' },
     ],
   },
@@ -25,7 +25,7 @@ const navCols = [
     heading: 'Salon',
     links: [
       { label: "FAQ's",                href: '/#faq' },
-      { label: 'Cadeaubonnen',         href: '#' },
+      { label: 'Cadeaubonnen',         href: '/contact' },
       { label: 'Privacybeleid',        href: '/privacybeleid' },
       { label: 'Algemene voorwaarden', href: '/algemene-voorwaarden' },
     ],
@@ -33,15 +33,15 @@ const navCols = [
   {
     heading: 'Behandelingen',
     links: [
-      { label: 'Gezicht',            href: '/#pricing' },
-      { label: 'Lichaam',            href: '/#pricing' },
-      { label: 'Permanente Make-up', href: '/#pricing' },
-      { label: 'Ontharen',           href: '/#pricing' },
+      { label: 'Gezicht',            href: '/behandelingen' },
+      { label: 'Lichaam',            href: '/behandelingen' },
+      { label: 'Permanente Make-up', href: '/behandelingen' },
+      { label: 'Ontharen',           href: '/behandelingen' },
     ],
   },
 ]
 
-export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
+export function SiteFooter({ bg = 'bg-background' }: { bg?: string }) {
   return (
     <div className={bg}>
     <footer className="rounded-t-[40px] bg-foreground text-white md:rounded-t-[64px] lg:rounded-t-[112px]">
@@ -76,7 +76,7 @@ export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
           {/* Newsletter */}
           <div className="flex flex-col gap-6">
             <ZenSpaLogo className="h-14 w-auto self-start text-white" />
-            <p className="text-[15px] leading-[1.75] text-white/45">
+            <p className="text-[15px] leading-[1.75] text-white/55">
               Maandelijkse wellness tips en exclusieve aanbiedingen.<br />
               Join 1.000+ tevreden klanten.
             </p>
@@ -87,6 +87,7 @@ export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
               <input
                 type="email"
                 name="email"
+                aria-label="Jouw e-mailadres"
                 placeholder="Jouw e-mailadres"
                 className="flex-1 bg-transparent text-[14px] text-white placeholder:text-white/30 focus:outline-none"
               />
@@ -120,7 +121,7 @@ export function SiteFooter({ bg = 'bg-muted/25' }: { bg?: string }) {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-8 text-[12px] text-white/28 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-8 text-[12px] text-white/55 sm:flex-row">
           <p>© 2026 Zen Spa · KvK 57713464 · Alle rechten voorbehouden</p>
 
           {/* Social icons */}

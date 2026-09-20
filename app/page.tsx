@@ -26,41 +26,51 @@ const marqueeItems = [
 
 
 const processSteps = [
-  { num: "01", title: "Kies jouw behandeling", desc: "Blader door ons menu en kies het ritueel dat het beste bij jou past." },
-  { num: "02", title: "Maak een afspraak",     desc: "Boek online of bel ons. Wij zorgen voor een naadloze planning." },
-  { num: "03", title: "Beleef het ritueel",    desc: "Geniet van jouw behandeling in onze stille, serene omgeving." },
-  { num: "04", title: "Voel het verschil",     desc: "Verlaat ons als een vernieuwde versie van jezelf." },
+  { num: "01", title: "Kies jouw behandeling", desc: "Blader door ons aanbod en kies de behandeling die het beste bij jou past — wij helpen je graag." },
+  { num: "02", title: "Maak een afspraak",     desc: "Boek eenvoudig online of bel ons. Wij zorgen voor een passend tijdstip in jouw drukke agenda." },
+  { num: "03", title: "Beleef het moment",     desc: "Geniet van jouw behandeling in een rustige, persoonlijke omgeving in Almere Buiten." },
+  { num: "04", title: "Voel het verschil",     desc: "Ga de deur uit als een nieuwe vrouw — opgeladen, stralend en klaar voor wat er ook op je wacht." },
 ]
 
 
-const blogPosts = [
-  {
-    tag: "Wellness",
-    date: "12 april 2025",
-    title: "De eeuwenoude kunst van botanisch baden",
-    excerpt:
-      "Hoe mineraalrijke kruidenbaden al eeuwenlang door culturen over de hele wereld worden gebruikt om lichaam en geest te herstellen.",
-    image: "/hero.jpg",
-  },
-  {
-    tag: "Huidverzorging",
-    date: "28 maart 2025",
-    title: "5 rituelen die onze therapeuten elke ochtend doen",
-    excerpt:
-      "De eenvoudige dagelijkse gewoonten die onze huid lumineus houden, onze energie kalm en onze mindset gecentreerd.",
-    image: "/bg-leaves.jpg",
-  },
-]
+export const metadata = {
+  title: 'Zen Spa — Schoonheidssalon & Huidtherapie in Almere Buiten',
+  description: 'Zen Spa in Almere Buiten — professionele gezichtsbehandelingen, massages en permanente make-up. Çigdem, gecertificeerd huidtherapeut met 20+ jaar ervaring. Online afspraken mogelijk vanaf €30.',
+}
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Moet ik vooraf reserveren bij Zen Spa?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Ja — wij adviseren minimaal 48 uur van tevoren te boeken. Same-day afspraken zijn soms beschikbaar via onze online agenda of telefonisch op 06 53 20 77 29.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'Wat kost een gezichtsbehandeling bij Zen Spa in Almere Buiten?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Gezichtsbehandelingen bij Zen Spa starten vanaf €30 (Mini Zen Moment, 30 min). De Classic Gezichtsbehandeling kost €70 (80 min). De Deluxe Gezichtsbehandeling €85 (120 min) en Microneedling €95 (60 min).' },
+    },
+    {
+      '@type': 'Question',
+      name: 'Kan ik een cadeaubon kopen bij Zen Spa?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Ja! Cadeaubonnen zijn verkrijgbaar voor elk bedrag of voor een specifieke behandeling — ideaal als cadeau voor een verjaardag of moederdag. Neem contact op via info@zenspa.nl.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'Wat is het annuleringsbeleid van Zen Spa?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Annuleringen tot 24 uur voor aanvang zijn kosteloos. Bij latere annulering of no-show brengen wij 50% van de behandelkosten in rekening.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'Wanneer zie ik resultaat na een behandeling bij Zen Spa?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Veel klanten merken direct na de behandeling een verschil. Voor behandelingen zoals Microneedling of Permanente Make-up zijn meerdere sessies aanbevolen voor het beste en meest duurzame resultaat.' },
+    },
+  ],
+}
 
 // ─── Shared micro-components ──────────────────────────────────────────────────
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="text-[11px] font-semibold tracking-[0.18em] text-accent uppercase">
-      {children}
-    </span>
-  )
-}
 
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
@@ -71,7 +81,7 @@ function Hero() {
       {/* Background image — parallax */}
       <ParallaxHeroImage />
       {/* Depth overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/42 to-black/68" />
+      <div className="absolute inset-0 bg-gradient-to-b from-amber-950/18 via-amber-950/32 to-amber-950/62" />
 
       {/* Center content */}
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-7 px-5 text-center">
@@ -88,14 +98,14 @@ function Hero() {
           className="hero-animate font-heading text-[36px] leading-[1.06] tracking-tight text-white sm:text-[52px] md:text-[72px] lg:text-[88px]"
           style={{ animationDelay: "110ms" }}
         >
-          Schoonheidssalon in Almere Buiten
+          Schoonheidssalon & Huidtherapie in Almere Buiten
         </h1>
 
         <p
           className="hero-animate max-w-[540px] text-[17px] leading-[1.85] text-white/68"
           style={{ animationDelay: "210ms" }}
         >
-          Persoonlijke schoonheidsbehandelingen voor verzorging, uitstraling en ontspanning.
+          Even helemaal voor jezelf. Professionele huidverzorging, massages en permanente make-up — door een specialist die écht naar je luistert.
         </p>
 
         <div
@@ -214,9 +224,9 @@ function About() {
             <Reveal delay={190}>
               <ul className="flex flex-col gap-4">
                 {[
-                  "Gecertificeerde schoonheidsspecialisten",
+                  "Gecertificeerde specialist met 20+ jaar ervaring in Almere",
                   "100% natuurlijke en biologische producten",
-                  "Private behandelkamers, rustige sessies",
+                  "Private behandelkamers — jouw moment, zonder afleiding",
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-4 text-[17px]">
                     <span
@@ -232,10 +242,10 @@ function About() {
             </Reveal>
             <Reveal delay={260}>
               <a
-                href="#contact"
+                href="/over-mij"
                 className="inline-flex w-fit items-center gap-2.5 rounded-full bg-accent px-10 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:gap-3.5 hover:shadow-md hover:shadow-accent/20"
               >
-                Ons verhaal <ArrowRight className="h-4 w-4" aria-hidden />
+                Maak kennis met Çigdem <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
             </Reveal>
           </div>
@@ -245,7 +255,7 @@ function About() {
             <div className="relative">
               <div className="relative aspect-square overflow-hidden rounded-[48px]">
                 <Image
-                  src="/bg-leaves.jpg"
+                  src="/lichaam.jpg"
                   alt="Zen Spa — luxe schoonheidsbehandeling in een serene omgeving"
                   fill
                   className="object-cover object-center"
@@ -339,72 +349,17 @@ function Process() {
 }
 
 
-function Journal() {
-  return (
-    <section className="section-fade bg-muted/25 pt-16 pb-36 md:pb-48 lg:py-48" aria-labelledby="journal-heading">
-      <div className="mx-auto max-w-[1840px] px-5 md:px-6">
-        <Reveal className="mb-20 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div className="flex flex-col gap-4">
-            <SectionLabel>Wellness journal</SectionLabel>
-            <h2
-              id="journal-heading"
-              className="font-heading text-[52px] leading-[1.06] tracking-tight md:text-[68px]"
-            >
-              Inzichten &{" "}
-              <em className="not-italic text-accent">inspiratie</em>
-            </h2>
-          </div>
-          <a
-            href="#"
-            className="flex shrink-0 items-center gap-2 text-[13px] font-medium text-accent transition-all duration-200 hover:gap-3"
-          >
-            Alle artikelen <ArrowRight className="h-4 w-4" aria-hidden />
-          </a>
-        </Reveal>
-
-        <div className="grid gap-8 md:grid-cols-2">
-          {blogPosts.map((post, i) => (
-            <Reveal key={post.title} delay={i * 100}>
-              <a href="#" className="group flex flex-col gap-5">
-                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-black/8 transition-colors group-hover:bg-black/18" />
-                </div>
-                <div className="flex flex-col gap-2.5">
-                  <div className="flex items-center gap-3">
-                    <span className="rounded-full bg-accent/10 px-3.5 py-1 text-[11px] font-semibold text-accent">
-                      {post.tag}
-                    </span>
-                    <span className="text-[12px] text-muted-foreground">{post.date}</span>
-                  </div>
-                  <h3 className="font-heading text-[28px] leading-snug transition-colors duration-200 group-hover:text-accent">
-                    {post.title}
-                  </h3>
-                  <p className="text-[15px] leading-[1.78] text-muted-foreground">{post.excerpt}</p>
-                </div>
-              </a>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Page() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <SiteNav />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero />
         <Pillars />
         <About />
@@ -413,11 +368,14 @@ export default function Page() {
         <CtaBand />
         <Behandelingen />
         <Process />
-        <ReviewsCarousel />
-        <FaqSection />
-        <Journal />
+        <section id="stories" aria-label="Reviews">
+          <ReviewsCarousel />
+        </section>
+        <section id="faq" aria-label="Veelgestelde vragen">
+          <FaqSection />
+        </section>
       </main>
-      <SiteFooter bg="bg-muted/25" />
+      <SiteFooter />
     </>
   )
 }

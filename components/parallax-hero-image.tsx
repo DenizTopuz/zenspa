@@ -23,15 +23,16 @@ export function ParallaxHeroImage() {
   return (
     <div
       ref={ref}
-      className="absolute inset-x-0 -bottom-[40%] -top-[40%]"
+      className="absolute inset-x-0 -bottom-[20%] -top-[20%]"
       style={{ willChange: 'transform' }}
     >
       <Image
-        src="/hero.jpg"
+        src="/hero.jpeg"
         alt="Zen Spa — luxe wellnessbehandelingen"
         fill
         priority
-        className="object-cover object-center"
+        quality={90}
+        className="object-cover object-[70%_center] brightness-95 saturate-[1.15] sepia-[0.18]"
         sizes="100vw"
       />
     </div>

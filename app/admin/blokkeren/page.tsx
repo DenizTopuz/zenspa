@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronLeft } from 'lucide-react'
+import Image from 'next/image'
 import type { BlockedTimeRow } from '@/lib/supabase/types'
 
 function formatDT(iso: string) {
@@ -12,12 +12,9 @@ function formatDT(iso: string) {
   })
 }
 
-// Convert local datetime-local input (YYYY-MM-DDTHH:mm) to Amsterdam ISO
 function toAmsterdamISO(local: string) {
-  // datetime-local gives us the user's local time; we treat it as Amsterdam
   const [date, time] = local.split('T')
   const [h, m] = time.split(':').map(Number)
-  // Build a Date in Amsterdam timezone
   const probe = new Date(`${date}T${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00`)
   return probe.toISOString()
 }
@@ -72,20 +69,18 @@ export default function AdminBlokkeren() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-10 border-b border-foreground/8 bg-white px-4 py-4 md:px-8">
+    <>
+      <header className="shrink-0 sticky top-0 z-10 border-b border-foreground/8 bg-white px-4 py-4 md:px-8">
         <div className="mx-auto flex max-w-4xl items-center justify-between">
-          <h1 className="text-lg font-bold text-foreground">Tijdsloten blokkeren</h1>
+          <Image src="/logo-green.svg" alt="Zen Spa" width={100} height={27} priority />
+          <button onClick={async () => { await fetch('/api/admin/logout', { method: 'POST' }); router.push('/admin') }}
+            className="text-sm text-foreground/40 hover:text-foreground transition-colors">
+            Uitloggen
+          </button>
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 py-6 md:px-8 space-y-6">
-        {/* Breadcrumb */}
-        <a href="/admin/boekingen" className="inline-flex items-center gap-1 text-base font-medium text-foreground/50 hover:text-foreground transition-colors">
-          <ChevronLeft className="h-4 w-4" aria-hidden />
-          Boekingen
-        </a>
-
+      <main className="flex-1 overflow-y-auto min-h-0 lg:flex-none lg:overflow-visible mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-6 pb-4">
         {/* Formulier */}
         <div className="rounded-2xl border border-foreground/8 bg-white p-5 shadow-sm">
           <h2 className="mb-4 font-semibold text-foreground">Periode blokkeren</h2>
@@ -159,6 +154,6 @@ export default function AdminBlokkeren() {
           )}
         </div>
       </main>
-    </div>
+    </>
   )
 }

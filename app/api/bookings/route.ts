@@ -6,6 +6,7 @@ import type { BookingInsert } from '@/lib/supabase/types'
 
 const TEST_OVERRIDE_EMAIL = process.env.EMAIL_TEST_OVERRIDE ?? null
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://zenspa.nl'
+const FROM_DOMAIN = TEST_OVERRIDE_EMAIL ? 'onboarding@resend.dev' : 'noreply@zenspa.nl'
 
 function esc(s: string) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -42,7 +43,7 @@ async function sendEmails(booking: {
 
   await Promise.all([
     resend.emails.send({
-      from: 'Zen Spa <noreply@zenspa.nl>',
+      from: `Zen Spa <${FROM_DOMAIN}>`,
       to: [to(booking.customer_email)],
       subject: 'Je aanvraag is ontvangen – Zen Spa',
       html: `
@@ -60,7 +61,7 @@ async function sendEmails(booking: {
       `,
     }),
     resend.emails.send({
-      from: 'Zen Spa Boekingen <noreply@zenspa.nl>',
+      from: `Zen Spa Boekingen <${FROM_DOMAIN}>`,
       to: [to('info@zenspa.nl')],
       subject: `Nieuwe aanvraag: ${esc(booking.treatment_name)} – ${esc(booking.customer_name)}`,
       html: `

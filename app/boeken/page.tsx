@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, Suspense, Fragment } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { ChevronLeft, ChevronRight, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer, X, AlertCircle } from 'lucide-react'
 import Image from 'next/image'
 import { ZenSpaLogo } from '@/components/logo'
 import { DATA, getTreatmentBySlug, type Treatment, type TabKey } from '@/lib/behandelingen-data'
@@ -84,7 +84,7 @@ function StepBar({ step }: { step: number }) {
                 </div>
                 <span className={cn(
                   'text-[10px] font-medium sm:text-[11px] whitespace-nowrap',
-                  active ? 'text-accent' : 'text-foreground/35'
+                  active ? 'text-accent' : 'text-foreground/58'
                 )}>{label}</span>
               </div>
             </Fragment>
@@ -106,7 +106,7 @@ function TreatmentStep({ selected, onSelect }: {
     <div className="space-y-6">
       <div>
         <h2 className="font-heading text-[28px] leading-tight tracking-tight md:text-[36px]">Kies een behandeling</h2>
-        <p className="mt-1 text-[15px] text-foreground/55">Selecteer de behandeling waarvoor je een afspraak wilt maken.</p>
+        <p className="mt-1 text-[15px] text-foreground/68">Selecteer de behandeling waarvoor je een afspraak wilt maken.</p>
       </div>
 
       {/* Tab bar */}
@@ -117,7 +117,7 @@ function TreatmentStep({ selected, onSelect }: {
             onClick={() => setTab(t.key)}
             className={cn(
               'flex-1 rounded-full py-2 text-[13px] font-medium transition-all duration-200',
-              tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/50 hover:text-foreground/70'
+              tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/65 hover:text-foreground'
             )}
           >
             {t.label}
@@ -130,7 +130,7 @@ function TreatmentStep({ selected, onSelect }: {
         {DATA[tab].groups.map((group, gi) => (
           <div key={gi} className="min-w-0">
             {group.subtitle && (
-              <p className="mb-2 mt-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-foreground/40 md:mt-4">{group.subtitle}</p>
+              <p className="mb-2 mt-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-foreground/60 md:mt-4">{group.subtitle}</p>
             )}
             {group.items.filter(t => t.bookable).map(t => (
               <button
@@ -154,7 +154,7 @@ function TreatmentStep({ selected, onSelect }: {
                       <p className={cn('min-w-0 truncate text-[15px] font-semibold', selected?.slug === t.slug ? 'text-accent' : 'text-foreground')}>{t.name}</p>
                       {t.tag && <span className="shrink-0 rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">{t.tag}</span>}
                     </div>
-                    <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/45">
+                    <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/62">
                       {t.duration && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.duration}</span>}
                       <span>{t.price}</span>
                     </div>
@@ -267,7 +267,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
     <div className="space-y-5">
       <div>
         <h2 className="font-heading text-[28px] leading-tight tracking-tight md:text-[36px]">Kies een datum & tijd</h2>
-        <p className="mt-1 text-[15px] text-foreground/55">We zijn open op <strong>maandag, woensdag en vrijdag</strong> van 10:00–18:00.</p>
+        <p className="mt-1 text-[15px] text-foreground/68">We zijn open op <strong>maandag, woensdag en vrijdag</strong> van 10:00–18:00.</p>
       </div>
 
       {/* Date chip — collapsed calendar state */}
@@ -299,7 +299,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
           </div>
           <div className="grid grid-cols-7 gap-y-1 gap-x-1 text-center">
             {NL_DAY_HEADERS.map(d => (
-              <div key={d} className="py-1 text-[11px] font-semibold text-foreground/35">{d}</div>
+              <div key={d} className="py-1 text-[11px] font-semibold text-foreground/55">{d}</div>
             ))}
             {days.map((dateStr, i) => {
               if (!dateStr) return <div key={`e-${i}`} />
@@ -333,7 +333,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
             })}
           </div>
           {/* Legend */}
-          <div className="mt-5 border-t border-foreground/8 pt-4 flex items-center justify-center gap-4 text-[11px] text-foreground/40">
+          <div className="mt-5 border-t border-foreground/8 pt-4 flex items-center justify-center gap-4 text-[11px] text-foreground/58">
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-400" />Veel plek</span>
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-amber-400" />Bijna vol</span>
             <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-rose-400" />Laatste plekjes</span>
@@ -341,7 +341,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
           {selectedDate && (
             <button
               onClick={() => setCalOpen(false)}
-              className="mt-3 w-full rounded-xl bg-foreground/5 py-2.5 text-[13px] font-medium text-foreground/50 transition-colors hover:bg-foreground/8"
+              className="mt-3 w-full rounded-xl bg-foreground/5 py-2.5 text-[13px] font-medium text-foreground/68 transition-colors hover:bg-foreground/8"
             >
               Sluiten
             </button>
@@ -353,7 +353,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
       {selectedDate && (
         <div ref={slotsRef}>
           {loadingSlots ? (
-            <div className="flex items-center gap-2 text-[14px] text-foreground/40">
+            <div className="flex items-center gap-2 text-[14px] text-foreground/58">
               <Clock className="h-4 w-4 animate-spin" /> Beschikbaarheid laden…
             </div>
           ) : slots.length === 0 ? (
@@ -408,7 +408,7 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRe
     <div className="space-y-6">
       <div>
         <h2 className="font-heading text-[28px] leading-tight tracking-tight md:text-[36px]">Jouw gegevens</h2>
-        <p className="mt-1 text-[15px] text-foreground/55">Vul je contactgegevens in om de aanvraag te voltooien.</p>
+        <p className="mt-1 text-[15px] text-foreground/68">Vul je contactgegevens in om de aanvraag te voltooien.</p>
       </div>
 
       {/* Booking summary */}
@@ -445,19 +445,19 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRe
         className="space-y-3"
       >
         <div>
-          <label className="mb-1 block text-[13px] font-medium text-foreground/60">Naam <span className="text-accent">*</span></label>
+          <label className="mb-1 block text-[13px] font-medium text-foreground/75">Naam <span className="text-accent">*</span></label>
           <input value={name} onChange={e => setName(e.target.value)} required placeholder="Voor- en achternaam" className={inputCls} />
         </div>
         <div>
-          <label className="mb-1 block text-[13px] font-medium text-foreground/60">E-mailadres <span className="text-accent">*</span></label>
+          <label className="mb-1 block text-[13px] font-medium text-foreground/75">E-mailadres <span className="text-accent">*</span></label>
           <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="jouw@email.nl" className={inputCls} />
         </div>
         <div>
-          <label className="mb-1 block text-[13px] font-medium text-foreground/60">Telefoonnummer <span className="text-accent">*</span></label>
+          <label className="mb-1 block text-[13px] font-medium text-foreground/75">Telefoonnummer <span className="text-accent">*</span></label>
           <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} required placeholder="06 12 34 56 78" className={inputCls} />
         </div>
         <div>
-          <label className="mb-1 block text-[13px] font-medium text-foreground/60">Opmerking <span className="text-foreground/35 font-normal">(optioneel)</span></label>
+          <label className="mb-1 block text-[13px] font-medium text-foreground/75">Opmerking <span className="text-foreground/55 font-normal">(optioneel)</span></label>
           <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} placeholder="Bijzonderheden, wensen of vragen…" className={`${inputCls} resize-none`} />
         </div>
 
@@ -467,7 +467,7 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRe
             required
             className="mt-[3px] h-4 w-4 shrink-0 accent-accent"
           />
-          <span className="text-[13px] text-foreground/55 leading-relaxed">
+          <span className="text-[13px] text-foreground/70 leading-relaxed">
             Ik ga akkoord met de{' '}
             <a href="/privacybeleid" className="text-accent underline underline-offset-2" target="_blank" rel="noopener noreferrer">
               privacyverklaring
@@ -477,7 +477,18 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRe
         </label>
 
         {error && (
-          <p className="rounded-xl bg-red-50 px-4 py-3 text-[13px] text-red-600 border border-red-200">{error}</p>
+          <div className="rounded-2xl border border-foreground/10 bg-white px-4 py-4 shadow-sm flex gap-3">
+            <AlertCircle className="h-5 w-5 shrink-0 text-red-500 mt-0.5" aria-hidden />
+            <div>
+              <p className="text-sm font-semibold text-foreground">Aanvraag niet verzonden</p>
+              <p className="mt-0.5 text-[13px] text-foreground/60">{error}</p>
+              {error.includes('openstaande aanvraag') && (
+                <a href="/contact" className="mt-2 inline-flex items-center gap-0.5 text-[13px] font-medium text-accent underline underline-offset-2">
+                  Neem contact op <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+                </a>
+              )}
+            </div>
+          </div>
         )}
 
         <p className="text-[12px] text-foreground/40">Je aanvraag wordt beoordeeld. Je ontvangt een bevestiging via e-mail.</p>
@@ -606,8 +617,9 @@ function BookingWizard() {
       </header>
 
       {/* ── Content ── */}
-      <main className="flex-1 pt-5 pb-32">
+      <main id="main-content" tabIndex={-1} className="flex-1 pt-5 pb-32">
         <div className="mx-auto max-w-2xl w-full px-5 overflow-hidden">
+          <h1 className="sr-only">Afspraak maken bij Zen Spa</h1>
           {step < 4 && <StepBar step={step} />}
 
           <div className="relative">

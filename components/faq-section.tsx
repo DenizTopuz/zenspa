@@ -7,7 +7,15 @@ import { Plus, Minus } from 'lucide-react'
 const faqs = [
   {
     q: 'Moet ik vooraf reserveren?',
-    a: 'Ja — wij adviseren minimaal 48 uur van tevoren te boeken om jouw voorkeurstijd en therapeut zeker te stellen. Same-day afspraken zijn soms beschikbaar; check de beschikbaarheid online of bel ons. Inlopen is welkom maar kan niet worden gegarandeerd.',
+    a: 'Ja — wij adviseren minimaal 48 uur van tevoren te boeken om jouw voorkeurstijd zeker te stellen. Same-day afspraken zijn soms beschikbaar; check de beschikbaarheid online of bel ons op 06 53 20 77 29. Inlopen is welkom maar kan niet worden gegarandeerd.',
+  },
+  {
+    q: 'Wat kost een gezichtsbehandeling bij Zen Spa?',
+    a: 'Onze gezichtsbehandelingen starten vanaf €30 (Mini Zen Moment, 30 min). De populairste keuze is de Classic Gezichtsbehandeling voor €70 (80 min). Wil je meer resultaat? De Microneedling (€95) en Deluxe Gezichtsbehandeling (€85) zijn ideaal voor diepgaande verzorging. Bekijk het volledige overzicht op de behandelingenpagina.',
+  },
+  {
+    q: 'Kan ik een cadeaubon kopen bij Zen Spa?',
+    a: 'Ja! Cadeaubonnen zijn verkrijgbaar voor elk bedrag of voor een specifieke behandeling — ideaal als cadeau voor een verjaardag, moederdag of gewoon als blijk van waardering. Neem contact met ons op via info@zenspa.nl of bel ons voor meer informatie.',
   },
   {
     q: 'Wat moet ik dragen tijdens mijn behandeling?',
@@ -15,14 +23,14 @@ const faqs = [
   },
   {
     q: 'Hoe vroeg moet ik aanwezig zijn?',
-    a: 'Wij vragen je om 10 tot 15 minuten voor je afspraak aanwezig te zijn, zodat je rustig kunt aankomen, een welkomstdrankje kunt nemen en de sfeer tot je door kunt laten dringen.',
+    a: 'Wij vragen je om 10 tot 15 minuten voor je afspraak aanwezig te zijn, zodat je rustig kunt aankomen, een welkomstdrankje kunt nemen en even tot rust kunt komen.',
   },
   {
     q: 'Wat is jullie annuleringsbeleid?',
     a: 'Annuleringen tot 24 uur voor aanvang zijn kosteloos. Bij latere annulering of no-show brengen wij 50% van de behandelkosten in rekening.',
   },
   {
-    q: 'Wanneer voel ik de resultaten?',
+    q: 'Wanneer zie ik resultaat?',
     a: 'Veel klanten merken direct na de behandeling een verschil in huid en welbevinden. Voor behandelingen zoals Microneedling of Permanente Make-up zijn meerdere sessies aanbevolen voor het beste en meest duurzame resultaat.',
   },
 ]
@@ -85,7 +93,7 @@ export function FaqSection({ className }: { className?: string }) {
             Alles wat je wilt weten.
           </h2>
           <p className="mt-5 max-w-[520px] text-[17px] leading-[1.85] text-muted-foreground">
-            Alles wat je wilt weten voor je eerste bezoek — en een paar dingen waar je nog niet aan had gedacht.
+            Van praktische vragen over jouw eerste bezoek tot specifieke behandelingen in Almere Buiten — hier vind je alle antwoorden.
           </p>
         </div>
 
@@ -119,7 +127,7 @@ export function FaqSection({ className }: { className?: string }) {
 
             <div className="relative flex h-full flex-col items-center justify-center gap-8 px-10 py-16 text-center text-white md:px-14">
               <p className="text-[13px] font-medium tracking-wide text-white/65">
-                +31 (0)20 123 4567 · Ma–Za, 9:00–18:00
+                06 53 20 77 29 · Ma, Wo, Vr: 10:00–18:00
               </p>
 
               <h3 className="font-heading text-[36px] leading-[1.1] tracking-tight md:text-[44px]">

@@ -5,6 +5,7 @@ import { isAdmin } from '@/lib/admin-auth'
 
 const TEST_OVERRIDE_EMAIL = process.env.EMAIL_TEST_OVERRIDE ?? null
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://zenspa.nl'
+const FROM_DOMAIN = TEST_OVERRIDE_EMAIL ? 'onboarding@resend.dev' : 'noreply@zenspa.nl'
 
 function esc(s: string) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -93,7 +94,7 @@ export async function PATCH(req: NextRequest) {
 
     if (status === 'confirmed') {
       resend.emails.send({
-        from: 'Zen Spa <noreply@zenspa.nl>',
+        from: `Zen Spa <${FROM_DOMAIN}>`,
         to: [to],
         subject: 'Je afspraak is bevestigd – Zen Spa',
         html: `
@@ -113,7 +114,7 @@ export async function PATCH(req: NextRequest) {
 
     if (status === 'rejected') {
       resend.emails.send({
-        from: 'Zen Spa <noreply@zenspa.nl>',
+        from: `Zen Spa <${FROM_DOMAIN}>`,
         to: [to],
         subject: 'Update over je aanvraag – Zen Spa',
         html: `

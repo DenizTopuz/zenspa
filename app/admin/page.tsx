@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function AdminLoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPw, setShowPw] = useState(false)
   const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
@@ -32,14 +34,24 @@ export default function AdminLoginPage() {
         <h1 className="mb-2 text-2xl font-bold text-foreground">Admin</h1>
         <p className="mb-4 text-sm text-foreground/50">Zen Spa · Beheer</p>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="Wachtwoord"
-            autoFocus
-            className="w-full rounded-2xl border border-foreground/12 bg-secondary/20 px-4 py-3 text-foreground placeholder:text-foreground/35 focus:outline-none focus:ring-2 focus:ring-accent/40"
-          />
+          <div className="relative">
+            <input
+              type={showPw ? 'text' : 'password'}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Wachtwoord"
+              autoFocus
+              className="w-full rounded-2xl border border-foreground/12 bg-secondary/20 px-4 py-3 pr-11 text-foreground placeholder:text-foreground/35 focus:outline-none focus:ring-2 focus:ring-accent/40"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPw(v => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-foreground/35 hover:text-foreground/60 transition-colors"
+              aria-label={showPw ? 'Verberg wachtwoord' : 'Toon wachtwoord'}
+            >
+              {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
+          </div>
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button
             type="submit"

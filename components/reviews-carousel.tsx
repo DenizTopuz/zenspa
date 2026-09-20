@@ -15,22 +15,22 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     name: 'Sophia R.',
-    location: 'Almere',
-    quote: 'Zen Spa voelde als een andere wereld. De Classic Gezichtsbehandeling liet mijn huid stralen en mijn geest volledig tot rust komen. Ik heb jaren niet zo goed geslapen.',
+    location: 'Almere Buiten',
+    quote: 'Zen Spa is mijn vaste plek om bij te komen. De Classic Gezichtsbehandeling liet mijn huid stralen én mijn hoofd leegmaken — precies wat ik nodig had na weken van drukte thuis en op werk.',
     stars: 5,
     image: '/hero.jpg',
   },
   {
-    name: 'Marcus T.',
-    location: 'Amsterdam',
-    quote: 'De therapeuten zijn van wereldklasse en de ambiance is ongeëvenaard. Al meer dan twee jaar kom ik hier maandelijks — het is mijn favoriete moment van de maand.',
+    name: 'Yasmine K.',
+    location: 'Almere Buiten',
+    quote: 'Als drukke moeder van twee kinderen is Zen Spa mijn enige moment voor mezelf. Çigdem luistert écht en stemt elke behandeling op je af. Ik ga altijd een stuk lichter de deur uit.',
     stars: 5,
     image: '/bg-leaves.jpg',
   },
   {
-    name: 'Lena M.',
-    location: 'Utrecht',
-    quote: 'Elk detail is doordacht — van de persoonlijke aandacht tot de warme sfeer. De meest luxueuze twee uur die ik ooit aan mezelf heb besteed.',
+    name: 'Fatima A.',
+    location: 'Almere',
+    quote: 'Na mijn Deluxe Gezichtsbehandeling en de Microneedling zie ik mijn huid écht verbeteren. Zo fijn dat dit gewoon om de hoek in Almere Buiten is — geen gedoe met reizen naar Amsterdam.',
     stars: 5,
     image: '/hero.jpg',
   },
@@ -38,7 +38,7 @@ const testimonials: Testimonial[] = [
 
 function Stars({ count }: { count: number }) {
   return (
-    <div className="flex gap-1" aria-label={`${count} van 5 sterren`}>
+    <div role="img" className="flex gap-1" aria-label={`${count} van 5 sterren`}>
       {Array.from({ length: count }).map((_, i) => (
         <span key={i} className="text-[22px] leading-none text-foreground" aria-hidden>★</span>
       ))}
@@ -125,7 +125,7 @@ export function ReviewsCarousel() {
                 <Stars count={t.stars} />
 
                 {/* Attribution */}
-                <p className="text-[17px] text-foreground/50">
+                <p className="text-[17px] text-foreground/68">
                   — {t.name}, {t.location}
                 </p>
               </div>
@@ -150,11 +150,12 @@ export function ReviewsCarousel() {
                 </div>
 
                 {/* Dot indicator */}
-                <div className="flex items-center gap-2" aria-hidden>
+                <div className="flex items-center gap-2" aria-hidden="true">
                   {testimonials.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setIdx(i)}
+                      tabIndex={-1}
                       className={`h-[5px] rounded-full transition-all duration-400 ${
                         i === idx
                           ? 'w-6 bg-foreground'

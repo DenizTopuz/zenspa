@@ -66,7 +66,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
         {(t.duration || t.tag) && (
           <div className="mt-1 flex flex-wrap gap-2">
             {t.duration && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/18 px-3.5 py-1.5 text-[13px] text-foreground/55 md:px-4 md:py-2 md:text-[14px]">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/18 px-3.5 py-1.5 text-[13px] text-foreground/70 md:px-4 md:py-2 md:text-[14px]">
                 <Clock className="h-3.5 w-3.5 md:h-4 md:w-4" aria-hidden />
                 {t.duration}
               </span>
@@ -169,7 +169,7 @@ export function Behandelingen() {
                 className={`relative z-10 flex cursor-pointer items-center justify-center gap-2 rounded-xl px-3 py-3 transition-colors duration-200 hover:text-foreground md:gap-2.5 md:rounded-full md:px-4 md:py-3.5 lg:gap-3 lg:px-5 lg:py-5 ${
                   active === key
                     ? 'text-accent'
-                    : 'text-foreground/40 hover:bg-white/45'
+                    : 'text-foreground/65 hover:bg-white/45'
                 }`}
               >
                 <Icon className="h-5 w-5 shrink-0 md:h-6 md:w-6 lg:h-7 lg:w-7" aria-hidden />
@@ -194,7 +194,7 @@ export function Behandelingen() {
           {tab.groups.map((group, gi) => (
             <div key={gi} className={gi > 0 ? 'mt-14' : ''}>
               {group.subtitle && (
-                <p className="mb-3 mt-6 text-[14px] font-semibold tracking-[0.18em] text-foreground/40 uppercase lg:mt-0">
+                <p className="mb-3 mt-6 text-[14px] font-semibold tracking-[0.18em] text-foreground/60 uppercase lg:mt-0">
                   {group.subtitle}
                 </p>
               )}

@@ -14,8 +14,37 @@ import { OverMijHero } from '@/components/over-mij-hero'
 import { getAllTreatments } from '@/lib/behandelingen-data'
 
 export const metadata = {
-  title: 'Over mij — Zen Spa',
-  description: 'Maak kennis met de gedreven specialist achter Zen Spa. Meer dan 20 jaar ervaring in huidverzorging, permanente make-up en wellness.',
+  title: 'Over Çigdem — Huidtherapeut & oprichter van Zen Spa Almere Buiten',
+  description: 'Maak kennis met Çigdem, gecertificeerd huidtherapeut en oprichter van Zen Spa in Almere Buiten. Meer dan 20 jaar ervaring in gezichtsbehandelingen, permanente make-up (PMU) en huidverzorging.',
+}
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Çigdem',
+  jobTitle: 'Gecertificeerd huidtherapeut & PMU-specialist',
+  description: 'Oprichter van Zen Spa in Almere Buiten. Meer dan 20 jaar ervaring in huidverzorging, gezichtsbehandelingen en permanente make-up. Gecertificeerd huidtherapeut en erkend wellness-specialist.',
+  worksFor: {
+    '@type': 'BeautySalon',
+    name: 'Zen Spa',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Kretastraat 77',
+      addressLocality: 'Almere',
+      postalCode: '1316 VT',
+      addressCountry: 'NL',
+    },
+  },
+  knowsAbout: [
+    'huidverzorging',
+    'gezichtsbehandelingen',
+    'permanente make-up',
+    'microneedling',
+    'galvanic spa',
+    'huidtherapie',
+    'wenkbrauwpigmentatie',
+    'lippigmentatie',
+  ],
 }
 
 const steps = [
@@ -30,6 +59,10 @@ export default function OverMijPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
       <SiteNav />
       <main>
 
@@ -44,7 +77,7 @@ export default function OverMijPage() {
           <div className="mx-auto max-w-5xl px-5 md:px-6 text-center">
             <Reveal>
               <p className="font-heading text-[32px] leading-[1.2] tracking-tight text-foreground/80 md:text-[44px] lg:text-[54px]">
-                Schoonheid is geen masker — het is de zorg die je jezelf gunt, dag na dag.
+                Een goede behandeling voelt niet als luxe — het voelt als thuiskomen bij jezelf.
               </p>
             </Reveal>
           </div>
@@ -57,18 +90,18 @@ export default function OverMijPage() {
               {[
                 {
                   icon: <Clock className="h-7 w-7 text-accent" aria-hidden />,
-                  title: 'Rituelen sinds 2004',
-                  body: 'Meer dan 20 jaar toewijding aan huidverzorging, welzijn en het herstel van balans.',
+                  title: 'Al sinds 2004 in Almere',
+                  body: 'Meer dan 20 jaar toewijding aan huidverzorging en welzijn voor vrouwen in Almere Buiten en omgeving.',
                 },
                 {
                   icon: <CalendarDays className="h-7 w-7 text-accent" aria-hidden />,
                   title: 'Vertrouwd door 1000+ klanten',
-                  body: 'Gecertificeerde specialisten die elke sessie persoonlijk afstemmen op jouw doelen.',
+                  body: 'Vaste klanten die terugkomen — niet omdat het moet, maar omdat ze het verschil voelen.',
                 },
                 {
                   icon: <Sparkles className="h-7 w-7 text-accent" aria-hidden />,
-                  title: 'Jouw welzijn, mijn roeping',
-                  body: 'Elk ritueel is ontworpen vanuit één intentie — jou volledig in balans brengen.',
+                  title: 'Jouw moment, mijn zorg',
+                  body: 'Of je nu komt voor je huid, je rust of gewoon even voor jezelf — hier ben je aan het juiste adres.',
                 },
               ].map((col, i) => (
                 <Reveal key={i} delay={i * 60}>
@@ -94,7 +127,7 @@ export default function OverMijPage() {
                 <div className="relative aspect-square overflow-hidden rounded-[48px]">
                   <Image
                     src="/hero.jpg"
-                    alt="Zen Spa specialist"
+                    alt="Çigdem, huidtherapeut en oprichter van Zen Spa in Almere Buiten"
                     fill
                     className="object-cover object-center"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -154,7 +187,7 @@ export default function OverMijPage() {
                 <div className="border-t border-foreground/10 pt-6">
                   <p className="mb-3 text-[14px] font-semibold tracking-[0.18em] text-accent uppercase">Mijn missie</p>
                   <p className="text-[17px] leading-[1.85] text-muted-foreground">
-                    Elke klant verdient persoonlijke aandacht en een behandeling die écht bij haar of hem past. Dat is de kern van Zen Spa.
+                    Elke vrouw verdient een moment voor zichzelf — een behandeling die écht bij haar past, niet een standaard protocol van de plank. Dat is de kern van Zen Spa.
                   </p>
                 </div>
               </Reveal>
@@ -218,7 +251,7 @@ export default function OverMijPage() {
               {/* Text */}
               <div className="flex flex-col gap-7 pt-6 lg:pt-0">
                 <Reveal>
-                  <p className="text-[12px] font-semibold tracking-[0.22em] text-accent uppercase">Uw specialist</p>
+                  <p className="text-[12px] font-semibold tracking-[0.22em] text-accent uppercase">Jouw specialist</p>
                   <h2 className="mt-3 font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px] lg:text-[60px]">
                     Çigdem<br />
                     <span className="text-foreground/38">Huidtherapeut & oprichter</span>
@@ -292,7 +325,7 @@ export default function OverMijPage() {
                 {steps.map((step, i) => (
                   <Reveal key={i} delay={i * 60}>
                     <div className={`flex gap-6 py-6 ${i < steps.length - 1 ? 'border-b border-foreground/10' : ''}`}>
-                      <span className="shrink-0 font-heading text-[17px] font-semibold text-foreground/30 md:text-[19px]">
+                      <span className="shrink-0 pt-1 font-heading text-[17px] font-semibold text-foreground/30 md:text-[19px]">
                         0{i + 1}
                       </span>
                       <div>

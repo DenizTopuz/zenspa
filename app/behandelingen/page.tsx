@@ -81,7 +81,7 @@ export default function BehandelingenPage() {
   return (
     <>
       <SiteNav />
-      <main>
+      <main id="main-content" tabIndex={-1}>
 
         {/* ── Hero ──────────────────────────────────────────────────── */}
         <BehandelingenHero />

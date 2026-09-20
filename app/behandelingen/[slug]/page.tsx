@@ -109,10 +109,46 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
   const content  = getContent(t.category)
   const related  = getRelatedTreatments(slug, 4)
 
+  const priceNum = parseFloat(t.price.replace(/[^0-9,]/g, '').replace(',', '.')) || undefined
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: t.name,
+    description: t.description,
+    provider: {
+      '@type': 'BeautySalon',
+      name: 'Zen Spa',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Kretastraat 77',
+        addressLocality: 'Almere',
+        postalCode: '1316 VT',
+        addressCountry: 'NL',
+      },
+      telephone: '+31653207729',
+      url: 'https://zenspa.nl',
+    },
+    ...(priceNum ? {
+      offers: {
+        '@type': 'Offer',
+        price: priceNum,
+        priceCurrency: 'EUR',
+        availability: 'https://schema.org/InStock',
+        url: 'https://zenspa.nl/boeken',
+      },
+    } : {}),
+    serviceType: t.category ?? 'Schoonheidsbehandeling',
+    areaServed: { '@type': 'City', name: 'Almere' },
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       <SiteNav />
-      <main>
+      <main id="main-content" tabIndex={-1}>
 
         {/* ── 1. Hero ───────────────────────────────────────────────── */}
         <TreatmentHero t={t} />
@@ -298,7 +334,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                 {content.steps.map((step, i) => (
                   <Reveal key={i} delay={i * 60}>
                     <div className={`flex gap-6 py-6 ${i < content.steps.length - 1 ? 'border-b border-foreground/10' : ''}`}>
-                      <span className="shrink-0 font-heading text-[17px] font-semibold text-foreground/30 md:text-[19px]">
+                      <span className="shrink-0 pt-1 font-heading text-[17px] font-semibold text-foreground/30 md:text-[19px]">
                         0{i + 1}
                       </span>
                       <div>
@@ -394,7 +430,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
           <div className="mx-auto max-w-[1840px] px-5 md:px-6">
             <Reveal>
               <div className="mb-12">
-                <h2 className="font-heading text-[40px] tracking-tight md:text-[54px] lg:text-[68px]">Ontdek ook</h2>
+                <h2 className="font-heading text-[40px] tracking-tight md:text-[54px] lg:text-[68px]">Ook interessant voor jou</h2>
                 <p className="mt-3 text-[17px] text-muted-foreground md:text-[18px]">Meer behandelingen die bij jou passen.</p>
               </div>
             </Reveal>
