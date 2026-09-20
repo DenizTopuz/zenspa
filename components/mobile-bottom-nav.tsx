@@ -70,8 +70,8 @@ export function MobileBottomNav() {
       <div
         ref={containerRef}
         className={cn(
-          'relative flex items-center justify-between rounded-full border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
-          compact ? 'px-1 py-1.5 md:py-2' : 'px-1 py-2.5 md:py-3'
+          'relative flex items-center justify-between rounded-full border border-foreground/12 bg-white shadow-[0_8px_48px_rgba(0,0,0,0.22)] backdrop-blur-xl transition-all duration-300',
+          compact ? 'px-1 py-2 md:py-2.5' : 'px-1 py-3 md:py-4'
         )}
       >
         {/* Sliding active pill */}
@@ -98,20 +98,20 @@ export function MobileBottomNav() {
               ref={el => { linkRefs.current[i] = el }}
               className={cn(
                 'relative flex flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
-                compact ? 'py-1.5' : 'py-2',
-                active ? 'text-accent' : 'text-foreground/40'
+                compact ? 'py-2' : 'py-2.5',
+                active ? 'text-accent' : 'text-foreground/55'
               )}
             >
               <Icon
                 className={cn('transition-all duration-300',
-                  compact ? 'h-[16px] w-[16px] md:h-[20px] md:w-[20px]' : 'h-[19px] w-[19px] md:h-[24px] md:w-[24px]'
+                  compact ? 'h-[18px] w-[18px] md:h-[22px] md:w-[22px]' : 'h-[22px] w-[22px] md:h-[26px] md:w-[26px]'
                 )}
                 strokeWidth={active ? 2.3 : 1.7}
                 aria-hidden
               />
               <span className={cn(
                 'whitespace-nowrap leading-none tracking-wide transition-all duration-300',
-                compact ? 'text-[8px] md:text-[10px]' : 'text-[10px] md:text-[12px]',
+                compact ? 'text-[9px] md:text-[11px]' : 'text-[11px] md:text-[13px]',
                 active ? 'font-bold' : 'font-medium'
               )}>
                 {label}
@@ -125,27 +125,27 @@ export function MobileBottomNav() {
           href="/boeken"
           className={cn(
             'relative flex flex-1 flex-col items-center gap-0.5 rounded-full px-3 transition-all duration-300 md:px-5',
-            compact ? 'py-1.5' : 'py-2'
+            compact ? 'py-2' : 'py-2.5'
           )}
           aria-label="Afspraak maken"
         >
           {/* Invisible spacer — keeps layout height identical to other links */}
           <span
             className={cn('invisible shrink-0 transition-all duration-300',
-              compact ? 'h-[16px] w-[16px] md:h-[20px] md:w-[20px]' : 'h-[19px] w-[19px] md:h-[24px] md:w-[24px]'
+              compact ? 'h-[18px] w-[18px] md:h-[22px] md:w-[22px]' : 'h-[22px] w-[22px] md:h-[26px] md:w-[26px]'
             )}
             aria-hidden
           />
           {/* Circle — absolutely positioned, floats above nav in normal state */}
           <span className={cn(
-            'absolute left-1/2 -translate-x-1/2 flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_18px_rgba(0,0,0,0.22)] transition-all duration-300',
+            'absolute left-1/2 -translate-x-1/2 flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(0,0,0,0.28)] transition-all duration-300',
             compact
-              ? 'top-1/2 -translate-y-1/2 h-8 w-8 md:h-10 md:w-10'
-              : '-top-4 h-10 w-10 md:-top-5 md:h-13 md:w-13'
+              ? 'top-1/2 -translate-y-1/2 h-10 w-10 md:h-12 md:w-12'
+              : '-top-5 h-12 w-12 md:-top-6 md:h-14 md:w-14'
           )}>
             <CalendarCheck
               className={cn('transition-all duration-300',
-                compact ? 'h-[16px] w-[16px] md:h-[20px] md:w-[20px]' : 'h-[19px] w-[19px] md:h-[24px] md:w-[24px]'
+                compact ? 'h-[18px] w-[18px] md:h-[22px] md:w-[22px]' : 'h-[22px] w-[22px] md:h-[26px] md:w-[26px]'
               )}
               strokeWidth={2}
               aria-hidden
@@ -153,7 +153,7 @@ export function MobileBottomNav() {
           </span>
           <span className={cn(
             'leading-none tracking-wide font-semibold text-accent transition-all duration-300',
-            compact ? 'text-[0px] opacity-0' : 'text-[10px] opacity-100 md:text-[12px]'
+            compact ? 'text-[0px] opacity-0' : 'text-[11px] opacity-100 md:text-[13px]'
           )}>
             Afspraak
           </span>
@@ -170,20 +170,20 @@ export function MobileBottomNav() {
               ref={el => { linkRefs.current[refIdx] = el }}
               className={cn(
                 'relative flex flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
-                compact ? 'py-1.5' : 'py-2',
-                active ? 'text-accent' : 'text-foreground/40'
+                compact ? 'py-2' : 'py-2.5',
+                active ? 'text-accent' : 'text-foreground/55'
               )}
             >
               <Icon
                 className={cn('transition-all duration-300',
-                  compact ? 'h-[16px] w-[16px] md:h-[20px] md:w-[20px]' : 'h-[19px] w-[19px] md:h-[24px] md:w-[24px]'
+                  compact ? 'h-[18px] w-[18px] md:h-[22px] md:w-[22px]' : 'h-[22px] w-[22px] md:h-[26px] md:w-[26px]'
                 )}
                 strokeWidth={active ? 2.3 : 1.7}
                 aria-hidden
               />
               <span className={cn(
                 'whitespace-nowrap leading-none tracking-wide transition-all duration-300',
-                compact ? 'text-[8px] md:text-[10px]' : 'text-[10px] md:text-[12px]',
+                compact ? 'text-[9px] md:text-[11px]' : 'text-[11px] md:text-[13px]',
                 active ? 'font-bold' : 'font-medium'
               )}>
                 {label}
