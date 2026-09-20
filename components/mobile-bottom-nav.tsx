@@ -71,7 +71,7 @@ export function MobileBottomNav() {
         ref={containerRef}
         className={cn(
           'relative flex items-center justify-between rounded-full border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
-          compact ? 'px-1 py-1 md:py-1.5' : 'px-1 py-1.5 md:py-2'
+          compact ? 'px-1 py-1.5 md:py-2' : 'px-1 py-2.5 md:py-3'
         )}
       >
         {/* Sliding active pill */}
@@ -98,7 +98,7 @@ export function MobileBottomNav() {
               ref={el => { linkRefs.current[i] = el }}
               className={cn(
                 'relative flex flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
-                compact ? 'py-1' : 'py-1.5',
+                compact ? 'py-1.5' : 'py-2',
                 active ? 'text-accent' : 'text-foreground/40'
               )}
             >
@@ -125,7 +125,7 @@ export function MobileBottomNav() {
           href="/boeken"
           className={cn(
             'relative flex flex-1 flex-col items-center gap-0.5 rounded-full px-3 transition-all duration-300 md:px-5',
-            compact ? 'py-1' : 'py-1.5'
+            compact ? 'py-1.5' : 'py-2'
           )}
           aria-label="Afspraak maken"
         >
@@ -170,7 +170,7 @@ export function MobileBottomNav() {
               ref={el => { linkRefs.current[refIdx] = el }}
               className={cn(
                 'relative flex flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300 md:gap-1 md:px-5',
-                compact ? 'py-1' : 'py-1.5',
+                compact ? 'py-1.5' : 'py-2',
                 active ? 'text-accent' : 'text-foreground/40'
               )}
             >
