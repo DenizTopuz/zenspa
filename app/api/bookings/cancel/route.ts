@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import { createServiceClient } from '@/lib/supabase/server'
 
 const TEST_OVERRIDE_EMAIL = process.env.EMAIL_TEST_OVERRIDE ?? null
+const FROM_DOMAIN = TEST_OVERRIDE_EMAIL ? 'onboarding@resend.dev' : 'noreply@zenspa.nl'
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 function esc(s: string) {
@@ -92,7 +93,7 @@ export async function POST(req: NextRequest) {
 
     await Promise.all([
       resend.emails.send({
-        from: 'Zen Spa <noreply@zenspa.nl>',
+        from: `Zen Spa <${FROM_DOMAIN}>`,
         to: [to(booking.customer_email)],
         subject: 'Afspraak geannuleerd – Zen Spa',
         html: `
@@ -108,7 +109,7 @@ export async function POST(req: NextRequest) {
         `,
       }).catch((e: unknown) => console.error('Email error:', e)),
       resend.emails.send({
-        from: 'Zen Spa Boekingen <noreply@zenspa.nl>',
+        from: `Zen Spa Boekingen <${FROM_DOMAIN}>`,
         to: [to('info@zenspa.nl')],
         subject: `Afspraak geannuleerd: ${esc(booking.treatment_name)} – ${esc(booking.customer_name)}`,
         html: `

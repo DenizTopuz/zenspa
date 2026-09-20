@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import { createServiceClient } from '@/lib/supabase/server'
 
 const TEST_OVERRIDE_EMAIL = process.env.EMAIL_TEST_OVERRIDE ?? null
+const FROM_DOMAIN = TEST_OVERRIDE_EMAIL ? 'onboarding@resend.dev' : 'noreply@zenspa.nl'
 
 function esc(s: string) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -71,7 +72,7 @@ export async function GET(req: NextRequest) {
   for (const b of tomorrow) {
     try {
       await resend.emails.send({
-        from: 'Zen Spa <noreply@zenspa.nl>',
+        from: `Zen Spa <${FROM_DOMAIN}>`,
         to: [TEST_OVERRIDE_EMAIL ?? b.customer_email],
         subject: 'Herinnering: morgen jouw afspraak bij Zen Spa',
         html: `
