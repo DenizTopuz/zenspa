@@ -1,10 +1,17 @@
 import { Geist, Geist_Mono, Nunito_Sans, EB_Garamond } from "next/font/google"
+import type { Viewport } from "next"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { MobileBottomNav } from "@/components/mobile-bottom-nav"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
 
 const ebGaramondHeading = EB_Garamond({subsets:['latin'],variable:'--font-heading'});
 
