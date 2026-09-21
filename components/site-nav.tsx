@@ -66,7 +66,7 @@ export function SiteNav() {
         className={cn(
           'mx-auto flex max-w-[1840px] items-center backdrop-blur-lg transition-all duration-500',
           dark
-            ? 'border-b border-foreground/10 bg-white py-3 pl-5 pr-3 shadow-[0_2px_16px_rgba(0,0,0,0.08)] md:rounded-[100px] md:border md:py-4 md:pl-10 md:pr-4 md:shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
+            ? 'border-b border-foreground/10 bg-background py-3 pl-5 pr-3 shadow-[0_2px_16px_rgba(0,0,0,0.08)] md:rounded-[100px] md:border md:bg-white md:py-4 md:pl-10 md:pr-4 md:shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
             : 'rounded-[100px] border border-white/30 bg-white/18 py-3 pl-3 pr-2 shadow-[0_2px_20px_rgba(0,0,0,0.06)] md:py-4 md:pl-10 md:pr-4'
         )}
       >

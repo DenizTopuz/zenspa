@@ -11,7 +11,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#ffffff',
+  themeColor: '#f8f2e8',
 }
 
 const ebGaramondHeading = EB_Garamond({subsets:['latin'],variable:'--font-heading'});
