@@ -140,7 +140,7 @@ export function SiteFooter({ bg = 'bg-background' }: { bg?: string }) {
               </svg>
             </a>
             <a
-              href="https://facebook.com/zenspa.almerebuiten"
+              href="https://www.facebook.com/share/1CAZNrse6p/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -148,6 +148,17 @@ export function SiteFooter({ bg = 'bg-background' }: { bg?: string }) {
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+            <a
+              href="https://vm.tiktok.com/ZGdQXnKsQ/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/38 transition-colors hover:border-white/35 hover:text-white/75"
+            >
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.23 8.23 0 0 0 4.82 1.54V6.78a4.85 4.85 0 0 1-1.05-.09Z" />
               </svg>
             </a>
           </div>

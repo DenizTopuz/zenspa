@@ -4,6 +4,7 @@ import { SiteNav } from '@/components/site-nav'
 import { SiteFooter } from '@/components/site-footer'
 import { ContactSection } from '@/components/contact-section'
 import { FaqSection } from '@/components/faq-section'
+import { InstagramFeed } from '@/components/instagram-feed'
 
 export const metadata = {
   title: 'Contact — Zen Spa',
@@ -131,10 +132,10 @@ export default function ContactPage() {
                 <h2 className="font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px]">
                   Volg ons op Instagram
                 </h2>
-                <p className="mt-2 text-[17px] text-muted-foreground">@zenspa.almere</p>
+                <p className="mt-2 text-[17px] text-muted-foreground">@cigdemzenspa</p>
               </div>
               <a
-                href="https://instagram.com/zenspa.almere"
+                href="https://instagram.com/cigdemzenspa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden shrink-0 items-center gap-2 text-[16px] font-semibold text-foreground underline-offset-4 hover:underline sm:flex"
@@ -143,36 +144,10 @@ export default function ContactPage() {
               </a>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
-              {[
-                { src: '/hero.jpg',      objectPos: 'object-top' },
-                { src: '/hero.jpg',      objectPos: 'object-center' },
-                { src: '/bg-leaves.jpg', objectPos: 'object-center' },
-                { src: '/hero.jpg',      objectPos: 'object-bottom' },
-                { src: '/bg-leaves.jpg', objectPos: 'object-top' },
-              ].map((img, i) => (
-                <a
-                  key={i}
-                  href="https://instagram.com/zenspa.almere"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative aspect-square overflow-hidden rounded-3xl"
-                >
-                  <Image
-                    src={img.src}
-                    alt=""
-                    fill
-                    aria-hidden
-                    className={`object-cover ${img.objectPos} transition-transform duration-700 group-hover:scale-[1.06]`}
-                    sizes="(max-width: 768px) 50vw, 20vw"
-                  />
-                  <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
-                </a>
-              ))}
-            </div>
+            <InstagramFeed />
 
             <a
-              href="https://instagram.com/zenspa.almere"
+              href="https://instagram.com/cigdemzenspa"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 flex items-center gap-2 text-[16px] font-semibold text-foreground underline-offset-4 hover:underline sm:hidden"

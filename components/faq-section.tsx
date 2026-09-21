@@ -43,7 +43,7 @@ function AccordionItem({
       <button
         onClick={onToggle}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-6 py-7 text-left transition-colors duration-200 hover:text-accent"
+        className="flex w-full cursor-pointer items-center justify-between gap-6 py-7 text-left transition-colors duration-200 hover:text-accent"
       >
         <span className="font-heading text-[22px] font-semibold leading-snug tracking-tight md:text-[26px]">
           {q}
