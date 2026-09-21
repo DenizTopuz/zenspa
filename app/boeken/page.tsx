@@ -602,9 +602,9 @@ function BookingWizard() {
   return (
     <div className="flex min-h-svh flex-col bg-background overflow-x-clip">
       {/* ── Mini header ── */}
-      <header className="sticky top-0 z-50 flex h-14 shrink-0 items-center justify-between border-b border-foreground/8 bg-background/95 px-4 backdrop-blur-sm md:px-6">
+      <header className="sticky top-0 z-50 flex h-[66px] shrink-0 items-center justify-between border-b border-foreground/8 bg-background/95 px-5 backdrop-blur-sm md:px-6">
         <a href="/" className="flex items-center text-foreground" aria-label="Zen Spa – terug naar home">
-          <ZenSpaLogo className="h-7 w-auto" />
+          <ZenSpaLogo className="h-9 w-auto" />
         </a>
 
         <a
