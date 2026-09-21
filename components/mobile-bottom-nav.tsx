@@ -23,6 +23,11 @@ export function MobileBottomNav() {
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
+  // 5 equal flex-1 slots: Home(0) Zen Spa(1) Afspraak(2) Diensten(3) Contact(4)
+  // Find which slot is active (Afspraak slot has no active state)
+  const slotOrder = ['/', '/over-mij', null, '/behandelingen', '/contact']
+  const activePillIndex = slotOrder.findIndex(href => href && isActive(href))
+
   // Reset scroll reference on navigation so the nav stays visible after a page change
   useEffect(() => {
     lastY.current = window.scrollY
@@ -60,7 +65,36 @@ export function MobileBottomNav() {
       )}
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
-      <div className="flex items-stretch">
+      <div className="relative flex items-stretch">
+
+        {/* Top accent line */}
+        {activePillIndex >= 0 && (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute top-0 bg-accent"
+            style={{
+              width: '20%',
+              height: '2px',
+              left: `${activePillIndex * 20}%`,
+              transition: 'left 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+          />
+        )}
+
+        {/* Sliding active pill with rounded corners */}
+        {activePillIndex >= 0 && (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute rounded-xl bg-accent/10"
+            style={{
+              width: 'calc(20% - 10px)',
+              left: `calc(${activePillIndex * 20}% + 5px)`,
+              top: '5px',
+              bottom: '5px',
+              transition: 'left 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+          />
+        )}
 
         {/* Left two links */}
         {links.slice(0, 2).map(({ href, label, icon: Icon }) => {
@@ -70,10 +104,8 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex flex-1 flex-col items-center justify-center gap-1 py-3 transition-colors duration-200',
-                active
-                  ? 'text-accent border-t-2 border-accent -mt-px'
-                  : 'text-foreground/45 border-t-2 border-transparent -mt-px'
+                'relative flex flex-1 flex-col items-center justify-center gap-1 py-3 transition-colors duration-200',
+                active ? 'text-accent' : 'text-foreground/45'
               )}
             >
               <Icon className="h-[22px] w-[22px]" strokeWidth={active ? 2.3 : 1.7} aria-hidden />
@@ -109,10 +141,8 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'flex flex-1 flex-col items-center justify-center gap-1 py-3 transition-colors duration-200',
-                active
-                  ? 'text-accent border-t-2 border-accent -mt-px'
-                  : 'text-foreground/45 border-t-2 border-transparent -mt-px'
+                'relative flex flex-1 flex-col items-center justify-center gap-1 py-3 transition-colors duration-200',
+                active ? 'text-accent' : 'text-foreground/45'
               )}
             >
               <Icon className="h-[22px] w-[22px]" strokeWidth={active ? 2.3 : 1.7} aria-hidden />
