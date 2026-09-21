@@ -65,13 +65,6 @@ export function MobileBottomNav() {
       )}
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
-      {/* Page fade above nav */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-14 h-14"
-        style={{ background: 'linear-gradient(to bottom, transparent, var(--background))' }}
-      />
-
       <div className="relative flex items-stretch">
 
         {/* Top accent line */}
