@@ -56,13 +56,14 @@ export function SiteNav() {
 
   return (
     <>
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6 md:pt-5">
+    <header className="fixed inset-x-0 top-0 z-50 md:px-6 md:pt-5">
       <div
         className={cn(
-          'mx-auto flex max-w-[1840px] items-center rounded-[100px] border backdrop-blur-lg transition-all duration-500',
+          'mx-auto flex max-w-[1840px] items-center backdrop-blur-lg transition-all duration-500',
+          'border-b md:rounded-[100px] md:border',
           dark
-            ? 'border-foreground/10 bg-white py-2 pl-3 pr-2 shadow-[0_4px_32px_rgba(0,0,0,0.10)] md:py-4 md:pl-10 md:pr-4'
-            : 'border-white/30 bg-white/18 py-3 pl-4 pr-3 shadow-[0_2px_20px_rgba(0,0,0,0.06)] md:py-4 md:pl-10 md:pr-4'
+            ? 'border-foreground/10 bg-white py-2 pl-3 pr-2 shadow-[0_2px_16px_rgba(0,0,0,0.08)] md:py-4 md:pl-10 md:pr-4 md:shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
+            : 'border-white/15 bg-white/5 py-3 pl-3 pr-2 md:bg-white/18 md:border-white/30 md:py-4 md:pl-10 md:pr-4'
         )}
       >
         {/* Left — nav links (desktop only) */}
