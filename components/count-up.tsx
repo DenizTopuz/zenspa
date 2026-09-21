@@ -29,22 +29,25 @@ export function CountUp({ target, suffix = '', duration = 2200 }: CountUpProps) 
         startedRef.current = true
         observer.disconnect()
 
-        setCount(0)
-        const start = performance.now()
-        const step = (now: number) => {
-          const progress = Math.min((now - start) / duration, 1)
-          const eased = 1 - Math.pow(1 - progress, 3)
-          setCount(Math.floor(eased * target))
-          if (progress < 1) {
-            rafRef.current = requestAnimationFrame(step)
-          } else {
-            setCount(target)
-            rafRef.current = null
+        // Small delay so the parent Reveal fade-in has time to start
+        setTimeout(() => {
+          setCount(0)
+          const start = performance.now()
+          const step = (now: number) => {
+            const progress = Math.min((now - start) / duration, 1)
+            const eased = 1 - Math.pow(1 - progress, 3)
+            setCount(Math.floor(eased * target))
+            if (progress < 1) {
+              rafRef.current = requestAnimationFrame(step)
+            } else {
+              setCount(target)
+              rafRef.current = null
+            }
           }
-        }
-        rafRef.current = requestAnimationFrame(step)
+          rafRef.current = requestAnimationFrame(step)
+        }, 150)
       },
-      { threshold: 0.05, rootMargin: '0px' }
+      { threshold: 0, rootMargin: '0px' }
     )
 
     observer.observe(el)

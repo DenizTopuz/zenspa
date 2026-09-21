@@ -96,9 +96,9 @@ export function ContactSection({ className }: { className?: string }) {
                 <input type="email" name="email" placeholder="E-mailadres" required className={inputCls} />
                 <input type="tel"   name="phone" placeholder="Telefoonnummer"        className={inputCls} />
               </div>
-              <label className="flex flex-col gap-2">
+              <label className="flex min-w-0 flex-col gap-2">
                 <span className="text-[13px] font-medium tracking-wide text-foreground/50 uppercase">Voorkeursdatum</span>
-                <input type="date" name="date" className={`${inputCls} text-foreground/70 cursor-pointer`} min={new Date().toISOString().split('T')[0]} onClick={(e) => (e.currentTarget as HTMLInputElement).showPicker?.()} />
+                <input type="date" name="date" className={`${inputCls} min-w-0 max-w-full text-foreground/70 cursor-pointer`} min={new Date().toISOString().split('T')[0]} onClick={(e) => (e.currentTarget as HTMLInputElement).showPicker?.()} />
               </label>
               <textarea
                 name="message"

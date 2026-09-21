@@ -24,12 +24,11 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          const timer = setTimeout(() => el.classList.add('reveal-visible'), delay)
           observer.unobserve(el)
-          return () => clearTimeout(timer)
+          setTimeout(() => el.classList.add('reveal-visible'), delay)
         }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0, rootMargin: '0px 0px 0px 0px' }
     )
 
     observer.observe(el)
