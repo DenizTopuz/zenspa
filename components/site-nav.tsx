@@ -58,16 +58,16 @@ export function SiteNav() {
     <>
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-500 md:px-6 md:pt-5',
-        !dark && 'px-4 pt-4'
+        'fixed inset-x-0 top-0 z-50 transition-all duration-500 lg:px-6 lg:pt-5',
+        !dark && 'px-4 pt-4 md:px-6 md:pt-5'
       )}
     >
       <div
         className={cn(
           'mx-auto flex max-w-[1840px] items-center backdrop-blur-lg transition-all duration-500',
           dark
-            ? 'border-b border-foreground/10 bg-background py-3 pl-5 pr-4 shadow-[0_2px_16px_rgba(0,0,0,0.08)] md:rounded-[100px] md:border md:bg-white md:py-4 md:pl-10 md:pr-4 md:shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
-            : 'rounded-[100px] border border-white/30 bg-white/18 py-3 pl-3 pr-2 shadow-[0_2px_20px_rgba(0,0,0,0.06)] md:py-4 md:pl-10 md:pr-4'
+            ? 'border-b border-foreground/10 bg-background py-3 pl-5 pr-4 md:py-4 md:pl-7 md:pr-5 shadow-[0_2px_16px_rgba(0,0,0,0.08)] lg:rounded-[100px] lg:border lg:bg-white lg:py-4 lg:pl-10 lg:pr-4 lg:shadow-[0_4px_32px_rgba(0,0,0,0.10)]'
+            : 'rounded-[100px] border border-white/30 bg-white/18 py-3 pl-3 pr-2 md:py-4 md:pl-6 md:pr-4 shadow-[0_2px_20px_rgba(0,0,0,0.06)] lg:pl-10'
         )}
       >
         {/* Left — nav links (desktop only) */}
@@ -96,7 +96,7 @@ export function SiteNav() {
             <ZenSpaLogo
               className={cn(
                 'w-auto transition-all duration-500',
-                dark ? 'h-10 md:h-16' : 'h-10 md:h-16',
+                'h-10 md:h-12 lg:h-16',
                 dark ? 'text-foreground' : 'text-white'
               )}
             />
