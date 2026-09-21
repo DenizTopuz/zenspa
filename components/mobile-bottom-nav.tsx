@@ -81,16 +81,14 @@ export function MobileBottomNav() {
           />
         )}
 
-        {/* Sliding active pill with rounded corners */}
+        {/* Sliding active fill */}
         {activePillIndex >= 0 && (
           <span
             aria-hidden
-            className="pointer-events-none absolute rounded-xl bg-accent/10"
+            className="pointer-events-none absolute inset-y-0 bg-accent/10"
             style={{
-              width: 'calc(20% - 10px)',
-              left: `calc(${activePillIndex * 20}% + 5px)`,
-              top: '5px',
-              bottom: '5px',
+              width: '20%',
+              left: `${activePillIndex * 20}%`,
               transition: 'left 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
             }}
           />
@@ -104,7 +102,7 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'relative flex flex-1 flex-col items-center justify-center gap-1 py-3 transition-colors duration-200',
+                'relative flex flex-1 flex-col items-center justify-center gap-1 py-4 transition-colors duration-200',
                 active ? 'text-accent' : 'text-foreground/45'
               )}
             >
@@ -120,7 +118,7 @@ export function MobileBottomNav() {
         <a
           href="/boeken"
           aria-label="Afspraak maken"
-          className="relative flex flex-1 flex-col items-center justify-end gap-1 py-3"
+          className="relative flex flex-1 flex-col items-center justify-end gap-1 py-4"
         >
           {/* Floating circle sits above the bar */}
           <span className="absolute left-1/2 -translate-x-1/2 -top-5 flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(0,0,0,0.25)] transition-transform duration-200 active:scale-95">
@@ -141,7 +139,7 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                'relative flex flex-1 flex-col items-center justify-center gap-1 py-3 transition-colors duration-200',
+                'relative flex flex-1 flex-col items-center justify-center gap-1 py-4 transition-colors duration-200',
                 active ? 'text-accent' : 'text-foreground/45'
               )}
             >
