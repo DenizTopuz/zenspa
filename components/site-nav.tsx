@@ -156,6 +156,15 @@ export function SiteNav() {
           </a>
         </div>
       </div>
+
+      {/* Page fade below nav — only when solid/scrolled, mobile only */}
+      {dark && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-full h-12 lg:hidden"
+          style={{ background: 'linear-gradient(to bottom, var(--background), transparent)' }}
+        />
+      )}
     </header>
     </>
   )
