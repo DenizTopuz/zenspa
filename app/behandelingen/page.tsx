@@ -37,38 +37,47 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group relative overflow-hidden rounded-2xl bg-card
-                 ring-1 ring-inset ring-foreground/12
-                 shadow-[0_2px_10px_rgba(0,0,0,0.07)]
-                 transition-all duration-300 ease-out
-                 sm:rounded-3xl sm:hover:-translate-y-4 sm:hover:ring-foreground/20
-                 sm:hover:shadow-[0_12px_36px_rgba(0,0,0,0.13)]
-                 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+      className="group relative overflow-hidden transition-all duration-300 ease-out
+                 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent
+                 rounded-2xl border border-foreground/8 bg-secondary/20 hover:border-accent/40 hover:bg-accent/4
+                 sm:rounded-3xl sm:border-0 sm:bg-card sm:ring-1 sm:ring-inset sm:ring-foreground/12
+                 sm:shadow-[0_2px_10px_rgba(0,0,0,0.07)]
+                 sm:hover:-translate-y-4 sm:hover:ring-foreground/20
+                 sm:hover:shadow-[0_12px_36px_rgba(0,0,0,0.13)]"
     >
-      {/* Mobile: compact horizontal row */}
-      <div className="flex items-center sm:hidden">
-        <div className="relative h-[72px] w-[88px] shrink-0 overflow-hidden rounded-l-2xl">
+      {/* Mobile: booking-style compact row */}
+      <div className="flex w-full items-center sm:hidden">
+        <div className="relative m-[4px] h-[72px] w-[72px] shrink-0 overflow-hidden rounded-xl">
           <Image
             src={t.image || '/hero.jpg'}
             alt=""
             fill
             aria-hidden
             className="object-cover object-center"
-            sizes="88px"
+            sizes="72px"
           />
-          {t.tag && (
-            <span className="absolute left-1.5 top-1.5 z-10 rounded-full bg-accent px-2 py-0.5 text-[9px] font-semibold text-white">
-              {t.tag}
-            </span>
-          )}
         </div>
-        <div className="flex min-w-0 flex-1 items-center justify-between gap-2 px-4 py-3">
+        <div className="flex min-w-0 flex-1 items-center justify-between gap-3 p-3.5">
           <div className="min-w-0">
-            <p className="line-clamp-1 text-[15px] font-semibold leading-tight">{t.name}</p>
-            <p className="mt-0.5 text-[14px] font-bold text-accent">{t.price}</p>
+            <div className="flex min-w-0 items-center gap-2">
+              <p className="min-w-0 text-[15px] font-semibold leading-tight">{t.name}</p>
+              {t.tag && (
+                <span className="shrink-0 rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">
+                  {t.tag}
+                </span>
+              )}
+            </div>
+            <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/60">
+              {t.duration && (
+                <span className="flex items-center gap-1">
+                  <Clock className="h-3 w-3" aria-hidden />{t.duration}
+                </span>
+              )}
+              <span>{t.price}</span>
+            </div>
           </div>
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-foreground/20">
-            <ArrowUpRight className="h-3.5 w-3.5 text-foreground" />
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-foreground/18">
+            <ArrowUpRight className="h-3.5 w-3.5 text-foreground/50" />
           </div>
         </div>
       </div>
