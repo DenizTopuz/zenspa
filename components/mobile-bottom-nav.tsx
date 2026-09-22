@@ -17,6 +17,7 @@ export function MobileBottomNav() {
   const pathname = usePathname()
   const [visible, setVisible] = useState(false)
   const lastY = useRef(0)
+  const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   if (pathname.startsWith('/boeken') || pathname.startsWith('/admin')) return null
 
@@ -33,7 +34,7 @@ export function MobileBottomNav() {
     lastY.current = window.scrollY
   }, [pathname])
 
-  // Show on scroll up, hide on scroll down — never auto-hide at top
+  // Show on scroll up, hide on scroll down, fade in again after idle
   useEffect(() => {
     lastY.current = window.scrollY
 
@@ -48,10 +49,17 @@ export function MobileBottomNav() {
       }
 
       lastY.current = y
+
+      // Fade in after 700ms of no scrolling
+      if (idleTimer.current) clearTimeout(idleTimer.current)
+      idleTimer.current = setTimeout(() => setVisible(true), 700)
     }
 
     window.addEventListener('scroll', handle, { passive: true })
-    return () => window.removeEventListener('scroll', handle)
+    return () => {
+      window.removeEventListener('scroll', handle)
+      if (idleTimer.current) clearTimeout(idleTimer.current)
+    }
   }, [])
 
   return (

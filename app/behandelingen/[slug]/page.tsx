@@ -347,8 +347,8 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
               </div>
             </div>
 
-            {/* Image */}
-            <Reveal delay={80}>
+            {/* Image — hidden on mobile, only visible on tablet+ */}
+            <Reveal delay={80} className="hidden sm:block">
               <div className="relative aspect-square overflow-hidden rounded-[48px]">
                 <Image
                   src={t.image === '/hero.jpg' ? '/bg-leaves.jpg' : '/hero.jpg'}

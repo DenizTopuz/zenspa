@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef, Suspense, Fragment } from 'react'
+import { createPortal } from 'react-dom'
 import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ChevronRight, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer, X, AlertCircle } from 'lucide-react'
 import Image from 'next/image'
@@ -20,6 +21,10 @@ const TABS: { key: TabKey; label: string }[] = [
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
+function formatPrice(price: string) {
+  return price.includes(',') ? price : price + ',-'
+}
+
 function todayAms(): string {
   return new Date().toLocaleDateString('en-CA', { timeZone: TZ })
 }
@@ -101,29 +106,104 @@ function TreatmentStep({ selected, onSelect }: {
   onSelect: (t: Treatment) => void
 }) {
   const [tab, setTab] = useState<TabKey>('gezicht')
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const tabWrapRef = useRef<HTMLDivElement>(null)
+  const [stuck, setStuck] = useState(false)
+  const [headerH, setHeaderH] = useState(86)
+  const [tabH, setTabH] = useState(0)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
+
+  useEffect(() => {
+    const update = () => {
+      const h = document.querySelector('header')?.getBoundingClientRect().bottom ?? 86
+      setHeaderH(Math.round(h))
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update, { passive: true })
+    return () => { window.removeEventListener('scroll', update); window.removeEventListener('resize', update) }
+  }, [])
+
+  useEffect(() => {
+    if (tabWrapRef.current) setTabH(tabWrapRef.current.offsetHeight)
+  })
+
+  useEffect(() => {
+    const el = sentinelRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (window.innerWidth >= 640) { setStuck(false); return }
+        if (!entry.isIntersecting) {
+          setStuck(entry.boundingClientRect.top < 0)
+        } else {
+          setStuck(false)
+        }
+      },
+      { threshold: 0 },
+    )
+    obs.observe(el)
+    const onResize = () => { if (window.innerWidth >= 640) setStuck(false) }
+    window.addEventListener('resize', onResize, { passive: true })
+    return () => { obs.disconnect(); window.removeEventListener('resize', onResize) }
+  }, [])
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <h2 className="font-heading text-[28px] leading-tight tracking-tight md:text-[36px]">Kies een behandeling</h2>
         <p className="mt-1 text-[15px] text-foreground/68">Selecteer de behandeling waarvoor je een afspraak wilt maken.</p>
       </div>
 
-      {/* Tab bar */}
-      <div className="flex gap-1 rounded-full bg-secondary/50 p-1">
-        {TABS.map(t => (
-          <button
-            key={t.key}
-            onClick={() => setTab(t.key)}
-            className={cn(
-              'flex-1 rounded-full py-2 text-[13px] font-medium transition-all duration-200',
-              tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/65 hover:text-foreground'
-            )}
-          >
-            {t.label}
-          </button>
-        ))}
+      {/* Sentinel for sticky detection (mobile only) */}
+      <div ref={sentinelRef} className="h-px sm:hidden" aria-hidden />
+      {stuck && <div className="sm:hidden" style={{ height: tabH || 46 }} aria-hidden />}
+
+      {/* Tab bar wrapper — inline when not stuck, invisible placeholder when stuck */}
+      <div ref={tabWrapRef}>
+        {!stuck && (
+          <div className="flex w-full rounded-full bg-secondary p-1">
+            {TABS.map(t => (
+              <button
+                key={t.key}
+                onClick={() => setTab(t.key)}
+                className={cn(
+                  'flex-1 rounded-full py-2.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                  tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45'
+                )}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* Portaled fixed tab bar — escapes any transform ancestor */}
+      {mounted && stuck && createPortal(
+        <div
+          className="fixed left-0 right-0 z-40 bg-background/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.06)] px-4 py-3 sm:hidden"
+          style={{ top: headerH }}
+        >
+          <div className="flex w-full rounded-full bg-secondary p-1">
+            {TABS.map(t => (
+              <button
+                key={t.key}
+                onClick={() => setTab(t.key)}
+                className={cn(
+                  'flex-1 rounded-full py-2.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                  tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45'
+                )}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </div>,
+        document.body,
+      )}
 
       {/* Treatment cards */}
       <div className="grid gap-2">
@@ -156,7 +236,7 @@ function TreatmentStep({ selected, onSelect }: {
                     </div>
                     <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/62">
                       {t.duration && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.duration}</span>}
-                      <span>{t.price}</span>
+                      <span>{formatPrice(t.price)}</span>
                     </div>
                   </div>
                   <div className={cn(
@@ -433,7 +513,7 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRe
           {treatment.price && (
             <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
               <Euro className="h-3.5 w-3.5 shrink-0" aria-hidden />
-              <span>{treatment.price}</span>
+              <span>{formatPrice(treatment.price)}</span>
             </span>
           )}
         </div>
@@ -529,7 +609,7 @@ function ConfirmStep({ treatment, slotStart }: { treatment: Treatment; slotStart
           {treatment.price && (
             <span className="grid grid-cols-[16px_1fr] items-center gap-x-2">
               <Euro className="h-3.5 w-3.5 shrink-0" aria-hidden />
-              <span>{treatment.price}</span>
+              <span>{formatPrice(treatment.price)}</span>
             </span>
           )}
         </div>
@@ -553,10 +633,9 @@ function BookingWizard() {
   const searchParams = useSearchParams()
   const preSlug = searchParams.get('behandeling')
 
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1)
-  const [treatment, setTreatment] = useState<Treatment | null>(
-    preSlug ? (getTreatmentBySlug(preSlug) ?? null) : null
-  )
+  const preloadedTreatment = preSlug ? (getTreatmentBySlug(preSlug) ?? null) : null
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(preloadedTreatment ? 2 : 1)
+  const [treatment, setTreatment] = useState<Treatment | null>(preloadedTreatment)
   const [date, setDate] = useState<string | null>(null)
   const [slotStart, setSlotStart] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
@@ -602,7 +681,7 @@ function BookingWizard() {
   return (
     <div className="flex min-h-svh flex-col bg-background overflow-x-clip">
       {/* ── Mini header ── */}
-      <header className="sticky top-0 z-50 flex h-[66px] shrink-0 items-center justify-between border-b border-foreground/8 bg-background/95 px-5 backdrop-blur-sm md:px-6">
+      <header className="fixed top-0 left-0 right-0 z-50 flex h-[66px] shrink-0 items-center justify-between border-b border-foreground/8 bg-background/95 px-5 backdrop-blur-sm md:px-6">
         <a href="/" className="flex items-center text-foreground" aria-label="Zen Spa – terug naar home">
           <ZenSpaLogo className="h-9 w-auto" />
         </a>
@@ -617,7 +696,7 @@ function BookingWizard() {
       </header>
 
       {/* ── Content ── */}
-      <main id="main-content" tabIndex={-1} className="flex-1 pt-5 pb-32">
+      <main id="main-content" tabIndex={-1} className="flex-1 pt-[86px] pb-32">
         <div className="mx-auto max-w-2xl w-full px-5 overflow-hidden">
           <h1 className="sr-only">Afspraak maken bij Zen Spa</h1>
           {step < 4 && <StepBar step={step} />}
@@ -680,7 +759,7 @@ function BookingWizard() {
             >
               {step === 3
                 ? (submitting ? 'Aanvraag versturen…' : 'Afspraak aanvragen')
-                : (<><span>Volgende: {NEXT_STEP_LABEL[step]}</span><ChevronRight className="h-4 w-4" /></>)
+                : (<><span>{NEXT_STEP_LABEL[step]}</span><ChevronRight className="h-4 w-4" /></>)
               }
             </button>
           </div>

@@ -57,7 +57,7 @@ export function BookingCTA() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-3xl px-6 py-44 text-center text-white md:py-56">
+      <div className="relative z-10 mx-auto max-w-3xl px-6 py-20 text-center text-white md:py-56">
         <p className="text-[13px] font-semibold tracking-[0.22em] text-white/60 uppercase">
           Klaar om te boeken?
         </p>
