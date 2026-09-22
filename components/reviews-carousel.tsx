@@ -92,7 +92,7 @@ export function ReviewsCarousel() {
           <div className="grid lg:h-[680px] lg:grid-cols-[2fr_3fr]">
 
             {/* Left — image, fills fixed height */}
-            <div className="relative min-h-[300px] md:min-h-[380px] lg:min-h-0">
+            <div className="relative min-h-[200px] md:min-h-[320px] lg:min-h-0">
               <Image
                 key={idx}
                 src={t.image}
@@ -105,19 +105,19 @@ export function ReviewsCarousel() {
             </div>
 
             {/* Right — quote panel */}
-            <div className="flex flex-col justify-between bg-foreground/[0.04] p-10 lg:p-20">
+            <div className="flex flex-col justify-between bg-foreground/[0.04] p-6 md:p-10 lg:p-20">
 
               <div className="flex flex-col gap-2 md:gap-3 lg:gap-8">
                 {/* Opening quote mark */}
                 <span
-                  className="font-heading text-[64px] leading-[0.75] text-foreground/18 md:text-[120px]"
+                  className="font-heading text-[44px] leading-[0.75] text-foreground/18 md:text-[80px] lg:text-[120px]"
                   aria-hidden
                 >
                   &ldquo;
                 </span>
 
                 {/* Quote — fixed min-height keeps card stable across slides */}
-                <p className="min-h-[40px] font-heading text-[26px] leading-[1.35] tracking-tight md:text-[30px] lg:min-h-[160px] lg:text-[36px]">
+                <p className="min-h-[40px] font-heading text-[20px] leading-[1.4] tracking-tight md:text-[26px] lg:min-h-[160px] lg:text-[36px]">
                   {t.quote}
                 </p>
 
