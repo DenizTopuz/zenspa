@@ -135,14 +135,14 @@ export function FaqSection({ className }: { className?: string }) {
               </h3>
 
               <p className="max-w-[300px] text-[16px] leading-[1.75] text-white/70">
-                Ons team helpt je de juiste behandeling te vinden voor jouw huid, doelen en planning.
+                Çigdem helpt je de juiste behandeling te vinden voor jouw huid, doelen en planning.
               </p>
 
               <a
                 href="/boeken"
                 className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-medium text-foreground transition-all duration-300 hover:bg-white/90 hover:shadow-lg"
               >
-                Spreek met ons team ›
+                Spreek met Çigdem ›
               </a>
             </div>
           </div>
