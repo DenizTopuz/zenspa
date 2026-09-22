@@ -97,7 +97,7 @@ export function SiteNav() {
               className={cn(
                 'w-auto transition-all duration-500',
                 'h-10 md:h-12 lg:h-16',
-                dark ? 'text-foreground' : 'text-white'
+                dark ? 'text-accent' : 'text-white'
               )}
             />
           </a>

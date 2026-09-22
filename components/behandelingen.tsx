@@ -212,7 +212,7 @@ export function Behandelingen() {
         {/* Inline pill tab bar (mobile, not yet stuck) */}
         <div ref={tabWrapRef} className={cn('sm:hidden', stuck ? '' : 'mb-6')}>
           {!stuck && (
-            <div className="flex w-full rounded-full bg-secondary p-1">
+            <div className="flex w-full rounded-full bg-accent/10 p-1.5">
               {TABS.map(({ key, label, labelMobile }) => (
                 <button
                   key={key}
@@ -221,7 +221,7 @@ export function Behandelingen() {
                   aria-controls={`tab-panel-${key}`}
                   onClick={() => setActive(key)}
                   className={cn(
-                    'flex flex-1 cursor-pointer items-center justify-center rounded-full py-2.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                    'flex flex-1 cursor-pointer items-center justify-center rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
                     active === key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45',
                   )}
                 >
@@ -238,7 +238,7 @@ export function Behandelingen() {
             className="fixed left-0 right-0 z-40 bg-background/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.06)] px-4 py-3 sm:hidden"
             style={{ top: headerH }}
           >
-            <div className="flex w-full rounded-full bg-secondary p-1">
+            <div className="flex w-full rounded-full bg-accent/10 p-1.5">
               {TABS.map(({ key, label, labelMobile }) => (
                 <button
                   key={key}
@@ -247,7 +247,7 @@ export function Behandelingen() {
                   aria-controls={`tab-panel-${key}`}
                   onClick={() => setActive(key)}
                   className={cn(
-                    'flex flex-1 cursor-pointer items-center justify-center rounded-full py-2.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                    'flex flex-1 cursor-pointer items-center justify-center rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
                     active === key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45',
                   )}
                 >
@@ -339,7 +339,7 @@ export function Behandelingen() {
         </div>
 
         {/* CTA */}
-        <div className="mt-6 border-t border-foreground/10 pt-6 text-center md:mt-16 md:pt-10">
+        <div className="mt-0 border-t border-foreground/10 pt-6 text-center md:mt-16 md:pt-10">
           <a
             href="/boeken"
             className="inline-flex items-center gap-2.5 rounded-full bg-accent px-10 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-md hover:shadow-accent/20"

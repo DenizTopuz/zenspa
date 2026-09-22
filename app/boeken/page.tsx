@@ -164,13 +164,13 @@ function TreatmentStep({ selected, onSelect }: {
       {/* Tab bar wrapper — inline when not stuck, invisible placeholder when stuck */}
       <div ref={tabWrapRef}>
         {!stuck && (
-          <div className="flex w-full rounded-full bg-secondary p-1">
+          <div className="flex w-full rounded-full bg-accent/10 p-1.5">
             {TABS.map(t => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}
                 className={cn(
-                  'flex-1 rounded-full py-2.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                  'flex-1 rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
                   tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45'
                 )}
               >
@@ -187,13 +187,13 @@ function TreatmentStep({ selected, onSelect }: {
           className="fixed left-0 right-0 z-40 bg-background/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.06)] px-4 py-3 sm:hidden"
           style={{ top: headerH }}
         >
-          <div className="flex w-full rounded-full bg-secondary p-1">
+          <div className="flex w-full rounded-full bg-accent/10 p-1.5">
             {TABS.map(t => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}
                 className={cn(
-                  'flex-1 rounded-full py-2.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                  'flex-1 rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
                   tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45'
                 )}
               >

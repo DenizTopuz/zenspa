@@ -86,14 +86,14 @@ export function BehandelingenPageTabs() {
   }
 
   const bar = (
-    <div className="flex w-full rounded-full bg-secondary p-1">
+    <div className="flex w-full rounded-full bg-accent/10 p-1.5">
       {TABS.map(({ key, label }) => (
         <a
           key={key}
           href={`#${key}`}
           onClick={() => handleClick(key)}
           className={cn(
-            'flex flex-1 items-center justify-center rounded-full py-2.5 text-[13px] font-semibold leading-none transition-all duration-200',
+            'flex flex-1 items-center justify-center rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
             active === key
               ? 'bg-accent text-white shadow-sm'
               : 'text-foreground/45',
