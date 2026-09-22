@@ -337,7 +337,7 @@ export default function OverMijPage() {
                 ))}
               </div>
             </div>
-            <Reveal delay={80}>
+            <Reveal delay={80} className="hidden lg:block">
               <div className="relative aspect-square overflow-hidden rounded-[48px]">
                 <Image
                   src="/bg-leaves.jpg"
@@ -345,7 +345,7 @@ export default function OverMijPage() {
                   fill
                   aria-hidden
                   className="object-cover object-center"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="50vw"
                 />
               </div>
             </Reveal>
