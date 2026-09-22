@@ -14,16 +14,16 @@ import { OverMijHero } from '@/components/over-mij-hero'
 import { getAllTreatments } from '@/lib/behandelingen-data'
 
 export const metadata = {
-  title: 'Over Çigdem — Huidtherapeut & oprichter van Zen Spa Almere Buiten',
-  description: 'Maak kennis met Çigdem, gecertificeerd huidtherapeut en oprichter van Zen Spa in Almere Buiten. Meer dan 20 jaar ervaring in gezichtsbehandelingen, permanente make-up (PMU) en huidverzorging.',
+  title: 'Over Çigdem — Schoonheidsspecialiste & oprichter van Zen Spa Almere Buiten',
+  description: 'Maak kennis met Çigdem, gecertificeerd schoonheidsspecialiste en oprichter van Zen Spa in Almere Buiten. Meer dan 20 jaar ervaring in gezichtsbehandelingen, permanente make-up (PMU) en huidverzorging.',
 }
 
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Çigdem',
-  jobTitle: 'Gecertificeerd huidtherapeut & PMU-specialist',
-  description: 'Oprichter van Zen Spa in Almere Buiten. Meer dan 20 jaar ervaring in huidverzorging, gezichtsbehandelingen en permanente make-up. Gecertificeerd huidtherapeut en erkend wellness-specialist.',
+  jobTitle: 'Gecertificeerd schoonheidsspecialiste & PMU-specialist',
+  description: 'Oprichter van Zen Spa in Almere Buiten. Meer dan 20 jaar ervaring in huidverzorging, gezichtsbehandelingen en permanente make-up. Gecertificeerd schoonheidsspecialiste en erkend wellness-specialist.',
   worksFor: {
     '@type': 'BeautySalon',
     name: 'Zen Spa',
@@ -127,7 +127,7 @@ export default function OverMijPage() {
                 <div className="relative aspect-square overflow-hidden rounded-[48px]">
                   <Image
                     src="/hero.jpg"
-                    alt="Çigdem, huidtherapeut en oprichter van Zen Spa in Almere Buiten"
+                    alt="Çigdem, schoonheidsspecialiste en oprichter van Zen Spa in Almere Buiten"
                     fill
                     className="object-cover object-center"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -173,7 +173,7 @@ export default function OverMijPage() {
               </Reveal>
               <Reveal delay={140}>
                 <ul className="flex flex-col gap-4">
-                  {['Gecertificeerd huidtherapeut', 'Specialist permanente make-up', 'Erkend wellness-specialist'].map((b, i) => (
+                  {['Gecertificeerd schoonheidsspecialiste', 'Specialist permanente make-up', 'Erkend wellness-specialist'].map((b, i) => (
                     <li key={i} className="flex items-center gap-4 text-[17px]">
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/12 text-accent">
                         <Check className="h-3.5 w-3.5" aria-hidden />
@@ -254,7 +254,7 @@ export default function OverMijPage() {
                   <p className="text-[12px] font-semibold tracking-[0.22em] text-accent uppercase">Jouw specialist</p>
                   <h2 className="mt-3 font-heading text-[40px] leading-[1.05] tracking-tight md:text-[54px] lg:text-[60px]">
                     Çigdem<br />
-                    <span className="text-foreground/38">Huidtherapeut & oprichter</span>
+                    <span className="text-foreground/38">Schoonheidsspecialiste & oprichter</span>
                   </h2>
                 </Reveal>
 
@@ -266,7 +266,7 @@ export default function OverMijPage() {
 
                 <Reveal delay={100}>
                   <p className="text-[17px] leading-[1.85] text-muted-foreground">
-                    Als gecertificeerd huidtherapeut en PMU-specialist blijf ik mezelf continu bijscholen — niet omdat het moet, maar omdat ik het beste wil bieden aan mensen die mij hun vertrouwen geven.
+                    Als gecertificeerd schoonheidsspecialiste en PMU-specialist blijf ik mezelf continu bijscholen — niet omdat het moet, maar omdat ik het beste wil bieden aan mensen die mij hun vertrouwen geven.
                   </p>
                 </Reveal>
 
@@ -284,7 +284,7 @@ export default function OverMijPage() {
                 <Reveal delay={180}>
                   <div className="flex flex-wrap gap-2.5">
                     {[
-                      'Gecertificeerd huidtherapeut',
+                      'Gecertificeerd schoonheidsspecialiste',
                       'PMU-specialist',
                       'Erkend wellness-specialist',
                       'Lid beroepsvereniging',

@@ -49,7 +49,7 @@ const localBusinessSchema = {
   founder: {
     '@type': 'Person',
     name: 'Çigdem',
-    jobTitle: 'Gecertificeerd huidtherapeut & PMU-specialist',
+    jobTitle: 'Gecertificeerd schoonheidsspecialiste & PMU-specialist',
   },
   sameAs: [
     'https://www.instagram.com/cigdemzenspa',

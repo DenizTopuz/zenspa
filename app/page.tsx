@@ -35,7 +35,7 @@ const processSteps = [
 
 export const metadata = {
   title: 'Zen Spa — Schoonheidssalon & Huidtherapie in Almere Buiten',
-  description: 'Zen Spa in Almere Buiten — professionele gezichtsbehandelingen, massages en permanente make-up. Çigdem, gecertificeerd huidtherapeut met 20+ jaar ervaring. Online afspraken mogelijk vanaf €30.',
+  description: 'Zen Spa in Almere Buiten — professionele gezichtsbehandelingen, massages en permanente make-up. Çigdem, gecertificeerd schoonheidsspecialiste met 20+ jaar ervaring. Online afspraken mogelijk vanaf €30.',
 }
 
 const faqSchema = {
@@ -98,7 +98,7 @@ function Hero() {
           className="hero-animate font-heading text-[36px] leading-[1.06] tracking-tight text-white sm:text-[52px] md:text-[72px] lg:text-[88px]"
           style={{ animationDelay: "110ms" }}
         >
-          Schoonheidssalon & Huidtherapie in Almere Buiten
+          Schoonheidssalon in Almere Buiten
         </h1>
 
         <p
