@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Clock, Sparkles, User, Pen, Scissors } from 'lucide-react'
@@ -100,6 +101,21 @@ export function Behandelingen() {
     setActive(TABS[newIdx].key)
   }, [activeIdx])
 
+  // Sticky tab bar detection
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const [stuck, setStuck] = useState(false)
+
+  useEffect(() => {
+    const el = sentinelRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => setStuck(!entry.isIntersecting),
+      { threshold: 0, rootMargin: '-64px 0px 0px 0px' },
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   // Sliding white indicator
   const gridRef = useRef<HTMLDivElement>(null)
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([])
@@ -114,7 +130,7 @@ export function Behandelingen() {
     measure()
     window.addEventListener('resize', measure, { passive: true })
     return () => window.removeEventListener('resize', measure)
-  }, [activeIdx])
+  }, [activeIdx, stuck])
 
   return (
     <section id="pricing" aria-labelledby="behandelingen-heading" className="section-fade py-24 md:py-36 lg:py-48">
@@ -136,49 +152,86 @@ export function Behandelingen() {
           </p>
         </div>
 
-        {/* Tabs — sliding pill */}
-        <div
-          className="mx-auto w-full rounded-2xl bg-accent/[0.07] p-2 md:mb-8 md:p-2.5 lg:mb-14 lg:w-fit lg:rounded-full lg:p-3"
-          role="tablist"
-          aria-label="Behandelcategorieën"
-        >
-          <div ref={gridRef} className="relative grid grid-cols-2 gap-1.5 md:grid-cols-4 md:gap-2 lg:flex lg:gap-2">
-            {/* Sliding white indicator — uses top+height to avoid spanning multiple rows */}
-            {ind && (
-              <div
-                aria-hidden
-                className="pointer-events-none absolute rounded-xl bg-white shadow-md shadow-foreground/8 lg:rounded-full"
-                style={{
-                  left:   ind.left,
-                  width:  ind.width,
-                  top:    ind.top,
-                  height: ind.height,
-                  transition: 'left 0.38s cubic-bezier(0.4, 0, 0.2, 1), top 0.38s cubic-bezier(0.4, 0, 0.2, 1)',
-                }}
-              />
-            )}
+        {/* Sentinel — triggers sticky when scrolled past nav */}
+        <div ref={sentinelRef} className="h-px" aria-hidden />
 
-            {TABS.map(({ key, label, labelMobile, icon: Icon }, idx) => (
-              <button
-                key={key}
-                ref={(el) => { btnRefs.current[idx] = el }}
-                role="tab"
-                aria-selected={active === key}
-                aria-controls={`tab-panel-${key}`}
-                onClick={() => setActive(key)}
-                className={`relative z-10 flex cursor-pointer items-center justify-center gap-2 rounded-xl px-3 py-3 transition-colors duration-200 hover:text-foreground md:gap-2.5 md:rounded-full md:px-4 md:py-3.5 lg:gap-3 lg:px-5 lg:py-5 ${
-                  active === key
-                    ? 'text-accent'
-                    : 'text-foreground/65 hover:bg-white/45'
-                }`}
-              >
-                <Icon className="h-5 w-5 shrink-0 md:h-6 md:w-6 lg:h-7 lg:w-7" aria-hidden />
-                <span className="font-heading font-semibold leading-none text-[15px] md:text-[18px] lg:text-[21px]">
-                  <span className="md:hidden">{labelMobile ?? label}</span>
-                  <span className="hidden md:inline">{label}</span>
-                </span>
-              </button>
-            ))}
+        {/* Tabs — sticky under nav on mobile/tablet when scrolled past */}
+        <div
+          className={cn(
+            'sticky top-[64px] z-40 transition-all duration-200 lg:relative lg:top-auto lg:z-auto',
+            stuck
+              ? '-mx-5 bg-background/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.07)] mb-4 md:-mx-6 lg:mx-0 lg:bg-transparent lg:shadow-none lg:backdrop-blur-none lg:mb-14'
+              : 'mb-8 lg:mb-14',
+          )}
+        >
+          <div
+            className={cn(
+              stuck
+                ? 'w-full'
+                : 'mx-auto w-full rounded-2xl bg-accent/[0.07] p-2 md:p-2.5 lg:w-fit lg:rounded-full lg:p-3',
+            )}
+            role="tablist"
+            aria-label="Behandelcategorieën"
+          >
+            <div
+              ref={gridRef}
+              className={cn(
+                'relative',
+                stuck
+                  ? 'flex flex-row'
+                  : 'grid grid-cols-2 gap-1.5 md:grid-cols-4 md:gap-2 lg:flex lg:gap-2',
+              )}
+            >
+              {!stuck && ind && (
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute rounded-xl bg-white shadow-md shadow-foreground/8 lg:rounded-full"
+                  style={{
+                    left:   ind.left,
+                    width:  ind.width,
+                    top:    ind.top,
+                    height: ind.height,
+                    transition: 'left 0.38s cubic-bezier(0.4, 0, 0.2, 1), top 0.38s cubic-bezier(0.4, 0, 0.2, 1)',
+                  }}
+                />
+              )}
+
+              {TABS.map(({ key, label, labelMobile, icon: Icon }, idx) => (
+                <button
+                  key={key}
+                  ref={(el) => { btnRefs.current[idx] = el }}
+                  role="tab"
+                  aria-selected={active === key}
+                  aria-controls={`tab-panel-${key}`}
+                  onClick={() => setActive(key)}
+                  className={cn(
+                    'relative z-10 flex cursor-pointer items-center justify-center transition-colors duration-200',
+                    stuck
+                      ? 'flex-1 gap-1.5 py-3.5'
+                      : 'gap-2 rounded-xl px-3 py-3 hover:text-foreground md:gap-2.5 md:rounded-full md:px-4 md:py-3.5 lg:gap-3 lg:px-5 lg:py-5',
+                    active === key ? 'text-accent' : 'text-foreground/65 hover:bg-white/45',
+                  )}
+                >
+                  <Icon
+                    className={cn('shrink-0', stuck ? 'h-4 w-4' : 'h-5 w-5 md:h-6 md:w-6 lg:h-7 lg:w-7')}
+                    aria-hidden
+                  />
+                  <span
+                    className={cn(
+                      'font-heading font-semibold leading-none',
+                      stuck ? 'text-[12px]' : 'text-[15px] md:text-[18px] lg:text-[21px]',
+                    )}
+                  >
+                    {stuck ? (labelMobile ?? label) : (
+                      <>
+                        <span className="md:hidden">{labelMobile ?? label}</span>
+                        <span className="hidden md:inline">{label}</span>
+                      </>
+                    )}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

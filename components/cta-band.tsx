@@ -55,7 +55,7 @@ export function CtaBand() {
       </div>
 
       {/* Dark overlay — lighter on mobile for readability */}
-      <div className="absolute inset-0 lg:bg-black/58" />
+      <div className="absolute inset-0 hidden lg:block lg:bg-black/58" />
 
       {/* Beeldlogo watermark — slower parallax layer */}
       <div

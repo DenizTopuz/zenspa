@@ -37,40 +37,68 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group relative overflow-hidden rounded-3xl bg-card
+      className="group relative overflow-hidden rounded-2xl bg-card
                  ring-1 ring-inset ring-foreground/12
                  shadow-[0_2px_10px_rgba(0,0,0,0.07)]
                  transition-all duration-300 ease-out
-                 hover:-translate-y-4 hover:ring-foreground/20
-                 hover:shadow-[0_12px_36px_rgba(0,0,0,0.13)]
+                 sm:rounded-3xl sm:hover:-translate-y-4 sm:hover:ring-foreground/20
+                 sm:hover:shadow-[0_12px_36px_rgba(0,0,0,0.13)]
                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
-      {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
-        <Image
-          src={t.image || '/hero.jpg'}
-          alt=""
-          fill
-          aria-hidden
-          className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw" />
-        {/* Hover: dark top gradient — same as homepage carousel */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-        {t.tag && (
-          <span className="absolute left-4 top-4 z-10 rounded-full bg-accent px-4 py-2 text-[14px] font-semibold text-white shadow-md">
-            {t.tag}
-          </span>
-        )}
+      {/* Mobile: compact horizontal row */}
+      <div className="flex items-center sm:hidden">
+        <div className="relative h-[72px] w-[88px] shrink-0 overflow-hidden rounded-l-2xl">
+          <Image
+            src={t.image || '/hero.jpg'}
+            alt=""
+            fill
+            aria-hidden
+            className="object-cover object-center"
+            sizes="88px"
+          />
+          {t.tag && (
+            <span className="absolute left-1.5 top-1.5 z-10 rounded-full bg-accent px-2 py-0.5 text-[9px] font-semibold text-white">
+              {t.tag}
+            </span>
+          )}
+        </div>
+        <div className="flex min-w-0 flex-1 items-center justify-between gap-2 px-4 py-3">
+          <div className="min-w-0">
+            <p className="line-clamp-1 text-[15px] font-semibold leading-tight">{t.name}</p>
+            <p className="mt-0.5 text-[14px] font-bold text-accent">{t.price}</p>
+          </div>
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-foreground/20">
+            <ArrowUpRight className="h-3.5 w-3.5 text-foreground" />
+          </div>
+        </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="flex items-center justify-between gap-3 bg-secondary/50 p-5 rounded-b-3xl">
-        <div className="min-w-0">
-          <p className="line-clamp-2 text-[17px] font-semibold leading-tight">{t.name}</p>
-          <p className="mt-1 text-[16px] font-bold text-accent">{t.price}</p>
+      {/* Tablet/desktop: full card */}
+      <div className="hidden sm:block">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
+          <Image
+            src={t.image || '/hero.jpg'}
+            alt=""
+            fill
+            aria-hidden
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
+            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          {t.tag && (
+            <span className="absolute left-4 top-4 z-10 rounded-full bg-accent px-4 py-2 text-[14px] font-semibold text-white shadow-md">
+              {t.tag}
+            </span>
+          )}
         </div>
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">
-          <ArrowUpRight className="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-background" />
+        <div className="flex items-center justify-between gap-3 rounded-b-3xl bg-secondary/50 p-5">
+          <div className="min-w-0">
+            <p className="line-clamp-2 text-[17px] font-semibold leading-tight">{t.name}</p>
+            <p className="mt-1 text-[16px] font-bold text-accent">{t.price}</p>
+          </div>
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">
+            <ArrowUpRight className="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-background" />
+          </div>
         </div>
       </div>
     </Link>
@@ -122,7 +150,7 @@ export default function BehandelingenPage() {
                         </h3>
                       </Reveal>
                     )}
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
                       {group.items.map((t, ti) => (
                         <Reveal key={t.slug} delay={ti * 55}>
                           <TreatmentCard t={t} />

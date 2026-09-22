@@ -77,7 +77,7 @@ const faqSchema = {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden" aria-label="Introductie">
+    <section className="relative flex min-h-svh flex-col items-center justify-start overflow-hidden pt-[20vh] md:justify-center md:pt-0" aria-label="Introductie">
       {/* Background image — parallax */}
       <ParallaxHeroImage />
       {/* Depth overlay */}
@@ -89,7 +89,7 @@ function Hero() {
           className="hero-animate"
           style={{ animationDelay: "0ms" }}
         >
-          <span className="inline-flex rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-[12px] font-semibold tracking-[0.18em] uppercase text-white backdrop-blur-sm">
+          <span className="text-[12px] font-semibold tracking-[0.18em] uppercase text-white/75">
             Zen Spa · Almere Buiten
           </span>
         </div>
