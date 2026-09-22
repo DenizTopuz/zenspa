@@ -38,7 +38,7 @@ export function OverMijHero() {
           fill
           aria-hidden
           priority
-          className="object-cover object-center"
+          className="object-cover object-[75%_center]"
           sizes="100vw"
         />
       </div>

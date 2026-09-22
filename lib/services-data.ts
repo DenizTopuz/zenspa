@@ -25,7 +25,7 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       'Van een snelle opfrisser tot een uitgebreid huidverzorgingsritueel — elke behandeling wordt afgestemd op jouw huidtype. Wij werken met hoogwaardige producten voor een resultaat dat je écht ziet.',
     image: '/svc-gezicht.jpg',
-    imgPos: 'object-center',
+    imgPos: '60% 35%',
     popular: true,
     treatments: [
       {
@@ -72,7 +72,7 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       'Gerichte lichaamsbehandelingen die jouw huid reinigen, verzachten en verwennen. Perfect als aanvulling op jouw gezichtsritueel of als losstaand moment voor jezelf.',
     image: '/svc-lichaam.jpg',
-    imgPos: 'object-top',
+    imgPos: 'center',
     popular: false,
     treatments: [
       {
@@ -98,7 +98,7 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       'Professionele pigmentatie voor wenkbrauwen, ogen en lippen. Çigdem werkt met precisie en gevoel voor jouw gezichtsvorm, zodat het resultaat er altijd natuurlijk uitziet.',
     image: '/pmu.jpg',
-    imgPos: 'object-center',
+    imgPos: '40% 35%',
     popular: true,
     treatments: [
       {
@@ -145,7 +145,7 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       'Professionele ontharing van gezichtszones — snel, hygiënisch en zonder gedoe. Ideaal als aanvulling op een gezichtsbehandeling of als losse sessie.',
     image: '/ontharen.jpg',
-    imgPos: 'object-center',
+    imgPos: '55% 45%',
     popular: false,
     treatments: [
       {

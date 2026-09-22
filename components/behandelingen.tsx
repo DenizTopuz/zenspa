@@ -31,7 +31,8 @@ function TreatmentCard({ t }: { t: Treatment }) {
           alt=""
           fill
           aria-hidden
-          className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          style={{ objectPosition: t.objectPosition ?? 'center' }}
           sizes="68px"
         />
       </div>
@@ -44,7 +45,8 @@ function TreatmentCard({ t }: { t: Treatment }) {
             alt=""
             fill
             aria-hidden
-            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            style={{ objectPosition: t.objectPosition ?? 'center' }}
             sizes="96px"
           />
         </div>

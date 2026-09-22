@@ -69,7 +69,8 @@ export function StackCards({ services }: { services: ServiceCategory[] }) {
               alt=""
               fill
               aria-hidden
-              className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] ${s.imgPos}`}
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+              style={{ objectPosition: s.imgPos }}
               sizes="190px"
             />
           </div>

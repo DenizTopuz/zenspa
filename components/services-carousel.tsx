@@ -77,7 +77,8 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
           alt=""
           fill
           aria-hidden
-          className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] ${service.imgPos}`}
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              style={{ objectPosition: service.imgPos }}
           sizes="(min-width: 1440px) 340px, (min-width: 1024px) 260px, (min-width: 768px) 360px, 200px"
         />
         {/* Bottom gradient for title legibility on hover */}

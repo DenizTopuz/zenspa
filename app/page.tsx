@@ -258,7 +258,8 @@ function About() {
                   src="/lichaam.jpg"
                   alt="Zen Spa — luxe schoonheidsbehandeling in een serene omgeving"
                   fill
-                  className="object-cover object-center"
+                  className="object-cover"
+                  style={{ objectPosition: '30% 40%' }}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>

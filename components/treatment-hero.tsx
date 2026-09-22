@@ -38,7 +38,8 @@ export function TreatmentHero({ t }: { t: Treatment }) {
           fill
           aria-hidden
           priority
-          className="object-cover object-center"
+          className="object-cover"
+          style={{ objectPosition: t.objectPosition ?? 'center' }}
           sizes="100vw"
         />
       </div>
