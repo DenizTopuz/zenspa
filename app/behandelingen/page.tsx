@@ -181,7 +181,7 @@ export default function BehandelingenPage() {
                     </div>
 
                     {/* Desktop/tablet: grid with Reveal animation */}
-                    <div className="hidden sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+                    <div className="hidden sm:grid sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:gap-6">
                       {group.items.map((t, ti) => (
                         <Reveal key={t.slug} delay={ti * 55}>
                           <TreatmentCard t={t} />
