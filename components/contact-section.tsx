@@ -36,7 +36,7 @@ export function ContactSection({ className }: { className?: string }) {
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/12">
                 <Phone className="h-5 w-5 text-white" aria-hidden />
               </span>
-              <p className="font-heading text-[22px] leading-none text-white md:text-[26px]">06 53 20 77 29</p>
+              <a href="tel:0653207729" className="font-heading text-[22px] leading-none text-white md:text-[26px] hover:text-white/80 transition-colors">06 53 20 77 29</a>
             </div>
 
             <div className="h-px bg-white/12 mb-5" />

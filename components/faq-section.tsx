@@ -127,7 +127,7 @@ export function FaqSection({ className }: { className?: string }) {
 
             <div className="relative flex h-full flex-col items-center justify-center gap-8 px-10 py-16 text-center text-white md:px-14">
               <p className="text-[13px] font-medium tracking-wide text-white/65">
-                06 53 20 77 29 · Ma, Wo, Vr: 10:00–18:00
+                <a href="tel:0653207729" className="hover:text-white transition-colors">06 53 20 77 29</a> · Ma, Wo, Vr: 10:00–18:00
               </p>
 
               <h3 className="font-heading text-[36px] leading-[1.1] tracking-tight md:text-[44px]">
@@ -139,7 +139,7 @@ export function FaqSection({ className }: { className?: string }) {
               </p>
 
               <a
-                href="/boeken"
+                href="tel:0653207729"
                 className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-medium text-foreground transition-all duration-300 hover:bg-white/90 hover:shadow-lg"
               >
                 Spreek met Çigdem ›
