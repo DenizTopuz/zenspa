@@ -21,7 +21,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
       href={`/behandelingen/${t.slug}`}
       className="group no-underline
                  flex w-full items-center overflow-hidden rounded-2xl border border-foreground/8 bg-secondary/20 transition-colors hover:bg-accent/4 active:bg-accent/8
-                 md:w-auto md:overflow-visible md:rounded-none md:border-none md:bg-transparent
+                 md:w-auto md:overflow-visible md:rounded-2xl md:border-none md:bg-transparent
                  md:items-start md:gap-6 md:py-5 md:-mx-4 md:px-4 md:transition-all md:duration-200 md:hover:bg-accent/[0.06]"
     >
       {/* Mobile: square thumb with card margin */}
