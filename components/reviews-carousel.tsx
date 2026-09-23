@@ -10,6 +10,7 @@ type Testimonial = {
   quote: string
   stars: number
   image: string
+  objectPosition?: string
 }
 
 const testimonials: Testimonial[] = [
@@ -19,6 +20,7 @@ const testimonials: Testimonial[] = [
     quote: 'Zen Spa is mijn vaste plek om bij te komen. De Classic Gezichtsbehandeling liet mijn huid stralen én mijn hoofd leegmaken — precies wat ik nodig had na weken van drukte thuis en op werk.',
     stars: 5,
     image: '/svc-aroma.jpg',
+    objectPosition: '40% 35%',
   },
   {
     name: 'Yasmine K.',
@@ -26,6 +28,7 @@ const testimonials: Testimonial[] = [
     quote: 'Als drukke moeder van twee kinderen is Zen Spa mijn enige moment voor mezelf. Çigdem luistert écht en stemt elke behandeling op je af. Ik ga altijd een stuk lichter de deur uit.',
     stars: 5,
     image: '/svc-massage.jpg',
+    objectPosition: '28% 50%',
   },
   {
     name: 'Fatima A.',
@@ -33,6 +36,7 @@ const testimonials: Testimonial[] = [
     quote: 'Na mijn Deluxe Gezichtsbehandeling en de Microneedling zie ik mijn huid écht verbeteren. Zo fijn dat dit gewoon om de hoek in Almere Buiten is — geen gedoe met reizen naar Amsterdam.',
     stars: 5,
     image: '/svc-lichaam.jpg',
+    objectPosition: '30% 40%',
   },
 ]
 
@@ -64,7 +68,7 @@ export function ReviewsCarousel() {
   }
 
   return (
-    <section id="stories" className="section-fade py-24 md:py-36 lg:py-48" aria-labelledby="reviews-heading">
+    <section id="stories" className="section-fade pt-10 pb-24 md:py-36 lg:py-48" aria-labelledby="reviews-heading">
       <div className="mx-auto max-w-[1840px] px-5 md:px-6">
 
         {/* Header */}
@@ -99,7 +103,8 @@ export function ReviewsCarousel() {
                 alt=""
                 fill
                 aria-hidden
-                className="object-cover object-center"
+                className="object-cover"
+                style={{ objectPosition: t.objectPosition ?? 'center' }}
                 sizes="(max-width: 1024px) 100vw, 700px"
               />
             </div>

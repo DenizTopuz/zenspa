@@ -84,7 +84,7 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-amber-950/18 via-amber-950/32 to-amber-950/62" />
 
       {/* Center content */}
-      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-7 px-5 text-center">
+      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-3 sm:gap-5 lg:gap-7 px-5 text-center">
         <div
           className="hero-animate"
           style={{ animationDelay: "0ms" }}

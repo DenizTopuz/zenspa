@@ -19,13 +19,13 @@ function TreatmentCard({ t }: { t: Treatment }) {
   return (
     <Link
       href={`/behandelingen/${t.slug}`}
-      className="group border-b border-foreground/[0.08] no-underline last:border-0
-                 flex items-center gap-3.5 py-3.5
-                 md:items-start md:gap-6 md:flex-row md:py-5 md:-mx-4 md:rounded-2xl md:border-b-0
-                 md:px-4 md:transition-all md:duration-200 md:hover:bg-accent/[0.06]"
+      className="group no-underline
+                 flex w-full items-center overflow-hidden rounded-2xl border border-foreground/8 bg-secondary/20 transition-colors hover:bg-accent/4 active:bg-accent/8
+                 md:w-auto md:overflow-visible md:rounded-none md:border-none md:bg-transparent
+                 md:items-start md:gap-6 md:py-5 md:-mx-4 md:px-4 md:transition-all md:duration-200 md:hover:bg-accent/[0.06]"
     >
-      {/* Mobile: small square thumb */}
-      <div className="relative h-[68px] w-[68px] shrink-0 overflow-hidden rounded-xl border border-foreground/10 md:hidden">
+      {/* Mobile: square thumb with card margin */}
+      <div className="relative m-[4px] h-[72px] w-[72px] shrink-0 overflow-hidden rounded-xl md:hidden">
         <Image
           src={t.image ?? '/hero.jpg'}
           alt=""
@@ -33,7 +33,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
           aria-hidden
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           style={{ objectPosition: t.objectPosition ?? 'center' }}
-          sizes="68px"
+          sizes="72px"
         />
       </div>
 
@@ -52,26 +52,30 @@ function TreatmentCard({ t }: { t: Treatment }) {
         </div>
       </div>
 
-      {/* Mobile content: tag → name → meta (max 3 lines) */}
-      <div className="flex min-w-0 flex-1 flex-col gap-0.5 md:hidden">
-        {t.tag && (
-          <span className="mb-0.5 self-start rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold text-white">
-            {t.tag}
-          </span>
-        )}
-        <p className="text-[15px] font-semibold leading-tight">{t.name}</p>
-        <div className="mt-0.5 flex items-center gap-2 text-[13px] text-foreground/55">
-          {t.duration && (
-            <span className="flex shrink-0 items-center gap-1">
-              <Clock className="h-3 w-3" aria-hidden />{t.duration}
-            </span>
-          )}
-          <span>{t.price}</span>
+      {/* Mobile content */}
+      <div className="flex min-w-0 flex-1 items-center justify-between gap-3 p-3.5 md:hidden">
+        <div className="min-w-0">
+          <div className="flex min-w-0 items-center gap-2">
+            <p className="min-w-0 truncate text-[15px] font-semibold leading-tight">{t.name}</p>
+            {t.tag && (
+              <span className="shrink-0 rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">
+                {t.tag}
+              </span>
+            )}
+          </div>
+          <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/60">
+            {t.duration && (
+              <span className="flex shrink-0 items-center gap-1">
+                <Clock className="h-3 w-3" aria-hidden />{t.duration}
+              </span>
+            )}
+            <span>{t.price}</span>
+          </div>
+        </div>
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-foreground/18">
+          <ArrowUpRight className="h-3.5 w-3.5 text-foreground/50" aria-hidden />
         </div>
       </div>
-
-      {/* Mobile: arrow */}
-      <ArrowUpRight className="h-4 w-4 shrink-0 text-foreground/30 md:hidden" aria-hidden />
 
       {/* Desktop content: full layout */}
       <div className="hidden min-w-0 flex-1 flex-col justify-start gap-3 md:flex">
@@ -325,7 +329,7 @@ export function Behandelingen() {
                   {group.subtitle}
                 </p>
               )}
-              <div className="grid lg:grid-cols-2 gap-x-12">
+              <div className="grid gap-y-2 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-0 md:gap-y-0">
                 {group.items.map((t) => (
                   <TreatmentCard key={t.name} t={t} />
                 ))}

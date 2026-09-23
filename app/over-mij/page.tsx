@@ -73,7 +73,7 @@ export default function OverMijPage() {
         <TrustPillars />
 
         {/* ── 3. Pull quote ────────────────────────────────────────── */}
-        <section className="section-fade bg-background py-10 md:py-14">
+        <section className="section-fade bg-background pt-4 pb-10 md:py-14">
           <div className="mx-auto max-w-5xl px-5 md:px-6 text-center">
             <Reveal>
               <p className="font-heading text-[32px] leading-[1.2] tracking-tight text-foreground/80 md:text-[44px] lg:text-[54px]">

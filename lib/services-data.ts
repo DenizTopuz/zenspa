@@ -72,7 +72,7 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       'Gerichte lichaamsbehandelingen die jouw huid reinigen, verzachten en verwennen. Perfect als aanvulling op jouw gezichtsritueel of als losstaand moment voor jezelf.',
     image: '/svc-lichaam.jpg',
-    imgPos: 'center',
+    imgPos: '35% 45%',
     popular: false,
     treatments: [
       {
