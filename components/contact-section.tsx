@@ -18,8 +18,8 @@ export function ContactSection({ className }: { className?: string }) {
     >
       <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-5 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-16">
 
-        {/* Image */}
-        <div className="relative aspect-square overflow-hidden rounded-3xl md:rounded-[48px]">
+        {/* Image — desktop only */}
+        <div className="relative hidden aspect-square overflow-hidden rounded-3xl lg:block lg:rounded-[48px]">
           <Image
             src="/hero.jpg"
             alt=""
