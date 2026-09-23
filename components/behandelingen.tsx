@@ -133,8 +133,29 @@ export function Behandelingen() {
   const [headerH, setHeaderH] = useState(65)
   const [tabH, setTabH] = useState(0)
   const [mounted, setMounted] = useState(false)
+  const clickLock = useRef(false)
 
   useEffect(() => setMounted(true), [])
+
+  // Mobile: update active tab based on scroll position
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (clickLock.current) return
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id.replace('home-', '') as TabKey)
+          }
+        }
+      },
+      { rootMargin: '-80px 0px -50% 0px', threshold: 0 },
+    )
+    TABS.forEach(({ key }) => {
+      const el = document.getElementById(`home-${key}`)
+      if (el) obs.observe(el)
+    })
+    return () => obs.disconnect()
+  }, [])
 
   useEffect(() => {
     const update = () => {
@@ -218,19 +239,21 @@ export function Behandelingen() {
           {!stuck && (
             <div className="flex w-full rounded-full bg-accent/10 p-1.5">
               {TABS.map(({ key, label, labelMobile }) => (
-                <button
+                <a
                   key={key}
-                  role="tab"
-                  aria-selected={active === key}
-                  aria-controls={`tab-panel-${key}`}
-                  onClick={() => setActive(key)}
+                  href={`#home-${key}`}
+                  onClick={() => {
+                    setActive(key)
+                    clickLock.current = true
+                    setTimeout(() => { clickLock.current = false }, 1200)
+                  }}
                   className={cn(
-                    'flex flex-1 cursor-pointer items-center justify-center rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                    'flex flex-1 cursor-pointer items-center justify-center rounded-full py-4 text-[14px] font-semibold leading-none transition-all duration-200',
                     active === key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45',
                   )}
                 >
                   {labelMobile ?? label}
-                </button>
+                </a>
               ))}
             </div>
           )}
@@ -244,19 +267,21 @@ export function Behandelingen() {
           >
             <div className="flex w-full rounded-full bg-accent/10 p-1.5">
               {TABS.map(({ key, label, labelMobile }) => (
-                <button
+                <a
                   key={key}
-                  role="tab"
-                  aria-selected={active === key}
-                  aria-controls={`tab-panel-${key}`}
-                  onClick={() => setActive(key)}
+                  href={`#home-${key}`}
+                  onClick={() => {
+                    setActive(key)
+                    clickLock.current = true
+                    setTimeout(() => { clickLock.current = false }, 1200)
+                  }}
                   className={cn(
-                    'flex flex-1 cursor-pointer items-center justify-center rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                    'flex flex-1 cursor-pointer items-center justify-center rounded-full py-4 text-[14px] font-semibold leading-none transition-all duration-200',
                     active === key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45',
                   )}
                 >
                   {labelMobile ?? label}
-                </button>
+                </a>
               ))}
             </div>
           </div>,
@@ -311,12 +336,41 @@ export function Behandelingen() {
           </div>
         </div>
 
-        {/* Panel — swipeable on mobile to switch categories */}
+        {/* Mobile: all categories stacked, tab bar = scroll nav */}
+        <div className="sm:hidden">
+          {TABS.map(({ key, label, labelMobile }) => {
+            const tabData = DATA[key]
+            return (
+              <section key={key} id={`home-${key}`} className="scroll-mt-[155px] pb-10 pt-8 first:pt-2">
+                <p className="mb-5 text-[13px] font-semibold tracking-[0.18em] text-accent uppercase">
+                  {labelMobile ?? label}
+                </p>
+                {tabData.groups.map((group, gi) => (
+                  <div key={gi} className={gi > 0 ? 'mt-10' : ''}>
+                    {group.subtitle && (
+                      <p className="mb-3 mt-4 text-[13px] font-semibold tracking-[0.18em] text-foreground/60 uppercase">
+                        {group.subtitle}
+                      </p>
+                    )}
+                    <div className="grid gap-y-2">
+                      {group.items.map((t) => <TreatmentCard key={t.name} t={t} />)}
+                    </div>
+                  </div>
+                ))}
+                {tabData.footerNote && (
+                  <p className="mt-8 text-[13px] italic text-muted-foreground/60">* {tabData.footerNote}</p>
+                )}
+              </section>
+            )
+          })}
+        </div>
+
+        {/* Desktop/tablet: tab-switched panel */}
         <div
           id={`tab-panel-${active}`}
           role="tabpanel"
           key={active}
-          className="animate-in fade-in duration-500 ease-out"
+          className="hidden sm:block animate-in fade-in duration-500 ease-out"
           onTouchStart={onPanelTouchStart}
           onTouchEnd={onPanelTouchEnd}
         >
@@ -334,7 +388,6 @@ export function Behandelingen() {
               </div>
             </div>
           ))}
-
           {tab.footerNote && (
             <p className="mt-10 text-[13px] italic text-muted-foreground/60">
               * {tab.footerNote}
