@@ -223,7 +223,7 @@ export default function OverMijPage() {
         </section>
 
         {/* ── 7. Maak kennis ───────────────────────────────────────── */}
-        <section className="section-fade bg-secondary/25 py-20 md:py-28 lg:py-36">
+        <section className="section-fade bg-secondary/25 py-10 md:py-16 lg:py-36">
           <div className="mx-auto max-w-[1840px] px-5 md:px-6">
             <div className="grid items-center gap-12 lg:grid-cols-[5fr_7fr] lg:gap-20">
 
@@ -312,7 +312,7 @@ export default function OverMijPage() {
         </section>
 
         {/* ── 8. Werkwijze ─────────────────────────────────────────── */}
-        <section className="section-fade bg-secondary/25 py-24 md:py-36">
+        <section className="section-fade bg-secondary/25 py-10 md:py-20 lg:py-36">
           <div className="mx-auto grid max-w-[1840px] items-center gap-14 px-5 md:px-6 lg:grid-cols-2 lg:gap-10 xl:gap-14">
             <div>
               <Reveal>
