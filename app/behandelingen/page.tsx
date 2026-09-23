@@ -111,7 +111,7 @@ function TreatmentCard({ t }: { t: Treatment }) {
       </div>
       <div className="flex items-center justify-between gap-3 rounded-b-3xl bg-secondary/50 p-5">
         <div className="min-w-0">
-          <p className="line-clamp-2 text-[17px] font-semibold leading-tight">{t.name}</p>
+          <p className="truncate text-[17px] font-semibold leading-tight">{t.name}</p>
           <p className="mt-1 text-[16px] font-bold text-accent">{t.price}</p>
         </div>
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">

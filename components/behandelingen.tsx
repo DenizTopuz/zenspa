@@ -54,16 +54,14 @@ function TreatmentCard({ t }: { t: Treatment }) {
 
       {/* Mobile content */}
       <div className="flex min-w-0 flex-1 items-center justify-between gap-3 p-3.5 md:hidden">
-        <div className="min-w-0">
-          <div className="flex min-w-0 items-center gap-2">
-            <p className="min-w-0 truncate text-[15px] font-semibold leading-tight">{t.name}</p>
-            {t.tag && (
-              <span className="shrink-0 rounded-full bg-accent/12 px-2 py-0.5 text-[10px] font-semibold text-accent">
-                {t.tag}
-              </span>
-            )}
-          </div>
-          <div className="mt-0.5 flex items-center gap-3 text-[13px] text-foreground/60">
+        <div className="min-w-0 flex flex-col gap-0.5">
+          {t.tag && (
+            <span className="self-start rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold text-white">
+              {t.tag}
+            </span>
+          )}
+          <p className="min-w-0 truncate text-[15px] font-semibold leading-tight">{t.name}</p>
+          <div className="flex items-center gap-3 text-[13px] text-foreground/60">
             {t.duration && (
               <span className="flex shrink-0 items-center gap-1">
                 <Clock className="h-3 w-3" aria-hidden />{t.duration}
