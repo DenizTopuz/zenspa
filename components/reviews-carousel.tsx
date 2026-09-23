@@ -18,21 +18,21 @@ const testimonials: Testimonial[] = [
     location: 'Almere Buiten',
     quote: 'Zen Spa is mijn vaste plek om bij te komen. De Classic Gezichtsbehandeling liet mijn huid stralen én mijn hoofd leegmaken — precies wat ik nodig had na weken van drukte thuis en op werk.',
     stars: 5,
-    image: '/hero.jpg',
+    image: '/svc-aroma.jpg',
   },
   {
     name: 'Yasmine K.',
     location: 'Almere Buiten',
     quote: 'Als drukke moeder van twee kinderen is Zen Spa mijn enige moment voor mezelf. Çigdem luistert écht en stemt elke behandeling op je af. Ik ga altijd een stuk lichter de deur uit.',
     stars: 5,
-    image: '/bg-leaves.jpg',
+    image: '/svc-massage.jpg',
   },
   {
     name: 'Fatima A.',
     location: 'Almere',
     quote: 'Na mijn Deluxe Gezichtsbehandeling en de Microneedling zie ik mijn huid écht verbeteren. Zo fijn dat dit gewoon om de hoek in Almere Buiten is — geen gedoe met reizen naar Amsterdam.',
     stars: 5,
-    image: '/hero.jpg',
+    image: '/svc-lichaam.jpg',
   },
 ]
 
