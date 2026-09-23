@@ -170,7 +170,7 @@ function TreatmentStep({ selected, onSelect }: {
                 key={t.key}
                 onClick={() => setTab(t.key)}
                 className={cn(
-                  'flex-1 rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                  'flex-1 rounded-full py-4 text-[14px] font-semibold leading-none transition-all duration-200',
                   tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45'
                 )}
               >
@@ -193,7 +193,7 @@ function TreatmentStep({ selected, onSelect }: {
                 key={t.key}
                 onClick={() => setTab(t.key)}
                 className={cn(
-                  'flex-1 rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
+                  'flex-1 rounded-full py-4 text-[14px] font-semibold leading-none transition-all duration-200',
                   tab === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/45'
                 )}
               >
