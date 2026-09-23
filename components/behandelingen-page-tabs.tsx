@@ -93,7 +93,7 @@ export function BehandelingenPageTabs() {
           href={`#${key}`}
           onClick={() => handleClick(key)}
           className={cn(
-            'flex flex-1 items-center justify-center rounded-full py-3.5 text-[13px] font-semibold leading-none transition-all duration-200',
+            'flex flex-1 items-center justify-center rounded-full py-4.5 text-[14px] font-semibold leading-none transition-all duration-200',
             active === key
               ? 'bg-accent text-white shadow-sm'
               : 'text-foreground/45',
@@ -119,7 +119,7 @@ export function BehandelingenPageTabs() {
         className={cn(
           'sm:hidden z-40',
           stuck
-            ? 'fixed left-0 right-0 bg-background/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.06)] px-4 py-3'
+            ? 'fixed left-0 right-0 bg-background/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.06)] px-4 py-4'
             : 'px-5 pt-6 pb-5',
         )}
         style={stuck ? { top: headerH } : undefined}

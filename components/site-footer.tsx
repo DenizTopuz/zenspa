@@ -121,7 +121,7 @@ export function SiteFooter({ bg = 'bg-background' }: { bg?: string }) {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-8 text-[12px] text-white/55 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 pb-24 text-[12px] text-white/55 sm:flex-row lg:pb-8">
           <p>© 2026 Zen Spa · KvK 57713464 · Alle rechten voorbehouden</p>
 
           {/* Social icons */}
