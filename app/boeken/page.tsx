@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef, Suspense, Fragment } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo, Suspense, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ChevronRight, Clock, CalendarDays, Leaf, Sparkles, Scissors, Zap, Euro, Timer, X, AlertCircle } from 'lucide-react'
@@ -12,7 +12,6 @@ import { cn } from '@/lib/utils'
 // ── Constants ─────────────────────────────────────────────────────────────────
 const TZ = 'Europe/Amsterdam'
 const NL_MONTHS = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December']
-const NL_DAY_HEADERS = ['Ma','Di','Wo','Do','Vr','Za','Zo']
 const TABS: { key: TabKey; label: string }[] = [
   { key: 'gezicht',  label: 'Gezicht' },
   { key: 'lichaam',  label: 'Lichaam' },
@@ -54,16 +53,6 @@ function isBusinessDay(dateStr: string): boolean {
   return dow === 1 || dow === 3 || dow === 5 // Mon Wed Fri
 }
 
-function getCalendarDays(year: number, month: number): (string | null)[] {
-  const pad = (n: number) => String(n).padStart(2, '0')
-  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7 // 0=Mon
-  const total = new Date(year, month + 1, 0).getDate()
-  const cells: (string | null)[] = Array(firstDow).fill(null)
-  for (let d = 1; d <= total; d++) {
-    cells.push(`${year}-${pad(month + 1)}-${pad(d)}`)
-  }
-  return cells
-}
 
 // ── Step indicator ─────────────────────────────────────────────────────────────
 function StepBar({ step }: { step: number }) {
@@ -256,6 +245,143 @@ function TreatmentStep({ selected, onSelect }: {
 }
 
 // ── Step 2: Datum & Tijd kiezen ───────────────────────────────────────────────
+// ── Date strip (swipeable horizontal row) ────────────────────────────────────
+const NL_DAYS_SHORT  = ['Zo','Ma','Di','Wo','Do','Vr','Za']
+const NL_MONTHS_SHORT = ['Jan','Feb','Mrt','Apr','Mei','Jun','Jul','Aug','Sep','Okt','Nov','Dec']
+
+function DateStrip({ selectedDate, onDateSelect, treatmentSlug }: {
+  selectedDate: string | null
+  onDateSelect: (d: string) => void
+  treatmentSlug: string
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [monthAvail, setMonthAvail] = useState<Record<string, 'green' | 'orange' | 'red'>>({})
+
+  const today   = useMemo(() => todayAms(), [])
+  const maxDate = useMemo(() => maxDateAms(), [])
+
+  const dates = useMemo(() => {
+    const pad = (n: number) => String(n).padStart(2, '0')
+    const [ty, tm, td] = today.split('-').map(Number)
+    const [my, mm, md] = maxDate.split('-').map(Number)
+    const result: string[] = []
+    const cur = new Date(ty, tm - 1, td)
+    const end = new Date(my, mm - 1, md)
+    while (cur <= end) {
+      result.push(`${cur.getFullYear()}-${pad(cur.getMonth()+1)}-${pad(cur.getDate())}`)
+      cur.setDate(cur.getDate() + 1)
+    }
+    return result
+  }, [today, maxDate])
+
+  // Fetch availability for all covered months upfront
+  useEffect(() => {
+    const months = [...new Set(dates.map(d => d.slice(0, 7)))]
+    months.forEach(async (monthStr) => {
+      try {
+        const res  = await fetch(`/api/availability/month?slug=${treatmentSlug}&month=${monthStr}`)
+        const json = await res.json()
+        setMonthAvail(prev => ({ ...prev, ...(json.availability ?? {}) }))
+      } catch {}
+    })
+  }, [treatmentSlug, dates])
+
+  // On mount: scroll to centre today (or nearest future business day)
+  useEffect(() => {
+    const container = scrollRef.current
+    if (!container) return
+    const target = (container.querySelector(`[data-date="${today}"]`) ??
+                    container.querySelector('[data-date]')) as HTMLElement | null
+    if (!target) return
+    container.scrollLeft = target.offsetLeft - container.clientWidth / 2 + target.offsetWidth / 2
+  }, [today])
+
+  const scrollBy = (dir: 1 | -1) =>
+    scrollRef.current?.scrollBy({ left: dir * 220, behavior: 'smooth' })
+
+  return (
+    <div className="relative -mx-5 md:-mx-0">
+      {/* left fade + arrow */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-background to-transparent" />
+      <button
+        onClick={() => scrollBy(-1)}
+        aria-label="Vorige datums"
+        className="absolute left-1 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full border border-foreground/10 bg-background shadow-sm transition-colors hover:bg-foreground/5"
+      >
+        <ChevronLeft className="h-3.5 w-3.5" />
+      </button>
+
+      {/* scrollable strip */}
+      <div
+        ref={scrollRef}
+        className="flex gap-2 overflow-x-auto px-10 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ scrollSnapType: 'x proximity', WebkitOverflowScrolling: 'touch' }}
+      >
+        {dates.map(dateStr => {
+          const [y, m, d] = dateStr.split('-').map(Number)
+          const dow        = new Date(y, m - 1, d).getDay()
+          const disabled   = !isBusinessDay(dateStr)
+          const isSelected = dateStr === selectedDate
+          const avail      = monthAvail[dateStr]
+
+          return (
+            <button
+              key={dateStr}
+              data-date={dateStr}
+              disabled={disabled}
+              onClick={() => !disabled && onDateSelect(dateStr)}
+              style={{ scrollSnapAlign: 'start', minWidth: '72px' }}
+              className={cn(
+                'relative flex shrink-0 flex-col items-center gap-0.5 rounded-2xl px-2.5 py-3.5 transition-all duration-200',
+                isSelected
+                  ? 'bg-accent text-white shadow-md'
+                  : disabled
+                  ? 'cursor-not-allowed opacity-35'
+                  : 'border border-foreground/10 hover:border-accent/50 hover:bg-accent/5 active:scale-95',
+              )}
+            >
+              {/* diagonal stripe overlay for disabled */}
+              {disabled && (
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-2xl overflow-hidden"
+                  style={{ backgroundImage: 'repeating-linear-gradient(-45deg,rgba(0,0,0,0.07),rgba(0,0,0,0.07) 1px,transparent 1px,transparent 7px)' }}
+                />
+              )}
+              <span className={cn('text-[11px] font-semibold uppercase tracking-wide', isSelected ? 'text-white/65' : 'text-foreground/40')}>
+                {NL_DAYS_SHORT[dow]}
+              </span>
+              <span className="text-[26px] font-bold leading-none">{d}</span>
+              <span className={cn('text-[11px] font-semibold uppercase tracking-wide', isSelected ? 'text-white/65' : 'text-foreground/40')}>
+                {NL_MONTHS_SHORT[m - 1]}
+              </span>
+              {!disabled && avail && (
+                <div className={cn(
+                  'mt-0.5 h-1.5 w-1.5 rounded-full',
+                  avail === 'green'  ? (isSelected ? 'bg-white/55' : 'bg-emerald-400') :
+                  avail === 'orange' ? (isSelected ? 'bg-white/55' : 'bg-amber-400')   :
+                                       (isSelected ? 'bg-white/55' : 'bg-rose-400'),
+                )} />
+              )}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* right fade + arrow */}
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-background to-transparent" />
+      <button
+        onClick={() => scrollBy(1)}
+        aria-label="Volgende datums"
+        className="absolute right-1 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full border border-foreground/10 bg-background shadow-sm transition-colors hover:bg-foreground/5"
+      >
+        <ChevronRight className="h-3.5 w-3.5" />
+      </button>
+    </div>
+  )
+}
+
+// ── Step 2: Datum & Tijd kiezen ───────────────────────────────────────────────
 function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onSlotSelect }: {
   treatment: Treatment
   selectedDate: string | null
@@ -263,32 +389,15 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
   onDateSelect: (d: string) => void
   onSlotSelect: (iso: string) => void
 }) {
-  const now = new Date()
-  const [calYear, setCalYear] = useState(now.getFullYear())
-  const [calMonth, setCalMonth] = useState(now.getMonth())
-  const [slots, setSlots] = useState<string[]>([])
+  const [slots, setSlots]             = useState<string[]>([])
   const [loadingSlots, setLoadingSlots] = useState(false)
-  const [calOpen, setCalOpen] = useState(!selectedDate)
-  const [monthAvail, setMonthAvail] = useState<Record<string, 'green' | 'orange' | 'red'>>({})
   const slotsRef = useRef<HTMLDivElement>(null)
-
-  const today = todayAms()
-  const maxDate = maxDateAms()
-
-  const prevMonth = () => {
-    if (calMonth === 0) { setCalYear(y => y - 1); setCalMonth(11) }
-    else setCalMonth(m => m - 1)
-  }
-  const nextMonth = () => {
-    if (calMonth === 11) { setCalYear(y => y + 1); setCalMonth(0) }
-    else setCalMonth(m => m + 1)
-  }
 
   const fetchSlots = useCallback(async (date: string) => {
     setLoadingSlots(true)
     setSlots([])
     try {
-      const res = await fetch(`/api/availability?slug=${treatment.slug}&date=${date}`)
+      const res  = await fetch(`/api/availability?slug=${treatment.slug}&date=${date}`)
       const json = await res.json()
       setSlots(json.slots ?? [])
     } finally {
@@ -296,34 +405,15 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
     }
   }, [treatment.slug])
 
-  const fetchMonthAvail = useCallback(async (year: number, month: number) => {
-    const pad = (n: number) => String(n).padStart(2, '0')
-    const monthStr = `${year}-${pad(month + 1)}`
-    try {
-      const res = await fetch(`/api/availability/month?slug=${treatment.slug}&month=${monthStr}`)
-      const json = await res.json()
-      setMonthAvail(json.availability ?? {})
-    } catch { /* ignore */ }
-  }, [treatment.slug])
-
   useEffect(() => {
     if (selectedDate) fetchSlots(selectedDate)
   }, [selectedDate, fetchSlots])
 
+  // Scroll slots into view when they appear
   useEffect(() => {
-    fetchMonthAvail(calYear, calMonth)
-  }, [calYear, calMonth, fetchMonthAvail])
+    if (slots.length > 0) setTimeout(() => slotsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120)
+  }, [slots])
 
-  const handleDatePick = (dateStr: string) => {
-    onDateSelect(dateStr)
-    onSlotSelect('')
-    setCalOpen(false)
-    setTimeout(() => slotsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120)
-  }
-
-  const days = getCalendarDays(calYear, calMonth)
-
-  // Slot groups (inline — no separate React component to avoid hoisting issues)
   const ochtend = slots.filter(s => slotHour(s) < 12)
   const middag  = slots.filter(s => slotHour(s) >= 12 && slotHour(s) < 17)
   const avond   = slots.filter(s => slotHour(s) >= 17)
@@ -335,8 +425,8 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
       className={cn(
         'rounded-xl border py-3 text-center text-[14px] font-medium transition-all duration-150',
         selectedSlot === iso
-          ? 'border-accent bg-accent text-white shadow-sm'
-          : 'border-foreground/15 text-foreground/70 hover:border-accent/50 hover:bg-accent/5'
+          ? 'border-accent bg-accent text-white shadow-sm scale-[1.03]'
+          : 'border-foreground/15 text-foreground/70 hover:border-accent/50 hover:bg-accent/5',
       )}
     >
       {formatTime(iso)}
@@ -344,94 +434,18 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
   )
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
         <h2 className="font-heading text-[28px] leading-tight tracking-tight md:text-[36px]">Kies een datum & tijd</h2>
         <p className="mt-1 text-[15px] text-foreground/68">We zijn open op <strong>maandag, woensdag en vrijdag</strong> van 10:00–18:00.</p>
       </div>
 
-      {/* Date chip — collapsed calendar state */}
-      {selectedDate && !calOpen ? (
-        <button
-          onClick={() => setCalOpen(true)}
-          className="group flex w-full items-center justify-between rounded-2xl border border-accent/25 bg-accent/5 px-4 py-3.5 transition-colors hover:border-accent/50 hover:bg-accent/10 active:bg-accent/14"
-        >
-          <div className="flex items-center gap-2.5">
-            <CalendarDays className="h-4 w-4 shrink-0 text-accent" />
-            <span className="text-[15px] font-semibold">{formatDateLong(selectedDate)}</span>
-          </div>
-          <div className="flex items-center gap-1 text-accent">
-            <span className="text-[13px] font-medium">Wijzigen</span>
-            <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-          </div>
-        </button>
-      ) : (
-        /* Full calendar */
-        <div className="rounded-2xl border border-foreground/8 bg-secondary/10 p-4 md:p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <button onClick={prevMonth} className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-foreground/6">
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <span className="text-[15px] font-semibold">{NL_MONTHS[calMonth]} {calYear}</span>
-            <button onClick={nextMonth} className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-foreground/6">
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
-          <div className="grid grid-cols-7 gap-y-1 gap-x-1 text-center">
-            {NL_DAY_HEADERS.map(d => (
-              <div key={d} className="py-1 text-[11px] font-semibold text-foreground/55">{d}</div>
-            ))}
-            {days.map((dateStr, i) => {
-              if (!dateStr) return <div key={`e-${i}`} />
-              const disabled = dateStr < today || dateStr > maxDate || !isBusinessDay(dateStr)
-              const isSelected = dateStr === selectedDate
-              const avail = monthAvail[dateStr]
-              return (
-                <div key={dateStr} className="flex flex-col items-center gap-[3px]">
-                  <button
-                    disabled={disabled}
-                    onClick={() => handleDatePick(dateStr)}
-                    className={cn(
-                      'h-9 w-9 rounded-full text-[13px] transition-all duration-150',
-                      isSelected
-                        ? 'bg-accent font-semibold text-white shadow-sm'
-                        : disabled
-                        ? 'cursor-not-allowed text-foreground/22'
-                        : 'font-semibold text-foreground hover:bg-accent/12 hover:text-accent'
-                    )}
-                  >
-                    {dateStr.slice(8)}
-                  </button>
-                  <div className={cn(
-                    'h-1.5 w-1.5 rounded-full transition-colors',
-                    avail === 'green'  ? 'bg-emerald-400' :
-                    avail === 'orange' ? 'bg-amber-400'   :
-                    avail === 'red'    ? 'bg-rose-400'    : 'invisible'
-                  )} />
-                </div>
-              )
-            })}
-          </div>
-          {/* Legend */}
-          <div className="mt-5 border-t border-foreground/8 pt-4 flex items-center justify-center gap-4 text-[11px] text-foreground/58">
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-400" />Veel plek</span>
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-amber-400" />Bijna vol</span>
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-rose-400" />Laatste plekjes</span>
-          </div>
-          {selectedDate && (
-            <button
-              onClick={() => setCalOpen(false)}
-              className="mt-3 w-full rounded-xl bg-foreground/5 py-2.5 text-[13px] font-medium text-foreground/68 transition-colors hover:bg-foreground/8"
-            >
-              Sluiten
-            </button>
-          )}
-        </div>
-      )}
+      <DateStrip selectedDate={selectedDate} onDateSelect={onDateSelect} treatmentSlug={treatment.slug} />
 
-      {/* Time slots */}
+      {/* Time slots — appear below strip once a date is picked */}
       {selectedDate && (
-        <div ref={slotsRef}>
+        <div ref={slotsRef} className="space-y-4">
+          <p className="text-[13px] font-semibold text-foreground/55">{formatDateLong(selectedDate)}</p>
           {loadingSlots ? (
             <div className="flex items-center gap-2 text-[14px] text-foreground/58">
               <Clock className="h-4 w-4 animate-spin" /> Beschikbaarheid laden…
@@ -441,7 +455,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
               Geen beschikbare tijden op deze dag. Kies een andere datum.
             </div>
           ) : (
-            <div className="space-y-4">
+            <>
               {ochtend.length > 0 && (
                 <div>
                   <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-foreground/35">Ochtend</p>
@@ -460,7 +474,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
                   <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">{avond.map(slotBtn)}</div>
                 </div>
               )}
-            </div>
+            </>
           )}
         </div>
       )}
@@ -710,8 +724,8 @@ function BookingWizard() {
                 treatment={treatment}
                 selectedDate={date}
                 selectedSlot={slotStart}
-                onDateSelect={setDate}
-                onSlotSelect={setSlotStart}
+                onDateSelect={(d) => { setDate(d); setSlotStart(null) }}
+                onSlotSelect={(iso) => { setSlotStart(iso); setTimeout(() => setStep(3), 350) }}
               />
             )}
             {step === 3 && treatment && slotStart && (
@@ -754,31 +768,22 @@ function BookingWizard() {
         </div>
       )}
 
-      {/* ── Sticky bottom bar: steps 2-3 ── */}
-      {step > 1 && step < 4 && (
+      {/* ── Sticky bottom bar: step 3 only ── */}
+      {step === 3 && (
         <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-foreground/8 bg-background/96 px-4 py-3 backdrop-blur-sm md:px-6">
           <div className="mx-auto flex max-w-2xl items-center gap-3">
             <button
-              onClick={() => setStep(s => (s - 1) as 1 | 2 | 3)}
+              onClick={() => setStep(2)}
               className="flex shrink-0 items-center gap-1 rounded-full border border-foreground/15 px-5 py-3 text-[14px] font-medium text-foreground/55 transition-colors hover:bg-foreground/4"
             >
               <ChevronLeft className="h-4 w-4" /> Terug
             </button>
             <button
-              disabled={!canGoNext[step] || (step === 3 && submitting)}
-              onClick={() => {
-                if (step === 3) {
-                  contactFormRef.current?.requestSubmit()
-                } else {
-                  setStep(s => (s + 1) as 2 | 3)
-                }
-              }}
+              disabled={submitting}
+              onClick={() => contactFormRef.current?.requestSubmit()}
               className="flex flex-1 items-center justify-center gap-2 rounded-full bg-accent py-3.5 text-[15px] font-semibold text-white transition-all duration-200 hover:bg-accent/88 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {step === 3
-                ? (submitting ? 'Aanvraag versturen…' : 'Afspraak aanvragen')
-                : (<><span>{NEXT_STEP_LABEL[step]}</span><ChevronRight className="h-4 w-4" /></>)
-              }
+              {submitting ? 'Aanvraag versturen…' : 'Afspraak aanvragen'}
             </button>
           </div>
         </div>
