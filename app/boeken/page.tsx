@@ -731,21 +731,39 @@ function BookingWizard() {
         </div>
       </main>
 
-      {/* ── Sticky bottom bar ── */}
-      {step < 4 && (
+      {/* ── Sticky bottom bar: step 1 — slides in when treatment selected ── */}
+      {step === 1 && (
+        <div
+          className={cn(
+            'fixed bottom-0 left-0 right-0 z-40 border-t border-foreground/8 bg-background/96 px-4 py-4 backdrop-blur-sm transition-transform duration-400 ease-out md:px-6',
+            treatment ? 'translate-y-0' : 'translate-y-full',
+          )}
+        >
+          <div className="mx-auto flex max-w-2xl items-center justify-between gap-4">
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[13px] text-foreground/50">{treatment?.name}</p>
+              <p className="text-[22px] font-bold leading-tight text-accent">{treatment?.price}</p>
+            </div>
+            <button
+              onClick={() => setStep(2)}
+              className="flex shrink-0 items-center gap-2 rounded-full bg-accent px-5 py-3.5 text-[14px] font-semibold text-white transition-all duration-200 hover:bg-accent/88"
+            >
+              Kies dag en tijd <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Sticky bottom bar: steps 2-3 ── */}
+      {step > 1 && step < 4 && (
         <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-foreground/8 bg-background/96 px-4 py-3 backdrop-blur-sm md:px-6">
           <div className="mx-auto flex max-w-2xl items-center gap-3">
-            {step > 1 ? (
-              <button
-                onClick={() => setStep(s => (s - 1) as 1 | 2 | 3)}
-                className="flex shrink-0 items-center gap-1 rounded-full border border-foreground/15 px-5 py-3 text-[14px] font-medium text-foreground/55 transition-colors hover:bg-foreground/4"
-              >
-                <ChevronLeft className="h-4 w-4" /> Terug
-              </button>
-            ) : (
-              <div className="shrink-0" />
-            )}
-
+            <button
+              onClick={() => setStep(s => (s - 1) as 1 | 2 | 3)}
+              className="flex shrink-0 items-center gap-1 rounded-full border border-foreground/15 px-5 py-3 text-[14px] font-medium text-foreground/55 transition-colors hover:bg-foreground/4"
+            >
+              <ChevronLeft className="h-4 w-4" /> Terug
+            </button>
             <button
               disabled={!canGoNext[step] || (step === 3 && submitting)}
               onClick={() => {
