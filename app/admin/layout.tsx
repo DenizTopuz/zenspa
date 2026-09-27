@@ -40,10 +40,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const containerRef = useRef<HTMLDivElement>(null)
   const tabRefs      = useRef<(HTMLButtonElement | null)[]>([null, null, null])
-  const [pill, setPill]       = useState<{ left: number; width: number } | null>(null)
-  const [compact, setCompact] = useState(false)
+  const [pill, setPill] = useState<{ left: number; width: number } | null>(null)
 
-  // Animate pill to the active tab whenever the route changes
   useEffect(() => {
     if (isLogin) return
     const idx = activeTab === 'boekingen' ? 0 : activeTab === 'inzichten' ? 1 : 2
@@ -54,14 +52,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     setPill({ left: b.left - r.left, width: b.width })
   }, [activeTab, isLogin])
 
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const obs = new ResizeObserver(([e]) => setCompact(e.contentRect.width < 300))
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
   if (isLogin) return <>{children}</>
 
   return (
@@ -71,61 +61,69 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {children}
       </div>
 
-      {/* Shared bottom nav — never unmounts, so the pill slides smoothly between pages */}
-      <div className="shrink-0 lg:hidden bg-background/80 backdrop-blur-sm px-4 md:px-8"
-        style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))', paddingTop: '8px' }}>
-        <div className="mx-auto max-w-4xl">
-          <div ref={containerRef}
-            className={cn(
-              'relative flex items-center justify-between rounded-full border border-foreground/10 bg-background/95 shadow-[0_8px_40px_rgba(0,0,0,0.14)] backdrop-blur-xl transition-all duration-300',
-              compact ? 'px-1 py-1' : 'px-1 py-1.5',
-            )}>
-            {pill && (
-              <span
-                aria-hidden
-                className="pointer-events-none absolute top-1/2 -translate-y-1/2 rounded-full bg-accent/10"
-                style={{
-                  left: pill.left, width: pill.width - 1, height: 'calc(100% - 8px)',
-                  transition: 'left 0.48s cubic-bezier(0.22,1,0.36,1), width 0.56s cubic-bezier(0.22,1,0.36,1)',
-                }}
-              />
-            )}
-            {TABS.map(({ key, label, icon: Icon, href }, i) => {
-              const active = key === activeTab
-              const badge  = key === 'boekingen' ? pendingCount : 0
-              return (
-                <button
-                  key={key}
-                  ref={el => { tabRefs.current[i] = el }}
-                  onClick={() => router.push(href)}
-                  className={cn(
-                    'relative flex flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-3 transition-all duration-300',
-                    compact ? 'py-1' : 'py-1.5',
-                    active ? 'text-accent' : 'text-foreground/40',
-                  )}>
-                  <div className="relative">
-                    <Icon
-                      className={cn('transition-all duration-300', compact ? 'h-[16px] w-[16px]' : 'h-[19px] w-[19px]')}
-                      strokeWidth={active ? 2.3 : 1.7}
-                      aria-hidden
-                    />
-                    {badge > 0 && (
-                      <span className="absolute -top-1.5 -right-2 flex h-[14px] w-[14px] items-center justify-center rounded-full bg-red-500 text-[8px] font-bold leading-none text-white">
-                        {badge > 99 ? '99+' : badge}
-                      </span>
-                    )}
-                  </div>
-                  <span className={cn(
-                    'whitespace-nowrap leading-none tracking-wide transition-all duration-300',
-                    compact ? 'text-[8px]' : 'text-[10px]',
-                    active ? 'font-bold' : 'font-medium',
-                  )}>
-                    {label}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
+      {/* Shared bottom nav */}
+      <div className="shrink-0 lg:hidden border-t border-foreground/10 bg-background"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+        <div ref={containerRef} className="relative flex items-stretch mx-auto max-w-4xl">
+
+          {/* Sliding accent top-line */}
+          {pill && (
+            <span
+              aria-hidden
+              className="pointer-events-none absolute top-0 bg-accent"
+              style={{
+                left: pill.left, width: pill.width,
+                height: 2,
+                transition: 'left 0.42s cubic-bezier(0.22,1,0.36,1), width 0.42s cubic-bezier(0.22,1,0.36,1)',
+              }}
+            />
+          )}
+
+          {/* Sliding fill */}
+          {pill && (
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 bg-accent/8"
+              style={{
+                left: pill.left, width: pill.width,
+                transition: 'left 0.42s cubic-bezier(0.22,1,0.36,1), width 0.42s cubic-bezier(0.22,1,0.36,1)',
+              }}
+            />
+          )}
+
+          {TABS.map(({ key, label, icon: Icon, href }, i) => {
+            const active = key === activeTab
+            const badge  = key === 'boekingen' ? pendingCount : 0
+            return (
+              <button
+                key={key}
+                ref={el => { tabRefs.current[i] = el }}
+                onClick={() => router.push(href)}
+                className={cn(
+                  'relative flex flex-1 flex-col items-center justify-center gap-1 py-4 transition-colors duration-200',
+                  active ? 'text-accent' : 'text-foreground/45',
+                )}>
+                <div className="relative">
+                  <Icon
+                    className="h-[22px] w-[22px] transition-all duration-200"
+                    strokeWidth={active ? 2.3 : 1.7}
+                    aria-hidden
+                  />
+                  {badge > 0 && (
+                    <span className="absolute -top-1.5 -right-2 flex h-[14px] w-[14px] items-center justify-center rounded-full bg-red-500 text-[8px] font-bold leading-none text-white">
+                      {badge > 99 ? '99+' : badge}
+                    </span>
+                  )}
+                </div>
+                <span className={cn(
+                  'whitespace-nowrap text-[10px] leading-none tracking-wide',
+                  active ? 'font-bold' : 'font-medium',
+                )}>
+                  {label}
+                </span>
+              </button>
+            )
+          })}
         </div>
       </div>
     </div>

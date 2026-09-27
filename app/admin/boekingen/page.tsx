@@ -7,6 +7,45 @@ import { Clock, CheckCircle, XCircle, LayoutList, List, LayoutGrid, CalendarDays
 import { cn } from '@/lib/utils'
 import type { BookingRow, BookingStatus } from '@/lib/supabase/types'
 
+// ── Treatment colour palette (by slug → category) ────────────────────────────
+const GEZICHT_SLUGS = new Set([
+  'mini-zen-moment','basis-gezichtsbehandeling','classic-gezichtsbehandeling',
+  'deluxe-gezichtsbehandeling','herenbehandeling','65-plus-behandeling',
+  'tienerbehandeling','microneedling','galvanic-spa',
+])
+const LICHAAM_SLUGS = new Set(['rugbehandeling','pedicure'])
+const PMU_SLUGS = new Set([
+  'hairstroke-microblading','powder-ombre-brows','combi-brows','ontbrekende-stukjes',
+  'infralash-deepliner','deepliner-boven-en-onder','lipliner','full-lips',
+])
+const ONTHAREN_SLUGS = new Set([
+  'ontharen-1-zone','bovenlip-kin','bovenlip-kin-kaaklijn','extra-zone',
+])
+
+function treatmentColor(slug: string) {
+  if (GEZICHT_SLUGS.has(slug))  return { bg: '#fce7ef', border: '#f48fb1', text: '#880e4f' }
+  if (LICHAAM_SLUGS.has(slug))  return { bg: '#e3f2fd', border: '#90caf9', text: '#0d47a1' }
+  if (PMU_SLUGS.has(slug))      return { bg: '#ede7f6', border: '#b39ddb', text: '#311b92' }
+  if (ONTHAREN_SLUGS.has(slug)) return { bg: '#fff8e1', border: '#ffe082', text: '#e65100' }
+  return { bg: '#f3f4f6', border: '#d1d5db', text: '#374151' }
+}
+
+// ── Timeline constants ────────────────────────────────────────────────────────
+const HOUR_PX  = 64
+const TL_START = 8
+const TL_END   = 19
+
+function amsMinutes(iso: string) {
+  const d = new Date(iso)
+  const parts = new Intl.DateTimeFormat('nl-NL', {
+    hour: 'numeric', minute: 'numeric', hour12: false,
+    timeZone: 'Europe/Amsterdam',
+  }).formatToParts(d)
+  const h = Number(parts.find(p => p.type === 'hour')?.value ?? 0)
+  const m = Number(parts.find(p => p.type === 'minute')?.value ?? 0)
+  return h * 60 + m
+}
+
 const STATUS_LABEL: Record<BookingStatus, string> = {
   pending: 'In afwachting',
   confirmed: 'Goedgekeurd',
@@ -331,13 +370,106 @@ export default function AdminBoekingen() {
             })}
           </div>
         </div>
-        {/* Boekingen voor geselecteerde dag */}
-        <p className="text-xs font-semibold text-foreground/40 uppercase tracking-wider mb-2">
+        {/* Boekingen voor geselecteerde dag — tijdlijn */}
+        <p className="text-xs font-semibold text-foreground/40 uppercase tracking-wider mb-3">
           {selectedWeekDay.toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' })}
         </p>
         {dayBookings.length === 0
           ? <p className="text-sm text-foreground/40 py-4">Geen boekingen op deze dag.</p>
-          : <div className="space-y-2">{dayBookings.map(b => <DayBookingRow key={b.id} b={b} />)}</div>}
+          : (<>
+              <TimelineLegend />
+              <TimelineGrid dayBookings={dayBookings} />
+            </>)}
+      </div>
+    )
+  }
+
+  // --- Timeline component (shared by Day + Week views) ---
+  function TimelineGrid({ dayBookings }: { dayBookings: BookingRow[] }) {
+    const hours = Array.from({ length: TL_END - TL_START }, (_, i) => TL_START + i)
+    const totalH = (TL_END - TL_START) * HOUR_PX
+
+    return (
+      <div className="rounded-2xl border border-foreground/8 bg-white shadow-sm overflow-hidden">
+        <div className="relative" style={{ height: totalH }}>
+          {/* Hour lines + labels */}
+          {hours.map(h => (
+            <div key={h} className="absolute left-0 right-0 flex items-start"
+              style={{ top: (h - TL_START) * HOUR_PX }}>
+              <span className="w-12 shrink-0 pl-3 text-[10px] font-medium text-foreground/35 tabular-nums leading-none -mt-[6px]">
+                {String(h).padStart(2,'0')}:00
+              </span>
+              <div className="flex-1 border-t border-foreground/6" />
+            </div>
+          ))}
+
+          {/* Appointment blocks */}
+          <div className="absolute left-14 right-2 top-0 bottom-0">
+            {dayBookings.map(b => {
+              const startMin = amsMinutes(b.start_time)
+              const endMin   = amsMinutes(b.end_time)
+              const top    = Math.max(0, (startMin - TL_START * 60) / 60 * HOUR_PX)
+              const height = Math.max(20, (endMin - startMin) / 60 * HOUR_PX - 2)
+              const col    = treatmentColor(b.treatment_slug)
+              const short  = height < 38
+
+              return (
+                <div key={b.id}
+                  style={{
+                    position: 'absolute',
+                    top,
+                    left: 0,
+                    right: 0,
+                    height,
+                    backgroundColor: col.bg,
+                    borderLeft: `3px solid ${col.border}`,
+                    borderRadius: 8,
+                    padding: short ? '3px 8px' : '6px 8px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <p className="text-[11px] font-bold leading-tight truncate" style={{ color: col.text }}>
+                    {b.customer_name}
+                  </p>
+                  {!short && (
+                    <p className="text-[10px] leading-tight truncate mt-0.5" style={{ color: col.text, opacity: 0.75 }}>
+                      {b.treatment_name}
+                    </p>
+                  )}
+                  {!short && (
+                    <p className="text-[10px] tabular-nums mt-0.5" style={{ color: col.text, opacity: 0.6 }}>
+                      {formatTime(b.start_time)}–{formatTime(b.end_time)}
+                    </p>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ── Legend ───────────────────────────────────────────────────────────────────
+  function TimelineLegend() {
+    const items = [
+      { label: 'Gezicht',          color: treatmentColor('basis-gezichtsbehandeling') },
+      { label: 'Lichaam',          color: treatmentColor('pedicure') },
+      { label: 'Permanente make-up', color: treatmentColor('combi-brows') },
+      { label: 'Ontharen',         color: treatmentColor('ontharen-1-zone') },
+    ]
+    return (
+      <div className="flex flex-wrap gap-3 mb-3">
+        {items.map(({ label, color }) => (
+          <span key={label} className="flex items-center gap-1.5 text-[11px] text-foreground/55">
+            <span className="inline-block h-2.5 w-2.5 rounded-sm"
+              style={{ backgroundColor: color.border }} />
+            {label}
+          </span>
+        ))}
       </div>
     )
   }
@@ -368,7 +500,10 @@ export default function AdminBoekingen() {
         </div>
         {dayBookings.length === 0
           ? <p className="text-foreground/40 py-8">Geen boekingen op deze dag.</p>
-          : <div className="space-y-2">{dayBookings.map(b => <DayBookingRow key={b.id} b={b} />)}</div>}
+          : (<>
+              <TimelineLegend />
+              <TimelineGrid dayBookings={dayBookings} />
+            </>)}
       </div>
     )
   }
