@@ -31,9 +31,9 @@ function treatmentColor(slug: string) {
 }
 
 // ── Timeline constants ────────────────────────────────────────────────────────
-const HOUR_PX  = 64
+const HOUR_PX  = 88          // px per hour — tall enough for 3 lines of text in a 45-min block
 const TL_START = 8
-const TL_END   = 19
+const TL_END   = 20          // show until 20:00
 
 function amsMinutes(iso: string) {
   const d = new Date(iso)
@@ -386,32 +386,34 @@ export default function AdminBoekingen() {
 
   // --- Timeline component (shared by Day + Week views) ---
   function TimelineGrid({ dayBookings }: { dayBookings: BookingRow[] }) {
-    const hours = Array.from({ length: TL_END - TL_START }, (_, i) => TL_START + i)
+    const hours  = Array.from({ length: TL_END - TL_START }, (_, i) => TL_START + i)
     const totalH = (TL_END - TL_START) * HOUR_PX
 
     return (
-      <div className="rounded-2xl border border-foreground/8 bg-white shadow-sm overflow-hidden">
-        <div className="relative" style={{ height: totalH }}>
+      <div className="rounded-2xl border border-foreground/8 bg-white shadow-sm overflow-y-auto"
+        style={{ maxHeight: '62vh' }}>
+        <div className="relative" style={{ height: totalH, minHeight: totalH }}>
           {/* Hour lines + labels */}
           {hours.map(h => (
             <div key={h} className="absolute left-0 right-0 flex items-start"
               style={{ top: (h - TL_START) * HOUR_PX }}>
-              <span className="w-12 shrink-0 pl-3 text-[10px] font-medium text-foreground/35 tabular-nums leading-none -mt-[6px]">
+              <span className="w-14 shrink-0 pl-3 text-[11px] font-medium text-foreground/40 tabular-nums leading-none -mt-[7px]">
                 {String(h).padStart(2,'0')}:00
               </span>
-              <div className="flex-1 border-t border-foreground/6" />
+              <div className="flex-1 border-t border-foreground/8" />
             </div>
           ))}
 
           {/* Appointment blocks */}
-          <div className="absolute left-14 right-2 top-0 bottom-0">
+          <div className="absolute left-16 right-2 top-0 bottom-0">
             {dayBookings.map(b => {
               const startMin = amsMinutes(b.start_time)
               const endMin   = amsMinutes(b.end_time)
-              const top    = Math.max(0, (startMin - TL_START * 60) / 60 * HOUR_PX)
-              const height = Math.max(20, (endMin - startMin) / 60 * HOUR_PX - 2)
-              const col    = treatmentColor(b.treatment_slug)
-              const short  = height < 38
+              const top      = Math.max(0, (startMin - TL_START * 60) / 60 * HOUR_PX)
+              const height   = Math.max(28, (endMin - startMin) / 60 * HOUR_PX - 3)
+              const col      = treatmentColor(b.treatment_slug)
+              // Show all 3 lines when block is at least 52px
+              const compact  = height < 52
 
               return (
                 <div key={b.id}
@@ -424,23 +426,23 @@ export default function AdminBoekingen() {
                     backgroundColor: col.bg,
                     borderLeft: `3px solid ${col.border}`,
                     borderRadius: 8,
-                    padding: short ? '3px 8px' : '6px 8px',
+                    padding: compact ? '4px 8px' : '7px 10px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
                     overflow: 'hidden',
                   }}
                 >
-                  <p className="text-[11px] font-bold leading-tight truncate" style={{ color: col.text }}>
+                  <p style={{ color: col.text, fontSize: 12, fontWeight: 700, lineHeight: '1.2', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {b.customer_name}
                   </p>
-                  {!short && (
-                    <p className="text-[10px] leading-tight truncate mt-0.5" style={{ color: col.text, opacity: 0.75 }}>
+                  {!compact && (
+                    <p style={{ color: col.text, fontSize: 11, lineHeight: '1.25', opacity: 0.75, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {b.treatment_name}
                     </p>
                   )}
-                  {!short && (
-                    <p className="text-[10px] tabular-nums mt-0.5" style={{ color: col.text, opacity: 0.6 }}>
+                  {!compact && (
+                    <p style={{ color: col.text, fontSize: 11, opacity: 0.6, marginTop: 2, fontVariantNumeric: 'tabular-nums' }}>
                       {formatTime(b.start_time)}–{formatTime(b.end_time)}
                     </p>
                   )}
