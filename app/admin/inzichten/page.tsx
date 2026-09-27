@@ -474,15 +474,10 @@ export default function AdminInzichten() {
                   )}
                 </div>
                 {chartMode === 'chart' ? (
-                  data.dayOfMonthData ? (
-                    <HBarRows rows={data.dayOfMonthData}
-                      compareRows={hasCompare ? (data.compareDayOfMonthData ?? null) : null}
-                      priLabel={priLabel} cmpLabel={cmpLabel} />
-                  ) : (
-                    <ColumnChart rows={data.monthData!}
-                      compareRows={hasCompare ? (data.compareMonthData ?? null) : null}
-                      priLabel={priLabel} cmpLabel={cmpLabel} />
-                  )
+                  <ColumnChart
+                    rows={data.dayOfMonthData ?? data.monthData!}
+                    compareRows={hasCompare ? (data.compareDayOfMonthData ?? data.compareMonthData ?? null) : null}
+                    priLabel={priLabel} cmpLabel={cmpLabel} />
                 ) : (
                   <DataTable
                     rows={data.dayOfMonthData ?? data.monthData!}
@@ -501,38 +496,20 @@ export default function AdminInzichten() {
                     <h2 className="text-sm font-semibold text-foreground">Populairste behandelingen</h2>
                   </div>
                   {chartMode === 'chart' ? (
-                    <div className="space-y-3">
+                    <div className="space-y-2.5">
                       {data.treatmentRanking.slice(0, 8).map((t, i) => {
-                        const max = data.treatmentRanking[0].count
                         const cmpItem = data.compareTreatmentRanking?.find(c => c.name === t.name)
-                        const cmpMax  = data.compareTreatmentRanking?.[0]?.count ?? 1
                         return (
-                          <div key={i} className="flex items-center gap-3">
-                            <span className={cn('shrink-0 text-[10px] font-bold w-4',
+                          <div key={i} className="flex items-center gap-3 py-0.5">
+                            <span className={cn('shrink-0 text-[10px] font-bold w-4 tabular-nums',
                               i === 0 ? 'text-amber-500' : i === 1 ? 'text-foreground/45' : i === 2 ? 'text-amber-700/60' : 'text-foreground/20')}>
                               {i + 1}
                             </span>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between gap-2 mb-1">
-                                <span className="text-sm font-medium text-foreground truncate">{t.name}</span>
-                                <span className="text-[11px] text-foreground/45 shrink-0 tabular-nums flex items-center gap-1">
-                                  {t.count}×
-                                  {cmpItem && hasCompare && <Delta a={t.count} b={cmpItem.count} />}
-                                </span>
-                              </div>
-                              <div className="space-y-0.5">
-                                <div className="h-1.5 rounded-full bg-secondary/40 overflow-hidden">
-                                  <div className="h-full rounded-full bg-accent transition-all duration-700"
-                                    style={{ width: `${(t.count / max) * 100}%` }} />
-                                </div>
-                                {cmpItem && hasCompare && (
-                                  <div className="h-1 rounded-full bg-secondary/40 overflow-hidden">
-                                    <div className="h-full rounded-full bg-accent/30 transition-all duration-700"
-                                      style={{ width: `${(cmpItem.count / cmpMax) * 100}%` }} />
-                                  </div>
-                                )}
-                              </div>
-                            </div>
+                            <span className="flex-1 text-sm text-foreground truncate">{t.name}</span>
+                            <span className="shrink-0 tabular-nums text-sm font-semibold text-foreground/60 flex items-center gap-1.5">
+                              {t.count}×
+                              {cmpItem && hasCompare && <Delta a={t.count} b={cmpItem.count} />}
+                            </span>
                           </div>
                         )
                       })}
@@ -568,7 +545,7 @@ export default function AdminInzichten() {
                     <h2 className="text-sm font-semibold text-foreground">Drukte per dag</h2>
                   </div>
                   {chartMode === 'chart' ? (
-                    <HBarRows rows={data.dayRanking}
+                    <ColumnChart rows={data.dayRanking}
                       compareRows={hasCompare ? (data.compareDayRanking ?? null) : null}
                       priLabel={priLabel} cmpLabel={cmpLabel} />
                   ) : (

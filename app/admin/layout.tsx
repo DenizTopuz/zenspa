@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutList, BarChart2, CalendarOff } from 'lucide-react'
+import { LayoutList, BarChart2, CalendarOff, CalendarDays } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const TABS = [
-  { key: 'boekingen', label: 'Boekingen', icon: LayoutList,  href: '/admin/boekingen' },
-  { key: 'inzichten', label: 'Inzichten', icon: BarChart2,   href: '/admin/inzichten' },
-  { key: 'tijdslot',  label: 'Tijdslot',  icon: CalendarOff, href: '/admin/blokkeren' },
+  { key: 'boekingen', label: 'Boekingen', icon: LayoutList,   href: '/admin/boekingen' },
+  { key: 'agenda',    label: 'Agenda',    icon: CalendarDays,  href: '/admin/agenda'    },
+  { key: 'inzichten', label: 'Inzichten', icon: BarChart2,    href: '/admin/inzichten' },
+  { key: 'tijdslot',  label: 'Tijdslot',  icon: CalendarOff,  href: '/admin/blokkeren' },
 ] as const
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -18,6 +19,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const activeTab = pathname.startsWith('/admin/inzichten') ? 'inzichten'
     : pathname.startsWith('/admin/blokkeren')  ? 'tijdslot'
+    : pathname.startsWith('/admin/agenda')     ? 'agenda'
     : 'boekingen'
 
   const [pendingCount, setPendingCount] = useState(0)
@@ -39,12 +41,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [isLogin])
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const tabRefs      = useRef<(HTMLButtonElement | null)[]>([null, null, null])
+  const tabRefs      = useRef<(HTMLButtonElement | null)[]>([null, null, null, null])
   const [pill, setPill] = useState<{ left: number; width: number } | null>(null)
 
   useEffect(() => {
     if (isLogin) return
-    const idx = activeTab === 'boekingen' ? 0 : activeTab === 'inzichten' ? 1 : 2
+    const idx = activeTab === 'boekingen' ? 0 : activeTab === 'agenda' ? 1 : activeTab === 'inzichten' ? 2 : 3
     const btn = tabRefs.current[idx]
     if (!btn || !containerRef.current) return
     const r = containerRef.current.getBoundingClientRect()
