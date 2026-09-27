@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Clock, CalendarDays, Sparkles, Check, ArrowUpRight } from 'lucide-react'
+import { Clock, CalendarDays, Sparkles, Check } from 'lucide-react'
 import { SiteNav } from '@/components/site-nav'
 import { SiteFooter } from '@/components/site-footer'
 import { Reveal } from '@/components/reveal'
@@ -12,7 +12,7 @@ import { TreatmentHero } from '@/components/treatment-hero'
 import { TrustPillars } from '@/components/trust-pillars'
 import { FaqSection } from '@/components/faq-section'
 import { ContactSection } from '@/components/contact-section'
-import { getTreatmentBySlug, getAllTreatments, getRelatedTreatments } from '@/lib/behandelingen-data'
+import { getTreatmentBySlug, getAllTreatments } from '@/lib/behandelingen-data'
 
 // ─── Per-category default content ────────────────────────────────────────────
 const CAT: Record<string, {
@@ -107,7 +107,6 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
   if (!t) notFound()
 
   const content  = getContent(t.category)
-  const related  = getRelatedTreatments(slug, 4)
 
   const priceNum = parseFloat(t.price.replace(/[^0-9,]/g, '').replace(',', '.')) || undefined
   const serviceSchema = {
@@ -370,54 +369,6 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         {/* ── 9. Booking CTA ───────────────────────────────────────── */}
         <BookingCTA />
 
-        {/* ── 10. Related treatments ───────────────────────────────── */}
-        <section className="section-fade bg-card py-24 md:py-32">
-          <div className="mx-auto max-w-[1840px] px-5 md:px-6">
-            <Reveal>
-              <div className="mb-12">
-                <h2 className="font-heading text-[40px] tracking-tight md:text-[54px] lg:text-[68px]">Ontdek ook</h2>
-                <p className="mt-3 text-[17px] text-muted-foreground md:text-[18px]">Meer behandelingen die bij jou passen.</p>
-              </div>
-            </Reveal>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
-              {related.map((r, i) => (
-                <Reveal key={r.slug} delay={i * 55}>
-                  <Link
-                    href={`/behandelingen/${r.slug}`}
-                    className="group relative overflow-hidden rounded-3xl bg-card
-                               ring-1 ring-inset ring-foreground/12
-                               shadow-[0_2px_10px_rgba(0,0,0,0.07)]
-                               transition-all duration-300 ease-out
-                               hover:-translate-y-4 hover:ring-foreground/20
-                               hover:shadow-[0_12px_36px_rgba(0,0,0,0.13)]
-                               focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
-                      <Image src={r.image || '/hero.jpg'} alt="" fill aria-hidden
-                        className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
-                      <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                      {r.tag && (
-                        <span className="absolute left-3 top-3 z-10 rounded-full bg-accent px-3 py-1 text-[12px] font-semibold text-white shadow-md">
-                          {r.tag}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-center justify-between gap-3 bg-secondary/50 p-4 rounded-b-3xl">
-                      <div className="min-w-0">
-                        <p className="line-clamp-2 text-[15px] font-semibold leading-tight">{r.name}</p>
-                        <p className="mt-0.5 text-[14px] font-bold text-accent">{r.price}</p>
-                      </div>
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">
-                        <ArrowUpRight className="h-3.5 w-3.5 text-foreground transition-colors duration-300 group-hover:text-background" />
-                      </div>
-                    </div>
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── 11. FAQ ──────────────────────────────────────────────── */}
         <FaqSection />
@@ -425,54 +376,6 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         {/* ── 12. Contact form ─────────────────────────────────────── */}
         <ContactSection />
 
-        {/* ── 13. Ontdek ook (reprise) ─────────────────────────────── */}
-        <section className="section-fade bg-card py-24 md:py-32">
-          <div className="mx-auto max-w-[1840px] px-5 md:px-6">
-            <Reveal>
-              <div className="mb-12">
-                <h2 className="font-heading text-[40px] tracking-tight md:text-[54px] lg:text-[68px]">Ook interessant voor jou</h2>
-                <p className="mt-3 text-[17px] text-muted-foreground md:text-[18px]">Meer behandelingen die bij jou passen.</p>
-              </div>
-            </Reveal>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
-              {related.map((r, i) => (
-                <Reveal key={r.slug} delay={i * 55}>
-                  <Link
-                    href={`/behandelingen/${r.slug}`}
-                    className="group relative overflow-hidden rounded-3xl bg-card
-                               ring-1 ring-inset ring-foreground/12
-                               shadow-[0_2px_10px_rgba(0,0,0,0.07)]
-                               transition-all duration-300 ease-out
-                               hover:-translate-y-4 hover:ring-foreground/20
-                               hover:shadow-[0_12px_36px_rgba(0,0,0,0.13)]
-                               focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
-                      <Image src={r.image || '/hero.jpg'} alt="" fill aria-hidden
-                        className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
-                      <div className="absolute inset-0 bg-gradient-to-b from-black/68 via-black/26 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                      {r.tag && (
-                        <span className="absolute left-3 top-3 z-10 rounded-full bg-accent px-3 py-1 text-[12px] font-semibold text-white shadow-md">
-                          {r.tag}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-center justify-between gap-3 bg-secondary/50 p-4 rounded-b-3xl">
-                      <div className="min-w-0">
-                        <p className="line-clamp-2 text-[15px] font-semibold leading-tight">{r.name}</p>
-                        <p className="mt-0.5 text-[14px] font-bold text-accent">{r.price}</p>
-                      </div>
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-foreground/20 transition-all duration-300 group-hover:border-foreground group-hover:bg-foreground">
-                        <ArrowUpRight className="h-3.5 w-3.5 text-foreground transition-colors duration-300 group-hover:text-background" />
-                      </div>
-                    </div>
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
 
       </main>
       <SiteFooter bg="bg-card" />
