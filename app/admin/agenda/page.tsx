@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Link2, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { BookingRow } from '@/lib/supabase/types'
 
@@ -146,19 +146,35 @@ function TimelineGrid({ dayBookings }: { dayBookings: BookingRow[] }) {
 
 export default function AdminAgenda() {
   const router  = useRouter()
-  const [bookings, setBookings] = useState<BookingRow[]>([])
-  const [loading, setLoading]  = useState(true)
-  const [mode, setMode]        = useState<'day' | 'week'>('week')
-  const [date, setDate]        = useState(new Date())
+  const [bookings, setBookings]       = useState<BookingRow[]>([])
+  const [loading, setLoading]         = useState(true)
+  const [mode, setMode]               = useState<'day' | 'week'>('week')
+  const [date, setDate]               = useState(new Date())
   const [selectedDay, setSelectedDay] = useState(new Date())
+  const [calUrl, setCalUrl]           = useState<string | null>(null)
+  const [copied, setCopied]           = useState(false)
 
   const load = useCallback(async () => {
-    const res = await fetch('/api/admin/bookings')
-    if (res.status === 401) { router.push('/admin'); return }
-    const { bookings } = await res.json()
+    const [bRes, uRes] = await Promise.all([
+      fetch('/api/admin/bookings'),
+      fetch('/api/admin/calendar-url'),
+    ])
+    if (bRes.status === 401) { router.push('/admin'); return }
+    const { bookings } = await bRes.json()
     setBookings((bookings ?? []).filter((b: BookingRow) => b.status === 'confirmed' || b.status === 'pending'))
+    if (uRes.ok) {
+      const { webcal } = await uRes.json()
+      setCalUrl(webcal)
+    }
     setLoading(false)
   }, [router])
+
+  async function copyUrl() {
+    if (!calUrl) return
+    await navigator.clipboard.writeText(calUrl)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   useEffect(() => { load() }, [load])
 
@@ -195,6 +211,26 @@ export default function AdminAgenda() {
       </header>
 
       <main className="flex-1 overflow-y-auto min-h-0 lg:flex-none lg:overflow-visible mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-4">
+        {/* Agenda abonneren */}
+        {calUrl && (
+          <div className="rounded-2xl border border-foreground/8 bg-white shadow-sm px-4 py-4 flex items-center gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-foreground">Agenda op je telefoon</p>
+              <p className="text-[12px] text-foreground/45 mt-0.5">Kopieer de link en voeg toe in Apple Agenda of Google Kalender</p>
+            </div>
+            <button onClick={copyUrl}
+              className={cn(
+                'shrink-0 flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold transition-colors',
+                copied
+                  ? 'bg-green-100 text-green-700'
+                  : 'bg-accent/10 text-accent hover:bg-accent/20',
+              )}>
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}
+              {copied ? 'Gekopieerd' : 'Kopieer link'}
+            </button>
+          </div>
+        )}
+
         {/* Titel + dag/week toggle */}
         <div className="flex items-center justify-between gap-3">
           <h1 className="text-xl font-bold text-foreground">Agenda</h1>
