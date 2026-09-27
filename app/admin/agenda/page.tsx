@@ -272,7 +272,9 @@ export default function AdminAgenda() {
                         {d.getDate()}
                       </span>
                       {dayB.length > 0 && (
-                        <span className="text-[9px] font-semibold text-foreground/40 tabular-nums">{dayB.length}</span>
+                        <span className="inline-flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-accent/15 text-[9px] font-bold text-accent tabular-nums">
+                          {dayB.length}
+                        </span>
                       )}
                     </button>
                   )
