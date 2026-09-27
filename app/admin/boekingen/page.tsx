@@ -33,7 +33,7 @@ function treatmentColor(slug: string) {
 // ── Timeline constants ────────────────────────────────────────────────────────
 const HOUR_PX  = 88          // px per hour — tall enough for 3 lines of text in a 45-min block
 const TL_START = 8
-const TL_END   = 20          // show until 20:00
+const TL_END   = 22          // show until 22:00
 
 function amsMinutes(iso: string) {
   const d = new Date(iso)
