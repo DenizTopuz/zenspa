@@ -270,7 +270,8 @@ export default function AdminInzichten() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto min-h-0 mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-5 pb-4">
+      <main className="flex-1 overflow-y-auto min-h-0">
+      <div className="mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-5 pb-4">
 
         {/* Paginakop — losgekoppeld van filters */}
         <div className="flex items-center justify-between gap-3">
@@ -629,7 +630,7 @@ export default function AdminInzichten() {
                     {data.customerStats.topCustomers.map((c, i) => (
                       <div key={i} className="flex items-center justify-between">
                         <span className="text-sm text-foreground/75 truncate">{c.name}</span>
-                        <span className="shrink-0 ml-3 tabular-nums text-sm font-semibold text-foreground/60">{c.count}×</span>
+                        <span className="shrink-0 inline-flex h-5 min-w-5 px-1.5 items-center justify-center rounded-full bg-foreground/6 text-[11px] font-semibold text-foreground/55 tabular-nums">{c.count}</span>
                       </div>
                     ))}
                   </div>
@@ -672,6 +673,7 @@ export default function AdminInzichten() {
             )}
           </>
         )}
+      </div>
       </main>
 
     </>

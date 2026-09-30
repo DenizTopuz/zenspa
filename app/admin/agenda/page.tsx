@@ -210,7 +210,8 @@ export default function AdminAgenda() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto min-h-0 mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-4">
+      <main className="flex-1 overflow-y-auto min-h-0">
+      <div className="mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-4">
         {/* Agenda abonneren */}
         {calUrl && (
           <div className="rounded-2xl border border-foreground/8 bg-white shadow-sm px-4 py-4 flex items-center gap-3">
@@ -327,6 +328,7 @@ export default function AdminAgenda() {
               : <><TimelineLegend /><TimelineGrid dayBookings={activeDayBooks} /></>}
           </>
         )}
+      </div>
       </main>
     </>
   )
