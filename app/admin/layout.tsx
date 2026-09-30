@@ -64,7 +64,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </div>
 
       {/* Shared bottom nav */}
-      <div className="shrink-0 border-t border-foreground/10 bg-background"
+      <div className="shrink-0 border-t border-foreground/10 bg-background relative z-20"
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
         <div ref={containerRef} className="relative flex items-stretch mx-auto max-w-4xl">
 
