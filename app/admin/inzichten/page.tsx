@@ -508,12 +508,14 @@ export default function AdminInzichten() {
                         const cmpItem = data.compareTreatmentRanking?.find(c => c.name === t.name)
                         return (
                           <div key={i} className="flex items-center gap-3 py-0.5">
-                            <span className="shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full bg-foreground/6 text-[10px] font-semibold text-foreground/45 tabular-nums">
+                            <span className="shrink-0 text-[11px] font-medium text-foreground/35 tabular-nums w-4 text-right">
                               {i + 1}
                             </span>
                             <span className="flex-1 text-sm text-foreground truncate">{t.name}</span>
-                            <span className="shrink-0 tabular-nums text-sm font-semibold text-foreground/60 flex items-center gap-1.5">
-                              {t.count}
+                            <span className="shrink-0 flex items-center gap-1.5">
+                              <span className="inline-flex h-5 min-w-5 px-1.5 items-center justify-center rounded-full bg-foreground/6 text-[11px] font-semibold text-foreground/55 tabular-nums">
+                                {t.count}
+                              </span>
                               {cmpItem && hasCompare && <Delta a={t.count} b={cmpItem.count} />}
                             </span>
                           </div>
