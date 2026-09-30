@@ -31,7 +31,16 @@ function getUpcoming(days = 120) {
   }).sort((a, b) => a.date.localeCompare(b.date))
 }
 
-type Booking = { id: string; treatment_name: string; status: string; start_time: string; created_at: string }
+type Booking = {
+  id: string
+  treatment_name: string
+  status: string
+  start_time: string
+  end_time: string
+  customer_name: string
+  customer_email: string
+  created_at: string
+}
 
 function buildStats(bookings: Booking[]) {
   const confirmed = bookings.filter(b => b.status === 'confirmed')
@@ -78,6 +87,56 @@ function buildDayOfMonthData(bookings: Booking[], month: number, year: number | 
   return Array.from({ length: daysInMonth }, (_, i) => ({ label: String(i + 1), count: dayMap[i] }))
 }
 
+function buildHourRanking(bookings: Booking[]): { label: string; count: number }[] {
+  const confirmed = bookings.filter(b => b.status === 'confirmed')
+  const hourMap: Record<number, number> = {}
+  confirmed.forEach(b => {
+    const parts = new Intl.DateTimeFormat('nl-NL', {
+      hour: 'numeric', hour12: false, timeZone: 'Europe/Amsterdam',
+    }).formatToParts(new Date(b.start_time))
+    const h = Number(parts.find(p => p.type === 'hour')?.value ?? 0)
+    hourMap[h] = (hourMap[h] ?? 0) + 1
+  })
+  return Array.from({ length: 14 }, (_, i) => ({
+    label: String(i + 8).padStart(2, '0'),
+    count: hourMap[i + 8] ?? 0,
+  }))
+}
+
+function buildCustomerStats(bookings: Booking[]) {
+  const confirmed = bookings.filter(b => b.status === 'confirmed')
+  const map: Record<string, { name: string; count: number }> = {}
+  confirmed.forEach(b => {
+    const key = (b.customer_email ?? '').toLowerCase().trim() || (b.customer_name ?? '').toLowerCase().trim()
+    if (!key) return
+    if (!map[key]) map[key] = { name: b.customer_name ?? key, count: 0 }
+    map[key].count++
+  })
+  const customers = Object.values(map).sort((a, b) => b.count - a.count)
+  const returningBookings = customers.filter(c => c.count > 1).reduce((s, c) => s + c.count, 0)
+  return {
+    returningPct: confirmed.length > 0 ? Math.round((returningBookings / confirmed.length) * 100) : 0,
+    uniqueCustomers: customers.length,
+    topCustomers: customers.slice(0, 5),
+  }
+}
+
+function buildAvgDuration(bookings: Booking[]): number | null {
+  const confirmed = bookings.filter(b => b.status === 'confirmed' && b.end_time)
+  if (confirmed.length === 0) return null
+  const total = confirmed.reduce((s, b) => {
+    return s + (new Date(b.end_time).getTime() - new Date(b.start_time).getTime()) / 60_000
+  }, 0)
+  return Math.round(total / confirmed.length)
+}
+
+function buildCancellationRate(bookings: Booking[]): number {
+  const confirmed = bookings.filter(b => b.status === 'confirmed').length
+  const cancelled = bookings.filter(b => b.status === 'cancelled').length
+  const total = confirmed + cancelled
+  return total > 0 ? Math.round((cancelled / total) * 100) : 0
+}
+
 const MONTH_LABELS = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
 
 export async function GET(req: NextRequest) {
@@ -96,7 +155,7 @@ export async function GET(req: NextRequest) {
   const supabase = createServiceClient()
   const { data: rawBookings, error } = await supabase
     .from('bookings')
-    .select('id, treatment_name, status, start_time, created_at')
+    .select('id, treatment_name, status, start_time, end_time, customer_name, customer_email, created_at')
     .order('start_time', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -123,6 +182,10 @@ export async function GET(req: NextRequest) {
   const dayRanking       = buildDayRanking(primary)
   const monthData        = selectedMonth ? null : buildMonthData(primary)
   const dayOfMonthData   = selectedMonth ? buildDayOfMonthData(primary, selectedMonth, selectedYear) : null
+  const hourRanking      = buildHourRanking(primary)
+  const customerStats    = buildCustomerStats(primary)
+  const avgDurationMin   = buildAvgDuration(primary)
+  const cancellationRate = buildCancellationRate(primary)
 
   const compareStats            = compare ? buildStats(compare)            : null
   const compareTreatmentRanking = compare ? buildTreatmentRanking(compare) : null
@@ -133,6 +196,8 @@ export async function GET(req: NextRequest) {
     : (compare && selectedMonth)
     ? buildDayOfMonthData(compare, selectedMonth, effectiveCompareYear)
     : null
+  const compareHourRanking   = compare ? buildHourRanking(compare)   : null
+  const compareCustomerStats = compare ? buildCustomerStats(compare)  : null
 
   const upcomingHolidays = getUpcoming(120)
 
@@ -192,11 +257,17 @@ Geef 3 concrete, praktische aanbevelingen in het Nederlands. Elke aanbeveling ma
     dayRanking,
     monthData,
     dayOfMonthData,
+    hourRanking,
+    customerStats,
+    avgDurationMin,
+    cancellationRate,
     compareStats,
     compareTreatmentRanking,
     compareDayRanking,
     compareMonthData,
     compareDayOfMonthData,
+    compareHourRanking,
+    compareCustomerStats,
     upcomingHolidays,
     aiAdvice,
   })

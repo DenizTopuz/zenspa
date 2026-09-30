@@ -6,6 +6,7 @@ import Image from 'next/image'
 import {
   TrendingUp, Calendar, Sparkles, Award, AlertCircle,
   BarChart, Table2, ChevronUp, ChevronDown, Minus, X, Plus,
+  Clock, Users, Timer,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -33,6 +34,12 @@ interface InsightsData {
   dayOfMonthData:       DataRow[] | null
   compareMonthData:      DataRow[] | null
   compareDayOfMonthData: DataRow[] | null
+  hourRanking:        DataRow[]
+  compareHourRanking: DataRow[] | null
+  customerStats: { returningPct: number; uniqueCustomers: number; topCustomers: { name: string; count: number }[] }
+  compareCustomerStats: { returningPct: number; uniqueCustomers: number; topCustomers: { name: string; count: number }[] } | null
+  avgDurationMin:   number | null
+  cancellationRate: number
   upcomingHolidays: HolidayRow[]
   aiAdvice: string | null
 }
@@ -556,6 +563,108 @@ export default function AdminInzichten() {
                 </div>
               )}
             </div>
+
+            {/* Nieuwe statistieken */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+              {/* Populairste uren */}
+              {data.hourRanking.some(h => h.count > 0) && (
+                <div className="rounded-2xl border border-foreground/8 bg-white px-5 py-5 shadow-sm">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Clock className="h-4 w-4 text-foreground/40" aria-hidden />
+                    <h2 className="text-sm font-semibold text-foreground">Populairste tijden</h2>
+                  </div>
+                  {chartMode === 'chart' ? (
+                    <ColumnChart
+                      rows={data.hourRanking}
+                      compareRows={hasCompare ? (data.compareHourRanking ?? null) : null}
+                      priLabel={priLabel} cmpLabel={cmpLabel} />
+                  ) : (
+                    <DataTable
+                      rows={data.hourRanking.map(r => ({ label: `${r.label}:00`, count: r.count }))}
+                      compareRows={hasCompare && data.compareHourRanking
+                        ? data.compareHourRanking.map(r => ({ label: `${r.label}:00`, count: r.count }))
+                        : null}
+                      priLabel={priLabel} cmpLabel={cmpLabel} />
+                  )}
+                </div>
+              )}
+
+              {/* Klantloyaliteit */}
+              {data.customerStats.uniqueCustomers > 0 && (
+                <div className="rounded-2xl border border-foreground/8 bg-white px-5 py-5 shadow-sm">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Users className="h-4 w-4 text-foreground/40" aria-hidden />
+                    <h2 className="text-sm font-semibold text-foreground">Klanten</h2>
+                  </div>
+
+                  {/* Stat-rij */}
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <div className="rounded-xl bg-secondary/20 px-3 py-3">
+                      <p className="text-[11px] text-foreground/40 uppercase tracking-wide font-medium">Terugkerend</p>
+                      <p className="text-2xl font-bold text-foreground mt-0.5">{data.customerStats.returningPct}%</p>
+                      {hasCompare && data.compareCustomerStats && (
+                        <div className="flex items-center gap-1 mt-0.5">
+                          <span className="text-[11px] text-foreground/30">{data.compareCustomerStats.returningPct}%</span>
+                          <Delta a={data.customerStats.returningPct} b={data.compareCustomerStats.returningPct} unit="%" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="rounded-xl bg-secondary/20 px-3 py-3">
+                      <p className="text-[11px] text-foreground/40 uppercase tracking-wide font-medium">Unieke klanten</p>
+                      <p className="text-2xl font-bold text-foreground mt-0.5">{data.customerStats.uniqueCustomers}</p>
+                      {hasCompare && data.compareCustomerStats && (
+                        <div className="flex items-center gap-1 mt-0.5">
+                          <span className="text-[11px] text-foreground/30">{data.compareCustomerStats.uniqueCustomers}</span>
+                          <Delta a={data.customerStats.uniqueCustomers} b={data.compareCustomerStats.uniqueCustomers} />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Top klanten */}
+                  <p className="text-[11px] font-semibold text-foreground/35 uppercase tracking-wide mb-2">Meest actief</p>
+                  <div className="space-y-1.5">
+                    {data.customerStats.topCustomers.map((c, i) => (
+                      <div key={i} className="flex items-center justify-between">
+                        <span className="text-sm text-foreground/75 truncate">{c.name}</span>
+                        <span className="shrink-0 ml-3 tabular-nums text-sm font-semibold text-foreground/60">{c.count}×</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Gemiddelde behandelduur + annuleringsratio */}
+            {(data.avgDurationMin !== null || data.cancellationRate > 0) && (
+              <div className="grid grid-cols-2 gap-3">
+                {data.avgDurationMin !== null && (
+                  <div className="rounded-2xl border border-foreground/8 bg-white px-4 py-4 shadow-sm">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <Timer className="h-4 w-4 text-foreground/35" aria-hidden />
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-foreground/35">Gem. duur</p>
+                    </div>
+                    <p className="text-2xl font-bold text-foreground">
+                      {data.avgDurationMin >= 60
+                        ? `${Math.floor(data.avgDurationMin / 60)}u${data.avgDurationMin % 60 > 0 ? ` ${data.avgDurationMin % 60}m` : ''}`
+                        : `${data.avgDurationMin}m`}
+                    </p>
+                    <p className="text-[11px] text-foreground/35 mt-0.5">per behandeling</p>
+                  </div>
+                )}
+                {data.cancellationRate > 0 && (
+                  <div className="rounded-2xl border border-foreground/8 bg-white px-4 py-4 shadow-sm">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <AlertCircle className="h-4 w-4 text-foreground/35" aria-hidden />
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-foreground/35">Annulering</p>
+                    </div>
+                    <p className="text-2xl font-bold text-foreground">{data.cancellationRate}%</p>
+                    <p className="text-[11px] text-foreground/35 mt-0.5">van bevestigde afspraken</p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {data.stats.total === 0 && (
               <p className="text-center text-foreground/40 py-8">Geen boekingen gevonden voor deze periode.</p>
