@@ -57,14 +57,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (isLogin) return <>{children}</>
 
   return (
-    <div className="flex flex-col h-dvh bg-background">
-      {/* Page content — fills remaining height on mobile, natural height on desktop */}
-      <div className="flex-1 flex flex-col min-h-0">
-        {children}
-      </div>
+    <div className="bg-background">
+      {/* Page content */}
+      {children}
 
-      {/* Shared bottom nav */}
-      <div className="shrink-0 border-t border-foreground/10 bg-background relative z-20"
+      {/* Shared bottom nav — fixed so it never blocks scroll */}
+      <div className="fixed bottom-0 left-0 right-0 border-t border-foreground/10 bg-background z-20"
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
         <div ref={containerRef} className="relative flex items-stretch mx-auto max-w-4xl">
 
