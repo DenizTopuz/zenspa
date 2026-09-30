@@ -80,7 +80,7 @@ export default function AdminBlokkeren() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto min-h-0 lg:flex-none lg:overflow-visible mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-6 pb-4">
+      <main className="flex-1 overflow-y-auto min-h-0 mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-6 pb-4">
         {/* Formulier */}
         <div className="rounded-2xl border border-foreground/8 bg-white p-5 shadow-sm">
           <h2 className="mb-4 font-semibold text-foreground">Periode blokkeren</h2>

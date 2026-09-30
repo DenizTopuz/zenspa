@@ -270,7 +270,7 @@ export default function AdminInzichten() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto min-h-0 lg:flex-none lg:overflow-visible mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-5 pb-4">
+      <main className="flex-1 overflow-y-auto min-h-0 mx-auto w-full max-w-4xl px-4 py-6 md:px-8 lg:px-0 space-y-5 pb-4">
 
         {/* Paginakop — losgekoppeld van filters */}
         <div className="flex items-center justify-between gap-3">
