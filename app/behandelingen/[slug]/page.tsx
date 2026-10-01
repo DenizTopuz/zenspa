@@ -378,7 +378,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
 
 
       </main>
-      <SiteFooter bg="bg-card" />
+      <SiteFooter bg="bg-background" />
     </>
   )
 }
