@@ -50,7 +50,7 @@ export default function AlgemeneVoorwaardenPage() {
               <h2>1. Toepasselijkheid</h2>
               <p>
                 Deze algemene voorwaarden zijn van toepassing op alle diensten van Zen Spa, gevestigd aan de
-                Kretastraat 77, 1316 VT Almere. Door een afspraak te maken of gebruik te maken van onze diensten,
+                Kretastraat 77, 1339 VT Almere. Door een afspraak te maken of gebruik te maken van onze diensten,
                 ga je akkoord met deze voorwaarden.
               </p>
 

@@ -50,7 +50,7 @@ function formatDateLong(dateStr: string) {
 function isBusinessDay(dateStr: string): boolean {
   const [y, m, d] = dateStr.split('-').map(Number)
   const dow = new Date(y, m - 1, d).getDay() // 0=Sun
-  return dow === 1 || dow === 3 || dow === 5 // Mon Wed Fri
+  return dow === 1 || dow === 2 || dow === 5 // Mon Tue Fri
 }
 
 
@@ -437,7 +437,7 @@ function DateTimeStep({ treatment, selectedDate, selectedSlot, onDateSelect, onS
     <div className="space-y-6">
       <div>
         <h2 className="font-heading text-[28px] leading-tight tracking-tight md:text-[36px]">Kies een datum & tijd</h2>
-        <p className="mt-1 text-[15px] text-foreground/68">We zijn open op <strong>maandag, woensdag en vrijdag</strong> van 10:00–18:00.</p>
+        <p className="mt-1 text-[15px] text-foreground/68">We zijn open op <strong>maandag, dinsdag en vrijdag</strong>.</p>
       </div>
 
       <DateStrip selectedDate={selectedDate} onDateSelect={onDateSelect} treatmentSlug={treatment.slug} />

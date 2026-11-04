@@ -4,8 +4,8 @@ import { MapPin, Clock, Phone, Mail, ArrowRight } from 'lucide-react'
 import { ZenSpaLogo } from '@/components/logo'
 
 const contactBar = [
-  { icon: MapPin, label: 'Adres',          value: 'Kretastraat 77, 1316 VT Almere', href: 'https://maps.google.com/?q=Kretastraat+77,+1316+VT+Almere', external: true },
-  { icon: Clock,  label: 'Openingstijden', value: 'Ma, Wo, Vr · 10:00–18:00',       href: '/contact' },
+  { icon: MapPin, label: 'Adres',          value: 'Kretastraat 77, 1339 VT Almere', href: 'https://maps.google.com/?q=Kretastraat+77,+1339+VT+Almere', external: true },
+  { icon: Clock,  label: 'Openingstijden', value: 'Ma, Di, Vr · zie rooster',        href: '/contact' },
   { icon: Phone,  label: 'Bel ons',        value: '06 53 20 77 29',                  href: 'tel:0653207729' },
   { icon: Mail,   label: 'E-mail',         value: 'info@zenspa.nl',                  href: 'mailto:info@zenspa.nl' },
 ]

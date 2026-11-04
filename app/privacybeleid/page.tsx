@@ -49,7 +49,7 @@ export default function PrivacybeleidPage() {
 
               <h2>1. Wie zijn wij?</h2>
               <p>
-                Zen Spa is een schoonheidssalon gevestigd aan de Kretastraat 77, 1316 VT Almere. Wij zijn verantwoordelijk
+                Zen Spa is een schoonheidssalon gevestigd aan de Kretastraat 77, 1339 VT Almere. Wij zijn verantwoordelijk
                 voor de verwerking van persoonsgegevens zoals beschreven in dit privacybeleid.
               </p>
               <p>

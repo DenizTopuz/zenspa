@@ -27,13 +27,13 @@ const infoItems = [
   {
     icon: <MapPin className="h-6 w-6 text-foreground/60" aria-hidden />,
     label: 'Adres',
-    value: 'Kretastraat 77\n1316 VT Almere',
+    value: 'Kretastraat 77\n1339 VT Almere',
     href: 'https://maps.google.com/?q=Kretastraat+77+Almere',
   },
   {
     icon: <Clock className="h-6 w-6 text-foreground/60" aria-hidden />,
     label: 'Openingstijden',
-    value: 'Ma, Wo, Vr\n10:00 – 18:00',
+    value: 'Ma · 09:30–14:30 & 17:30–22:00\nDi, Vr · 09:00–14:30',
     href: null,
   },
 ]
@@ -113,7 +113,7 @@ export default function ContactPage() {
         {/* ── Map ───────────────────────────────────────────────────── */}
         <section className="bg-background" style={{ height: '520px' }}>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2441.7!2d5.2!3d52.37!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609b1d1b4a6c9%3A0x0!2sKretastraat+77%2C+1316+VT+Almere!5e0!3m2!1snl!2snl!4v1!5m2!1snl!2snl&q=Kretastraat+77,+1316+VT+Almere,+Netherlands"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2441.7!2d5.2!3d52.37!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609b1d1b4a6c9%3A0x0!2sKretastraat+77%2C+1339+VT+Almere!5e0!3m2!1snl!2snl!4v1!5m2!1snl!2snl&q=Kretastraat+77,+1339+VT+Almere,+Netherlands"
             width="100%"
             height="100%"
             style={{ border: 0, display: 'block' }}

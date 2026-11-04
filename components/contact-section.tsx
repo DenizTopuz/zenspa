@@ -48,14 +48,14 @@ export function ContactSection({ className }: { className?: string }) {
                   <MapPin className="h-4 w-4 shrink-0 text-white/50" aria-hidden />
                   <p className="text-[11px] font-semibold tracking-[0.14em] text-white/50 uppercase">Adres</p>
                 </div>
-                <p className="text-[14px] leading-[1.5] text-white/80">Kretastraat 77<br />1316 VT Almere</p>
+                <p className="text-[14px] leading-[1.5] text-white/80">Kretastraat 77<br />1339 VT Almere</p>
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 shrink-0 text-white/50" aria-hidden />
                   <p className="text-[11px] font-semibold tracking-[0.14em] text-white/50 uppercase">Openingstijden</p>
                 </div>
-                <p className="text-[14px] leading-[1.5] text-white/80">Ma, Wo, Vr<br />10:00 – 18:00</p>
+                <p className="text-[14px] leading-[1.5] text-white/80">Ma · 09:30–14:30 & 17:30–22:00<br />Di, Vr · 09:00–14:30</p>
               </div>
             </div>
           </div>

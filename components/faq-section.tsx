@@ -127,7 +127,7 @@ export function FaqSection({ className }: { className?: string }) {
 
             <div className="relative flex h-full flex-col items-center justify-center gap-8 px-10 py-16 text-center text-white md:px-14">
               <p className="text-[13px] font-medium tracking-wide text-white/65">
-                <a href="tel:0653207729" className="hover:text-white transition-colors">06 53 20 77 29</a> · Ma, Wo, Vr: 10:00–18:00
+                <a href="tel:0653207729" className="hover:text-white transition-colors">06 53 20 77 29</a> · Ma · 09:30–14:30 & 17:30–22:00 · Di, Vr · 09:00–14:30
               </p>
 
               <h3 className="font-heading text-[36px] leading-[1.1] tracking-tight md:text-[44px]">

@@ -104,7 +104,7 @@ export async function PATCH(req: NextRequest) {
             <li><strong>Behandeling:</strong> ${esc(booking.treatment_name)}</li>
             <li><strong>Datum:</strong> ${date}</li>
             <li><strong>Tijd:</strong> ${time}</li>
-            <li><strong>Adres:</strong> Kretastraat 77, 1316 VT Almere</li>
+            <li><strong>Adres:</strong> Kretastraat 77, 1339 VT Almere</li>
           </ul>
           <p>Wij zien je graag! Mocht je de afspraak toch willen annuleren, dan kan dat via <a href="${cancelLink}">deze link</a>.</p>
           <p>Met vriendelijke groet,<br/>Zen Spa · House of Beauty</p>

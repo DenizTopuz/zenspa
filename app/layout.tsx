@@ -37,11 +37,13 @@ const localBusinessSchema = {
     streetAddress: 'Kretastraat 77',
     addressLocality: 'Almere',
     addressRegion: 'Flevoland',
-    postalCode: '1316 VT',
+    postalCode: '1339 VT',
     addressCountry: 'NL',
   },
   openingHoursSpecification: [
-    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Wednesday', 'Friday'], opens: '10:00', closes: '18:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday'], opens: '09:30', closes: '14:30' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday'], opens: '17:30', closes: '22:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Friday'], opens: '09:00', closes: '14:30' },
   ],
   priceRange: '€€',
   currenciesAccepted: 'EUR',
@@ -62,7 +64,7 @@ const localBusinessSchema = {
     bestRating: '5',
     worstRating: '1',
   },
-  hasMap: 'https://maps.google.com/?q=Kretastraat+77,+1316+VT+Almere',
+  hasMap: 'https://maps.google.com/?q=Kretastraat+77,+1339+VT+Almere',
 }
 
 export default function RootLayout({

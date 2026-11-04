@@ -31,7 +31,7 @@ const personSchema = {
       '@type': 'PostalAddress',
       streetAddress: 'Kretastraat 77',
       addressLocality: 'Almere',
-      postalCode: '1316 VT',
+      postalCode: '1339 VT',
       addressCountry: 'NL',
     },
   },
@@ -126,10 +126,10 @@ export default function OverMijPage() {
               <div className="relative">
                 <div className="relative aspect-square overflow-hidden rounded-[48px]">
                   <Image
-                    src="/hero.jpg"
+                    src="/cigdem-portrait.jpg"
                     alt="Çigdem, schoonheidsspecialiste en oprichter van Zen Spa in Almere Buiten"
                     fill
-                    className="object-cover object-center"
+                    className="object-cover object-top"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                   <div className="absolute bottom-5 left-5 right-5 flex items-center gap-4 rounded-2xl bg-black/42 px-6 py-5 backdrop-blur-md md:px-8 md:py-6">
@@ -232,7 +232,7 @@ export default function OverMijPage() {
                 <div className="relative mx-auto max-w-[420px] lg:max-w-none">
                   <div className="relative aspect-[3/4] overflow-hidden rounded-[48px] ring-1 ring-foreground/10">
                     <Image
-                      src="/hero.jpg"
+                      src="/cigdem-portrait.jpg"
                       alt="Çigdem — specialist bij Zen Spa"
                       fill
                       className="object-cover object-top"

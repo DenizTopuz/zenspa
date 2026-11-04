@@ -121,7 +121,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
         '@type': 'PostalAddress',
         streetAddress: 'Kretastraat 77',
         addressLocality: 'Almere',
-        postalCode: '1316 VT',
+        postalCode: '1339 VT',
         addressCountry: 'NL',
       },
       telephone: '+31653207729',

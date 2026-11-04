@@ -83,7 +83,7 @@ export async function GET(req: NextRequest) {
             <li><strong>Datum:</strong> ${formatDateNL(b.start_time)}</li>
             <li><strong>Tijd:</strong> ${formatTimeNL(b.start_time)}</li>
           </ul>
-          <p><strong>Adres:</strong> Kretastraat 77, 1316 VT Almere</p>
+          <p><strong>Adres:</strong> Kretastraat 77, 1339 VT Almere</p>
           <p>Tot morgen!<br/>Zen Spa · House of Beauty</p>
         `,
       })
