@@ -126,10 +126,10 @@ export default function OverMijPage() {
               <div className="relative">
                 <div className="relative aspect-square overflow-hidden rounded-[48px]">
                   <Image
-                    src="/cigdem-portrait.jpg"
-                    alt="Çigdem, schoonheidsspecialiste en oprichter van Zen Spa in Almere Buiten"
+                    src="/hero.jpg"
+                    alt="Behandelruimte van Zen Spa in Almere Buiten"
                     fill
-                    className="object-cover object-top"
+                    className="object-cover object-center"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                   <div className="absolute bottom-5 left-5 right-5 flex items-center gap-4 rounded-2xl bg-black/42 px-6 py-5 backdrop-blur-md md:px-8 md:py-6">
