@@ -16,6 +16,7 @@ const navCols = [
     links: [
       { label: 'Home',          href: '/' },
       { label: 'Behandelingen', href: '/behandelingen' },
+      { label: 'Parfums',       href: '/parfums' },
       { label: 'Over ons',      href: '/over-mij' },
       { label: 'Prijzen',       href: '/behandelingen' },
       { label: 'Reviews',       href: '/#stories' },
@@ -41,9 +42,10 @@ const navCols = [
   },
 ]
 
-export function SiteFooter({ bg = 'bg-background' }: { bg?: string }) {
+export function SiteFooter({ bg = 'bg-background', overlap = false }: { bg?: string; overlap?: boolean }) {
   return (
-    <div className={bg}>
+    // overlap: footer schuift over de onderkant van de afbeelding erboven, zodat die onder de ronde hoeken doorloopt
+    <div className={overlap ? 'relative z-10 -mt-10 md:-mt-16 lg:-mt-28' : bg}>
     <footer className="rounded-t-[40px] bg-foreground text-white md:rounded-t-[64px] lg:rounded-t-[112px]">
       <div className="mx-auto max-w-[1840px] px-5 md:px-6">
 

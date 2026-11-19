@@ -234,3 +234,20 @@
   }
   html { scroll-behavior: auto; }
 }
+
+/* ── Parfum-detail: op mobiel schuift de dialog als bottom sheet omhoog ── */
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@keyframes sheet-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@media (max-width: 767px) {
+  .parfum-sheet[open] { animation: sheet-up 0.38s cubic-bezier(0.22, 1, 0.36, 1); }
+  .parfum-sheet[open]::backdrop { animation: sheet-fade 0.3s ease-out; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parfum-sheet[open], .parfum-sheet[open]::backdrop { animation: none; }
+}

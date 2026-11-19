@@ -85,8 +85,9 @@ function Hero() {
 
       {/* Center content */}
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-3 sm:gap-5 lg:gap-7 px-5 text-center">
+        {/* negatieve marge: afstand tot de titel is op elk breakpoint 12px (gelijk aan de andere heroes) */}
         <div
-          className="hero-animate"
+          className="hero-animate sm:-mb-2 lg:-mb-4"
           style={{ animationDelay: "0ms" }}
         >
           <span className="text-[12px] font-semibold tracking-[0.18em] uppercase text-white/75">

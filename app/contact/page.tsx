@@ -59,7 +59,7 @@ export default function ContactPage() {
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/52 to-black/80" />
           <div className="relative z-10 w-full pt-20 pb-44 text-center text-white md:pt-28 md:pb-56">
-            <p className="mb-4 text-[16px] font-semibold tracking-[0.22em] text-white/60 uppercase">
+            <p className="mb-3 text-[16px] font-semibold tracking-[0.22em] text-white/60 uppercase">
               Zen Spa · Almere
             </p>
             <h1 className="font-heading text-[52px] leading-[1.04] tracking-tight md:text-[72px] lg:text-[88px]">

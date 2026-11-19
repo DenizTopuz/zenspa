@@ -51,7 +51,7 @@ export function TreatmentHero({ t }: { t: Treatment }) {
       <div className="relative z-10 w-full px-8 text-center text-white md:px-0">
 
         {/* Price */}
-        <p className="mb-4 text-[28px] font-semibold tracking-[0.04em] text-white/75">
+        <p className="mb-3 text-[28px] font-semibold tracking-[0.04em] text-white/75">
           {t.price}
         </p>
 

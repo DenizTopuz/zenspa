@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { cn } from '@/lib/utils'
 
-export function BookingCTA() {
+export function BookingCTA({ underFooter = false }: { underFooter?: boolean }) {
   const sectionRef = useRef<HTMLElement>(null)
   const bgRef     = useRef<HTMLDivElement>(null)
 
@@ -21,7 +22,10 @@ export function BookingCTA() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative isolate overflow-hidden">
+    <section
+      ref={sectionRef}
+      className={cn('relative isolate overflow-hidden', underFooter && 'pb-10 md:pb-16 lg:pb-28')}
+    >
       {/* Background — oversized vertically to give the parallax room to move */}
       <div
         ref={bgRef}

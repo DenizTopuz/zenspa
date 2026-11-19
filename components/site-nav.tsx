@@ -10,6 +10,7 @@ const links = [
   { href: '/',               label: 'Home' },
   { href: '/over-mij',       label: 'Zen Spa' },
   { href: '/behandelingen',  label: 'Behandelingen' },
+  { href: '/parfums',        label: 'Parfums' },
   { href: '/contact',        label: 'Contact' },
 ]
 

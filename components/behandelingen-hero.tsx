@@ -3,7 +3,19 @@
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 
-export function BehandelingenHero() {
+interface HeroProps {
+  eyebrow?: string
+  title?: string
+  subtitle?: string
+  label?: string
+}
+
+export function BehandelingenHero({
+  eyebrow = 'Ons aanbod',
+  title = 'Onze Behandelingen',
+  subtitle = 'Elk ritueel zorgvuldig samengesteld voor jou.',
+  label = 'Behandelingen overzicht',
+}: HeroProps = {}) {
   const imgRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -24,7 +36,7 @@ export function BehandelingenHero() {
   return (
     <section
       className="relative flex min-h-[58vh] items-center overflow-hidden"
-      aria-label="Behandelingen overzicht"
+      aria-label={label}
     >
       {/* Parallax image */}
       <div
@@ -46,14 +58,14 @@ export function BehandelingenHero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/38 to-black/78" />
 
       <div className="relative z-10 w-full pb-16 pt-32 text-center text-white md:pb-20 md:pt-36">
-        <span className="mb-5 block text-[13px] font-semibold tracking-[0.20em] text-white/55 uppercase">
-          Ons aanbod
+        <span className="mb-3 block text-[13px] font-semibold tracking-[0.20em] text-white/55 uppercase">
+          {eyebrow}
         </span>
         <h1 className="font-heading text-[52px] leading-[1.04] tracking-tight md:text-[76px] lg:text-[92px]">
-          Onze Behandelingen
+          {title}
         </h1>
         <p className="mx-auto mt-4 mb-14 max-w-[460px] text-[17px] leading-[1.85] text-white/62 md:mt-5 md:mb-0">
-          Elk ritueel zorgvuldig samengesteld voor jou.
+          {subtitle}
         </p>
       </div>
     </section>
