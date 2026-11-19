@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
-import { ChevronLeft, ChevronRight, MessageCircle, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, MessageCircle, SlidersHorizontal, X } from 'lucide-react'
 import { ParfumSearch } from '@/components/parfum-search'
 import { ParfumFamilyTabs } from '@/components/parfum-family-tabs'
 import { matchesQuery, suggest } from '@/lib/parfums-search'
@@ -28,17 +28,33 @@ const waLink = (p: Parfum) =>
 
 const familyLabel = (key: Family) => FAMILIES.find((f) => f.key === key)!.label
 
-function NotePill({ note, active, onClick }: { note: string; active?: boolean; onClick?: () => void }) {
+function NotePill({
+  note,
+  active,
+  count,
+  onClick,
+  large,
+}: {
+  note: string
+  active?: boolean
+  count?: number
+  onClick?: () => void
+  large?: boolean
+}) {
+  const empty = !active && count === 0
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={active}
+      disabled={empty}
       className={cn(
-        'flex shrink-0 items-center gap-2 rounded-full py-1.5 pr-3.5 pl-2.5 text-[13px] whitespace-nowrap transition-colors',
+        'flex shrink-0 items-center gap-2 rounded-full whitespace-nowrap transition-colors',
+        large ? 'py-3 pr-4 pl-3 text-[15px]' : 'py-1.5 pr-3.5 pl-2.5 text-[13px]',
         active
           ? 'bg-primary text-primary-foreground'
-          : 'bg-secondary/60 text-foreground/75 hover:bg-secondary hover:text-foreground'
+          : 'bg-secondary/60 text-foreground/75 hover:bg-secondary hover:text-foreground',
+        empty && 'cursor-not-allowed opacity-45 hover:bg-secondary/60'
       )}
     >
       <span
@@ -47,6 +63,9 @@ function NotePill({ note, active, onClick }: { note: string; active?: boolean; o
         style={{ backgroundColor: NOTE_COLORS[note] ?? 'var(--primary)' }}
       />
       {note}
+      {count !== undefined && (
+        <span className={cn('text-[11px]', active ? 'text-primary-foreground/80' : 'text-foreground/70')}>{count}</span>
+      )}
     </button>
   )
 }
@@ -65,12 +84,56 @@ function ActiveChip({ label, onClear }: { label: string; onClear: () => void }) 
   )
 }
 
+/** Mobiele lijstweergave: de foto staat links en is leidend, de info ernaast */
+function ParfumRow({ p, onOpen }: { p: Parfum; onOpen: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="group flex w-full items-center gap-5 overflow-hidden rounded-[22px] border border-foreground/8 bg-white p-3 pr-4 text-left transition-colors active:bg-secondary/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:hidden"
+    >
+      <span className="relative size-[116px] shrink-0 overflow-hidden rounded-2xl bg-white">
+        <Image
+          src={image(p)}
+          alt={`Yodeyma ${p.name}`}
+          fill
+          sizes="116px"
+          className="scale-[1.2] object-contain"
+        />
+      </span>
+
+      <span className="flex min-w-0 flex-1 flex-col items-start gap-2">
+        <span className="rounded-full bg-background px-2.5 py-1 text-[11px] font-semibold tracking-[0.12em] text-foreground/70 uppercase">
+          {p.unisex ? 'Unisex' : familyLabel(p.family)}
+        </span>
+        <span className="font-heading text-[28px] leading-[1.02] tracking-tight">{p.name}</span>
+        <span className="text-[13px] leading-snug text-muted-foreground">
+          Geïnspireerd op <span className="font-medium text-foreground">{p.inspired}</span> van {p.house}
+        </span>
+        {noteList(p).length > 0 && (
+          <span className="flex flex-wrap gap-1">
+            {noteList(p).map((n) => (
+              <span key={n} className="rounded-full border border-foreground/12 bg-white px-2 py-0.5 text-[12px] text-foreground/75">
+                {n}
+              </span>
+            ))}
+          </span>
+        )}
+        <span className="mt-1 flex w-full items-center justify-between gap-2">
+          <span className="font-heading text-[26px] leading-none font-semibold text-primary">{priceOf(p)}</span>
+          <ChevronRight aria-hidden className="size-5 text-foreground/50" />
+        </span>
+      </span>
+    </button>
+  )
+}
+
 function ParfumCard({ p, onOpen }: { p: Parfum; onOpen: () => void }) {
   return (
     <button
       type="button"
       onClick={onOpen}
-      className="group flex h-full w-full flex-col overflow-hidden rounded-[22px] border border-foreground/8 bg-white text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(33,35,27,0.10)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      className="group hidden h-full w-full flex-col overflow-hidden rounded-[22px] border border-foreground/8 bg-white text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(33,35,27,0.10)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:flex"
     >
       <div className="relative aspect-square overflow-hidden bg-white">
         <Image
@@ -100,9 +163,9 @@ function ParfumCard({ p, onOpen }: { p: Parfum; onOpen: () => void }) {
 
       <div className="flex flex-1 flex-col gap-3 border-t border-foreground/6 bg-card p-4 sm:p-5">
         <div>
-          <div className="flex items-baseline justify-between gap-3">
+          <div className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
             <h3 className="font-heading text-[26px] leading-none tracking-tight sm:text-[30px]">{p.name}</h3>
-            <span className="shrink-0 text-[15px] font-medium text-foreground/80">{priceOf(p)}</span>
+            <span className="shrink-0 font-heading text-[26px] leading-none font-semibold text-primary sm:text-[28px]">{priceOf(p)}</span>
           </div>
           <p className="mt-2 text-[13px] leading-snug text-muted-foreground sm:text-[14px]">
             Geïnspireerd op <span className="text-foreground/85">{p.inspired}</span>
@@ -273,29 +336,10 @@ function ParfumGallery({ p, shot, setShot }: { p: Parfum; shot: number; setShot:
   )
 }
 
-function ParfumDialog({ p, onClose }: { p: Parfum | null; onClose: () => void }) {
-  const ref = useRef<HTMLDialogElement>(null)
-  const [shot, setShot] = useState(0)
-
-  useEffect(() => {
-    const d = ref.current
-    if (!d) return
-    if (p && !d.open) {
-      setShot(0)
-      d.style.transform = ''
-      d.style.transition = ''
-      d.showModal()
-      document.documentElement.style.overflow = 'hidden'
-    }
-    if (!p && d.open) d.close()
-    return () => {
-      document.documentElement.style.overflow = ''
-    }
-  }, [p])
-
-  // Mobiel: de greep bovenaan naar beneden slepen sluit de sheet
+/** Mobiel: de greep bovenaan van een sheet naar beneden slepen sluit hem */
+function useSheetDrag(ref: React.RefObject<HTMLDialogElement | null>) {
   const drag = useRef<{ y: number; dy: number } | null>(null)
-  const dragProps = {
+  return {
     onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => {
       drag.current = { y: e.clientY, dy: 0 }
       e.currentTarget.setPointerCapture(e.pointerId)
@@ -317,6 +361,103 @@ function ParfumDialog({ p, onClose }: { p: Parfum | null; onClose: () => void })
       else el.style.transform = ''
     },
   }
+}
+
+function NotesSheet({
+  open,
+  onClose,
+  notes,
+  allNotes,
+  noteCount,
+  toggle,
+  clear,
+  total,
+}: {
+  open: boolean
+  onClose: () => void
+  notes: string[]
+  allNotes: string[]
+  noteCount: (n: string) => number
+  toggle: (n: string) => void
+  clear: () => void
+  total: number
+}) {
+  const ref = useRef<HTMLDialogElement>(null)
+  const dragProps = useSheetDrag(ref)
+
+  useEffect(() => {
+    const d = ref.current
+    if (!d) return
+    if (open && !d.open) {
+      d.style.transform = ''
+      d.style.transition = ''
+      d.showModal()
+    }
+    if (!open && d.open) d.close()
+  }, [open])
+
+  return (
+    <dialog
+      ref={ref}
+      onClose={onClose}
+      onClick={(e) => e.target === ref.current && ref.current?.close()}
+      aria-label="Kies geurnoten"
+      className="parfum-sheet m-0 mt-auto w-full max-w-none overflow-hidden rounded-t-[28px] rounded-b-none border-0 bg-background p-0 text-foreground shadow-[0_30px_90px_rgba(0,0,0,0.35)] backdrop:bg-stone-950/55 backdrop:backdrop-blur-sm sm:hidden"
+    >
+      <div {...dragProps} className="relative touch-none pt-3 pb-2">
+        <div aria-hidden className="mx-auto h-1.5 w-11 rounded-full bg-foreground/20" />
+      </div>
+      <div className="px-5 pb-2">
+        <h2 className="font-heading text-[30px] leading-none tracking-tight">Hou je van…</h2>
+        <p className="mt-2 text-[14px] text-foreground/70">Kies één of meer noten. Je ziet meteen hoeveel geuren er overblijven.</p>
+        <div className="mt-5 flex flex-wrap gap-2.5">
+          {allNotes.map((n) => (
+            <NotePill key={n} note={n} active={notes.includes(n)} count={noteCount(n)} onClick={() => toggle(n)} large />
+          ))}
+        </div>
+      </div>
+      <div className="mt-4 flex items-center gap-3 border-t border-foreground/8 px-5 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+        <button
+          type="button"
+          onClick={clear}
+          disabled={notes.length === 0}
+          className="shrink-0 px-2 py-3 text-[15px] underline underline-offset-4 disabled:no-underline disabled:opacity-40"
+        >
+          Wissen
+        </button>
+        <button
+          type="button"
+          onClick={() => ref.current?.close()}
+          className="flex-1 rounded-full bg-primary py-4 text-[16px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
+        >
+          Toon {total} {total === 1 ? 'geur' : 'geuren'}
+        </button>
+      </div>
+    </dialog>
+  )
+}
+
+function ParfumDialog({ p, onClose }: { p: Parfum | null; onClose: () => void }) {
+  const ref = useRef<HTMLDialogElement>(null)
+  const [shot, setShot] = useState(0)
+
+  useEffect(() => {
+    const d = ref.current
+    if (!d) return
+    if (p && !d.open) {
+      setShot(0)
+      d.style.transform = ''
+      d.style.transition = ''
+      d.showModal()
+      document.documentElement.style.overflow = 'hidden'
+    }
+    if (!p && d.open) d.close()
+    return () => {
+      document.documentElement.style.overflow = ''
+    }
+  }, [p])
+
+  const dragProps = useSheetDrag(ref)
 
   return (
     <dialog
@@ -370,7 +511,7 @@ function ParfumDialog({ p, onClose }: { p: Parfum | null; onClose: () => void })
             <div>
               <div className="flex items-center gap-4">
                 <h3 className="font-heading text-[26px] leading-none tracking-tight md:text-[28px]">Zo ruik je deze geur</h3>
-                <span aria-hidden className="h-px flex-1 translate-y-[4px] bg-foreground/15" />
+                <span aria-hidden className="hidden h-px flex-1 translate-y-[4px] bg-foreground/15 md:block" />
               </div>
               <p className="mt-2 mb-4 hidden text-[15px] leading-snug text-foreground/65 md:block">
                 Van de eerste spray tot uren later, in drie stappen.
@@ -404,24 +545,133 @@ function ParfumDialog({ p, onClose }: { p: Parfum | null; onClose: () => void })
   )
 }
 
+const EXIT_MS = 220
+
+/**
+ * Raster met zichtbare filteranimatie: geuren die wegvallen vervagen eerst,
+ * de rest schuift soepel naar zijn nieuwe plek (FLIP) en nieuwe geuren komen zacht binnen.
+ */
+function ParfumGrid({ results, onOpen }: { results: Parfum[]; onOpen: (p: Parfum) => void }) {
+  const [shown, setShown] = useState(results)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const prevPos = useRef(new Map<string, { x: number; y: number }>())
+
+  const resultSlugs = new Set(results.map((p) => p.slug))
+  const leaving = new Set(shown.filter((p) => !resultSlugs.has(p.slug)).map((p) => p.slug))
+
+  // Eerst laten vervagen wat wegvalt, daarna pas de nieuwe lijst tonen
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const same = shown.length === results.length && shown.every((p, i) => p.slug === results[i].slug)
+    if (same) return
+    const t = setTimeout(() => setShown(results), leaving.size && !reduce ? EXIT_MS : 0)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results])
+
+  // FLIP: vergelijk de posities met de vorige keer en animeer het verschil
+  useEffect(() => {
+    const grid = gridRef.current
+    if (!grid) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const next = new Map<string, { x: number; y: number }>()
+    let entering = 0
+    grid.querySelectorAll<HTMLElement>('[data-slug]').forEach((el) => {
+      const slug = el.dataset.slug!
+      const pos = { x: el.offsetLeft, y: el.offsetTop }
+      next.set(slug, pos)
+      if (reduce || el.dataset.leaving === 'true') return
+      const before = prevPos.current.get(slug)
+      if (before) {
+        const dx = before.x - pos.x
+        const dy = before.y - pos.y
+        if (dx || dy) {
+          el.animate(
+            [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0, 0)' }],
+            { duration: 450, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+          )
+        }
+      } else if (prevPos.current.size > 0) {
+        el.animate(
+          [
+            { opacity: 0, transform: 'translateY(14px) scale(0.96)' },
+            { opacity: 1, transform: 'translateY(0) scale(1)' },
+          ],
+          { duration: 420, delay: Math.min(entering++, 8) * 35, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'backwards' }
+        )
+      }
+    })
+    prevPos.current = next
+  }, [shown])
+
+  return (
+    <div ref={gridRef} className="relative grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+      {shown.map((p) => (
+        <div
+          key={p.slug}
+          data-slug={p.slug}
+          data-leaving={leaving.has(p.slug)}
+          className={cn(
+            'transition-[opacity,transform] ease-out motion-reduce:transition-none',
+            leaving.has(p.slug) ? 'pointer-events-none scale-95 opacity-0 duration-200' : 'duration-0'
+          )}
+        >
+          <ParfumRow p={p} onOpen={() => onOpen(p)} />
+          <ParfumCard p={p} onOpen={() => onOpen(p)} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// Alle gekozen noten moeten in de geur zitten (en-filter): hoe meer noten, hoe specifieker
+const hasNotes = (p: Parfum, list: string[]) => list.every((n) => matchesNote(p, n))
+
 export function ParfumCollection() {
   const [family, setFamily] = useState<Family | 'alle'>('alle')
-  const [note, setNote] = useState<string | null>(null)
+  const [notes, setNotes] = useState<string[]>([])
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState<Parfum | null>(null)
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [quickOpen, setQuickOpen] = useState(false)
+  const barRef = useRef<HTMLDivElement>(null)
 
-  const counts = useMemo(
-    () => Object.fromEntries(FAMILIES.map((f) => [f.key, PARFUMS.filter((p) => p.family === f.key).length])) as Record<Family, number>,
-    []
+  const rootRef = useRef<HTMLDivElement>(null)
+  const filtersRef = useRef<HTMLDivElement>(null)
+  // De balk blijft altijd in de DOM en fade via opacity; positie regelt de browser (sticky), zonder scroll-code
+  const [barVisible, setBarVisible] = useState(false)
+  const barVisibleRef = useRef(false)
+  const endRef = useRef<HTMLDivElement>(null)
+  const [barTop, setBarTop] = useState(76)
+
+  const toggleNote = (n: string) => setNotes((cur) => (cur.includes(n) ? cur.filter((x) => x !== n) : [...cur, n]))
+  const addNote = (n: string) => setNotes((cur) => (cur.includes(n) ? cur : [...cur, n]))
+
+  const results = useMemo(
+    () =>
+      PARFUMS.filter(
+        (p) => (family === 'alle' || p.family === family) && hasNotes(p, notes) && matchesQuery(p, query)
+      ),
+    [family, notes, query]
   )
 
-  const results = useMemo(() => {
-    return PARFUMS.filter((p) => {
-      if (family !== 'alle' && p.family !== family) return false
-      if (note && !matchesNote(p, note)) return false
-      return matchesQuery(p, query)
-    })
-  }, [family, note, query])
+  // Live aantallen: elke tab en noot toont hoeveel geuren er overblijven mét de andere filters
+  const familyCounts = useMemo(() => {
+    const base = PARFUMS.filter((p) => hasNotes(p, notes) && matchesQuery(p, query))
+    const out = { alle: base.length } as Record<Family | 'alle', number>
+    for (const f of FAMILIES) out[f.key] = base.filter((p) => p.family === f.key).length
+    return out
+  }, [notes, query])
+
+  const noteCount = (n: string) =>
+    PARFUMS.filter(
+      (p) =>
+        (family === 'alle' || p.family === family) &&
+        matchesQuery(p, query) &&
+        hasNotes(p, notes.includes(n) ? notes : [...notes, n])
+    ).length
+
+  const noteList2 = [...POPULAR_NOTES, ...notes.filter((n) => !POPULAR_NOTES.includes(n))]
 
   // Bij 0 resultaten door een typfout: stel de dichtstbijzijnde geur voor
   const didYouMean = useMemo(() => {
@@ -432,49 +682,245 @@ export function ParfumCollection() {
 
   const reset = () => {
     setFamily('alle')
-    setNote(null)
+    setNotes([])
     setQuery('')
   }
 
-  return (
+  // Compacte balk: zichtbaar zodra de filters boven het scherm uit zijn en tot je het einde van de lijst nadert.
+  // Alleen een IntersectionObserver bepaalt de zichtbaarheid; er is geen scroll-listener die iets verplaatst.
+  useEffect(() => {
+    const filtersEl = filtersRef.current
+    const endEl = endRef.current
+    if (!filtersEl || !endEl) return
+    const top = Math.round(document.querySelector('header')?.getBoundingClientRect().bottom ?? 70)
+    let filtersGone = false
+    let endNear = false
+
+    const apply = () => {
+      const show = filtersGone && !endNear
+      if (show === barVisibleRef.current) return
+      // De hoogte pas vastleggen vlak voor hij verschijnt, als de navigatie is uitgeklapt
+      if (show) setBarTop(Math.round(document.querySelector('header')?.getBoundingClientRect().bottom ?? top) + 8)
+      barVisibleRef.current = show
+      setBarVisible(show)
+      if (!show) setQuickOpen(false)
+    }
+
+    const ioFilters = new IntersectionObserver(
+      ([e]) => {
+        filtersGone = !e.isIntersecting && e.boundingClientRect.bottom < top
+        apply()
+      },
+      { rootMargin: `-${top}px 0px 0px 0px` }
+    )
+    const ioEnd = new IntersectionObserver(
+      ([e]) => {
+        endNear = !e.isIntersecting && e.boundingClientRect.top < top + 200
+        apply()
+      },
+      { rootMargin: `-${top + 200}px 0px 0px 0px` }
+    )
+    ioFilters.observe(filtersEl)
+    ioEnd.observe(endEl)
+    return () => {
+      ioFilters.disconnect()
+      ioEnd.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!quickOpen) return
+    const onDown = (e: PointerEvent) => {
+      if (!barRef.current?.contains(e.target as Node)) setQuickOpen(false)
+    }
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setQuickOpen(false)
+    document.addEventListener('pointerdown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [quickOpen])
+
+  const filtersActive = family !== 'alle' || notes.length > 0 || query !== ''
+  const countLabel = `${results.length} ${results.length === 1 ? 'geur' : 'geuren'}`
+  const chips = (
     <>
+      {family !== 'alle' && <ActiveChip label={familyLabel(family)} onClear={() => setFamily('alle')} />}
+      {notes.map((n) => (
+        <ActiveChip key={n} label={n} onClear={() => toggleNote(n)} />
+      ))}
+      {query && <ActiveChip label={`“${query}”`} onClear={() => setQuery('')} />}
+    </>
+  )
+
+  return (
+    <div ref={rootRef}>
+      {/* Compacte balk — blijft in beeld tijdens het scrollen; Filters klapt een paneel uit op de plek waar je bent */}
+      {/* fixed (niet sticky): body heeft overflow-x:hidden op deze site, waardoor sticky niet werkt */}
+      <div className="pointer-events-none fixed inset-x-0 z-30 px-3 md:px-6" style={{ top: barTop }}>
+        <div
+          ref={barRef}
+          className={cn(
+            'transition-[opacity,visibility] duration-300 ease-out motion-reduce:transition-none',
+            barVisible ? 'pointer-events-auto visible opacity-100' : 'invisible opacity-0'
+          )}
+        >
+          <div className="mx-auto w-full max-w-[640px]">
+            <div className="flex items-center gap-3 rounded-full border border-foreground/10 bg-white/92 py-2 pr-2 pl-5 shadow-[0_10px_34px_rgba(33,35,27,0.12)] backdrop-blur-xl">
+              <span className="shrink-0 text-[14px] font-medium" aria-live="polite">
+                {countLabel}
+              </span>
+              <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {filtersActive ? chips : <span className="text-[13px] text-foreground/70">Alle geuren</span>}
+              </div>
+              <button
+                type="button"
+                onClick={() => setQuickOpen((o) => !o)}
+                aria-expanded={quickOpen}
+                aria-controls="snelfilters"
+                className="flex shrink-0 items-center gap-2 rounded-full bg-foreground px-4 py-2.5 text-[14px] text-background transition-opacity hover:opacity-90"
+              >
+                <SlidersHorizontal className="size-4" />
+                Filters
+                {family !== 'alle' || notes.length > 0 ? (
+                  <span className="grid size-5 place-items-center rounded-full bg-white text-[12px] font-semibold text-foreground">
+                    {(family !== 'alle' ? 1 : 0) + notes.length}
+                  </span>
+                ) : null}
+              </button>
+            </div>
+
+            {(
+              <div
+                id="snelfilters"
+                aria-hidden={!quickOpen}
+                className={cn(
+                  'mt-2 max-h-[min(70vh,560px)] overflow-y-auto rounded-3xl border border-foreground/10 bg-white p-4 shadow-[0_18px_50px_rgba(33,35,27,0.16)] transition-[opacity,transform,visibility] duration-250 ease-out motion-reduce:transition-none md:p-5',
+                  quickOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'
+                )}
+                data-lenis-prevent
+              >
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Zoek een geur"
+                  aria-label="Zoek parfum"
+                  className="mb-4 h-11 w-full rounded-full border border-foreground/12 bg-white px-5 text-[15px] outline-none placeholder:text-muted-foreground focus:border-primary focus-visible:ring-2 focus-visible:ring-primary/40"
+                />
+
+                <p className="mb-2 text-[12px] font-semibold tracking-[0.16em] text-foreground/70 uppercase">Geurfamilie</p>
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {[{ key: 'alle' as const, label: 'Alle' }, ...FAMILIES].map((f) => {
+                    const active = family === f.key
+                    const count = familyCounts[f.key]
+                    return (
+                      <button
+                        key={f.key}
+                        type="button"
+                        onClick={() => setFamily(f.key)}
+                        aria-pressed={active}
+                        disabled={count === 0 && !active}
+                        className={cn(
+                          'flex items-center gap-2 rounded-full border px-4 py-2 text-[14px] transition-colors disabled:cursor-not-allowed disabled:opacity-40',
+                          active
+                            ? 'border-foreground bg-foreground text-background'
+                            : 'border-foreground/12 bg-white hover:border-foreground/40'
+                        )}
+                      >
+                        {f.label}
+                        <span className={cn('text-[12px]', active ? 'text-background/70' : 'text-foreground/70')}>{count}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+
+                <p className="mb-2 text-[12px] font-semibold tracking-[0.16em] text-foreground/70 uppercase">Hou je van</p>
+                <div className="flex flex-wrap gap-2">
+                  {noteList2.map((n) => (
+                    <NotePill key={n} note={n} active={notes.includes(n)} count={noteCount(n)} onClick={() => toggleNote(n)} />
+                  ))}
+                </div>
+
+                <div className="mt-5 flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={reset}
+                    disabled={!filtersActive}
+                    className="px-2 py-2 text-[14px] underline underline-offset-4 disabled:no-underline disabled:opacity-40"
+                  >
+                    Alles wissen
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setQuickOpen(false)}
+                    className="rounded-full bg-primary px-6 py-3 text-[15px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
+                  >
+                    Toon {results.length} {results.length === 1 ? 'geur' : 'geuren'}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Filters: hoofdcategorie = tabs zoals op de homepage; geurnoot = lichtere kleurstip-pills eronder */}
-      <div className="mb-2 flex flex-col items-center gap-4 lg:gap-5">
-        <ParfumFamilyTabs value={family} onChange={setFamily} total={PARFUMS.length} counts={counts} />
+      <div ref={filtersRef} className="mb-2 flex flex-col items-center gap-4 lg:gap-5">
+        <ParfumFamilyTabs value={family} onChange={setFamily} total={familyCounts.alle} counts={familyCounts} />
 
         <div className="flex w-full flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-center lg:gap-4">
-          <ParfumSearch
-            value={query}
-            onChange={setQuery}
-            onPickParfum={setOpen}
-            onPickNote={setNote}
-            onPickHouse={() => setFamily('alle')}
-          />
+          <div className="flex w-full items-center gap-2 sm:contents">
+            <div className="min-w-0 flex-1 sm:flex-none">
+              <ParfumSearch
+                value={query}
+                onChange={setQuery}
+                onPickParfum={setOpen}
+                onPickNote={addNote}
+                onPickHouse={() => setFamily('alle')}
+              />
+            </div>
+
+            {/* Mobiel: één duidelijke knop voor de geurnoten */}
+            <button
+              type="button"
+              onClick={() => setSheetOpen(true)}
+              className={cn(
+                'flex h-11 shrink-0 items-center gap-2 rounded-full border px-4 text-[15px] transition-colors sm:hidden',
+                notes.length ? 'border-primary bg-primary text-primary-foreground' : 'border-foreground/12 bg-white'
+              )}
+            >
+              <SlidersHorizontal className="size-4" />
+              Geurnoot
+              {notes.length > 0 && (
+                <span className="grid size-5 place-items-center rounded-full bg-white text-[12px] font-semibold text-primary">
+                  {notes.length}
+                </span>
+              )}
+            </button>
+          </div>
 
           <div
             role="group"
             aria-label="Geurnoot"
-            className="-mx-5 flex items-center gap-2 overflow-x-auto px-5 [scrollbar-width:none] md:-mx-6 md:px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden"
+            className="-mx-5 hidden items-center gap-2 overflow-x-auto px-5 [scrollbar-width:none] sm:flex md:-mx-6 md:px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden"
           >
             <span className="mr-1 shrink-0 text-[11px] font-semibold tracking-[0.16em] text-foreground/70 uppercase">
               Hou je van
             </span>
-            {POPULAR_NOTES.map((n) => (
-              <NotePill key={n} note={n} active={note === n} onClick={() => setNote(note === n ? null : n)} />
+            {noteList2.map((n) => (
+              <NotePill key={n} note={n} active={notes.includes(n)} count={noteCount(n)} onClick={() => toggleNote(n)} />
             ))}
           </div>
         </div>
       </div>
 
       <div className="mt-6 mb-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 px-1 text-[14px] text-muted-foreground" aria-live="polite">
-        <span>
-          {results.length} {results.length === 1 ? 'geur' : 'geuren'}
-        </span>
-        {(family !== 'alle' || note || query) && (
+        <span>{countLabel}</span>
+        {filtersActive && (
           <>
-            {family !== 'alle' && <ActiveChip label={familyLabel(family)} onClear={() => setFamily('alle')} />}
-            {note && <ActiveChip label={note} onClear={() => setNote(null)} />}
-            {query && <ActiveChip label={`“${query}”`} onClear={() => setQuery('')} />}
+            {chips}
             <button type="button" onClick={reset} className="underline underline-offset-4 hover:text-foreground">
               Alles wissen
             </button>
@@ -482,14 +928,13 @@ export function ParfumCollection() {
         )}
       </div>
 
-      {results.length > 0 ? (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 lg:gap-6">
-          {results.map((p) => (
-            <ParfumCard key={p.slug} p={p} onOpen={() => setOpen(p)} />
-          ))}
-        </div>
-      ) : (
-        <div className="mx-auto max-w-[420px] py-16 text-center">
+      <ParfumGrid results={results} onOpen={setOpen} />
+
+      {results.length === 0 && (
+        <div
+          className="mx-auto max-w-[420px] py-16 text-center"
+          style={{ animation: 'sheet-fade 0.3s ease-out 0.25s backwards' }}
+        >
           <p className="font-heading text-[30px]">Geen geur gevonden</p>
           <p className="mt-2 text-[16px] text-muted-foreground">Probeer een andere noot of zoekterm.</p>
           {didYouMean && (
@@ -515,7 +960,19 @@ export function ParfumCollection() {
         </div>
       )}
 
+      <div ref={endRef} aria-hidden className="h-px" />
+
       <ParfumDialog p={open} onClose={() => setOpen(null)} />
-    </>
+      <NotesSheet
+        open={sheetOpen}
+        onClose={() => setSheetOpen(false)}
+        notes={notes}
+        allNotes={noteList2}
+        noteCount={noteCount}
+        toggle={toggleNote}
+        clear={() => setNotes([])}
+        total={results.length}
+      />
+    </div>
   )
 }

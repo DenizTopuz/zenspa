@@ -24,8 +24,6 @@ export function ParfumSearch({ value, onChange, onPickParfum, onPickNote, onPick
   const items = useMemo(() => suggest(value), [value])
   const open = focused && value.trim().length > 0 && items.length > 0
 
-  useEffect(() => setActive(-1), [value])
-
   useEffect(() => {
     const close = (e: PointerEvent) => {
       if (!wrapRef.current?.contains(e.target as Node)) setFocused(false)
@@ -75,7 +73,10 @@ export function ParfumSearch({ value, onChange, onPickParfum, onPickNote, onPick
         aria-activedescendant={active >= 0 ? `${id}-${active}` : undefined}
         autoComplete="off"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => {
+          setActive(-1)
+          onChange(e.target.value)
+        }}
         onFocus={() => setFocused(true)}
         onKeyDown={onKeyDown}
         placeholder="Zoek een geur"

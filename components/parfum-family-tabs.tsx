@@ -57,8 +57,9 @@ export function ParfumFamilyTabs({ value, onChange, total, counts }: Props) {
             type="button"
             onClick={() => onChange(t.key)}
             aria-pressed={value === t.key}
+            disabled={t.count === 0 && value !== t.key}
             className={cn(
-              'flex flex-1 cursor-pointer items-center justify-center rounded-full py-4 text-[14px] font-semibold leading-none transition-all duration-200',
+              'flex flex-1 cursor-pointer items-center justify-center rounded-full py-4 text-[14px] font-semibold leading-none transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40',
               value === t.key ? 'bg-accent text-white shadow-sm' : 'text-foreground/70'
             )}
           >
@@ -97,9 +98,10 @@ export function ParfumFamilyTabs({ value, onChange, total, counts }: Props) {
                 }}
                 type="button"
                 aria-pressed={value === t.key}
+                disabled={t.count === 0 && value !== t.key}
                 onClick={() => onChange(t.key)}
                 className={cn(
-                  'relative z-10 flex cursor-pointer items-center justify-center gap-2 rounded-full px-3.5 py-3 transition-colors duration-200 hover:text-foreground md:gap-2.5 md:px-4 md:py-3.5 lg:gap-3 lg:px-5',
+                  'relative z-10 flex cursor-pointer items-center justify-center gap-2 rounded-full px-3.5 py-3 transition-colors duration-200 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent md:gap-2.5 md:px-4 md:py-3.5 lg:gap-3 lg:px-5',
                   value === t.key ? 'text-accent' : 'text-foreground/65 hover:bg-white/45'
                 )}
               >
@@ -108,7 +110,7 @@ export function ParfumFamilyTabs({ value, onChange, total, counts }: Props) {
                   <span className="lg:hidden">{t.short}</span>
                   <span className="hidden lg:inline">{t.label}</span>
                 </span>
-                <span className="hidden text-[12px] font-normal text-foreground/70 md:inline">{t.count}</span>
+                <span className="hidden translate-y-[2px] text-[12px] leading-none font-normal text-foreground/70 md:inline">{t.count}</span>
               </button>
             )
           })}

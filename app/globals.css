@@ -251,3 +251,12 @@
 @media (prefers-reduced-motion: reduce) {
   .parfum-sheet[open], .parfum-sheet[open]::backdrop { animation: none; }
 }
+
+/* Compacte filterbalk schuift zacht naar beneden in beeld */
+@keyframes bar-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [style*="bar-in"] { animation: none !important; }
+}
