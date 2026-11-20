@@ -15,7 +15,7 @@ const TZ = 'Europe/Amsterdam'
 const NL_MONTHS = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December']
 const TABS: { key: TabKey; label: string }[] = [
   { key: 'gezicht',  label: 'Gezicht' },
-  { key: 'lichaam',  label: 'Lichaam' },
+  { key: 'lichaam',  label: 'Spa pedicure' },
   { key: 'pmu',      label: 'PMU' },
   { key: 'ontharen', label: 'Ontharen' },
 ]

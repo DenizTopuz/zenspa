@@ -37,7 +37,7 @@ const navCols = [
     heading: 'Behandelingen',
     links: [
       { label: 'Gezicht',            href: '/behandelingen' },
-      { label: 'Lichaam',            href: '/behandelingen' },
+      { label: 'Spa pedicure',       href: '/behandelingen' },
       { label: 'Permanente Make-up', href: '/behandelingen' },
       { label: 'Ontharen',           href: '/behandelingen' },
     ],

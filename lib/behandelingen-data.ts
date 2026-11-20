@@ -52,8 +52,7 @@ export const DATA: Record<TabKey, TabData> = {
   lichaam: {
     groups: [{
       items: [
-        { name: 'Rugbehandeling',             slug: 'rugbehandeling', duration: '30 min',     durationMinutes: 30, prepMinutes: 5,  bufferMinutes: 10, bookable: true, price: '€40', image: '/lb-rug.jpg',      objectPosition: '70% 30%', category: 'Lichaam', description: 'Grondige reiniging, peeling en verzorging van de rug — ideaal bij vermoeidheid of onzuiverheden.' },
-        { name: 'Spa pedicure',              slug: 'pedicure',       duration: 'ca. 60 min', durationMinutes: 60, prepMinutes: 10, bufferMinutes: 10, bookable: true, price: '€45', image: '/lb-pedicure.jpg', objectPosition: '55% 55%', category: 'Lichaam', description: 'Volledige voetverzorging met exfoliërende scrub voor zijdezachte voeten en verzorgde nagels.', tag: 'Meest geliefd' },
+        { name: 'Spa pedicure',              slug: 'pedicure',       duration: 'ca. 60 min', durationMinutes: 60, prepMinutes: 10, bufferMinutes: 10, bookable: true, price: '€45', image: '/lb-pedicure.jpg', objectPosition: '55% 55%', category: 'Spa pedicure', description: 'Volledige voetverzorging met exfoliërende scrub voor zijdezachte voeten en verzorgde nagels.', tag: 'Meest geliefd' },
       ]
     }]
   },

@@ -91,7 +91,11 @@ Lotusteken als SVG (viewBox `0 0 165 89.22`, vul met huisstijlkleur):
 </svg>
 ```
 
-Het volledige logo met tekst staat in de repository: `public/logo-green.svg` en `public/logo-variant.svg`.
+Het volledige logo met tekst staat in de repository: `public/logo-green.svg` (officieel logo-groen **#74795E**, voor lichte achtergronden) en `public/logo-variant.svg` (officieel logo-crème **#EAE1D6**, voor donkere of olijfgroene vlakken). Gebruik altijd deze bestanden en teken het logo niet na.
+
+Let op: het logo-groen (#74795E) is lichter dan het olijfgroen dat op de site voor vlakken en knoppen wordt getoond (#5F6947 / #616848). Gebruik voor het logo de officiële kleuren hierboven en voor grote vlakken het site-olijf.
+
+Voorbeeld van de huisstijl in print: de offline cadeaubon in `design/cadeaubon/` (zie ook paragraaf 8).
 
 ---
 

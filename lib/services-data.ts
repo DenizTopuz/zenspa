@@ -67,21 +67,14 @@ export const serviceCategories: ServiceCategory[] = [
   },
   {
     slug: 'lichaam',
-    title: 'Lichaam & Bad',
-    tagline: 'Verzorging van top tot teen',
+    title: 'Spa pedicure',
+    tagline: 'Verzorgde voeten, van scrub tot nagels',
     description:
-      'Gerichte lichaamsbehandelingen die jouw huid reinigen, verzachten en verwennen. Perfect als aanvulling op jouw gezichtsritueel of als losstaand moment voor jezelf.',
+      'Een volledige voetverzorging met exfoliërende scrub voor zijdezachte voeten en verzorgde nagels. Een moment van rust, alleen voor jou.',
     image: '/svc-lichaam.jpg',
     imgPos: '35% 45%',
     popular: false,
     treatments: [
-      {
-        name: 'Rugbehandeling',
-        price: '€40',
-        duration: '30 min',
-        results: 'Gereinigde en verzorgde rugshuid, ideaal bij onzuiverheden.',
-        downtime: 'Geen downtime.',
-      },
       {
         name: 'Spa pedicure',
         price: '€45',

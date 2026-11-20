@@ -20,9 +20,9 @@ const CATS: Array<{ key: TabKey; title: string; mobileTitle?: string; desc: stri
   },
   {
     key: 'lichaam',
-    title: 'Lichaamsbehandelingen',
-    mobileTitle: 'Lichaam',
-    desc: 'Verwennende behandelingen voor een zijdezachte huid en diepgaande ontspanning.',
+    title: 'Spa pedicure',
+    mobileTitle: 'Pedicure',
+    desc: 'Een verzorgende voetbehandeling met scrub voor zijdezachte voeten en verzorgde nagels.',
   },
   {
     key: 'pmu',

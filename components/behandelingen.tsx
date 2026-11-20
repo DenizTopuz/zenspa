@@ -5,12 +5,12 @@ import { createPortal } from 'react-dom'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Clock, Sparkles, User, Pen, Scissors, ArrowUpRight } from 'lucide-react'
+import { Clock, Sparkles, Footprints, Pen, Scissors, ArrowUpRight } from 'lucide-react'
 import { DATA, type TabKey, type Treatment } from '@/lib/behandelingen-data'
 
 const TABS: { key: TabKey; label: string; labelMobile?: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { key: 'gezicht',  label: 'Gezicht',            icon: Sparkles },
-  { key: 'lichaam',  label: 'Lichaam',            icon: User     },
+  { key: 'lichaam',  label: 'Spa pedicure',       labelMobile: 'Pedicure', icon: Footprints },
   { key: 'pmu',      label: 'Permanente Make-up', labelMobile: 'PMU',          icon: Pen },
   { key: 'ontharen', label: 'Ontharen',           icon: Scissors },
 ]

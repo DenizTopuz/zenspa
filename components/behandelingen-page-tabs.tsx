@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 
 const TABS = [
   { key: 'gezicht',  label: 'Gezicht'  },
-  { key: 'lichaam',  label: 'Lichaam'  },
+  { key: 'lichaam',  label: 'Spa pedicure'  },
   { key: 'pmu',      label: 'PMU'      },
   { key: 'ontharen', label: 'Ontharen' },
 ]

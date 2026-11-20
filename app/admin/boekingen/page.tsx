@@ -459,7 +459,7 @@ export default function AdminBoekingen() {
   function TimelineLegend() {
     const items = [
       { label: 'Gezicht',          color: treatmentColor('basis-gezichtsbehandeling') },
-      { label: 'Lichaam',          color: treatmentColor('pedicure') },
+      { label: 'Pedicure',          color: treatmentColor('pedicure') },
       { label: 'Permanente make-up', color: treatmentColor('combi-brows') },
       { label: 'Ontharen',         color: treatmentColor('ontharen-1-zone') },
     ]
