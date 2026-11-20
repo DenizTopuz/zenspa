@@ -25,14 +25,9 @@ export function MobileBottomNav() {
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
-  // Floating Afspraak CTA stays in the exact centre: 3 pages left, 2 pages right.
-  // Each side gets the same width, so the circle is centred while items share their side evenly.
-  const CTA = 18
-  const SIDE = (100 - CTA) / 2
-  const slot = (i: number) =>
-    i < 3
-      ? { left: (i * SIDE) / 3, width: SIDE / 3 }
-      : { left: SIDE + CTA + ((i - 3) * SIDE) / 2, width: SIDE / 2 }
+  // 6 equal slots: 5 pages + the floating Afspraak CTA as the last item
+  const SLOT = 100 / 6
+  const slot = (i: number) => ({ left: i * SLOT, width: SLOT })
   const activePillIndex = links.findIndex(l => isActive(l.href))
 
   // Reset scroll reference on navigation so the nav stays visible after a page change
@@ -108,15 +103,14 @@ export function MobileBottomNav() {
           />
         )}
 
-        {links.slice(0, 3).map(({ href, label, icon: Icon }, i) => {
+        {links.map(({ href, label, icon: Icon }) => {
           const active = isActive(href)
           return (
             <Link
               key={href}
               href={href}
-              style={{ width: `${slot(i).width}%` }}
               className={cn(
-                'relative flex flex-col items-center justify-center gap-1 py-4 transition-colors duration-200',
+                'relative flex flex-1 flex-col items-center justify-center gap-1 py-4 transition-colors duration-200',
                 active ? 'text-accent' : 'text-foreground/70'
               )}
             >
@@ -128,12 +122,11 @@ export function MobileBottomNav() {
           )
         })}
 
-        {/* Midden — zwevende Afspraak-knop boven de balk */}
+        {/* Laatste slot — zwevende Afspraak-knop boven de balk */}
         <a
           href="/boeken"
           aria-label="Afspraak maken"
-          style={{ width: `${CTA}%` }}
-          className="relative flex flex-col items-center justify-end gap-1 py-4"
+          className="relative flex flex-1 flex-col items-center justify-end gap-1 py-4"
         >
           <span className="absolute left-1/2 -top-5 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(0,0,0,0.25)] transition-transform duration-200 active:scale-95">
             <CalendarCheck className="h-[22px] w-[22px]" strokeWidth={2} aria-hidden />
@@ -141,27 +134,6 @@ export function MobileBottomNav() {
           <span className="invisible block h-[22px] w-[22px]" aria-hidden />
           <span className="text-[10px] font-semibold leading-none tracking-wide text-accent">Afspraak</span>
         </a>
-
-        {links.slice(3).map(({ href, label, icon: Icon }, j) => {
-          const i = j + 3
-          const active = isActive(href)
-          return (
-            <Link
-              key={href}
-              href={href}
-              style={{ width: `${slot(i).width}%` }}
-              className={cn(
-                'relative flex flex-col items-center justify-center gap-1 py-4 transition-colors duration-200',
-                active ? 'text-accent' : 'text-foreground/70'
-              )}
-            >
-              <Icon className="h-[22px] w-[22px]" strokeWidth={active ? 2.3 : 1.7} aria-hidden />
-              <span className={cn('text-[10px] leading-none tracking-wide', active ? 'font-bold' : 'font-medium')}>
-                {label}
-              </span>
-            </Link>
-          )
-        })}
 
       </div>
     </nav>

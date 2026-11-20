@@ -546,9 +546,10 @@ function ParfumDialog({ p, onClose }: { p: Parfum | null; onClose: () => void })
             </div>
 
             {/* Eén ontwerp voor mobiel en desktop; op mobiel blijft het vastgeplakt onderin */}
-            <div className="sticky bottom-0 z-10 -mx-5 mt-auto bg-gradient-to-t from-background from-70% to-transparent px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:-mx-9 sm:px-8 md:static md:mx-0 md:bg-none md:p-0">
-              <div className="relative flex flex-col gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,oklch(0.52_0.054_122),oklch(0.40_0.05_122))] px-5 py-4 text-primary-foreground shadow-[0_18px_40px_-18px_rgba(60,66,45,0.55)] md:flex-row md:items-center md:justify-between md:gap-4 md:py-3.5">
-                <span aria-hidden className="pointer-events-none absolute -top-16 -right-12 size-48 rounded-full bg-white/10 blur-2xl" />
+            <div className="sticky bottom-0 z-10 -mx-5 mt-auto overflow-hidden rounded-t-3xl bg-[linear-gradient(135deg,oklch(0.52_0.054_122),oklch(0.40_0.05_122))] px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] text-primary-foreground shadow-[0_-14px_30px_-14px_rgba(33,35,27,0.45)] sm:-mx-9 sm:px-9 md:static md:mx-0 md:overflow-visible md:rounded-none md:bg-none md:p-0 md:text-inherit md:shadow-none">
+              <span aria-hidden className="pointer-events-none absolute -top-16 -right-12 size-48 rounded-full bg-white/10 blur-2xl md:hidden" />
+              <div className="relative flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4 md:overflow-hidden md:rounded-2xl md:bg-[linear-gradient(135deg,oklch(0.52_0.054_122),oklch(0.40_0.05_122))] md:px-5 md:py-3.5 md:text-primary-foreground md:shadow-[0_18px_40px_-18px_rgba(60,66,45,0.55)]">
+                <span aria-hidden className="pointer-events-none absolute -top-16 -right-12 hidden size-48 rounded-full bg-white/10 blur-2xl md:block" />
                 <div className="relative flex min-w-0 items-baseline justify-between gap-3 md:flex-col md:items-start md:justify-start md:gap-1">
                   <span className="font-heading text-[32px] leading-none font-semibold">{priceOf(p)}</span>
                   <span className="text-[13px] leading-tight text-primary-foreground/85">Eau de Parfum · 100 ml</span>
