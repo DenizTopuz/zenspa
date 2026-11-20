@@ -17,6 +17,7 @@ const navCols = [
       { label: 'Home',          href: '/' },
       { label: 'Behandelingen', href: '/behandelingen' },
       { label: 'Parfums',       href: '/parfums' },
+      { label: 'Cadeaubon',     href: '/cadeaubon' },
       { label: 'Over ons',      href: '/over-mij' },
       { label: 'Prijzen',       href: '/behandelingen' },
       { label: 'Reviews',       href: '/#stories' },

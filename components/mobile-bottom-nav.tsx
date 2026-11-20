@@ -122,17 +122,13 @@ export function MobileBottomNav() {
           )
         })}
 
-        {/* Laatste slot — zwevende Afspraak-knop boven de balk */}
+        {/* Laatste slot — zelfde opbouw als de andere items */}
         <a
           href="/boeken"
-          aria-label="Afspraak maken"
-          className="relative flex flex-1 flex-col items-center justify-end gap-1 py-4"
+          className="relative flex flex-1 flex-col items-center justify-center gap-1 py-4 text-foreground/70 transition-colors duration-200"
         >
-          <span className="absolute left-1/2 -top-5 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(0,0,0,0.25)] transition-transform duration-200 active:scale-95">
-            <CalendarCheck className="h-[22px] w-[22px]" strokeWidth={2} aria-hidden />
-          </span>
-          <span className="invisible block h-[22px] w-[22px]" aria-hidden />
-          <span className="text-[10px] font-semibold leading-none tracking-wide text-accent">Afspraak</span>
+          <CalendarCheck className="h-[22px] w-[22px]" strokeWidth={1.7} aria-hidden />
+          <span className="text-[10px] leading-none font-medium tracking-wide">Afspraak</span>
         </a>
 
       </div>

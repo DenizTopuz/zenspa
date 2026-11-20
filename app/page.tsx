@@ -13,6 +13,7 @@ import { CtaBand } from "@/components/cta-band"
 import { Behandelingen } from "@/components/behandelingen"
 import { ReviewsCarousel } from "@/components/reviews-carousel"
 import { FaqSection } from "@/components/faq-section"
+import { KerstBanner } from "@/components/kerst-banner"
 import { serviceCategories } from "@/lib/services-data"
 
 const marqueeItems = [
@@ -35,7 +36,7 @@ const processSteps = [
 
 export const metadata = {
   title: 'Zen Spa — Schoonheidssalon & Huidtherapie in Almere Buiten',
-  description: 'Zen Spa in Almere Buiten — professionele gezichtsbehandelingen, massages en permanente make-up. Çigdem, gecertificeerd schoonheidsspecialiste met 20+ jaar ervaring. Online afspraken mogelijk vanaf €30.',
+  description: 'Zen Spa in Almere Buiten — professionele huidverzorging, permanente make-up en pedicure. Çigdem, gecertificeerd schoonheidsspecialiste met 20+ jaar ervaring. Online afspraken mogelijk vanaf €30.',
 }
 
 const faqSchema = {
@@ -106,7 +107,7 @@ function Hero() {
           className="hero-animate max-w-[540px] text-[17px] leading-[1.85] text-white/68"
           style={{ animationDelay: "210ms" }}
         >
-          Even helemaal voor jezelf. Professionele huidverzorging, massages en permanente make-up — door een specialist die écht naar je luistert.
+          Even helemaal voor jezelf. Professionele huidverzorging, permanente make-up en pedicure — door een specialist die écht naar je luistert.
         </p>
 
         <div
@@ -364,6 +365,7 @@ export default function Page() {
       <main id="main-content" tabIndex={-1}>
         <Hero />
         <Pillars />
+        <KerstBanner />
         <About />
         <Stats />
         <ServicesCarousel services={serviceCategories} />

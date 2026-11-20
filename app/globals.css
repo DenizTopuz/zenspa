@@ -259,3 +259,32 @@
 @media (prefers-reduced-motion: reduce) {
   [style*="bar-in"] { animation: none !important; }
 }
+
+/* ── Kerstbanner: vallende sneeuw en twinkelende lichtjes ── */
+@keyframes kerst-fall {
+  0%   { transform: translate3d(0, -12%, 0) rotate(0deg); opacity: 0; }
+  12%  { opacity: 1; }
+  100% { transform: translate3d(var(--drift, 24px), 112%, 0) rotate(160deg); opacity: 0; }
+}
+@keyframes kerst-twinkle {
+  0%, 100% { opacity: 0.45; transform: scale(0.85); }
+  50%      { opacity: 1;    transform: scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kerst-flake { animation: none !important; opacity: 0.5 !important; transform: none !important; }
+  .kerst-light { animation: none !important; }
+}
+
+/* ── Kerstbanner: zachtjes zwevende cadeautjes en slingerende kerstballen ── */
+@keyframes kerst-bob {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50%      { transform: translateY(-7px) rotate(calc(var(--rot, 0deg) + 1.5deg)); }
+}
+@keyframes kerst-sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50%      { transform: rotate(4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kerst-gift { animation: none !important; transform: rotate(var(--rot, 0deg)) !important; }
+  .kerst-bauble { animation: none !important; }
+}

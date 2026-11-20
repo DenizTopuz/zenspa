@@ -39,7 +39,7 @@ export const serviceCategories: ServiceCategory[] = [
         name: 'Basis Gezichtsbehandeling',
         price: '€62,50',
         duration: '50 min',
-        results: 'Grondige reiniging en basishuidverzorging afgestemd op jouw huidtype.',
+        results: 'Gezuiverde, verzorgde huid na peeling, stomen en het verwijderen van mee-eters.',
         downtime: 'Geen downtime.',
       },
       {
@@ -83,7 +83,7 @@ export const serviceCategories: ServiceCategory[] = [
         downtime: 'Geen downtime.',
       },
       {
-        name: 'Pedicure incl. voetenscrub',
+        name: 'Spa pedicure',
         price: '€45',
         duration: 'ca. 60 min',
         results: 'Zijdezachte voeten en verzorgde nagels na 1 sessie.',

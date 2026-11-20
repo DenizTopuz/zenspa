@@ -13,8 +13,6 @@ export interface Parfum {
   base?: string
   /** Tweede afbeelding (flacon met doosje) */
   hasAlt: boolean
-  /** Eigen prijs in euro; laat leeg voor de standaardprijs */
-  price?: number
 }
 
 export const FAMILIES: Array<{ key: Family; label: string; short: string; desc: string }> = [
@@ -84,8 +82,31 @@ export const NOTE_COLORS: Record<string, string> = {
   Citrus: '#E9C74A',
 }
 
-/** Voorlopige standaardprijs (100 ml) voor alle geuren — pas hier aan, of zet `price` bij een losse geur */
-export const DEFAULT_PRICE = 29.95
+/** Beschikbare formaten in ml */
+export const SIZES = [30, 50, 100] as const
+export type Size = (typeof SIZES)[number]
 
-export const priceOf = (p: Parfum) =>
-  new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(p.price ?? DEFAULT_PRICE)
+/** Nichemerken zijn iets duurder — pas de lijst aan als een merk er (niet) bij hoort */
+const NICHE_HOUSES = [
+  'Parfums de Marly',
+  'Amouage',
+  'Maison Francis Kurkdjian',
+  'Lorenzo Villoresi',
+  'Annick Goutal',
+  'Tom Ford',
+]
+export const isNiche = (p: Parfum) => NICHE_HOUSES.includes(p.house)
+
+/**
+ * VOORLOPIGE prijzen in euro per formaat — vul hier de echte prijzen in.
+ * 'standaard' geldt voor de meeste geuren, 'niche' voor de iets duurdere nichegeuren.
+ */
+export const PRICES: Record<'standaard' | 'niche', Record<Size, number>> = {
+  standaard: { 30: 14.95, 50: 19.95, 100: 29.95 },
+  niche: { 30: 19.95, 50: 24.95, 100: 34.95 },
+}
+
+const eur = new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' })
+export const priceFor = (p: Parfum, size: Size) => eur.format(PRICES[isNiche(p) ? 'niche' : 'standaard'][size])
+/** Laagste prijs (kleinste formaat) voor "vanaf" op de kaarten */
+export const fromPrice = (p: Parfum) => priceFor(p, SIZES[0])

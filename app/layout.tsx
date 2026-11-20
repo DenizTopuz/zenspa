@@ -28,7 +28,7 @@ const localBusinessSchema = {
   '@type': 'BeautySalon',
   name: 'Zen Spa',
   alternateName: 'Zen Spa Almere Buiten',
-  description: 'Gecertificeerde schoonheidssalon en huidtherapiepraktijk in Almere Buiten. Specialisaties: gezichtsbehandelingen, massages, permanente make-up (PMU), microneedling en ontharen.',
+  description: 'Gecertificeerde schoonheidssalon en huidtherapiepraktijk in Almere Buiten. Specialisaties: gezichtsbehandelingen, permanente make-up (PMU), microneedling, spa pedicure en ontharen.',
   url: 'https://zenspa.nl',
   telephone: '+31653207729',
   email: 'info@zenspa.nl',

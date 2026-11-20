@@ -188,7 +188,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                   <CalendarDays className="h-6 w-6 text-accent" aria-hidden />
                   <p className="text-[11px] font-semibold tracking-[0.18em] text-foreground/40 uppercase">Aanbevolen frequentie</p>
                   <p className="font-heading text-[28px] font-semibold leading-tight">
-                    {content.frequency}
+                    {t.frequency ?? content.frequency}
                   </p>
                 </div>
 
@@ -199,7 +199,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
                   <Sparkles className="h-6 w-6 text-accent" aria-hidden />
                   <p className="text-[11px] font-semibold tracking-[0.18em] text-foreground/40 uppercase">Voordelen</p>
                   <p className="font-heading text-[22px] font-semibold leading-snug">
-                    {content.benefits.join(' · ')}
+                    {(t.benefit ? [t.benefit] : content.benefits).join(' · ')}
                   </p>
                 </div>
 
