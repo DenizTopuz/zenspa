@@ -64,20 +64,22 @@ type GiftProps = {
   /** Parallaxsnelheid in pixels; weglaten = geen parallax */
   speed?: number
   className?: string
+  /** Staat stil (geen zweven), voor cadeautjes die onder de boom liggen */
+  still?: boolean
   /** rotatie in graden en vertraging van het zweven */
   rot?: number
   delay?: number
 }
 
 /** Een cadeautje met strik */
-function GiftArt({ ribbon, body = '#F4EFE4', lid = '#E8DFCC', variant = 'wide', pos, speed, className, rot = 0, delay = 0 }: GiftProps) {
+function GiftArt({ ribbon, body = '#F4EFE4', lid = '#E8DFCC', variant = 'wide', pos, speed, still, className, rot = 0, delay = 0 }: GiftProps) {
   const tall = variant === 'tall'
   const art = (
     <svg
       aria-hidden
       viewBox={tall ? '0 0 100 150' : '0 0 120 124'}
       className={`kerst-gift ${className ?? ''}`}
-      style={{ '--rot': `${rot}deg`, transform: `rotate(${rot}deg)`, animation: `kerst-bob ${5 + (delay % 3)}s ease-in-out ${delay}s infinite` } as React.CSSProperties}
+      style={{ '--rot': `${rot}deg`, transform: `rotate(${rot}deg)`, animation: still ? undefined : `kerst-bob ${5 + (delay % 3)}s ease-in-out ${delay}s infinite` } as React.CSSProperties}
     >
       {tall ? (
         <>
@@ -195,6 +197,110 @@ function VoucherCard({ className }: { className?: string }) {
   )
 }
 
+
+type Look = { ribbon: string; body: string; lid: string }
+const PINK: Look = { body: '#E5A8B4', lid: '#D68C9D', ribbon: '#F4EFE4' }
+const GOLD: Look = { body: '#E6CF95', lid: '#D2B66F', ribbon: '#B5485B' }
+const OLIVE: Look = { body: '#657350', lid: '#53603F', ribbon: '#E6CF95' }
+const RED: Look = { body: '#B5485B', lid: '#9B3A4C', ribbon: '#E6CF95' }
+const CREAM: Look = { body: '#F4EFE4', lid: '#E8DFCC', ribbon: '#E5A8B4' }
+
+type PileItem = { x: number; y: number; w: number; rot: number; look: Look; variant?: 'wide' | 'tall' }
+
+/**
+ * Cadeautjes in rijen met diepte, zoals onder een boom op de grond: achteraan groot en hoger in beeld,
+ * voorin klein en lager, zodat de kleine pakjes goed zichtbaar blijven. Alleen voor/achter elkaar, nooit op elkaar.
+ * x = vanaf links, y = hoogte van de onderkant (px), w = breedte.
+ */
+const ITEMS_LEFT: PileItem[] = [
+  // achterste rij (groot)
+  { x: 20, y: 24, w: 112, rot: -3, look: OLIVE },
+  { x: 96, y: 26, w: 86, variant: 'tall', rot: 3, look: GOLD },
+  { x: 160, y: 24, w: 122, rot: -2, look: RED },
+  { x: 250, y: 26, w: 78, variant: 'tall', rot: 4, look: PINK },
+  // middelste rij
+  { x: 40, y: 10, w: 80, rot: 3, look: PINK },
+  { x: 104, y: 8, w: 62, variant: 'tall', rot: -4, look: CREAM },
+  { x: 150, y: 10, w: 82, rot: 3, look: GOLD },
+  { x: 214, y: 8, w: 64, variant: 'tall', rot: -3, look: OLIVE },
+  // voorste rij (klein)
+  { x: 26, y: 0, w: 54, variant: 'tall', rot: -5, look: RED },
+  { x: 66, y: 0, w: 58, rot: 4, look: GOLD },
+  { x: 112, y: 0, w: 46, variant: 'tall', rot: -3, look: PINK },
+  { x: 146, y: 0, w: 62, rot: 3, look: CREAM },
+  { x: 196, y: 0, w: 48, variant: 'tall', rot: 5, look: OLIVE },
+  { x: 232, y: 0, w: 58, rot: -4, look: RED },
+]
+const ITEMS_RIGHT: PileItem[] = [
+  // achterste rij (groot)
+  { x: 16, y: 24, w: 96, variant: 'tall', rot: -3, look: PINK },
+  { x: 84, y: 24, w: 124, rot: 3, look: GOLD },
+  { x: 188, y: 26, w: 90, variant: 'tall', rot: -2, look: RED },
+  { x: 250, y: 24, w: 80, rot: 4, look: OLIVE },
+  // middelste rij
+  { x: 36, y: 10, w: 76, rot: 4, look: CREAM },
+  { x: 98, y: 8, w: 84, rot: -3, look: OLIVE },
+  { x: 168, y: 10, w: 60, variant: 'tall', rot: 4, look: PINK },
+  { x: 212, y: 8, w: 70, rot: -3, look: GOLD },
+  // voorste rij (klein)
+  { x: 24, y: 0, w: 58, rot: -4, look: GOLD },
+  { x: 70, y: 0, w: 48, variant: 'tall', rot: 4, look: RED },
+  { x: 108, y: 0, w: 62, rot: -3, look: PINK },
+  { x: 158, y: 0, w: 50, variant: 'tall', rot: -5, look: GOLD },
+  { x: 196, y: 0, w: 58, rot: 5, look: CREAM },
+  { x: 240, y: 0, w: 46, variant: 'tall', rot: -4, look: OLIVE },
+]
+
+/** Een versierde kerstboom met lichtjes en een ster */
+function XmasTree({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 200 270" className={className}>
+      <rect x="91" y="222" width="18" height="32" rx="2" fill="#4A3B2C" />
+      <polygon points="100,98 186,224 14,224" fill="#2C3822" />
+      <polygon points="100,52 166,156 34,156" fill="#33422A" />
+      <polygon points="100,12 148,92 52,92" fill="#3B4B31" />
+      <g fill="none" stroke="#E6CF95" strokeOpacity="0.75" strokeWidth="2" strokeLinecap="round">
+        <path d="M58 80 C 80 92, 120 92, 142 80" />
+        <path d="M44 138 C 76 154, 124 154, 156 138" />
+        <path d="M26 206 C 68 226, 132 226, 174 206" />
+      </g>
+      {[
+        [86, 70, '#C14A5E'], [116, 78, '#E6CF95'], [70, 124, '#E6CF95'], [102, 142, '#C14A5E'], [138, 126, '#F4EFE4'],
+        [48, 192, '#C14A5E'], [88, 204, '#F4EFE4'], [126, 206, '#E6CF95'], [160, 192, '#C14A5E'],
+      ].map(([x, y, c], i) => (
+        <g key={i}>
+          <circle cx={x as number} cy={y as number} r="6" fill={c as string} />
+          <circle cx={(x as number) - 2} cy={(y as number) - 2} r="1.6" fill="#fff" fillOpacity="0.6" />
+        </g>
+      ))}
+      {[[100, 40], [74, 108], [128, 112], [58, 168], [150, 170], [30, 214], [170, 214]].map(([x, y], i) => (
+        <circle key={i} className="kerst-light" cx={x} cy={y} r="2.6" fill="#FBF3D5" style={{ animation: `kerst-twinkle ${2.6 + (i % 3) * 0.6}s ease-in-out ${i * 0.35}s infinite` }} />
+      ))}
+      <path d="M100 -2 L104.5 8 L115 9.5 L107.5 17 L109.5 27.5 L100 22.5 L90.5 27.5 L92.5 17 L85 9.5 L95.5 8 Z" fill="#E6CF95" />
+    </svg>
+  )
+}
+
+/** Boom met cadeautjes eronder; staat op de sneeuw en beweegt als geheel */
+function TreeScene({ items, treeClassName, className }: { items: PileItem[]; treeClassName: string; className?: string }) {
+  return (
+    <div aria-hidden className={`relative h-[330px] w-[340px] ${className ?? ''}`}>
+      <XmasTree className={`absolute bottom-[34px] hidden md:block ${treeClassName}`} />
+      {/* Voorste rijen liggen over de achterste: sorteer op hoogte, laagste (voorste) bovenop */}
+      {[...items].sort((a, b) => b.y - a.y).map((g, i) => (
+        <div key={i} className="absolute" style={{ left: g.x, bottom: g.y, width: g.w, zIndex: i + 1 }}>
+          <span
+            aria-hidden
+            className="absolute -bottom-1 left-[8%] h-2.5 w-[84%] rounded-full bg-black/35 blur-[3px]"
+            style={{ zIndex: -1 }}
+          />
+          <GiftArt ribbon={g.look.ribbon} body={g.look.body} lid={g.look.lid} variant={g.variant} rot={g.rot} still className="w-full drop-shadow-[0_6px_8px_rgba(0,0,0,0.35)]" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /**
  * Teaser voor de cadeaubon (en kerstactie). Bewust zonder bedragen of kortingen:
  * zet die in de tekst zodra de actie vaststaat.
@@ -205,24 +311,14 @@ export function KerstBanner() {
       aria-labelledby="kerst-heading"
       className="relative z-20 mt-12 mb-10 text-primary-foreground md:mt-24 md:mb-16"
     >
-      {/* Cadeautjes die uit het kader steken: boven (schuiven sneller dan de pagina) */}
-      <GiftArt ribbon="#E6CF95" rot={6} delay={0} speed={-90} pos="absolute -top-14 right-4 z-30 md:-top-24 md:right-[13%]" className="w-24 drop-shadow-[0_14px_16px_rgba(0,0,0,0.3)] md:w-44" />
-      <GiftArt variant="tall" ribbon="#E5A8B4" rot={-9} delay={1.2} speed={-55} pos="absolute -top-20 right-[27%] z-30 hidden md:block" className="w-24 drop-shadow-[0_12px_14px_rgba(0,0,0,0.3)]" />
-      <GiftArt variant="tall" ribbon="#6F7A55" rot={-7} delay={0.6} speed={-120} pos="absolute -top-10 left-4 z-30 md:-top-20 md:left-[8%]" className="w-14 drop-shadow-[0_12px_14px_rgba(0,0,0,0.3)] md:w-24" />
-
-      {/* ... en onder (blijven iets achter) */}
-      <GiftArt ribbon="#E5A8B4" rot={-12} delay={0.4} speed={70} pos="absolute -bottom-10 left-3 z-30 md:-bottom-16 md:left-[9%]" className="w-16 drop-shadow-[0_12px_14px_rgba(0,0,0,0.3)] md:w-32" />
-      <GiftArt variant="tall" ribbon="#E6CF95" rot={8} delay={1.8} speed={40} pos="absolute -bottom-12 left-[20%] z-30 hidden md:block" className="w-20 drop-shadow-[0_12px_14px_rgba(0,0,0,0.3)]" />
-      <GiftArt ribbon="#E5A8B4" rot={9} delay={0.9} speed={95} pos="absolute -right-1 -bottom-8 z-30 md:-bottom-14 md:right-[7%]" className="w-20 drop-shadow-[0_12px_14px_rgba(0,0,0,0.3)] md:w-36" />
-      <GiftArt variant="tall" ribbon="#6F7A55" rot={-6} delay={2.2} speed={50} pos="absolute -bottom-10 right-[19%] z-30 hidden md:block" className="w-20 drop-shadow-[0_12px_14px_rgba(0,0,0,0.3)]" />
-
-      {/* Gestapelde cadeautjes in het kader (alleen op brede schermen) */}
-      <ParallaxLayer speed={-30} className="pointer-events-none absolute bottom-8 left-[3%] z-20 hidden lg:block">
-        <div aria-hidden className="relative">
-          <GiftArt ribbon="#E6CF95" rot={-3} delay={0.3} className="w-32 drop-shadow-[0_10px_12px_rgba(0,0,0,0.3)]" />
-          <GiftArt variant="tall" ribbon="#E5A8B4" rot={7} delay={1.4} className="absolute -top-14 left-14 w-16 drop-shadow-[0_10px_12px_rgba(0,0,0,0.3)]" />
-        </div>
+      {/* Twee kerstbomen met cadeautjes eronder, staand op de sneeuw. Elk tafereel beweegt als geheel met de scroll. */}
+      <ParallaxLayer speed={26} className="pointer-events-none absolute bottom-3 left-[-60px] z-30 md:bottom-4 md:left-[2%]">
+        <TreeScene items={ITEMS_LEFT} treeClassName="left-[70px] w-[200px]" className="origin-bottom-left scale-[0.42] md:scale-[0.68] xl:scale-[0.9]" />
       </ParallaxLayer>
+      <ParallaxLayer speed={36} className="pointer-events-none absolute right-[-60px] bottom-3 z-30 md:right-[2%] md:bottom-4">
+        <TreeScene items={ITEMS_RIGHT} treeClassName="left-[80px] w-[170px]" className="origin-bottom-right scale-[0.42] md:scale-[0.62] xl:scale-[0.82]" />
+      </ParallaxLayer>
+
       {/* Het bonnetje, zwevend rechts (brede schermen) */}
       <ParallaxLayer speed={-25} className="pointer-events-none absolute top-[24%] right-[4%] z-20 hidden xl:block">
         <VoucherCard />
