@@ -119,3 +119,36 @@ export function ParfumFamilyTabs({ value, onChange, total, counts }: Props) {
     </>
   )
 }
+
+/** Verticale variant voor de zijbalk (desktop) — zelfde iconen en kleuren als de tabs */
+export function ParfumFamilyList({ value, onChange, total, counts }: Props) {
+  const tabs: Array<{ key: Key; label: string; count: number }> = [
+    { key: 'alle', label: 'Alle geuren', count: total },
+    ...FAMILIES.map((f) => ({ key: f.key, label: f.label, count: counts[f.key] })),
+  ]
+  return (
+    <div className="flex flex-col gap-1 rounded-3xl bg-accent/[0.07] p-2" role="group" aria-label="Geurfamilie">
+      {tabs.map((t) => {
+        const Icon = ICONS[t.key]
+        const active = value === t.key
+        return (
+          <button
+            key={t.key}
+            type="button"
+            aria-pressed={active}
+            disabled={t.count === 0 && !active}
+            onClick={() => onChange(t.key)}
+            className={cn(
+              'flex cursor-pointer items-center gap-3 rounded-full px-4 py-3 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40',
+              active ? 'bg-white text-accent shadow-md shadow-foreground/8' : 'text-foreground/70 hover:bg-white/50 hover:text-foreground'
+            )}
+          >
+            <Icon className="size-5 shrink-0" aria-hidden />
+            <span className="flex-1 font-heading text-[18px] leading-none font-semibold">{t.label}</span>
+            <span className="text-[12px] leading-none text-foreground/70">{t.count}</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}

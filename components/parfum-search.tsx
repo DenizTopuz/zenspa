@@ -13,9 +13,13 @@ interface Props {
   onPickParfum: (p: Parfum) => void
   onPickNote: (note: string) => void
   onPickHouse: (house: string) => void
+  /** Rond zoekicoon dat bij focus uitklapt (desktop) */
+  compact?: boolean
+  /** Zonder eigen rand: staat in een omhullende pill (mobiel) */
+  embedded?: boolean
 }
 
-export function ParfumSearch({ value, onChange, onPickParfum, onPickNote, onPickHouse }: Props) {
+export function ParfumSearch({ value, onChange, onPickParfum, onPickNote, onPickHouse, compact, embedded }: Props) {
   const id = useId()
   const wrapRef = useRef<HTMLDivElement>(null)
   const [focused, setFocused] = useState(false)
@@ -62,8 +66,8 @@ export function ParfumSearch({ value, onChange, onPickParfum, onPickNote, onPick
   }
 
   return (
-    <div ref={wrapRef} className="relative lg:w-[250px] lg:shrink-0">
-      <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+    <div ref={wrapRef} className={cn('relative', compact ? 'size-11 shrink-0' : 'w-full')}>
+      <Search className={cn('pointer-events-none absolute top-1/2 z-20 size-4 -translate-y-1/2 text-foreground/70', compact ? 'left-[14px]' : 'left-4')} />
       <input
         type="search"
         role="combobox"
@@ -81,14 +85,21 @@ export function ParfumSearch({ value, onChange, onPickParfum, onPickNote, onPick
         onKeyDown={onKeyDown}
         placeholder="Zoek een geur"
         aria-label="Zoek parfum"
-        className="h-11 w-full rounded-full border border-foreground/12 bg-white pl-11 pr-4 text-[15px] outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus-visible:ring-2 focus-visible:ring-primary/40"
+        className={cn(
+          'rounded-full border border-foreground/50 bg-white text-[15px] outline-none transition-[width,colors] duration-300 placeholder:text-muted-foreground focus:border-primary focus-visible:ring-2 focus-visible:ring-primary/40',
+          compact
+            ? 'absolute left-0 top-0 z-10 h-11 cursor-pointer pl-10 pr-4 focus:w-[280px] focus:cursor-text motion-reduce:transition-none [&:not(:placeholder-shown)]:w-[280px] w-11 placeholder:text-transparent focus:placeholder:text-muted-foreground'
+            : embedded
+              ? 'h-11 w-full border-transparent bg-transparent pl-11 pr-2 focus:border-transparent focus-visible:ring-0'
+              : 'h-11 w-full pl-11 pr-4'
+        )}
       />
 
       {open && (
         <ul
           id={`${id}-list`}
           role="listbox"
-          className="absolute left-0 top-[calc(100%+8px)] z-50 w-full min-w-[300px] overflow-hidden rounded-3xl border border-foreground/10 bg-white p-2 shadow-[0_18px_50px_rgba(33,35,27,0.16)] lg:left-1/2 lg:w-[360px] lg:-translate-x-1/2"
+          className="absolute left-0 top-[calc(100%+8px)] z-50 w-full min-w-[300px] overflow-hidden rounded-3xl border border-foreground/10 bg-white p-2 shadow-[0_18px_50px_rgba(33,35,27,0.16)]"
         >
           {items.map((s, i) => (
             <li

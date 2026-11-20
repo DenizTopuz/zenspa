@@ -5,15 +5,43 @@ import { BookingCTA } from '@/components/booking-cta'
 import { Reveal } from '@/components/reveal'
 import { BehandelingenHero } from '@/components/behandelingen-hero'
 import { ParfumCollection } from '@/components/parfum-collection'
-import { PARFUMS } from '@/lib/parfums-data'
+import { headers } from 'next/headers'
+import { PARFUMS, image } from '@/lib/parfums-data'
 
-export const metadata: Metadata = {
+const BASE_META = {
   title: 'Parfums — Yodeyma damesgeuren | Zen Spa Almere Buiten',
   description:
     'Ontdek de Yodeyma-collectie bij Zen Spa: Eau de Parfum geïnspireerd op de grootste geuren. Bekijk topnoten, hartnoten en basisnoten van elke geur.',
 }
 
-export default function ParfumsPage() {
+type Props = { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }
+
+const slugOf = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v)
+
+/** Een gedeelde link (?geur=…) krijgt de titel en foto van die geur, zodat WhatsApp een nette preview toont */
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const slug = slugOf((await searchParams).geur)
+  const p = PARFUMS.find((x) => x.slug === slug)
+  if (!p) return BASE_META
+  const h = await headers()
+  const host = h.get('x-forwarded-host') ?? h.get('host')
+  const proto = h.get('x-forwarded-proto') ?? (host?.startsWith('localhost') ? 'http' : 'https')
+  const title = `${p.name} — Yodeyma | Zen Spa Almere Buiten`
+  const description = `Eau de Parfum geïnspireerd op ${p.inspired} van ${p.house}. Bekijk de geurnoten bij Zen Spa.`
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      images: host ? [{ url: `${proto}://${host}${image(p)}`, width: 800, height: 800, alt: `Yodeyma ${p.name}` }] : undefined,
+    },
+  }
+}
+
+export default async function ParfumsPage({ searchParams }: Props) {
+  const initialSlug = slugOf((await searchParams).geur)
   return (
     <>
       <SiteNav />
@@ -40,7 +68,7 @@ export default function ParfumsPage() {
                 </p>
               </Reveal>
 
-              <ParfumCollection />
+              <ParfumCollection initialSlug={initialSlug} />
 
               <p className="mx-auto mt-16 max-w-[640px] text-center text-[13px] leading-relaxed text-muted-foreground">
                 Yodeyma-parfums zijn eigen geuren die geïnspireerd zijn op bestaande parfums. Genoemde merken en

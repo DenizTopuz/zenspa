@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import Image from 'next/image'
-import { ChevronLeft, ChevronRight, MessageCircle, SlidersHorizontal, X } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight, SlidersHorizontal, X } from 'lucide-react'
 import { ParfumSearch } from '@/components/parfum-search'
-import { ParfumFamilyTabs } from '@/components/parfum-family-tabs'
+import { ParfumFamilyTabs, ParfumFamilyList } from '@/components/parfum-family-tabs'
 import { matchesQuery, suggest } from '@/lib/parfums-search'
 import { cn } from '@/lib/utils'
 import {
@@ -23,8 +23,17 @@ import {
 
 const WHATSAPP = 'https://wa.me/31653207729'
 
-const waLink = (p: Parfum) =>
-  `${WHATSAPP}?text=${encodeURIComponent(`Hallo Zen Spa, ik heb interesse in de parfum ${p.name} (gebaseerd op ${p.inspired} – ${p.house}). Kunnen jullie mij hier meer over vertellen?`)}`
+/** Link naar deze geur op de site: WhatsApp toont hiervan zelf een preview met foto en titel */
+const shareUrl = (p: Parfum, origin: string) => `${origin}/parfums?geur=${p.slug}`
+
+const waLink = (p: Parfum, origin: string) => {
+  const text =
+    `Hallo Zen Spa, ik heb interesse in dit geurtje: ${p.name} (geïnspireerd op ${p.inspired} – ${p.house}).` +
+    (origin ? `\n${shareUrl(p, origin)}` : '')
+  return `${WHATSAPP}?text=${encodeURIComponent(text)}`
+}
+
+const noopSubscribe = () => () => {}
 
 const familyLabel = (key: Family) => FAMILIES.find((f) => f.key === key)!.label
 
@@ -34,12 +43,14 @@ function NotePill({
   count,
   onClick,
   large,
+  tall,
 }: {
   note: string
   active?: boolean
   count?: number
   onClick?: () => void
   large?: boolean
+  tall?: boolean
 }) {
   const empty = !active && count === 0
   return (
@@ -50,16 +61,16 @@ function NotePill({
       disabled={empty}
       className={cn(
         'flex shrink-0 items-center gap-2 rounded-full whitespace-nowrap transition-colors',
-        large ? 'py-3 pr-4 pl-3 text-[15px]' : 'py-1.5 pr-3.5 pl-2.5 text-[13px]',
+        large ? 'py-3 pr-4 pl-3 text-[15px]' : tall ? 'h-11 pr-4 pl-3 text-[14px]' : 'py-1.5 pr-3.5 pl-2.5 text-[13px]',
         active
-          ? 'bg-primary text-primary-foreground'
-          : 'bg-secondary/60 text-foreground/75 hover:bg-secondary hover:text-foreground',
-        empty && 'cursor-not-allowed opacity-45 hover:bg-secondary/60'
+          ? 'border border-transparent bg-primary text-primary-foreground'
+          : 'border border-foreground/50 bg-white text-foreground hover:border-primary hover:bg-primary/10',
+        empty && 'cursor-not-allowed opacity-45 hover:border-foreground/50 hover:bg-white'
       )}
     >
       <span
         aria-hidden
-        className="size-3 rounded-full ring-1 ring-black/15"
+        className="size-3 rounded-full ring-1 ring-black/35"
         style={{ backgroundColor: NOTE_COLORS[note] ?? 'var(--primary)' }}
       />
       {note}
@@ -76,10 +87,10 @@ function ActiveChip({ label, onClear }: { label: string; onClear: () => void }) 
       type="button"
       onClick={onClear}
       aria-label={`Filter ${label} verwijderen`}
-      className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 text-[13px] text-foreground transition-colors hover:bg-secondary/70"
+      className="group flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 text-[13px] text-foreground transition-colors hover:bg-secondary/70"
     >
       {label}
-      <X className="size-3" />
+      <X className="size-3 text-foreground/70 transition-colors group-hover:text-foreground" strokeWidth={1.4} aria-hidden />
     </button>
   )
 }
@@ -90,7 +101,7 @@ function ParfumRow({ p, onOpen }: { p: Parfum; onOpen: () => void }) {
     <button
       type="button"
       onClick={onOpen}
-      className="group flex w-full items-center gap-5 overflow-hidden rounded-[22px] border border-foreground/8 bg-white p-3 pr-4 text-left transition-colors active:bg-secondary/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:hidden"
+      className="group flex w-full cursor-pointer items-center gap-5 overflow-hidden rounded-[22px] border border-foreground/8 bg-white p-3 pr-4 text-left transition-colors active:bg-secondary/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:hidden"
     >
       <span className="relative size-[116px] shrink-0 overflow-hidden rounded-2xl bg-white">
         <Image
@@ -133,7 +144,7 @@ function ParfumCard({ p, onOpen }: { p: Parfum; onOpen: () => void }) {
     <button
       type="button"
       onClick={onOpen}
-      className="group hidden h-full w-full flex-col overflow-hidden rounded-[22px] border border-foreground/8 bg-white text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(33,35,27,0.10)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:flex"
+      className="group hidden h-full w-full cursor-pointer flex-col overflow-hidden rounded-[22px] border border-foreground/8 bg-white text-left transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(33,35,27,0.10)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:flex"
     >
       <div className="relative aspect-square overflow-hidden bg-white">
         <Image
@@ -188,46 +199,56 @@ function ParfumCard({ p, onOpen }: { p: Parfum; onOpen: () => void }) {
 }
 
 /** Cirkel die zich vult naarmate de tijd verstrijkt: ¼, ¾ en vol */
-function PhaseDot({ fill }: { fill: number }) {
-  const r = 10
-  const angle = fill * Math.PI * 2
-  const x = 12 + r * Math.sin(angle)
-  const y = 12 - r * Math.cos(angle)
+/** Mini-geurpiramide: de laag die bij deze noot hoort is gevuld (0 = top, 1 = hart, 2 = basis) */
+function PyramidMark({ level }: { level: 0 | 1 | 2 }) {
+  const top = 3
+  const h = 18
+  const gap = 1.3
+  const hw = (y: number) => ((y - top) / h) * 10
+  const bands = [
+    [top, top + 6 - gap / 2],
+    [top + 6 + gap / 2, top + 12 - gap / 2],
+    [top + 12 + gap / 2, top + 18],
+  ]
   return (
-    <svg viewBox="0 0 24 24" className="size-6 shrink-0 text-primary" aria-hidden>
-      <circle cx="12" cy="12" r={r} fill="none" stroke="currentColor" strokeWidth="1.5" />
-      {fill >= 1 ? (
-        <circle cx="12" cy="12" r={r} fill="currentColor" />
-      ) : (
-        <path d={`M12 12 L12 ${12 - r} A${r} ${r} 0 ${fill > 0.5 ? 1 : 0} 1 ${x.toFixed(2)} ${y.toFixed(2)} Z`} fill="currentColor" />
-      )}
+    <svg viewBox="0 0 24 24" className="size-7 shrink-0 text-primary" aria-hidden>
+      {bands.map(([y1, y2], i) => (
+        <polygon
+          key={i}
+          points={`${12 - hw(y1)},${y1} ${12 + hw(y1)},${y1} ${12 + hw(y2)},${y2} ${12 - hw(y2)},${y2}`}
+          fill="currentColor"
+          fillOpacity={i === level ? 0.7 : 0.2}
+        />
+      ))}
     </svg>
   )
 }
 
 function NoteSteps({ p }: { p: Parfum }) {
   const rows = [
-    { label: 'topnoot', when: 'eerste minuten', note: p.top, text: 'Dit ruik je als eerste. Fris en vluchtig.', fill: 0.25 },
-    { label: 'hartnoot', when: 'na een kwartier', note: p.heart, text: 'Het karakter van de geur.', fill: 0.65 },
-    { label: 'basisnoot', when: 'uren later', note: p.base, text: 'Blijft het langst op je huid hangen.', fill: 1 },
+    { label: 'topnoot', when: 'eerste minuten', note: p.top, text: 'Dit ruik je als eerste. Fris en vluchtig.', level: 0 as const },
+    { label: 'hartnoot', when: 'na een kwartier', note: p.heart, text: 'Het karakter van de geur.', level: 1 as const },
+    { label: 'basisnoot', when: 'uren later', note: p.base, text: 'Blijft het langst op je huid hangen.', level: 2 as const },
   ]
   if (!p.top && !p.heart && !p.base) {
     return <p className="text-[15px] italic text-muted-foreground">De geurnoten van deze geur volgen binnenkort.</p>
   }
   return (
-    <ol className="divide-y divide-foreground/12 border-y border-foreground/12">
+    <ol className="flex flex-col gap-2.5">
       {rows.map((r) => (
-        <li
-          key={r.label}
-          className="grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto] items-baseline gap-x-4 gap-y-1.5 py-4"
-        >
-          <span className="row-span-2 self-center">
-            <PhaseDot fill={r.fill} />
+        <li key={r.label} className="relative rounded-2xl bg-white/70 px-5 py-4">
+          <span className="absolute top-1/2 right-5 -translate-y-1/2">
+            <PyramidMark level={r.level} />
           </span>
-          <span className="font-heading text-[28px] leading-none">{r.note ?? '—'}</span>
-          <span className="text-right font-heading text-[22px] leading-none text-primary italic">{r.label}</span>
-          <p className="text-[14px] leading-snug text-foreground/70">{r.text}</p>
-          <span className="text-right text-[13px] font-medium text-foreground/75">{r.when}</span>
+          <div className="min-w-0">
+            <p className="text-[11px] leading-none tracking-[0.14em] text-foreground/70 uppercase">
+              <span className="font-semibold text-foreground/80">{r.label}</span>
+              <span aria-hidden> · </span>
+              {r.when}
+            </p>
+            <p className="mt-2 font-heading text-[24px] leading-none">{r.note ?? '—'}</p>
+            <p className="mt-1.5 text-[14px] leading-snug text-foreground/70">{r.text}</p>
+          </div>
         </li>
       ))}
     </ol>
@@ -317,16 +338,22 @@ function ParfumGallery({ p, shot, setShot }: { p: Parfum; shot: number; setShot:
           >
             <ChevronRight className="size-5" />
           </button>
-          <div className="absolute inset-x-0 bottom-3 flex justify-center">
-            {slides.map((_, i) => (
+          <div className="absolute top-3 left-3 z-10 flex gap-2 md:top-4 md:left-4" role="group" aria-label="Kies afbeelding">
+            {slides.map((src, i) => (
               <button
-                key={i}
+                key={src}
                 type="button"
                 onClick={() => setShot(i)}
                 aria-label={i === 0 ? 'Toon flacon' : 'Toon flacon met doosje'}
-                className="grid h-8 w-8 place-items-center"
+                aria-current={shot === i}
+                className={cn(
+                  'relative size-12 overflow-hidden rounded-xl bg-white transition-all duration-200 md:size-16',
+                  shot === i
+                    ? 'ring-2 ring-primary ring-offset-2 ring-offset-white'
+                    : 'border border-foreground/25 opacity-75 hover:opacity-100'
+                )}
               >
-                <span className={cn('h-2 rounded-full transition-all', shot === i ? 'w-6 bg-primary' : 'w-2 bg-foreground/25')} />
+                <Image src={src} alt="" fill sizes="64px" draggable={false} className="object-contain p-1" />
               </button>
             ))}
           </div>
@@ -439,6 +466,7 @@ function NotesSheet({
 
 function ParfumDialog({ p, onClose }: { p: Parfum | null; onClose: () => void }) {
   const ref = useRef<HTMLDialogElement>(null)
+  const origin = useSyncExternalStore(noopSubscribe, () => window.location.origin, () => '')
   const [shot, setShot] = useState(0)
 
   useEffect(() => {
@@ -509,34 +537,32 @@ function ParfumDialog({ p, onClose }: { p: Parfum | null; onClose: () => void })
             </div>
 
             <div>
-              <div className="flex items-center gap-4">
-                <h3 className="font-heading text-[26px] leading-none tracking-tight md:text-[28px]">Zo ruik je deze geur</h3>
-                <span aria-hidden className="hidden h-px flex-1 translate-y-[4px] bg-foreground/15 md:block" />
-              </div>
-              <p className="mt-2 mb-4 hidden text-[15px] leading-snug text-foreground/65 md:block">
+              <h3 className="font-heading text-[28px] leading-none font-normal tracking-tight">Zo ruik je deze geur</h3>
+              <p className="mt-2.5 mb-4 hidden text-[16px] leading-snug text-foreground/80 md:block">
                 Van de eerste spray tot uren later, in drie stappen.
               </p>
               <div className="mb-4 md:hidden" />
               <NoteSteps p={p} />
             </div>
 
-            <div className="sticky bottom-0 z-10 -mx-5 mt-auto flex flex-col gap-3 border-t border-foreground/8 bg-background/95 px-5 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))] backdrop-blur sm:-mx-9 sm:px-9 md:static md:mx-0 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
-              <div className="flex items-center justify-between rounded-2xl border border-foreground/10 bg-card px-5 py-3.5 max-md:border-0 max-md:bg-transparent max-md:px-1 max-md:py-0">
-                <div className="flex items-center gap-3">
-                  <span className="font-heading text-[30px] leading-none">{priceOf(p)}</span>
+            {/* Eén ontwerp voor mobiel en desktop; op mobiel blijft het vastgeplakt onderin */}
+            <div className="sticky bottom-0 z-10 -mx-5 mt-auto bg-gradient-to-t from-background from-70% to-transparent px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:-mx-9 sm:px-8 md:static md:mx-0 md:bg-none md:p-0">
+              <div className="relative flex flex-col gap-3 overflow-hidden rounded-2xl bg-[linear-gradient(135deg,oklch(0.52_0.054_122),oklch(0.40_0.05_122))] px-5 py-4 text-primary-foreground shadow-[0_18px_40px_-18px_rgba(60,66,45,0.55)] md:flex-row md:items-center md:justify-between md:gap-4 md:py-3.5">
+                <span aria-hidden className="pointer-events-none absolute -top-16 -right-12 size-48 rounded-full bg-white/10 blur-2xl" />
+                <div className="relative flex min-w-0 items-baseline justify-between gap-3 md:flex-col md:items-start md:justify-start md:gap-1">
+                  <span className="font-heading text-[32px] leading-none font-semibold">{priceOf(p)}</span>
+                  <span className="text-[13px] leading-tight text-primary-foreground/85">Eau de Parfum · 100 ml</span>
                 </div>
-                <span className="text-[13px] text-muted-foreground">Eau de Parfum · 100 ml</span>
+                <a
+                  href={waLink(p, origin)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-full bg-background px-4 py-3 text-[15px] font-medium md:w-auto md:py-2.5 md:text-[14px] text-foreground shadow-lg shadow-black/20 transition-transform hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
+                >
+                  Vraag naar deze geur
+                  <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0" />
+                </a>
               </div>
-
-              <a
-                href={waLink(p)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 rounded-full bg-primary px-7 py-4 text-[16px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
-              >
-                <MessageCircle className="size-5" />
-                Vraag naar deze geur
-              </a>
             </div>
           </div>
         </div>
@@ -605,7 +631,7 @@ function ParfumGrid({ results, onOpen }: { results: Parfum[]; onOpen: (p: Parfum
   }, [shown])
 
   return (
-    <div ref={gridRef} className="relative grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+    <div ref={gridRef} className="relative grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3">
       {shown.map((p) => (
         <div
           key={p.slug}
@@ -627,11 +653,11 @@ function ParfumGrid({ results, onOpen }: { results: Parfum[]; onOpen: (p: Parfum
 // Alle gekozen noten moeten in de geur zitten (en-filter): hoe meer noten, hoe specifieker
 const hasNotes = (p: Parfum, list: string[]) => list.every((n) => matchesNote(p, n))
 
-export function ParfumCollection() {
+export function ParfumCollection({ initialSlug }: { initialSlug?: string }) {
   const [family, setFamily] = useState<Family | 'alle'>('alle')
   const [notes, setNotes] = useState<string[]>([])
   const [query, setQuery] = useState('')
-  const [open, setOpen] = useState<Parfum | null>(null)
+  const [open, setOpen] = useState<Parfum | null>(() => PARFUMS.find((x) => x.slug === initialSlug) ?? null)
   const [sheetOpen, setSheetOpen] = useState(false)
   const [quickOpen, setQuickOpen] = useState(false)
   const barRef = useRef<HTMLDivElement>(null)
@@ -758,7 +784,7 @@ export function ParfumCollection() {
     <div ref={rootRef}>
       {/* Compacte balk — blijft in beeld tijdens het scrollen; Filters klapt een paneel uit op de plek waar je bent */}
       {/* fixed (niet sticky): body heeft overflow-x:hidden op deze site, waardoor sticky niet werkt */}
-      <div className="pointer-events-none fixed inset-x-0 z-30 px-3 md:px-6" style={{ top: barTop }}>
+      <div className="pointer-events-none fixed inset-x-0 z-30 px-3 md:px-6 lg:hidden" style={{ top: barTop }}>
         <div
           ref={barRef}
           className={cn(
@@ -867,13 +893,45 @@ export function ParfumCollection() {
       </div>
 
       {/* Filters: hoofdcategorie = tabs zoals op de homepage; geurnoot = lichtere kleurstip-pills eronder */}
-      <div ref={filtersRef} className="mb-2 flex flex-col items-center gap-4 lg:gap-5">
+      <div className="lg:grid lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start lg:gap-10">
+      {/* Zijbalk (desktop): zoeken en filters links, geuren rechts */}
+      <aside className="hidden lg:sticky lg:top-36 lg:flex lg:flex-col lg:gap-6" aria-label="Filters">
+        <ParfumSearch
+          value={query}
+          onChange={setQuery}
+          onPickParfum={setOpen}
+          onPickNote={addNote}
+          onPickHouse={() => setFamily('alle')}
+        />
+        <div>
+          <p className="mb-3 px-1 text-[12px] font-semibold tracking-[0.16em] text-foreground/70 uppercase">Geurfamilie</p>
+          <ParfumFamilyList value={family} onChange={setFamily} total={familyCounts.alle} counts={familyCounts} />
+        </div>
+        <div>
+          <p className="mb-3 px-1 text-[12px] font-semibold tracking-[0.16em] text-foreground/70 uppercase">Hou je van</p>
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Geurnoot">
+            {noteList2.map((n) => (
+              <NotePill key={n} note={n} active={notes.includes(n)} count={noteCount(n)} onClick={() => toggleNote(n)} />
+            ))}
+          </div>
+        </div>
+        <p className="px-1 text-[14px] text-muted-foreground" aria-live="polite">{countLabel}</p>
+        {filtersActive && (
+          <button type="button" onClick={reset} className="self-start px-1 text-[14px] text-muted-foreground underline underline-offset-4 hover:text-foreground">
+            Alles wissen
+          </button>
+        )}
+      </aside>
+
+      <div className="min-w-0">
+      <div ref={filtersRef} className="mb-2 flex flex-col items-center gap-4 lg:hidden">
         <ParfumFamilyTabs value={family} onChange={setFamily} total={familyCounts.alle} counts={familyCounts} />
 
-        <div className="flex w-full flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-center lg:gap-4">
-          <div className="flex w-full items-center gap-2 sm:contents">
-            <div className="min-w-0 flex-1 sm:flex-none">
+        <div className="flex w-full flex-col items-center gap-2.5 sm:gap-4">
+          <div className="flex h-11 w-full items-stretch rounded-full border border-foreground/50 bg-white transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/40 sm:hidden">
+            <div className="min-w-0 flex-1">
               <ParfumSearch
+                embedded
                 value={query}
                 onChange={setQuery}
                 onPickParfum={setOpen}
@@ -882,13 +940,13 @@ export function ParfumCollection() {
               />
             </div>
 
-            {/* Mobiel: één duidelijke knop voor de geurnoten */}
+            {/* Mobiel: geurnoten-knop als onderdeel van dezelfde balk */}
             <button
               type="button"
               onClick={() => setSheetOpen(true)}
               className={cn(
-                'flex h-11 shrink-0 items-center gap-2 rounded-full border px-4 text-[15px] transition-colors sm:hidden',
-                notes.length ? 'border-primary bg-primary text-primary-foreground' : 'border-foreground/12 bg-white'
+                'flex shrink-0 items-center gap-2 rounded-r-full border-l px-4 text-[15px] transition-colors',
+                notes.length ? 'border-primary bg-primary text-primary-foreground' : 'border-foreground/20 bg-white'
               )}
             >
               <SlidersHorizontal className="size-4" />
@@ -901,22 +959,33 @@ export function ParfumCollection() {
             </button>
           </div>
 
-          <div
-            role="group"
-            aria-label="Geurnoot"
-            className="-mx-5 hidden items-center gap-2 overflow-x-auto px-5 [scrollbar-width:none] sm:flex md:-mx-6 md:px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden"
-          >
-            <span className="mr-1 shrink-0 text-[11px] font-semibold tracking-[0.16em] text-foreground/70 uppercase">
-              Hou je van
-            </span>
-            {noteList2.map((n) => (
-              <NotePill key={n} note={n} active={notes.includes(n)} count={noteCount(n)} onClick={() => toggleNote(n)} />
-            ))}
+          <div className="hidden w-full flex-col items-center gap-4 sm:flex">
+            <div className="w-full max-w-[480px]">
+              <ParfumSearch
+                value={query}
+                onChange={setQuery}
+                onPickParfum={setOpen}
+                onPickNote={addNote}
+                onPickHouse={() => setFamily('alle')}
+              />
+            </div>
+            <div
+              role="group"
+              aria-label="Geurnoot"
+              className="flex max-w-full items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              <span className="mr-1 shrink-0 text-[11px] font-semibold tracking-[0.16em] text-foreground/70 uppercase">
+                Hou je van
+              </span>
+              {noteList2.map((n) => (
+                <NotePill tall key={n} note={n} active={notes.includes(n)} count={noteCount(n)} onClick={() => toggleNote(n)} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-6 mb-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 px-1 text-[14px] text-muted-foreground" aria-live="polite">
+      <div className="mt-6 mb-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 px-1 lg:hidden text-[14px] text-muted-foreground" aria-live="polite">
         <span>{countLabel}</span>
         {filtersActive && (
           <>
@@ -961,6 +1030,8 @@ export function ParfumCollection() {
       )}
 
       <div ref={endRef} aria-hidden className="h-px" />
+      </div>
+      </div>
 
       <ParfumDialog p={open} onClose={() => setOpen(null)} />
       <NotesSheet
