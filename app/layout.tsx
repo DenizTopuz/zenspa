@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono, Nunito_Sans, EB_Garamond } from "next/font/google"
 import type { Viewport } from "next"
+import { ViewTransition } from "react"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -85,7 +86,7 @@ export default function RootLayout({
         />
         <ThemeProvider>
           <SmoothScroll />
-          {children}
+          <ViewTransition default="page-fade">{children}</ViewTransition>
           <MobileBottomNav />
         </ThemeProvider>
       </body>

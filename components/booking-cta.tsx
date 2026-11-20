@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
 
@@ -71,13 +72,13 @@ export function BookingCTA({ underFooter = false }: { underFooter?: boolean }) {
         <p className="mx-auto mt-6 max-w-[480px] text-[17px] leading-[1.8] text-white/70">
           Soms zijn er nog dezelfde dag afspraken beschikbaar. Reserveer jouw moment en laat de rest aan ons over.
         </p>
-        <a
+        <Link
           href="/boeken"
           className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[16px] font-semibold text-stone-900 transition-all duration-300 hover:bg-white/90 hover:gap-3"
         >
           Maak een Afspraak
           <span aria-hidden>›</span>
-        </a>
+        </Link>
       </div>
     </section>
   )

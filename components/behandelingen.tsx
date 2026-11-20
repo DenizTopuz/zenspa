@@ -397,12 +397,12 @@ export function Behandelingen() {
 
         {/* CTA */}
         <div className="mt-0 border-t border-foreground/10 pt-6 text-center md:mt-16 md:pt-10">
-          <a
+          <Link
             href="/boeken"
             className="inline-flex items-center gap-2.5 rounded-full bg-accent px-10 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-md hover:shadow-accent/20"
           >
             Maak een afspraak
-          </a>
+          </Link>
         </div>
       </div>
     </section>

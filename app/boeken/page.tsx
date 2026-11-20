@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useEffect, useCallback, useRef, useMemo, Suspense, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { useSearchParams } from 'next/navigation'
@@ -577,9 +578,9 @@ function ContactStep({ treatment, slotStart, onSubmit, submitting, error, formRe
               <p className="text-sm font-semibold text-foreground">Aanvraag niet verzonden</p>
               <p className="mt-0.5 text-[13px] text-foreground/60">{error}</p>
               {error.includes('openstaande aanvraag') && (
-                <a href="/contact" className="mt-2 inline-flex items-center gap-0.5 text-[13px] font-medium text-accent underline underline-offset-2">
+                <Link href="/contact" className="mt-2 inline-flex items-center gap-0.5 text-[13px] font-medium text-accent underline underline-offset-2">
                   Neem contact op <ChevronRight className="h-3.5 w-3.5" aria-hidden />
-                </a>
+                </Link>
               )}
             </div>
           </div>
@@ -629,9 +630,9 @@ function ConfirmStep({ treatment, slotStart }: { treatment: Treatment; slotStart
         </div>
       </div>
 
-      <a href="/" className="block w-full text-center rounded-full border border-foreground/15 px-8 py-3 text-[14px] font-medium text-foreground/60 hover:bg-foreground/4 transition-colors md:mt-2 md:inline-block md:w-auto">
+      <Link href="/" className="block w-full text-center rounded-full border border-foreground/15 px-8 py-3 text-[14px] font-medium text-foreground/60 hover:bg-foreground/4 transition-colors md:mt-2 md:inline-block md:w-auto">
         Terug naar de homepage
-      </a>
+      </Link>
     </div>
   )
 }
@@ -696,17 +697,17 @@ function BookingWizard() {
     <div className="flex min-h-svh flex-col bg-background overflow-x-clip">
       {/* ── Mini header ── */}
       <header className="fixed top-0 left-0 right-0 z-50 flex h-[66px] shrink-0 items-center justify-between border-b border-foreground/8 bg-background/95 px-5 backdrop-blur-sm md:px-6">
-        <a href="/" className="flex items-center text-foreground" aria-label="Zen Spa – terug naar home">
+        <Link href="/" className="flex items-center text-foreground" aria-label="Zen Spa – terug naar home">
           <ZenSpaLogo className="h-9 w-auto" />
-        </a>
+        </Link>
 
-        <a
+        <Link
           href="/"
           aria-label="Sluiten"
           className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/12 text-foreground/50 transition-colors hover:bg-foreground/5 hover:text-foreground"
         >
           <X className="h-4 w-4" />
-        </a>
+        </Link>
       </header>
 
       {/* ── Content ── */}

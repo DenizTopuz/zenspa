@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { ArrowUpRight, ArrowLeft, ArrowRight } from 'lucide-react'
@@ -61,7 +62,7 @@ const SHADOW_PY = 16
 function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
   const imgH = Math.round(cardW * 1.3)
   return (
-    <a
+    <Link
       href="/behandelingen"
       className="group relative shrink-0 overflow-hidden rounded-3xl bg-secondary/30
                  transition-all duration-300 ease-out
@@ -99,7 +100,7 @@ function Card({ service, cardW }: { service: ServiceCategory; cardW: number }) {
           <ArrowUpRight className="h-4 w-4 text-foreground transition-colors duration-300 group-hover:text-background" />
         </div>
       </div>
-    </a>
+    </Link>
   )
 }
 
@@ -200,12 +201,12 @@ export function ServicesCarousel({ services }: { services: ServiceCategory[] }) 
               <em className="not-italic text-accent">elk verlangen.</em>
             </h2>
           </div>
-          <a
+          <Link
             href="/behandelingen"
             className="hidden shrink-0 items-center gap-2 text-[17px] font-medium text-accent underline underline-offset-4 transition-all duration-200 hover:gap-3 md:flex"
           >
             Volledig overzicht <ArrowRight className="h-4 w-4" aria-hidden />
-          </a>
+          </Link>
         </div>
       </div>
 

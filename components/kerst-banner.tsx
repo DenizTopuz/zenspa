@@ -309,14 +309,14 @@ export function KerstBanner() {
   return (
     <section
       aria-labelledby="kerst-heading"
-      className="relative z-20 mt-12 mb-10 text-primary-foreground md:mt-24 md:mb-16"
+      className="relative z-20 -mt-3 mb-10 overflow-x-clip text-primary-foreground md:mt-24 md:mb-16"
     >
       {/* Twee kerstbomen met cadeautjes eronder, staand op de sneeuw. Elk tafereel beweegt als geheel met de scroll. */}
-      <ParallaxLayer speed={26} className="pointer-events-none absolute bottom-3 left-[-60px] z-30 md:bottom-4 md:left-[2%]">
-        <TreeScene items={ITEMS_LEFT} treeClassName="left-[70px] w-[200px]" className="origin-bottom-left scale-[0.42] md:scale-[0.68] xl:scale-[0.9]" />
+      <ParallaxLayer speed={26} className="pointer-events-none absolute bottom-3 left-1.5 z-30 md:bottom-4 md:left-[2%]">
+        <TreeScene items={ITEMS_LEFT} treeClassName="left-[70px] w-[200px]" className="origin-bottom-left scale-[0.55] md:scale-[0.68] xl:scale-[0.9]" />
       </ParallaxLayer>
-      <ParallaxLayer speed={36} className="pointer-events-none absolute right-[-60px] bottom-3 z-30 md:right-[2%] md:bottom-4">
-        <TreeScene items={ITEMS_RIGHT} treeClassName="left-[80px] w-[170px]" className="origin-bottom-right scale-[0.42] md:scale-[0.62] xl:scale-[0.82]" />
+      <ParallaxLayer speed={36} className="pointer-events-none absolute right-1.5 bottom-3 z-30 md:right-[2%] md:bottom-4">
+        <TreeScene items={ITEMS_RIGHT} treeClassName="left-[80px] w-[170px]" className="origin-bottom-right scale-[0.55] md:scale-[0.62] xl:scale-[0.82]" />
       </ParallaxLayer>
 
       {/* Het bonnetje, zwevend rechts (brede schermen) */}

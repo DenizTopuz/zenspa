@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Image from "next/image"
 import {
   BadgeCheck, Leaf, Lock, Sparkles, Users,
@@ -114,12 +115,12 @@ function Hero() {
           className="hero-animate flex flex-col items-center gap-3 sm:flex-row"
           style={{ animationDelay: "310ms" }}
         >
-          <a
+          <Link
             href="/boeken"
             className="rounded-full bg-accent px-11 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-lg hover:shadow-accent/30"
           >
             Afspraak maken
-          </a>
+          </Link>
           <a
             href="#services"
             className="flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-11 py-5 text-[17px] font-medium text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
@@ -243,12 +244,12 @@ function About() {
               </ul>
             </Reveal>
             <Reveal delay={260}>
-              <a
+              <Link
                 href="/over-mij"
                 className="inline-flex w-fit items-center gap-2.5 rounded-full bg-accent px-10 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:gap-3.5 hover:shadow-md hover:shadow-accent/20"
               >
                 Maak kennis met Çigdem <ArrowRight className="h-4 w-4" aria-hidden />
-              </a>
+              </Link>
             </Reveal>
           </div>
 

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { MapPin, Clock, Phone, Mail, ArrowRight } from 'lucide-react'
 import { ZenSpaLogo } from '@/components/logo'
 
@@ -110,13 +111,13 @@ export function SiteFooter({ bg = 'bg-background', overlap = false }: { bg?: str
               <p className="text-[15px] font-semibold text-white">{col.heading}</p>
               <div className="flex flex-col gap-3">
                 {col.links.map((link) => (
-                  <a
+                  <Link
                     key={link.label}
                     href={link.href}
                     className="text-[14px] text-white/48 transition-colors hover:text-white"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </nav>

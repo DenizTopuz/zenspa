@@ -288,3 +288,20 @@
   .kerst-gift { animation: none !important; transform: rotate(var(--rot, 0deg)) !important; }
   .kerst-bauble { animation: none !important; }
 }
+
+/* ── Paginaovergangen: zachte crossfade, geen haperende sprong ── */
+@keyframes page-fade-out { to { opacity: 0; } }
+@keyframes page-fade-in { from { opacity: 0; } }
+::view-transition-old(.page-fade) {
+  animation: 160ms ease-out both page-fade-out;
+}
+::view-transition-new(.page-fade) {
+  animation: 260ms ease-in 80ms both page-fade-in;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

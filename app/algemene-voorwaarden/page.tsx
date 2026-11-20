@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import { SiteNav } from '@/components/site-nav'
 import { SiteFooter } from '@/components/site-footer'
@@ -119,7 +120,7 @@ export default function AlgemeneVoorwaardenPage() {
               <h2>9. Privacy</h2>
               <p>
                 Wij verwerken jouw persoonsgegevens conform ons{' '}
-                <a href="/privacybeleid" className="text-accent underline underline-offset-2">privacybeleid</a>.
+                <Link href="/privacybeleid" className="text-accent underline underline-offset-2">privacybeleid</Link>.
               </p>
 
               <h2>10. Klachten</h2>

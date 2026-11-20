@@ -9,6 +9,10 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
+  // Vloeiende overgangen tussen pagina's (View Transitions)
+  experimental: {
+    viewTransition: true,
+  },
   async headers() {
     return [
       {

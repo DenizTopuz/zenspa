@@ -298,12 +298,12 @@ export default function OverMijPage() {
                 </Reveal>
 
                 <Reveal delay={220}>
-                  <a
+                  <Link
                     href="/boeken"
                     className="w-fit inline-flex items-center gap-2.5 rounded-full bg-accent px-10 py-5 text-[17px] font-medium text-white transition-all duration-300 hover:bg-accent/88 hover:shadow-md hover:shadow-accent/20"
                   >
                     Maak een afspraak
-                  </a>
+                  </Link>
                 </Reveal>
               </div>
 

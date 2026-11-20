@@ -123,13 +123,13 @@ export function MobileBottomNav() {
         })}
 
         {/* Laatste slot — zelfde opbouw als de andere items */}
-        <a
+        <Link
           href="/boeken"
           className="relative flex flex-1 flex-col items-center justify-center gap-1 py-4 text-foreground/70 transition-colors duration-200"
         >
           <CalendarCheck className="h-[22px] w-[22px]" strokeWidth={1.7} aria-hidden />
           <span className="text-[10px] leading-none font-medium tracking-wide">Afspraak</span>
-        </a>
+        </Link>
 
       </div>
     </nav>

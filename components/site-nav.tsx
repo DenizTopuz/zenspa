@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { ZenSpaLogo } from '@/components/logo'
@@ -74,7 +75,7 @@ export function SiteNav() {
         {/* Left — nav links (desktop only) */}
         <nav className="hidden flex-1 items-center gap-10 lg:flex" aria-label="Primaire navigatie">
           {links.map((l) => (
-            <a
+            <Link
               key={l.label}
               href={l.href}
               className={cn(
@@ -87,13 +88,13 @@ export function SiteNav() {
               aria-current={isActive(l.href) ? 'page' : undefined}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         {/* Center — logo */}
         <div className="flex flex-1 justify-start lg:flex-none lg:justify-center">
-          <a href="/" aria-label="Zen Spa home">
+          <Link href="/" aria-label="Zen Spa home">
             <ZenSpaLogo
               className={cn(
                 'w-auto transition-all duration-500',
@@ -101,13 +102,13 @@ export function SiteNav() {
                 dark ? 'text-accent' : 'text-white'
               )}
             />
-          </a>
+          </Link>
         </div>
 
         {/* Right — CTA (desktop) + email + phone (mobile) */}
         <div className="flex flex-1 items-center justify-end gap-3 md:gap-4">
           {/* Desktop: afspraak CTA */}
-          <a
+          <Link
             href="/boeken"
             className={cn(
               'hidden items-center gap-2 whitespace-nowrap rounded-[84px] border px-8 py-4 text-[18px] font-medium transition-all duration-300 lg:flex',
@@ -117,7 +118,7 @@ export function SiteNav() {
             )}
           >
             Afspraak maken
-          </a>
+          </Link>
 
           {/* Mobile: WhatsApp icon */}
           <a
@@ -152,13 +153,13 @@ export function SiteNav() {
           </a>
 
           {/* Mobile: appointment icon with accent background */}
-          <a
+          <Link
             href="/boeken"
             aria-label="Afspraak maken"
             className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white shadow-[0_2px_12px_rgba(0,0,0,0.18)] transition-all duration-300 hover:bg-accent/85 lg:hidden"
           >
             <CalendarCheck className="h-5 w-5" aria-hidden />
-          </a>
+          </Link>
         </div>
       </div>
 
