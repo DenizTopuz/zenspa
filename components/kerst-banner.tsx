@@ -309,7 +309,7 @@ export function KerstBanner() {
   return (
     <section
       aria-labelledby="kerst-heading"
-      className="relative z-20 -mt-3 mb-10 overflow-x-clip text-primary-foreground md:mt-24 md:mb-16"
+      className="relative z-20 -mt-3 overflow-x-clip text-primary-foreground md:mt-24"
     >
       {/* Twee kerstbomen met cadeautjes eronder, staand op de sneeuw. Elk tafereel beweegt als geheel met de scroll. */}
       <ParallaxLayer speed={26} className="pointer-events-none absolute bottom-3 left-1.5 z-30 md:bottom-4 md:left-[2%]">
@@ -394,6 +394,8 @@ export function KerstBanner() {
         </div>
         <SnowDrift />
       </div>
+      {/* Sluit de onderrand af in de achtergrondkleur: geen haarlijn of gat tussen banner en volgende sectie */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 -bottom-px z-10 h-[3px] bg-background" />
 
       <Reveal>
         <div className="relative mx-auto flex max-w-[760px] flex-col items-center gap-5 px-6 pt-24 pb-28 text-center md:pt-36 md:pb-40">
