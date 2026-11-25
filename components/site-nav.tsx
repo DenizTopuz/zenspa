@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { ZenSpaLogo } from '@/components/logo'
-import { Phone, CalendarCheck } from 'lucide-react'
+import { Phone, Menu, X, CalendarCheck, MessageCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
@@ -18,6 +18,7 @@ const links = [
 export function SiteNav() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
   const lightBg = pathname.startsWith('/boeken')
   const dark = scrolled || lightBg
 
@@ -25,6 +26,23 @@ export function SiteNav() {
     if (href === '/') return pathname === '/'
     return pathname.startsWith(href)
   }
+
+  // Menu sluit bij navigatie, Escape; achtergrond scrolt niet mee
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
+    window.addEventListener('keydown', onKey)
+    const prev = document.documentElement.style.overflow
+    document.documentElement.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.documentElement.style.overflow = prev
+    }
+  }, [open])
 
   useEffect(() => {
     const sentinel = document.createElement('div')
@@ -152,18 +170,91 @@ export function SiteNav() {
             <Phone className="h-5 w-5" aria-hidden />
           </a>
 
-          {/* Mobile: appointment icon with accent background */}
-          <Link
-            href="/boeken"
-            aria-label="Afspraak maken"
+          {/* Mobile: hamburger */}
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            aria-expanded={open}
+            aria-controls="mobiel-menu"
             className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white shadow-[0_2px_12px_rgba(0,0,0,0.18)] transition-all duration-300 hover:bg-accent/85 lg:hidden"
           >
-            <CalendarCheck className="h-5 w-5" aria-hidden />
-          </Link>
+            <Menu className="h-5 w-5" aria-hidden />
+          </button>
         </div>
       </div>
 
     </header>
+
+    {/* Mobiel menu — schuift van onder naar boven, grote letters. Buiten de header i.v.m. backdrop-blur. */}
+    <div
+      id="mobiel-menu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu"
+      aria-hidden={!open}
+      inert={!open}
+      className={cn(
+        'fixed inset-0 z-[70] flex flex-col overflow-y-auto bg-primary text-primary-foreground lg:hidden',
+        'transition-transform duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+        open ? 'translate-y-0' : 'translate-y-full'
+      )}
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+    >
+      <div className="flex items-center px-5 py-4">
+        <Link href="/" aria-label="Zen Spa home" onClick={() => setOpen(false)}>
+          <ZenSpaLogo className="h-10 w-auto text-primary-foreground" />
+        </Link>
+      </div>
+
+      <nav aria-label="Mobiel menu" className="flex flex-1 flex-col justify-center gap-1 px-7 py-6">
+        {links.map((l, i) => (
+          <Link
+            key={l.label}
+            href={l.href}
+            onClick={() => setOpen(false)}
+            aria-current={isActive(l.href) ? 'page' : undefined}
+            className={cn(
+              'font-heading block py-1.5 text-[44px] leading-[1.1] tracking-tight transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+              open ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0',
+              isActive(l.href) ? 'italic text-[#E6CF95]' : 'text-primary-foreground'
+            )}
+            style={{ transitionDelay: open ? `${200 + i * 70}ms` : '0ms' }}
+          >
+            {l.label}
+          </Link>
+        ))}
+      </nav>
+
+      <div
+        className={cn(
+          'flex flex-col gap-4 px-7 pb-8 transition-[opacity,translate] duration-700 ease-out motion-reduce:transition-none',
+          open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+        )}
+        style={{ transitionDelay: open ? '650ms' : '0ms' }}
+      >
+        <Link
+          href="/boeken"
+          onClick={() => setOpen(false)}
+          className="flex items-center justify-center gap-2 rounded-full bg-[#E6CF95] px-6 py-3.5 text-[16px] font-semibold text-[#21231B]"
+        >
+          <CalendarCheck className="h-5 w-5" aria-hidden />
+          Afspraak maken
+        </Link>
+        <div className="flex items-center justify-center gap-6 text-[15px] text-primary-foreground/85">
+          <a href="tel:0653207729" className="flex items-center gap-2"><Phone className="h-4 w-4" aria-hidden />Bel ons</a>
+          <a href="https://wa.me/31653207729" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2"><MessageCircle className="h-4 w-4" aria-hidden />WhatsApp</a>
+        </div>
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          aria-label="Sluit menu"
+          className="mx-auto mt-1 flex h-14 w-14 items-center justify-center rounded-full border border-primary-foreground/30 text-primary-foreground transition-colors hover:bg-primary-foreground/10"
+        >
+          <X className="h-6 w-6" strokeWidth={1.4} aria-hidden />
+        </button>
+      </div>
+    </div>
     </>
   )
 }

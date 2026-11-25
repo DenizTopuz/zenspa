@@ -3,15 +3,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { Home, Sparkles, Leaf, FlaskConical, Phone, CalendarCheck } from 'lucide-react'
+import { Home, Sparkles, Leaf, FlaskConical, CalendarCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
   { href: '/',              label: 'Home',     icon: Home },
   { href: '/over-mij',      label: 'Zen Spa',  icon: Sparkles },
-  { href: '/behandelingen', label: 'Diensten', icon: Leaf },
+  { href: '/behandelingen', label: 'Behandelingen', icon: Leaf },
   { href: '/parfums',       label: 'Parfums',  icon: FlaskConical },
-  { href: '/contact',       label: 'Contact',  icon: Phone },
 ]
 
 export function MobileBottomNav() {
@@ -20,13 +19,11 @@ export function MobileBottomNav() {
   const lastY = useRef(0)
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  if (pathname.startsWith('/boeken') || pathname.startsWith('/admin')) return null
-
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
-  // 6 equal slots: 5 pages + the floating Afspraak CTA as the last item
-  const SLOT = 100 / 6
+  // 5 equal slots: 4 pages + Afspraak as the last item
+  const SLOT = 100 / 5
   const slot = (i: number) => ({ left: i * SLOT, width: SLOT })
   const activePillIndex = links.findIndex(l => isActive(l.href))
 
@@ -62,6 +59,8 @@ export function MobileBottomNav() {
       if (idleTimer.current) clearTimeout(idleTimer.current)
     }
   }, [])
+
+  if (pathname.startsWith('/boeken') || pathname.startsWith('/admin')) return null
 
   return (
     <nav

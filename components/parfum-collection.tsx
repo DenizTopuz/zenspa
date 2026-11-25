@@ -182,8 +182,8 @@ function ParfumCard({ p, onOpen }: { p: Parfum; onOpen: () => void }) {
         <div>
           <div className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
             <h3 className="font-heading text-[26px] leading-none tracking-tight sm:text-[30px]">{p.name}</h3>
-            <span className="flex shrink-0 items-baseline gap-1.5 sm:flex-col sm:items-end sm:gap-1">
-              <span className="text-[12px] leading-none text-foreground/70">vanaf</span>
+            <span className="flex shrink-0 items-baseline gap-3">
+              <span className="font-heading text-[18px] italic leading-none text-foreground/70">vanaf</span>
               <span className="font-heading text-[26px] leading-none font-semibold text-primary sm:text-[28px]">{fromPrice(p)}</span>
             </span>
           </div>

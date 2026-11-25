@@ -83,7 +83,7 @@ export const NOTE_COLORS: Record<string, string> = {
 }
 
 /** Beschikbare formaten in ml */
-export const SIZES = [30, 50, 100] as const
+export const SIZES = [15, 50, 100] as const
 export type Size = (typeof SIZES)[number]
 
 /** Nichemerken zijn iets duurder — pas de lijst aan als een merk er (niet) bij hoort */
@@ -97,13 +97,10 @@ const NICHE_HOUSES = [
 ]
 export const isNiche = (p: Parfum) => NICHE_HOUSES.includes(p.house)
 
-/**
- * VOORLOPIGE prijzen in euro per formaat — vul hier de echte prijzen in.
- * 'standaard' geldt voor de meeste geuren, 'niche' voor de iets duurdere nichegeuren.
- */
+/** Prijzen in euro per formaat. 'standaard' = Gewone Collectie, 'niche' = The Niche Collection. */
 export const PRICES: Record<'standaard' | 'niche', Record<Size, number>> = {
-  standaard: { 30: 14.95, 50: 19.95, 100: 29.95 },
-  niche: { 30: 19.95, 50: 24.95, 100: 34.95 },
+  standaard: { 15: 8.5, 50: 19.99, 100: 35.5 },
+  niche: { 15: 10.5, 50: 24.99, 100: 42.99 },
 }
 
 const eur = new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' })
