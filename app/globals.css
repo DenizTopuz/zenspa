@@ -305,3 +305,21 @@
     animation: none !important;
   }
 }
+
+/* Menuknop mobiel: druppel die naar de rand glijdt (uitrekken en inknijpen) */
+@keyframes menu-drop-tuck {
+  0%   { transform: translateX(-16px) scale(1, 1); }
+  35%  { transform: translateX(8px) scale(1.28, 0.84); }
+  70%  { transform: translateX(36px) scale(0.74, 1.08); }
+  100% { transform: translateX(33px) scale(0.8, 1); }
+}
+@keyframes menu-drop-show {
+  0%   { transform: translateX(33px) scale(0.8, 1); }
+  35%  { transform: translateX(-24px) scale(1.3, 0.82); }
+  62%  { transform: translateX(-10px) scale(0.9, 1.08); }
+  82%  { transform: translateX(-18px) scale(1.04, 0.97); }
+  100% { transform: translateX(-16px) scale(1, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-drop-tuck, .menu-drop-show { animation: none !important; }
+}

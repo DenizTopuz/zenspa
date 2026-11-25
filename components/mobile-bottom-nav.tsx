@@ -19,6 +19,8 @@ const IDLE_MS = 2200
 export function MobileBottomNav() {
   const pathname = usePathname()
   const [tucked, setTucked] = useState(false)
+  // Pas animeren na de eerste wissel (niet bij het laden van de pagina)
+  const [moved, setMoved] = useState(false)
   const lastY = useRef(0)
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -39,6 +41,7 @@ export function MobileBottomNav() {
       } else if (Math.abs(y - prev) > 3) {
         // Tijdens het scrollen (omhoog én omlaag) blijft de knop opgeborgen
         setTucked(true)
+        setMoved(true)
       }
       lastY.current = y
 
@@ -64,16 +67,19 @@ export function MobileBottomNav() {
       aria-label="Open menu"
       aria-haspopup="dialog"
       className={cn(
-        'fixed right-0 z-50 flex h-14 w-14 origin-right items-center justify-center rounded-full bg-primary text-primary-foreground ring-1 ring-white/20 lg:hidden',
-        'transition-[transform,opacity,box-shadow] motion-reduce:transition-none',
+        'fixed right-0 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground ring-1 ring-white/20 lg:hidden',
+        'transition-[opacity,box-shadow] duration-500 motion-reduce:transition-none',
         tucked
-          ? 'duration-500 ease-[cubic-bezier(0.5,0,0.2,1)] opacity-80 shadow-[0_4px_14px_rgba(33,35,27,0.18)]'
-          : 'duration-[650ms] ease-[cubic-bezier(0.22,1.2,0.36,1)] opacity-100 shadow-[0_8px_28px_rgba(33,35,27,0.28)] active:scale-95'
+          ? 'opacity-80 shadow-[0_4px_14px_rgba(33,35,27,0.18)]'
+          : 'opacity-100 shadow-[0_8px_28px_rgba(33,35,27,0.28)]',
+        moved && (tucked ? 'menu-drop-tuck' : 'menu-drop-show')
       )}
       style={{
         bottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)',
-        // Tonen: 16px van de rand. Opgeborgen: smaller (druppel, 45px breed) met ~17px zichtbaar aan de rand.
-        transform: tucked ? 'translateX(28px) scaleX(0.8)' : 'translateX(-16px)',
+        // Eindstand (de keyframes in globals.css doen de beweging): getoond 16px van de rand,
+        // opgeborgen als smalle druppel met ~17px zichtbaar.
+        transform: tucked ? 'translateX(33px) scale(0.8, 1)' : 'translateX(-16px)',
+        animation: moved ? `${tucked ? 'menu-drop-tuck 650ms cubic-bezier(0.4,0,0.2,1)' : 'menu-drop-show 850ms cubic-bezier(0.3,0,0.3,1)'} forwards` : undefined,
       }}
     >
       <Menu className="h-6 w-6" strokeWidth={1.7} aria-hidden />
