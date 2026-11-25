@@ -1,38 +1,32 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
-import { Home, Sparkles, Leaf, FlaskConical, CalendarCheck } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const links = [
-  { href: '/',              label: 'Home',     icon: Home },
-  { href: '/over-mij',      label: 'Zen Spa',  icon: Sparkles },
-  { href: '/behandelingen', label: 'Behandelingen', icon: Leaf },
-  { href: '/parfums',       label: 'Parfums',  icon: FlaskConical },
-]
+/**
+ * Mobiel: één zwevende menuknop rechtsonder (binnen duimbereik).
+ * Opent het schermvullende menu uit SiteNav via een event.
+ *
+ * Tijdens het scrollen glijdt de knop als een druppel naar rechts en blijft als een
+ * klein randje zichtbaar (en aantikbaar). Pas na een rustmoment (IDLE_MS) of bovenaan
+ * de pagina glijdt hij soepel terug.
+ */
+/** Rusttijd zonder scrollen voordat de knop weer verschijnt */
+const IDLE_MS = 2200
 
 export function MobileBottomNav() {
   const pathname = usePathname()
-  const [visible, setVisible] = useState(false)
+  const [tucked, setTucked] = useState(false)
   const lastY = useRef(0)
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href)
-
-  // 5 equal slots: 4 pages + Afspraak as the last item
-  const SLOT = 100 / 5
-  const slot = (i: number) => ({ left: i * SLOT, width: SLOT })
-  const activePillIndex = links.findIndex(l => isActive(l.href))
-
-  // Reset scroll reference on navigation so the nav stays visible after a page change
   useEffect(() => {
     lastY.current = window.scrollY
+    setTucked(false)
   }, [pathname])
 
-  // Show on scroll up, hide on scroll down, fade in again after idle
   useEffect(() => {
     lastY.current = window.scrollY
 
@@ -40,17 +34,17 @@ export function MobileBottomNav() {
       const y = window.scrollY
       const prev = lastY.current
 
-      if (y > prev + 8) {
-        setVisible(false)
-      } else if (y < prev - 6) {
-        setVisible(true)
+      if (y < 80) {
+        setTucked(false)
+      } else if (Math.abs(y - prev) > 3) {
+        // Tijdens het scrollen (omhoog én omlaag) blijft de knop opgeborgen
+        setTucked(true)
       }
-
       lastY.current = y
 
-      // Fade in after 700ms of no scrolling
+      // Pas na een rustmoment weer tonen (lezers pauzeren vaak 1-2 seconden)
       if (idleTimer.current) clearTimeout(idleTimer.current)
-      idleTimer.current = setTimeout(() => setVisible(true), 700)
+      idleTimer.current = setTimeout(() => setTucked(false), IDLE_MS)
     }
 
     window.addEventListener('scroll', handle, { passive: true })
@@ -60,77 +54,29 @@ export function MobileBottomNav() {
     }
   }, [])
 
-  if (pathname.startsWith('/boeken') || pathname.startsWith('/admin')) return null
+  // Pagina's zonder eigen menu (SiteNav) of met een eigen flow
+  if (pathname.startsWith('/boeken') || pathname.startsWith('/admin') || pathname.startsWith('/annuleren')) return null
 
   return (
-    <nav
-      aria-label="Paginanavigatie"
+    <button
+      type="button"
+      onClick={() => window.dispatchEvent(new Event('zenspa:open-menu'))}
+      aria-label="Open menu"
+      aria-haspopup="dialog"
       className={cn(
-        'fixed bottom-0 left-0 right-0 z-50 bg-background lg:hidden',
-        'border-t border-foreground/10',
-        'transition-all duration-300 ease-out',
-        visible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
+        'fixed right-0 z-50 flex h-14 w-14 origin-right items-center justify-center rounded-full bg-primary text-primary-foreground ring-1 ring-white/20 lg:hidden',
+        'transition-[transform,opacity,box-shadow] motion-reduce:transition-none',
+        tucked
+          ? 'duration-500 ease-[cubic-bezier(0.5,0,0.2,1)] opacity-80 shadow-[0_4px_14px_rgba(33,35,27,0.18)]'
+          : 'duration-[650ms] ease-[cubic-bezier(0.22,1.2,0.36,1)] opacity-100 shadow-[0_8px_28px_rgba(33,35,27,0.28)] active:scale-95'
       )}
-      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      style={{
+        bottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)',
+        // Tonen: 16px van de rand. Opgeborgen: smaller (druppel, 45px breed) met ~17px zichtbaar aan de rand.
+        transform: tucked ? 'translateX(28px) scaleX(0.8)' : 'translateX(-16px)',
+      }}
     >
-      <div className="relative flex items-stretch">
-
-        {/* Top accent line */}
-        {activePillIndex >= 0 && (
-          <span
-            aria-hidden
-            className="pointer-events-none absolute top-0 bg-accent"
-            style={{
-              width: `${slot(activePillIndex).width}%`,
-              height: '2px',
-              left: `${slot(activePillIndex).left}%`,
-              transition: 'left 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
-            }}
-          />
-        )}
-
-        {/* Sliding active fill */}
-        {activePillIndex >= 0 && (
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-y-0 bg-accent/10"
-            style={{
-              width: `${slot(activePillIndex).width}%`,
-              left: `${slot(activePillIndex).left}%`,
-              transition: 'left 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
-            }}
-          />
-        )}
-
-        {links.map(({ href, label, icon: Icon }) => {
-          const active = isActive(href)
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                'relative flex flex-1 flex-col items-center justify-center gap-1 py-4 transition-colors duration-200',
-                active ? 'text-accent' : 'text-foreground/70'
-              )}
-            >
-              <Icon className="h-[22px] w-[22px]" strokeWidth={active ? 2.3 : 1.7} aria-hidden />
-              <span className={cn('text-[10px] leading-none tracking-wide', active ? 'font-bold' : 'font-medium')}>
-                {label}
-              </span>
-            </Link>
-          )
-        })}
-
-        {/* Laatste slot — zelfde opbouw als de andere items */}
-        <Link
-          href="/boeken"
-          className="relative flex flex-1 flex-col items-center justify-center gap-1 py-4 text-foreground/70 transition-colors duration-200"
-        >
-          <CalendarCheck className="h-[22px] w-[22px]" strokeWidth={1.7} aria-hidden />
-          <span className="text-[10px] leading-none font-medium tracking-wide">Afspraak</span>
-        </Link>
-
-      </div>
-    </nav>
+      <Menu className="h-6 w-6" strokeWidth={1.7} aria-hidden />
+    </button>
   )
 }

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { ZenSpaLogo } from '@/components/logo'
-import { Phone, Menu, X, CalendarCheck, MessageCircle } from 'lucide-react'
+import { Phone, X, CalendarCheck, MessageCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const links = [
@@ -31,6 +31,13 @@ export function SiteNav() {
   useEffect(() => {
     setOpen(false)
   }, [pathname])
+
+  // De knop "Menu" in de onderbalk opent dit menu
+  useEffect(() => {
+    const openMenu = () => setOpen(true)
+    window.addEventListener('zenspa:open-menu', openMenu)
+    return () => window.removeEventListener('zenspa:open-menu', openMenu)
+  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -170,23 +177,20 @@ export function SiteNav() {
             <Phone className="h-5 w-5" aria-hidden />
           </a>
 
-          {/* Mobile: hamburger */}
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-            aria-expanded={open}
-            aria-controls="mobiel-menu"
+          {/* Mobile: afspraak (het menu zit onderin, binnen duimbereik) */}
+          <Link
+            href="/boeken"
+            aria-label="Afspraak maken"
             className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white shadow-[0_2px_12px_rgba(0,0,0,0.18)] transition-all duration-300 hover:bg-accent/85 lg:hidden"
           >
-            <Menu className="h-5 w-5" aria-hidden />
-          </button>
+            <CalendarCheck className="h-5 w-5" aria-hidden />
+          </Link>
         </div>
       </div>
 
     </header>
 
-    {/* Mobiel menu — schuift van onder naar boven, grote letters. Buiten de header i.v.m. backdrop-blur. */}
+    {/* Mobiel menu — waaiert als een cirkel uit vanuit de menuknop rechtsonder, grote letters. Buiten de header i.v.m. backdrop-blur. */}
     <div
       id="mobiel-menu"
       role="dialog"
@@ -196,10 +200,15 @@ export function SiteNav() {
       inert={!open}
       className={cn(
         'fixed inset-0 z-[70] flex flex-col overflow-y-auto bg-primary text-primary-foreground lg:hidden',
-        'transition-transform duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
-        open ? 'translate-y-0' : 'translate-y-full'
+        'transition-[clip-path] duration-[850ms] ease-[cubic-bezier(0.65,0,0.2,1)] motion-reduce:transition-none'
       )}
-      style={{ paddingTop: 'env(safe-area-inset-top, 0px)', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      style={{
+        paddingTop: 'env(safe-area-inset-top, 0px)',
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+        // Cirkel die uitwaaiert vanuit de menuknop rechtsonder (en daar weer in verdwijnt)
+        clipPath: open ? 'circle(150% at calc(100% - 44px) calc(100% - 44px))' : 'circle(0px at calc(100% - 44px) calc(100% - 44px))',
+        WebkitClipPath: open ? 'circle(150% at calc(100% - 44px) calc(100% - 44px))' : 'circle(0px at calc(100% - 44px) calc(100% - 44px))',
+      }}
     >
       <div className="flex items-center px-5 py-4">
         <Link href="/" aria-label="Zen Spa home" onClick={() => setOpen(false)}>
@@ -207,7 +216,7 @@ export function SiteNav() {
         </Link>
       </div>
 
-      <nav aria-label="Mobiel menu" className="flex flex-1 flex-col justify-center gap-1 px-7 py-6">
+      <nav aria-label="Mobiel menu" className="flex flex-1 flex-col justify-end gap-1 px-7 pb-10 pt-6">
         {links.map((l, i) => (
           <Link
             key={l.label}
@@ -215,7 +224,7 @@ export function SiteNav() {
             onClick={() => setOpen(false)}
             aria-current={isActive(l.href) ? 'page' : undefined}
             className={cn(
-              'font-heading block py-1.5 text-[44px] leading-[1.1] tracking-tight transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+              'font-heading block py-2.5 text-[44px] leading-[1.1] tracking-tight transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
               open ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0',
               isActive(l.href) ? 'italic text-[#E6CF95]' : 'text-primary-foreground'
             )}
@@ -228,7 +237,7 @@ export function SiteNav() {
 
       <div
         className={cn(
-          'flex flex-col gap-4 px-7 pb-8 transition-[opacity,translate] duration-700 ease-out motion-reduce:transition-none',
+          'flex flex-col gap-5 px-7 pb-8 transition-[opacity,translate] duration-700 ease-out motion-reduce:transition-none',
           open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
         )}
         style={{ transitionDelay: open ? '650ms' : '0ms' }}
@@ -242,14 +251,14 @@ export function SiteNav() {
           Afspraak maken
         </Link>
         <div className="flex items-center justify-center gap-6 text-[15px] text-primary-foreground/85">
-          <a href="tel:0653207729" className="flex items-center gap-2"><Phone className="h-4 w-4" aria-hidden />Bel ons</a>
-          <a href="https://wa.me/31653207729" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2"><MessageCircle className="h-4 w-4" aria-hidden />WhatsApp</a>
+          <a href="tel:0653207729" className="flex items-center gap-2 py-2"><Phone className="h-4 w-4" aria-hidden />Bel ons</a>
+          <a href="https://wa.me/31653207729" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-2"><MessageCircle className="h-4 w-4" aria-hidden />WhatsApp</a>
         </div>
         <button
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Sluit menu"
-          className="mx-auto mt-1 flex h-14 w-14 items-center justify-center rounded-full border border-primary-foreground/30 text-primary-foreground transition-colors hover:bg-primary-foreground/10"
+          className="mx-auto mt-10 flex h-14 w-14 items-center justify-center rounded-full border border-primary-foreground/30 text-primary-foreground transition-colors hover:bg-primary-foreground/10"
         >
           <X className="h-6 w-6" strokeWidth={1.4} aria-hidden />
         </button>
